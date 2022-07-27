@@ -1,0 +1,80 @@
+.container {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 12px;
+}
+main {
+    margin-top: 2em;
+}
+.container > :is(.sidebar, .content) {
+    background: #eff4f5;
+    padding: 1em 1.5em;
+    direction: ltr;
+    height: calc(100vh - 2em - 56px);
+}
+.container .content {
+    position: relative;
+    width: 100%;
+    padding-top: 4.3em;
+}
+.vagas {
+    overflow-y: scroll;
+}
+.sidebar {
+    width: 27%;
+}
+.page-header {
+    background: #dae0e38a;
+    padding: 7px 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+.page-header h1 {
+    line-height: 1;
+    font-size: 24px;
+    background: #7eb627;
+    width: max-content;
+    padding: .3em .7em .3em .5em;
+    border-radius: 0 15px 15px 0;
+    margin: 0;
+    transform: translateX(-7px);
+    color: white;
+}
+
+.sidebar-menu {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    margin: 0;
+}
+body {
+    background-color: #fcfdfd;
+}
+
+.avatar {
+    height: 150px;
+    width: 150px;
+    border: 2px solid #d0dade;
+    margin: 0 auto 7px;
+    border-radius: 50%;
+}
+
+.lista-de-vagas li {
+    list-style: none;
+}
+
+.navbar-brand {
+    position: relative;
+}
+.navbar-brand img {
+    position: absolute;
+    right: 0;
+    height: 75px;
+    top: -23px;
+}
