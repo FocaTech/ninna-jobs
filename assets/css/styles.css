@@ -1,3 +1,7 @@
+:root {
+    --border-color: #c9cbcb;
+}
+
 .container {
     display: flex;
     flex-direction: row-reverse;
@@ -16,9 +20,6 @@ main {
     position: relative;
     width: 100%;
     padding-top: 4.3em;
-}
-.vagas {
-    overflow-y: scroll;
 }
 .sidebar {
     width: 27%;
@@ -77,4 +78,27 @@ body {
     right: 0;
     height: 75px;
     top: -23px;
+}
+.vagas {
+    display: flex;
+    gap: 10px;
+}
+.lista-de-vagas {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+.lista-de-vagas ul {
+    padding: 0;
+}
+.lista-de-vagas ul li {
+    min-height: 40px;
+}
+.lista-de-vagas ul li:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+.informacoes-da-vaga {
+    border-left: 1px solid var(--border-color);
+    padding-left: 10px;
+    flex-basis: 140%;
 }

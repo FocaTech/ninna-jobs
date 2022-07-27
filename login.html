@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NINNA Jobs</title>
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/tabber.css">
+    <script src="assets/js/tabber.js" defer></script>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="logo">
+            <img src="assets/img/logoninna.jpg" alt="" style="border-radius: 50%;">
+        </div>
+        <div class="tabber">
+            <div class="tabber__tabs">
+                <div class="tabber__tab active">
+                    Empresa
+                </div>
+                <div class="tabber__tab">
+                    Candidato
+                </div>
+            </div>
+            <div class="tabber__content">
+                <div id="empresa" class="active">
+                    <form action="#" method="post">
+                        <input type="text" name="empresa-cnpj" id="empresa-cnpj" placeholder="CNPJ">
+                        <input type="password" name="empresa-senha" id="empresa-senha" placeholder="Senha">
+                        <!-- <a class="button" href="#">Entrar</a> -->
+                        <input type="button" value="Entrar">
+                    </form>
+                    <p>Não possui uma conta? <a href="cadastro-empresa.html">Registre-se</a></p>
+                </div>
+                <div id="candidato">
+                    <form action="#" method="post">
+                        <input type="text" name="candidato-cpf" id="candidato-cpf" placeholder="CPF">
+                        <input type="password" name="candidato-senha" id="candidato-senha" placeholder="Senha">
+                        <a class="button" href="#">Entrar</a>
+                    </form>
+                    <p>Não possui uma conta? <a href="cadastro-candidato.html">Registre-se</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
