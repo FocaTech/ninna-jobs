@@ -7,10 +7,12 @@
   <title>Início - NINNA Jobs</title>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/bootstrap/js/bootstrap.min.js" defer></script>
+  <script src="assets/js/jquery-2.2.4.min.js" defer></script>
 </head>
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-dark navbar-expand-lg">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -18,21 +20,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="#">Início</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="#">Sobre Nós</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contato</a>
             </li>
           </ul>
         </div>
@@ -41,11 +35,90 @@
     </nav>
   </header>
   <main class="container">
-    <div class="content">
-      <div class="page-header"><h1>Vagas</h1></div>
+    <div class="right-column">
+      <div class="filtros">
+        <form action="">
+          <select name="teste1" id="">
+            <option value="a0" selected>empresa</option>
+            <option value="a1">empresa1</option>
+            <option value="a2">empresa2</option>
+            <option value="a3">empresa3</option>
+            <option value="a4">empresa4</option>
+          </select>
+          <select name="teste2" id="">
+            <option value="a0" selected>vaga</option>
+            <option value="a1">vaga1</option>
+            <option value="a2">vaga2</option>
+            <option value="a3">vaga3</option>
+            <option value="a4">vaga4</option>
+          </select>
+          <select name="teste3" id="">
+            <option value="a0" selected>nível de experiência</option>
+            <option value="a1">experiência1</option>
+            <option value="a2">experiência2</option>
+            <option value="a3">experiência3</option>
+            <option value="a4">experiência4</option>
+          </select>
+        </form>
+      </div>
+      <div class="content">
+        <div class="page-header"><h1>Vagas</h1></div>
       <div class="vagas">
         <div class="lista-de-vagas">
-          <ul>
+            <ul>
+            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga" onclick="$(this).toggleClass('active')">
+              <p><span class="informacao-de-inscricao">inscrito</span></p>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                <h2>nome da vaga</h2>
+                <p>nome da empresa - local (sistema)</p>
+                <p>informações da vaga</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                <h2>nome da vaga</h2>
+                <p>nome da empresa - local (sistema)</p>
+                <p>informações da vaga</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                <h2>nome da vaga</h2>
+                <p>nome da empresa - local (sistema)</p>
+                <p>informações da vaga</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                <h2>nome da vaga</h2>
+                <p>nome da empresa - local (sistema)</p>
+                <p>informações da vaga</p>
+                </div>
+              </div>
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
             <li></li>
             <li></li>
             <li></li>
@@ -56,23 +129,28 @@
             <li></li>
           </ul>
         </div>
-        <div class="informacoes-da-vaga">
+        <div class="informacoes-da-vaga collapse">
+          <h2>nome da vaga</h2>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur rerum voluptatum velit? Quos veritatis possimus fugiat id exercitationem harum, rerum natus molestias debitis modi cumque unde alias hic ipsum amet.
         </div>
       </div>
     </div>
-    <div class="sidebar">
-      <div class="avatar">
-        <img src="" alt="">
-      </div>
-      <div class="sidebar-content">
-        <ul class="sidebar-menu">
-        <li><a class="btn btn-primary" href="#" role="button">Perfil Profissional</a></li>
-        <li><a class="btn btn-primary" href="#" role="button">Candidaturas Feitas</a></li>
-        <li><a class="btn btn-primary" href="#" role="button">Vagas Salvas</a></li>
-        <li><a class="btn btn-primary" href="#" role="button">Ofertas Recebidas&gt;</a></li>
-        <li><a class="btn btn-primary" href="#" role="button">Arquivadas</a></li>
-        </ul>
+    </div>
+    <div class="left-column">
+      <div class="sidebar">
+        <div class="avatar">
+          <img src="" alt="">
+        </div>
+        <div class="sidebar-content">
+          <ul class="sidebar-menu">
+            <li><a class="btn btn-primary" href="#" role="button">Dados Pessoais</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Perfil Profissional</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Candidaturas Feitas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Vagas Salvas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Ofertas Recebidas&gt;</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Arquivadas</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </main>
