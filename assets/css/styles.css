@@ -102,6 +102,7 @@ body {
 }
 .lista-de-vagas li:hover {
     background: #e4e9eb;
+    cursor: pointer;
 }
 .lista-de-vagas li.active {
     border: 2px solid #4774c7 !important;
@@ -128,12 +129,15 @@ body {
 .lista-de-vagas p:last-child {
     margin-bottom: 0;
 }
-.lista-de-vagas li img {
-    height: 50px;
-    float: left;
-    vertical-align: middle;
+.vaga-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1em;
 }
-.btn-primary {
+.vaga-wrapper img {
+    height: 70px;
+}
+.sidebar .btn {
     width: 100%;
 }
 .informacao-de-inscricao {
