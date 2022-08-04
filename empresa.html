@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Início - NINNA Jobs</title>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/bootstrap/js/bootstrap.min.js" defer></script>
+  <script src="assets/js/jquery-2.2.4.min.js" defer></script>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-dark navbar-expand-lg">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Início</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contato</a>
+            </li>
+          </ul>
+        </div>
+          <a class="navbar-brand" href="#"><img src="assets/img/logoninna.jpg" alt=""></a>
+        </div>
+    </nav>
+  </header>
+  <main class="container">
+    <div class="right-column">
+      <div class="filtros">
+        <form action="">
+          <select name="teste1" id="">
+            <option value="a0" selected disabled>Empresa</option>
+            <option value="a1">empresa1</option>
+            <option value="a2">empresa2</option>
+            <option value="a3">empresa3</option>
+            <option value="a4">empresa4</option>
+          </select>
+          <select name="teste2" id="">
+            <option value="a0" selected disabled>Vaga</option>
+            <option value="a1">vaga1</option>
+            <option value="a2">vaga2</option>
+            <option value="a3">vaga3</option>
+            <option value="a4">vaga4</option>
+          </select>
+          <select name="teste3" id="">
+            <option value="a0" selected disabled>Nível de experiência</option>
+            <option value="a1">experiência1</option>
+            <option value="a2">experiência2</option>
+            <option value="a3">experiência3</option>
+            <option value="a4">experiência4</option>
+          </select>
+        </form>
+      </div>
+      <div class="content">
+        <div class="page-header"><h1>Vagas</h1></div>
+      <div class="vagas">
+        <div class="lista-de-vagas">
+            <ul>
+            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga" onclick="$(this).toggleClass('active')">
+              <span class="informacao-de-inscricao">Aberta</span>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                  <h2>nome da vaga</h2>
+                  <p>
+                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
+                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
+                  </p>
+                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
+                  <p>Nível exigido</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                <h2>nome da vaga</h2>
+                <p>nome da empresa - local (sistema)</p>
+                <p>informações da vaga</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                <h2>nome da vaga</h2>
+                <p>nome da empresa - local (sistema)</p>
+                <p>informações da vaga</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                <h2>nome da vaga</h2>
+                <p>nome da empresa - local (sistema)</p>
+                <p>informações da vaga</p>
+                </div>
+              </div>
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+        <div class="informacoes-da-vaga collapse">
+          <h2>nome da vaga</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur rerum voluptatum velit? Quos veritatis possimus fugiat id exercitationem harum, rerum natus molestias debitis modi cumque unde alias hic ipsum amet.</p>
+          <button class="btn btn-primary">Fechar vaga</button>
+          <a href="#" class="btn btn-secondary" title="Editar"><i class="bi bi-pencil"></i></a>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="left-column">
+      <div class="sidebar">
+        <div class="avatar">
+          <img src="" alt="">
+        </div>
+        <div class="sidebar-content">
+          <ul class="sidebar-menu">
+            <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Vagas cadastradas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Vagas abertas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Vagas fechadas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Banco de talentos</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Candidatos favoritados</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+  </footer>
+</body>
+</html>

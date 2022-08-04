@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Início - NINNA Jobs</title>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/bootstrap/icons/bootstrap-icons.css">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="assets/bootstrap/js/bootstrap.min.js" defer></script>
   <script src="assets/js/jquery-2.2.4.min.js" defer></script>
@@ -40,21 +40,21 @@
       <div class="filtros">
         <form action="">
           <select name="teste1" id="">
-            <option value="a0" selected>empresa</option>
+            <option value="a0" selected disabled>Empresa</option>
             <option value="a1">empresa1</option>
             <option value="a2">empresa2</option>
             <option value="a3">empresa3</option>
             <option value="a4">empresa4</option>
           </select>
           <select name="teste2" id="">
-            <option value="a0" selected>vaga</option>
+            <option value="a0" selected disabled>Vaga</option>
             <option value="a1">vaga1</option>
             <option value="a2">vaga2</option>
             <option value="a3">vaga3</option>
             <option value="a4">vaga4</option>
           </select>
           <select name="teste3" id="">
-            <option value="a0" selected>nível de experiência</option>
+            <option value="a0" selected disabled>Nível de experiência</option>
             <option value="a1">experiência1</option>
             <option value="a2">experiência2</option>
             <option value="a3">experiência3</option>
@@ -68,13 +68,17 @@
         <div class="lista-de-vagas">
             <ul>
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga" onclick="$(this).toggleClass('active')">
-              <p><span class="informacao-de-inscricao">inscrito</span></p>
+              <span class="informacao-de-inscricao">Inscrito</span>
               <div class="vaga-wrapper">
                 <img src="assets/img/placeholder.svg" alt="">
                 <div class="vaga-info">
-                <h2>nome da vaga</h2>
-                <p>nome da empresa - local (sistema)</p>
-                <p>informações da vaga</p>
+                  <h2>nome da vaga</h2>
+                  <p>
+                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
+                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
+                  </p>
+                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
+                  <p>Nível exigido</p>
                 </div>
               </div>
             </li>
@@ -134,7 +138,11 @@
           <h2>nome da vaga</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur rerum voluptatum velit? Quos veritatis possimus fugiat id exercitationem harum, rerum natus molestias debitis modi cumque unde alias hic ipsum amet.</p>
           <button class="btn btn-primary">Candidatar-se à vaga</button>
-          <button class="btn btn-secondary"><i class="bi bi-star"></i></button>
+          <button class="btn btn-secondary" title="Favoritar"><i class="bi bi-star"></i></button>
+          <h3>Sobre a empresa</h3>
+          <!-- Não, Alice, mas já tem o logo da empresa ali do lado. Pra quê um aqui também? -->
+          <img class="informacoes-logo" src="assets/img/placeholder.svg" alt="">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi ipsa aspernatur asperiores ullam maxime blanditiis inventore officia iste, eaque enim dignissimos sint ducimus eum adipisci, voluptas nostrum consequuntur nulla esse!</p>
         </div>
       </div>
     </div>
@@ -146,11 +154,10 @@
         </div>
         <div class="sidebar-content">
           <ul class="sidebar-menu">
-            <li><a class="btn btn-primary" href="#" role="button">Dados Pessoais</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Perfil Profissional</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Candidaturas Feitas</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Vagas Salvas</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Ofertas Recebidas&gt;</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Vagas salvas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
             <li><a class="btn btn-primary" href="#" role="button">Arquivadas</a></li>
           </ul>
         </div>
