@@ -176,7 +176,7 @@ body {
     margin-bottom: 8px;
 }
 .filtros form select {
-    flex: 1 0 calc(50% - .75em / 2); /* precisa mesmo desse cálculo todo? não, né? */
+    flex-grow: 1;
     padding: .4em;
     background: transparent;
     border: 0;
