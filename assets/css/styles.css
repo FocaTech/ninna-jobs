@@ -62,11 +62,13 @@ body {
 }
 
 .avatar {
+    display: block;
     height: 150px;
     width: 150px;
     border: 2px solid #d0dade;
     margin: 0 auto 15px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .lista-de-vagas li {
