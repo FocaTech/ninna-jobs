@@ -184,3 +184,9 @@ body {
     border: 0;
     border-bottoM: 1px solid var(--border-color);
 }
+
+
+.btn-primary {
+    --bs-btn-bg: #1e0c85;
+    --bs-btn-border: var(--bs-btn-bg);
+}

@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Início</a>
+              <a class="nav-link" aria-current="page" href="index.html">Início</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Sobre Nós</a>
@@ -65,27 +65,11 @@
         </form>
       </div>
       <div class="content">
-        <div class="page-header"><h1>Vagas</h1></div>
+        <div class="page-header"><h1>Vagas salvas</h1></div>
       <div class="vagas">
         <div class="lista-de-vagas">
           <ul>
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-              <span class="informacao-de-inscricao">Inscrito</span>
-              <div class="vaga-wrapper">
-                <img src="assets/img/placeholder.svg" alt="">
-                <div class="vaga-info">
-                  <h2>nome da vaga</h2>
-                  <p>
-                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
-                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
-                  </p>
-                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
-                  <p>Nível exigido</p>
-                </div>
-              </div>
-            </li>
-            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-              <span class="informacao-de-inscricao">Inscrito</span>
               <div class="vaga-wrapper">
                 <img src="assets/img/placeholder.svg" alt="">
                 <div class="vaga-info">
@@ -114,7 +98,20 @@
               </div>
             </li>
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-              <span class="informacao-de-inscricao">Inscrito</span>
+              <div class="vaga-wrapper">
+                <img src="assets/img/placeholder.svg" alt="">
+                <div class="vaga-info">
+                  <h2>nome da vaga</h2>
+                  <p>
+                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
+                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
+                  </p>
+                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
+                  <p>Nível exigido</p>
+                </div>
+              </div>
+            </li>
+            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
               <div class="vaga-wrapper">
                 <img src="assets/img/placeholder.svg" alt="">
                 <div class="vaga-info">
@@ -154,7 +151,7 @@
           <h2>nome da vaga</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur rerum voluptatum velit? Quos veritatis possimus fugiat id exercitationem harum, rerum natus molestias debitis modi cumque unde alias hic ipsum amet.</p>
           <button class="btn btn-primary" id="modal-open">Candidatar-se à vaga</button>
-          <button class="btn btn-secondary" title="Favoritar"><i class="bi bi-star"></i></button>
+          <button class="btn btn-secondary" title="Desfavoritar"><i class="bi bi-star-fill"></i></button>
           <h3>Sobre a empresa</h3>
           <!-- Não, Alice, mas já tem o logo da empresa ali do lado. Pra quê um aqui também? -->
           <img class="informacoes-logo" src="assets/img/placeholder.svg" alt="">
@@ -170,7 +167,7 @@
           <ul class="sidebar-menu">
             <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
             <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
-            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Vagas salvas</a></li>
             <li><a class="btn btn-primary" href="arquivadas.html" role="button">Vagas arquivadas</a></li>
             <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
           </ul>
@@ -183,7 +180,7 @@
 
   <div class="modal" id="modal">
     <div class="modal-content">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam!</p>
+      <p></p>
     </div>
   </div>
 </body>
