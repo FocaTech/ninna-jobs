@@ -1,48 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - NINNA Jobs</title>
-    <link rel="stylesheet" href="assets/css/login.css">
-    <link rel="stylesheet" href="assets/css/tabber.css">
-    <script src="assets/js/tabber.js" defer></script>
-</head>
-<body>
-    <div class="login-wrapper">
-        <div class="logo">
-            <img src="assets/img/logoninna.jpg" alt="" style="border-radius: 50%;">
-        </div>
-        <div class="tabber">
-            <div class="tabber__tabs">
-                <div class="tabber__tab active">
-                    Empresa
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/tabber.js" defer></script>
+    <link rel="stylesheet" href="css/tabber.css">
+
+    <title>Ninna-Login</title>
+  </head>
+  
+  <body class="body-form">
+    <section class="form my-4 mx-5">
+        <div class="container a"> 
+            <div class="row no-gutters container-login">
+                <div class="col-lg-5 p-0">
+                    <img src="img/ninna.webp" alt="Ninna-Hub" class="img-fluid img-login">
                 </div>
-                <div class="tabber__tab">
-                    Candidato
+                <div class="col-lg-7 px-5 pt-5 login-wrapper">
+                    <h1 class="font-weight-bold py-3">Ninna Jobs</h1>
+                    <h4>Entre com sua conta</h4>
+                    <div class="tabber">
+                        <div class="tabber__tabs">
+                            <div class="tabber__tab active">
+                                Empresa
+                            </div>
+                            <div class="tabber__tab">
+                                Candidato
+                            </div>
+                        </div>
+                       <div class="tabber__content">
+                        <div id="empresa" class="active">
+                            <form action="{% url 'cadastro_user' %}" method="POST">
+                                <div class="form-row">
+                                    <div class="col-lg7">
+                                        <input type="text" name="empresa-cnpj" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="CNPJ" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg7">
+                                        <input type="password"name="empresa-senha" id="empresa-senha" placeholder="Senha" class="form-control my-3 p-3" pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg7">
+                                        <button type="button" class="btn1 mt-3 mb-5">Login</button>
+                                    </div>
+                                </div>
+                                <a href="#">Esqueceu seu email?</a>
+                                <p> Não tem uma conta?<a href="#">Registre aqui</a></p>
+                            </form>
+                        </div>
+                        <div id="candidato">
+                            <form action="{% url 'cadastro_user' %}" method="POST">
+                                <div class="form-row">
+                                    <div class="col-lg7">
+                                        <input type="text" name="candidato-cpf" id="candidato-cpf" class="form-control my-3 p-3" placeholder="cpf" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg7">
+                                        <input type="password" name="candidato-senha" id="candidato-senha" placeholder="Senha" class="form-control my-3 p-3" pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg7">
+                                        <button type="button" class="btn1 mt-3 mb-5">Login</button>
+                                    </div>
+                                </div>
+                                <a href="#">Esqueceu seu email?</a>
+                                <p> Não tem uma conta?<a href="#">Registre aqui</a></p>
+                            </form>
+                        </div>
+                       </div>
+                    </div>
                 </div>
             </div>
-            <div class="tabber__content">
-                <div id="empresa" class="active">
-                    <form action="#" method="post">
-                        <input type="text" name="empresa-cnpj" id="empresa-cnpj" placeholder="CNPJ">
-                        <input type="password" name="empresa-senha" id="empresa-senha" placeholder="Senha">
-                        <!-- <a class="button" href="#">Entrar</a> -->
-                        <input type="button" value="Entrar">
-                    </form>
-                    <p>Não possui uma conta? <a href="cadastro-empresa.html">Registre-se</a></p>
-                </div>
-                <div id="candidato">
-                    <form action="#" method="post">
-                        <input type="text" name="candidato-cpf" id="candidato-cpf" placeholder="CPF">
-                        <input type="password" name="candidato-senha" id="candidato-senha" placeholder="Senha">
-                        <a class="button" href="#">Entrar</a>
-                    </form>
-                    <p>Não possui uma conta? <a href="cadastro-candidato.html">Registre-se</a></p>
-                </div>
-            </div>
         </div>
-    </div>
-</body>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
 </html>
