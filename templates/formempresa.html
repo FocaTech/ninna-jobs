@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/forms.css">
+    <link rel="stylesheet" href="assets/css/passos.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <title>Ninna-Login</title>
+  </head>
+  
+  <body class="body-form">
+    <section class="form my-4 ">
+        <div class="container"> 
+            <div class="row no-gutters container-login">
+                <div class="col px-5 pt-5">
+                    <h1 class="font-weight-bold py-4 text-center p-3 bt-1">Ninna Jobs</h1>
+                    <div class="form mx-4">
+                        <form class="row needs-validation" method="post" action="" novalidate>
+                            <div class="step" id="step_1">
+                                <h2 class="p-3">Cadastro empresa</h2>
+                                <div class="row py-2">
+                                    <div class="col-md-8">
+                                        <label for="razaosocial" class="form-label">Razão Social</label>
+                                        <input name="razaosocial" type="text" class="form-control" id="razaosocial" required>
+                                        <div class="valid-feedback">
+                                            Tudo ok!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="cnpj" class="form-label">CNPJ</label>
+                                        <input name="cnpj" type="text" class="form-control" id="cnpj" required>
+                                        <div class="valid-feedback">
+                                            Tudo ok!
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col-md-12 pt-3">
+                                        <label for="nomeFantasia" class="form-label">Nome Fantasia</label>
+                                        <input name="nomefantasia" type="text" class="form-control" id="nomefantasia" required>
+                                        <div class="valid-feedback">
+                                            Tudo ok!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row py-2">
+                                    <div class="col-md-8">
+                                        <label for="telefone" class="form-label">Telefone</label>
+                                        <input type="number" class="form-control" id="telefone" name="telefone" placeholder="(00) 0 0000-0000" required>
+                                        <div class="invalid-feedback">
+                                            Informe um telefone valido.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="cnpj" class="form-label">Celular</label>
+                                        <input name="cnpj" type="text" class="form-control" id="cnpj" required>
+                                        <div class="valid-feedback">
+                                            Tudo ok!
+                                        </div>
+                                </div>
+                                <div class="row py-2">
+                                    <div class="col-md-6">
+                                        <label for="cidade" class="form-label">Cidade</label>
+                                        <input type="text" class="form-control" id="cidade" required>
+                                        <div class="invalid-feedback">
+                                            Informe sua cidade
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="validationCustom04" class="form-label">Estado</label>
+                                        <select class="form-select" id="validationCustom04" required>
+                                            <option selected disabled value="">Escolha...</option>
+                                            <option>...</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                             Por favor, escolha um estado valido
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div>
+                                    <div class="row py-1">
+                                        <div class="col-md-6">
+                                            <label for="cep" class="form-label">Cep</label>
+                                            <input type="text" class="form-control" id="cep" required>
+                                            <div class="invalid-feedback">
+                                                Por favor, informe um cep valido.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Ramo de atividade</label>
+                                            <select class="form-select" name="ramodeatividade" required aria-label="selecione uma opção">
+                                              <option value="">Escolha...</option>
+                                              <option value="1">One</option>
+                                              <option value="2">Two</option>
+                                              <option value="3">Three</option>
+                                            </select>
+                                            <div class="invalid-feedback">Example invalid select feedback</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px"></textarea>
+                                        <label for="floatingTextarea">Uma breve historia sobre a empresa</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step" id="step_2">   
+                            </div>                     
+                             
+                        </form>
+                    </div>
+                </div>  
+                <div class="d-flex justify-content-between p-5">
+                    <div>
+                        <button class="btn tn-block btn-secondary" id="prev">Anterior</button>
+                    </div>
+                    <div>
+                        <button class="btn tn-block btn-secondary" id="next">Próximo</button>
+                    </div>
+                </div>      
+            </div>
+            
+        </div>
+    </section>
+    <script src="progresso.js"></script>
+  </body>
+</html>
