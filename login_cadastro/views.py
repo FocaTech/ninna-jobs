@@ -63,3 +63,4 @@ def plataforma(request):
     if request.user.is_authenticated:
         return HttpResponse("tela de vagas")
     return redirect('login')
+    
