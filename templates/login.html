@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="pt-br">
   <head>
@@ -5,20 +7,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/login.css">
-    <link rel="stylesheet" href="assets/css/tabber.css">
-    <script src="assets/js/tabber.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="{% static 'js/tabber.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'css/tabber.css' %}">
 
     <title>Ninna-Login</title>
   </head>
-
+  
   <body class="body-form">
     <section class="form my-4 mx-5">
-        <div class="container a">
+        <div class="container a"> 
             <div class="row no-gutters container-login">
                 <div class="col-lg-5 p-0">
-                    <img src="assets/img/ninna.webp" alt="Ninna-Hub" class="img-fluid img-login">
+                    <img src="{% static 'img/ninna.webp' %}" alt="Ninna-Hub" class="img-fluid img-login">
                 </div>
                 <div class="col-lg-7 px-5 pt-5 login-wrapper">
                     <h1 class="font-weight-bold py-3">Ninna Jobs</h1>
@@ -34,41 +36,44 @@
                         </div>
                        <div class="tabber__content">
                         <div id="empresa" class="active">
-                            <form action="{% url 'cadastro_user' %}" method="POST">
+                            <form action="{% url 'login' %}" method="POST"> 
+                                {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="text" name="empresa-cnpj" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="CNPJ" required>
+                                        <input type="text" name="empresa_email" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="password"name="empresa-senha" id="empresa-senha" placeholder="Senha" class="form-control my-3 p-3" pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/" required>
+                                        <input type="password"name="empresa_senha" id="empresa-senha" placeholder="Senha" class="form-control my-3 p-3" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <button type="button" class="btn1 mt-3 mb-5">Login</button>
+                                        <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
+                                        <button type="submit" class="btn1 mt-3 mb-5">Login</button>
                                     </div>
                                 </div>
-                                <a href="#">Esqueceu seu email?</a>
+                                <a href="#">Esqueceu sua senha?</a>
                                 <p> Não tem uma conta?<a href="#">Registre aqui</a></p>
                             </form>
                         </div>
                         <div id="candidato">
-                            <form action="{% url 'cadastro_user' %}" method="POST">
+                            <form action="{% url 'login' %}" method="POST"> {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="text" name="candidato-cpf" id="candidato-cpf" class="form-control my-3 p-3" placeholder="cpf" required>
+                                        <input type="text" name="candidato_email" id="candidato-cpf" class="form-control my-3 p-3" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="password" name="candidato-senha" id="candidato-senha" placeholder="Senha" class="form-control my-3 p-3" pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/" required>
+                                        <input type="password" name="candidato_senha" id="candidato-senha" placeholder="Senha" class="form-control my-3 p-3" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <button type="button" class="btn1 mt-3 mb-5">Login</button>
+                                        <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
+                                        <button type="submit" class="btn1 mt-3 mb-5">Login</button>
                                     </div>
                                 </div>
                                 <a href="#">Esqueceu seu email?</a>
@@ -81,6 +86,6 @@
             </div>
         </div>
     </section>
-    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>
