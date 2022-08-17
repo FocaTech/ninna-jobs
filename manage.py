@@ -3,8 +3,6 @@
 import os
 import sys
 
-#comentario
-
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ninna_jobs.settings')
