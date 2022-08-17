@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 
 from django.http import HttpResponse
 
-def index(request):
-    return render(request, 'index.html')
 
 def login(request):
     # PEGAR OS DADOS 
