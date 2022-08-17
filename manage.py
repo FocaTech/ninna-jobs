@@ -3,7 +3,6 @@
 import os
 import sys
 
-#comentario
 
 def main():
     """Run administrative tasks."""
@@ -22,5 +21,3 @@ def main():
 if __name__ == '__main__':
     main()
 #python manage.py runserver
-
-#hadja
