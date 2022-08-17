@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,13 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Início - NINNA Jobs</title>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/modal.css">
-  <script src="assets/bootstrap/js/bootstrap.min.js" defer></script>
-  <script src="assets/js/jquery-2.2.4.min.js" defer></script>
-  <script src="assets/js/modal.js" defer></script>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" defer></script>
+  <script src="{% static 'js/jquery-2.2.4.min.js' %}" defer></script>
+  <script src="{% static 'assets/js/modal.js' %}" defer></script>
 </head>
 <body>
   <header>
@@ -33,7 +34,7 @@
             </li>
           </ul>
         </div>
-          <a class="navbar-brand" href="#"><img src="assets/img/logoninna.jpg" alt=""></a>
+          <a class="navbar-brand" href="#"><img src="{% static '/img/logoninna.jpg' %}" alt=""></a>
         </div>
     </nav>
   </header>
@@ -72,7 +73,7 @@
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
               <span class="informacao-de-inscricao">Inscrito</span>
               <div class="vaga-wrapper">
-                <img src="assets/img/placeholder.svg" alt="">
+                <img src="{% static '/img/placeholder.svg' %}" alt="">
                 <div class="vaga-info">
                   <h2>nome da vaga</h2>
                   <p>
@@ -87,7 +88,7 @@
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
               <span class="informacao-de-inscricao">Inscrito</span>
               <div class="vaga-wrapper">
-                <img src="assets/img/placeholder.svg" alt="">
+                <img src="{% static '/img/placeholder.svg' %}" alt="">
                 <div class="vaga-info">
                   <h2>nome da vaga</h2>
                   <p>
@@ -101,7 +102,7 @@
             </li>
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
               <div class="vaga-wrapper">
-                <img src="assets/img/placeholder.svg" alt="">
+                <img src="{% static '/img/placeholder.svg' %}" alt="">
                 <div class="vaga-info">
                   <h2>nome da vaga</h2>
                   <p>
@@ -116,7 +117,7 @@
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
               <span class="informacao-de-inscricao">Inscrito</span>
               <div class="vaga-wrapper">
-                <img src="assets/img/placeholder.svg" alt="">
+                <img src="{% static '/img/placeholder.svg' %}" alt="">
                 <div class="vaga-info">
                   <h2>nome da vaga</h2>
                   <p>
@@ -128,25 +129,7 @@
                 </div>
               </div>
             </li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            
             <li></li>
           </ul>
         </div>
@@ -157,7 +140,7 @@
           <button class="btn btn-secondary" title="Favoritar"><i class="bi bi-star"></i></button>
           <h3>Sobre a empresa</h3>
           <!-- Não, Alice, mas já tem o logo da empresa ali do lado. Pra quê um aqui também? -->
-          <img class="informacoes-logo" src="assets/img/placeholder.svg" alt="">
+          <img class="informacoes-logo" src="{% static '/img/placeholder.svg' %}" alt="">
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi ipsa aspernatur asperiores ullam maxime blanditiis inventore officia iste, eaque enim dignissimos sint ducimus eum adipisci, voluptas nostrum consequuntur nulla esse!</p>
         </div>
       </div>
@@ -165,7 +148,7 @@
     </div>
     <div class="left-column">
       <div class="sidebar">
-        <img class="avatar" src="assets/img/placeholder.svg" alt="">
+        <img class="avatar" src="{% static '/img/placeholder.svg' %}" alt="">
         <div class="sidebar-content">
           <ul class="sidebar-menu">
             <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>

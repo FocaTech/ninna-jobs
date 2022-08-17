@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from django.http import HttpResponse
 
+
 def login(request):
     # PEGAR OS DADOS 
     candidato_email = None
