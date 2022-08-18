@@ -12,16 +12,16 @@
   <link rel="stylesheet" href="{% static 'css/modal.css' %}">
   <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" defer></script>
   <script src="{% static 'js/jquery-2.2.4.min.js' %}" defer></script>
-  <script src="{% static 'assets/js/modal.js' %}" defer></script>
+  <script src="{% static 'js/modal.js' %}" defer></script>
 </head>
 <body>
   <header>
     <nav class="navbar navbar-dark navbar-expand-lg">
-      <div class="container-fluid">
+      <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Início</a>
@@ -33,90 +33,97 @@
               <a class="nav-link" href="#">Contato</a>
             </li>
           </ul>
+        </div> -->
+        <a class="navbar-brand" href="#">NINNA Jobs</a>
+        <div class="navbar-logo">
+          <img src="{% static 'img/logoninna.jpg' %}" alt="">
         </div>
-          <a class="navbar-brand" href="#"><img src="{% static '/img/logoninna.jpg' %}" alt=""></a>
-        </div>
+      </div>
     </nav>
+    <div class="top-detail">
+      <img src="{% static 'img/top-detail.png' %}">
+    </div>
   </header>
   <main class="container">
     <div class="right-column">
-      <div class="filtros">
-        <form action="">
-          <select name="teste1" id="">
-            <option value="a0" selected disabled>Empresa</option>
-            <option value="a1">empresa1</option>
-            <option value="a2">empresa2</option>
-            <option value="a3">empresa3</option>
-            <option value="a4">empresa4</option>
-          </select>
-          <select name="teste2" id="">
-            <option value="a0" selected disabled>Vaga</option>
-            <option value="a1">vaga1</option>
-            <option value="a2">vaga2</option>
-            <option value="a3">vaga3</option>
-            <option value="a4">vaga4</option>
-          </select>
-          <select name="teste3" id="">
-            <option value="a0" selected disabled>Nível de experiência</option>
-            <option value="a1">experiência1</option>
-            <option value="a2">experiência2</option>
-            <option value="a3">experiência3</option>
-            <option value="a4">experiência4</option>
-          </select>
-        </form>
-      </div>
       <div class="content">
-        <div class="page-header"><h1>Vagas</h1></div>
-      <div class="vagas">
-        <div class="lista-de-vagas">
-          <ul>
-            {% if vagas %}
-            {% for vaga in vagas %}
-            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-              <span class="informacao-de-inscricao">Inscrito</span>
-              <div class="vaga-wrapper">
-                <img src="{{ vaga.logo_empresa.url }}" alt="">
-                <div class="vaga-info">
-                  <h2>{{vaga.nome_vaga}}</h2>
-                  <p>
-                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> {{vaga.nome_empresa}}</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
-                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> {{vaga.local_empresa}}</span>
-                  </p>
-                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> {{vaga.descricao_vaga}}</span></p>
-                  <p>{{vaga.perfil_profissional}}</p>
-                </div>
-              </div>
-            </li>
-
-            {% endfor%}
-            {% else %}
-            {% endif %}
-            
-            <li></li>
-          </ul>
+        <div class="page-header">
+          <h1>Vagas</h1>
+          <div class="filtros">
+            <form action="">
+              <select name="teste1" id="">
+                <option value="a0" selected disabled>Empresa</option>
+                <option value="a1">empresa1</option>
+                <option value="a2">empresa2</option>
+                <option value="a3">empresa3</option>
+                <option value="a4">empresa4</option>
+              </select>
+              <select name="teste2" id="">
+                <option value="a0" selected disabled>Vaga</option>
+                <option value="a1">vaga1</option>
+                <option value="a2">vaga2</option>
+                <option value="a3">vaga3</option>
+                <option value="a4">vaga4</option>
+              </select>
+              <select name="teste3" id="">
+                <option value="a0" selected disabled>Nível de experiência</option>
+                <option value="a1">experiência1</option>
+                <option value="a2">experiência2</option>
+                <option value="a3">experiência3</option>
+                <option value="a4">experiência4</option>
+              </select>
+            </form>
+          </div>
         </div>
-        <div class="informacoes-da-vaga collapse">
-          <h2>nome da vaga</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur rerum voluptatum velit? Quos veritatis possimus fugiat id exercitationem harum, rerum natus molestias debitis modi cumque unde alias hic ipsum amet.</p>
-          <button class="btn btn-primary" id="modal-open">Candidatar-se à vaga</button>
-          <button class="btn btn-secondary" title="Favoritar"><i class="bi bi-star"></i></button>
-          <h3>Sobre a empresa</h3>
-          <!-- Não, Alice, mas já tem o logo da empresa ali do lado. Pra quê um aqui também? -->
-          <img class="informacoes-logo" src="{% static '/img/placeholder.svg' %}" alt="">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi ipsa aspernatur asperiores ullam maxime blanditiis inventore officia iste, eaque enim dignissimos sint ducimus eum adipisci, voluptas nostrum consequuntur nulla esse!</p>
+        <div class="vagas">
+          <div class="lista-de-vagas">
+            <ul>
+              {% if vagas %}
+              {% for vaga in vagas %}
+              <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
+                <span class="informacao-de-inscricao">Inscrito</span>
+                <div class="vaga-wrapper">
+                  <img src="{{ vaga.logo_empresa.url }}" alt="">
+                  <div class="vaga-info">
+                    <h2>{{vaga.nome_vaga}}</h2>
+                    <p>
+                      <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> {{vaga.nome_empresa}}</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
+                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> {{vaga.local_empresa}}</span>
+                    </p>
+                    <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> {{vaga.descricao_vaga}}</span></p>
+                    <p>{{vaga.perfil_profissional}}</p>
+                  </div>
+                </div>
+              </li>
+              {% endfor%}
+              {% endif %}
+            </ul>
+          </div>
+          <div class="informacoes-da-vaga collapse">
+            <h2>nome da vaga</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur rerum voluptatum velit? Quos veritatis possimus fugiat id exercitationem harum, rerum natus molestias debitis modi cumque unde alias hic ipsum amet.</p>
+            <button class="btn btn-primary" id="modal-open">Candidatar-se à vaga</button>
+            <button class="btn btn-secondary" title="Favoritar"><i class="bi bi-star"></i></button>
+            <h3>Sobre a empresa</h3>
+            <!-- Não, Alice, mas já tem o logo da empresa ali do lado. Pra quê um aqui também? -->
+            <img class="informacoes-logo" src="{% static 'img/placeholder.svg' %}" alt="">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi ipsa aspernatur asperiores ullam maxime blanditiis inventore officia iste, eaque enim dignissimos sint ducimus eum adipisci, voluptas nostrum consequuntur nulla esse!</p>
+          </div>
         </div>
       </div>
-    </div>
     </div>
     <div class="left-column">
       <div class="sidebar">
-        <img class="avatar" src="{% static '/img/placeholder.svg' %}" alt="">
+        <div class="sidebar-user mb-3">
+          <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
+          <h2 class="sidebar-name h5 text-center">Lorem, ipsum dolor</h2>
+        </div>
         <div class="sidebar-content">
           <ul class="sidebar-menu">
             <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
-            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li>
-            <li><a class="btn btn-primary" href="arquivadas.html" role="button">Vagas arquivadas</a></li>
+            <!-- <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
+            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> -->
+            <li><a class="btn btn-primary" href="arquivadas.html" role="button">Minhas vagas</a></li>
             <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
           </ul>
         </div>
