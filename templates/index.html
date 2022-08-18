@@ -70,65 +70,27 @@
       <div class="vagas">
         <div class="lista-de-vagas">
           <ul>
+            {% if vagas %}
+            {% for vaga in vagas %}
             <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
               <span class="informacao-de-inscricao">Inscrito</span>
               <div class="vaga-wrapper">
                 <img src="{% static '/img/placeholder.svg' %}" alt="">
                 <div class="vaga-info">
-                  <h2>nome da vaga</h2>
+                  <h2>{{vaga.nome_vaga}}</h2>
                   <p>
-                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
-                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
+                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> {{vaga.nome_empresa}}</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
+                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> {{vaga.local_empresa}}</span>
                   </p>
-                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
-                  <p>Nível exigido</p>
+                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> {{vaga.descricao_vaga}}</span></p>
+                  <p>{{vaga.perfil_profissional}}</p>
                 </div>
               </div>
             </li>
-            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-              <span class="informacao-de-inscricao">Inscrito</span>
-              <div class="vaga-wrapper">
-                <img src="{% static '/img/placeholder.svg' %}" alt="">
-                <div class="vaga-info">
-                  <h2>nome da vaga</h2>
-                  <p>
-                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
-                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
-                  </p>
-                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
-                  <p>Nível exigido</p>
-                </div>
-              </div>
-            </li>
-            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-              <div class="vaga-wrapper">
-                <img src="{% static '/img/placeholder.svg' %}" alt="">
-                <div class="vaga-info">
-                  <h2>nome da vaga</h2>
-                  <p>
-                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
-                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
-                  </p>
-                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
-                  <p>Nível exigido</p>
-                </div>
-              </div>
-            </li>
-            <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-              <span class="informacao-de-inscricao">Inscrito</span>
-              <div class="vaga-wrapper">
-                <img src="{% static '/img/placeholder.svg' %}" alt="">
-                <div class="vaga-info">
-                  <h2>nome da vaga</h2>
-                  <p>
-                    <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> nome da empresa</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
-                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> local (sistema)</span>
-                  </p>
-                  <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> informações da vaga</span></p>
-                  <p>Nível exigido</p>
-                </div>
-              </div>
-            </li>
+
+            {% endfor%}
+            {% else %}
+            {% endif %}
             
             <li></li>
           </ul>
