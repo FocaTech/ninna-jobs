@@ -83,7 +83,7 @@
               <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
                 <span class="informacao-de-inscricao">Inscrito</span>
                 <div class="vaga-wrapper">
-                  <img src="{% static 'img/placeholder.svg' %}" alt="">
+                  <img src="{{ vaga.logo_empresa.url }}" alt="">
                   <div class="vaga-info">
                     <h2>{{vaga.nome_vaga}}</h2>
                     <p>
