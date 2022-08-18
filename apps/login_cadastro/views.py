@@ -7,19 +7,19 @@ from django.http import HttpResponse
 
 
 def login(request):
-    # PEGAR OS DADOS 
+    # PEGAR OS DADOS
     candidato_email = None
     candidato_senha = None
     if request.method == 'POST':
         empresa_email = request.POST.get('empresa_email', None)
-        empresa_senha = request.POST.get('empresa_senha', None) 
+        empresa_senha = request.POST.get('empresa_senha', None)
         print(empresa_email, empresa_senha)
 
         if empresa_email == None or empresa_senha == None:
-            candidato_email = request.POST.get('candidato_email', None)  
-            candidato_senha = request.POST.get('candidato_senha', None)  
+            candidato_email = request.POST.get('candidato_email', None)
+            candidato_senha = request.POST.get('candidato_senha', None)
             print(candidato_email, candidato_senha)
-        
+
         if nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
             print("Os campos não podem estar vazios")
             return redirect('login')
@@ -58,10 +58,12 @@ def login(request):
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
     return (empresa_email == "" or empresa_senha == "") or (candidato_email == "" or candidato_senha == "")
 
-
 # exemplo de quando for para a tela principal
 def plataforma(request):
     if request.user.is_authenticated:
         return HttpResponse("tela de vagas")
     return redirect('login')
-    
+
+def cadastro_candidatos(request):
+    '''faz o cadastro dos candidatos'''
+    return render(request, 'formcandidato.html')
