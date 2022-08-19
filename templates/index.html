@@ -75,11 +75,11 @@
             </form>
           </div>
         </div>
+        {% if vagas %}
+        {% for vaga in vagas %}
         <div class="vagas">
           <div class="lista-de-vagas">
             <ul>
-              {% if vagas %}
-              {% for vaga in vagas %}
               <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
                 <span class="informacao-de-inscricao">Inscrito</span>
                 <div class="vaga-wrapper">
@@ -110,9 +110,9 @@
             <img class="informacoes-logo" src="{{ vaga.logo_empresa.url }}" alt="">
             <p>{{vaga.descricao_empresa}}</p>
           </div>
-          {% endfor%}
-          {% endif %}
         </div>
+        {% endfor%}
+        {% endif %}
       </div>
     </div>
     <div class="left-column">
