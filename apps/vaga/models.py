@@ -3,7 +3,7 @@ from django.db import models
 class Vagas(models.Model):
     nome_vaga = models.CharField(max_length=100)
     nome_empresa = models.CharField(max_length=100)
-    logo_empresa = models.ImageField(upload_to= 'logos/%d/%m/%Y', blank=True)
+    logo_empresa = models.ImageField(upload_to= 'logos/%Y/%m/%d', blank=True)
     tipo_contratacao = models.CharField(max_length=50)
     local_empresa = models.CharField(max_length=100)
     perfil_profissional = models.CharField(max_length=50)
