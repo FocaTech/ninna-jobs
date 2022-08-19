@@ -1,49 +1,7 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Início - NINNA Jobs</title>
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-icons.css' %}">
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <link rel="stylesheet" href="{% static 'css/modal.css' %}">
-  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" defer></script>
-  <script src="{% static 'js/jquery-2.2.4.min.js' %}" defer></script>
-  <script src="{% static 'js/modal.js' %}" defer></script>
-</head>
-<body>
-  <header>
-    <nav class="navbar navbar-dark navbar-expand-lg">
-      <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Início</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sobre Nós</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contato</a>
-            </li>
-          </ul>
-        </div> -->
-        <a class="navbar-brand" href="#">NINNA Jobs</a>
-        <div class="navbar-logo">
-          <img src="{% static 'img/logoninna.jpg' %}" alt="">
-        </div>
-      </div>
-    </nav>
-    <div class="top-detail">
-      <img src="{% static 'img/top-detail.png' %}">
-    </div>
-  </header>
+{% block content %}
+{% include 'partials/header.html' %}
   <main class="container">
     <div class="right-column">
       <div class="content">
@@ -138,5 +96,5 @@
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam!</p>
     </div>
   </div>
-</body>
 </html>
+{% endblock %}

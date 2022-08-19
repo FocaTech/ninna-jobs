@@ -67,3 +67,10 @@ def plataforma(request):
 def cadastro_candidatos(request):
     '''faz o cadastro dos candidatos'''
     return render(request, 'formcandidato.html')
+
+
+def arquivadas(request):
+    return render(request, 'arquivadas.html')
+
+def empresa(request):
+    return render(request, 'empresa.html')
