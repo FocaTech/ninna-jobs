@@ -2,9 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth.models import User
-
 from django.http import HttpResponse
-
 
 def login(request):
     # PEGAR OS DADOS
@@ -58,8 +56,8 @@ def login(request):
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
     return (empresa_email == "" or empresa_senha == "") or (candidato_email == "" or candidato_senha == "")
 
-# exemplo de quando for para a tela principal
 def plataforma(request):
+    '''exemplo de quando for para a tela principal'''
     if request.user.is_authenticated:
         return HttpResponse("tela de vagas")
     return redirect('login')
@@ -71,7 +69,6 @@ def cadastro_candidatos(request):
 def cadastro_empresas(request):
     '''faz o cadastro dos candidatos'''
     return render(request, 'formempresa.html')
-
 
 def arquivadas(request):
     return render(request, 'arquivadas.html')
