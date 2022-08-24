@@ -1,0 +1,139 @@
+
+body{
+    --img: url("../img/logo-ninna-branco.png");
+    background-image: linear-gradient(rgba(50, 50, 50, 0.5), rgba(32, 32, 32, 0.5)), var(--img);
+    background-size: 100%;
+    min-height: 100vh;
+}
+section{
+    padding: 5%;
+    align-items: center;
+    margin: auto;
+}
+
+.wizard .nav-tabs {
+    position: relative;
+    margin-bottom: 0;
+    border-bottom-color: #e0e0e0;
+}
+
+.form-control{
+    outline: none!important;
+    box-shadow: none!important;
+    border: none!important;
+    flex-grow: 1!important;
+    padding: .4em!important;
+    background: transparent!important;
+    border: 0!important;
+    border-bottom: 1px solid rgb(108, 108, 108)!important;
+    display: flex!important;
+    flex-wrap: wrap!important;
+    gap: .75em!important;
+    margin-bottom: 8px!important;
+}
+
+.form-control:focus{ 
+    border-color: inherit; 
+    -webkit-box-shadow: none; 
+    box-shadow: none; 
+}
+
+.wizard .content {
+    min-height: 100px;
+}
+.wizard .content > .body {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    position: relative;
+}
+
+#adicionarforma{
+    background: #7eb627;
+    color: #fff;
+    display: block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    width: 100px;
+    text-align: center;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 70px;
+
+}
+.corBotao{
+    background:  rgb(9, 9, 171)!important;
+    webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 80px!important;
+}
+
+/* ----------------------------------------------- */
+
+.wizard {
+    max-width: 1000px;
+    margin: auto;
+}
+.checked {
+    font-weight: 900;
+    color: rgb(126, 182, 39);
+}
+.wizard > .steps a,
+.wizard > .steps a:hover,
+.wizard > .steps a:active {
+    display: block;
+    width: auto;
+    margin: 0px 0.5em 0.5em;
+    padding: 1em;
+    text-decoration: none;
+    border-radius: 80px;
+}
+.wizard > .steps .current a,
+.wizard > .steps .current a:hover,
+.wizard > .steps .current a:active {
+    background: rgb(2,3,129);
+}
+.wizard.vertical > .steps {
+    width: 25%;
+}
+.wizard.vertical > .content {
+    width: 70%;
+}
+.wizard > .actions a,
+.wizard > .actions a:hover,
+.wizard > .actions a:active {
+    background: rgb(2,3,129);
+}
+.wizard > .steps .error a,
+.wizard > .steps .error a:hover,
+.wizard > .steps .error a:active {
+    background: #ff3111;
+}
+
+.wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active {
+    color: rgb(255, 255, 255);
+    display: block;
+    width: 100px;
+    text-align: center;
+    background: rgb(126, 182, 39);
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-radius: 70px;
+}
+
+.titulo {
+    color: white;
+}
+
+.wizard > .steps .done a,
+.wizard > .steps .done a:hover,
+.wizard > .steps .done a:active {
+    background: #363e87;
+}
+
+.wizard > .steps .disabled a,
+.wizard > .steps .disabled a:hover,
+.wizard > .steps .disabled a:active {
+    color: #3f3f3f;
+}
