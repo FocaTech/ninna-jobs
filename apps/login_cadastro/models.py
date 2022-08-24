@@ -1,45 +1,49 @@
-from telnetlib import AO
 from django.db import models
+from datetime import datetime
 
-# Create your models here.
-# class candidatos(models.Model):
-#     NENHUM = 'ND'
-#     ENSINO_FUNDAMENTAL = 'EF'
-#     ENSINO_MEDIO = 'EM'
-#     TECNICO = 'TE'
-#     TECTOLOGO = 'TEC'
-#     BACHAREL = 'BAC'
-#     LICENCIATURA = 'LI'
-#     POS_GRADUACAO = 'PG'
-#     MESTRADO = 'ME'
-#     DOUTORADO = 'DO'
-#     POS_DOUTORADO = 'PD'
+class Candidato(models.Model):
+    '''Criando os models do candidato'''
+    #Dados Pessoais
+    nome_do_candidato= models.CharField(max_length=100)
+    data_nascimento = models.DateField()
+    cpf_do_candidato = models.CharField(max_length=15)
+    sexo_candidato = models.CharField(max_length=100)
+    telefone = models.CharField(max_length=20)
+    senha = models.CharField(max_length=50)
+    email = models.CharField(max_length=100)
 
-#     FORMACAO = {
-#     NENHUM:'nenhum',
-#     ENSINO_FUNDAMENTAL:'Ensino medio',
-#     ENSINO_MEDIO:'Ensino Medio',
-#     TECNICO:'Tecnico',
-#     TECTOLOGO:'Tecnologo',
-#     BACHAREL:'Bacharel',
-#     LICENCIATURA:'Licenciatura',
-#     POS_GRADUACAO:'Pos graduação',
-#     MESTRADO:'Mestrado',
-#     DOUTORADO:'Doutorado',
-#     POS_DOUTORADO:'Pos Doutorado'
-# }
-#     tipo_contrato = models.CharField(max_length=7)#mandar curriculo pdf
-#     salario_pretendido = models.IntegerField()
-#     area_atuacao = models.CharField()
-#     imagem_perfil = models.ImageField(upload_to= 'logos/%d/%m/%Y')#Kaue vai melhorar
-#     nome = models.CharField(max_length=50)
-#     cpf = models.IntegerField()
-#     data_nascimento = models.DateField()
-#     genero = models.CharField(max_length=20)
-#     cidade = models.CharField(max_length=50)
-#     estado = models.CharField(max_length=50)
-#     telefone = models.IntegerField()
-#     cep = models.IntegerField()
-#     sobre_voce = models.TextField(max_length=300)
-#     Instituicao = models.CharField(max_length=30)
-#     formacao = models.CharField(max_length=3, choices=FORMACAO, default='nenhum')
+    #Experiência Profissional
+    empresa_onde_trabalhou = models.CharField(max_length=50)
+    cargo_exercido = models.CharField(max_length=50)
+    inicio_do_emprego = models.DateField()
+    data_da_demissao = models.DateField()
+    descricao_de_atividades = models.TextField()
+
+    #Experiência Academica, Fundamental e Ensino Médio
+    experiencia = models.CharField(max_length=12)
+    status_fundamental = models.CharField(max_length=12)
+    status_medio = models.CharField(max_length=12)
+
+    #Curso Técnico
+    status_tecnico = models.CharField(max_length=12)
+    curso_tecnico = models.CharField(max_length=50)
+    instituicao_do_curso_tecnico = models.CharField(max_length=50)
+    inicio_do_curso_tecnico = models.DateField()
+    termino_do_curso_tecnico = models.DateField()
+
+    #Curso Superior
+    grau_superior = models.CharField(max_length=12)
+    curso_superior = models.CharField(max_length=50)
+    instituicao_do_curso_superior = models.CharField(max_length=50)
+    inicio_do_curso_superior = models.DateField()
+    termino_do_curso_superior = models.DateField()
+
+    #Idiomas
+    idioma = models.CharField(max_length=12)
+    nivel_idioma = models.CharField(max_length=13)
+
+    #Datas
+    data_atual = models.DateTimeField(default=datetime.now, blank=True)
+    data_atualizacao = models.DateTimeField(default=datetime.now, blank=True)
+    class Meta:
+        db_table = 'tb_candidatos'
