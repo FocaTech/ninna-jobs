@@ -67,7 +67,7 @@ def cadastro_candidatos(request):
     return render(request, 'formcandidato.html')
 
 def cadastro_empresas(request):
-    '''faz o cadastro dos candidatos'''
+    '''faz o cadastro das empresas'''
     return render(request, 'formempresa.html')
 
 def arquivadas(request):
