@@ -1,3 +1,4 @@
+from secrets import choice
 from django.db import models
 from datetime import datetime
 
@@ -39,8 +40,14 @@ class Candidato(models.Model):
     termino_do_curso_superior = models.DateField()
 
     #Idiomas
+    nivel_idioma = (
+        ('B', 'Básico'),
+        ('I', 'Intermediário'),
+        ('A','Avançado'),
+        ('F', 'Fluente')
+    )
     idioma = models.CharField(max_length=12)
-    nivel_idioma = models.CharField(max_length=13)
+    nivel_idioma = models.CharField(max_length=1, choice=nivel_idioma)
 
     #Datas
     data_atual = models.DateTimeField(default=datetime.now, blank=True)
