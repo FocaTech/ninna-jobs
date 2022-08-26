@@ -47,7 +47,7 @@ class Candidato(models.Model):
         ('F', 'Fluente')
     )
     idioma = models.CharField(max_length=12)
-    nivel_idioma = models.CharField(max_length=1, choice=nivel_idioma)
+    nivel_idioma = models.CharField(max_length=1, choices=nivel_idioma)
 
     #Datas
     data_atual = models.DateTimeField(default=datetime.now, blank=True)
