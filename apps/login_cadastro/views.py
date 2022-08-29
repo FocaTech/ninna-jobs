@@ -4,6 +4,30 @@ from django.contrib.auth import login as login_django
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 
+def cadastro_candidatos(request):
+    if request.method == 'POST' and candidato_email:
+        candidato_email = request.POST['email']
+        candidato_senha = request.POST['password']
+        candidato_senha_conf = request.POST['password2']
+        candi_user = User.objects.create_user(candidato_email, candidato_senha)
+        candi_user.save()
+        return render (request, 'login')
+
+    else:
+        return render(request, 'formcandidato.html')
+        
+def cadastro_empresas(request):
+    if request.method == 'POST' and empresa_email:
+        empresa_email = request.POST['email']
+        empresa_senha = request.POST['password']
+        empresa_senha_conf = request.POST['password2']
+        empresa_user = User.objects.create_user(empresa_email, empresa_senha)
+        empresa_user.save()
+        return render (request, 'login')    
+
+    else:
+        return render(request, 'formempresa.html')    
+
 def login(request):
     # PEGAR OS DADOS
     candidato_email = None
@@ -62,13 +86,9 @@ def plataforma(request):
         return HttpResponse("tela de vagas")
     return redirect('login')
 
-def cadastro_candidatos(request):
-    '''faz o cadastro dos candidatos'''
-    return render(request, 'formcandidato.html')
-
-def cadastro_empresas(request):
+"""def cadastro_empresas(request):
     '''faz o cadastro das empresas'''
-    return render(request, 'formempresa.html')
+    return render(request, 'formempresa.html')"""
 
 def arquivadas(request):
     return render(request, 'arquivadas.html')
