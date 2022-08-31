@@ -1,3 +1,4 @@
+from pickletools import read_uint8
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional
 
@@ -9,3 +10,6 @@ def index(request):
     }
 
     return render(request, 'index.html', dados)
+
+def novo(request):
+    return render(request, 'novo.html')

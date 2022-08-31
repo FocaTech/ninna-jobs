@@ -1,0 +1,39 @@
+.containerFormEmpresa{
+    width: 90%;
+    margin: auto;
+}
+
+.botaoenviarformempresa{
+    color: rgb(255, 255, 255);
+    display: block;
+    width: 100px;
+    text-align: center;
+    background: rgb(126, 182, 39);
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-radius: 70px;
+}
+
+.form-control{
+    outline: none!important;
+    box-shadow: none!important;
+    border: none!important;
+    flex-grow: 1!important;
+    padding: .4em!important;
+    background: transparent!important;
+    border: 0!important;
+    border-bottom: 1px solid rgb(108, 108, 108)!important;
+    display: flex!important;
+    flex-wrap: wrap!important;
+    gap: .75em!important;
+    margin-bottom: 8px!important;
+    border-radius: 0;
+}
+
+/* .input-line, .form-control {
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-radius: 0;
+    box-shadow: none;
+    border-color: rgb(108, 108, 108);
+} */
