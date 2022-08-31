@@ -30,38 +30,39 @@
             <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong>  </h1>
 
             <script>
-                $(function ()
-                {
+                $(function () {
                     $("#wizard").steps({
                         headerTag: "h2",
                         bodyTag: "section",
                         transitionEffect: "slideLeft",
                         stepsOrientation: "vertical",
                         //enableFinishButton: false,
+                        saveState: false,
 
                         labels: {
                             previous : 'Voltar',
                             next : 'Próximo',
                             finish : 'Enviar',
                         },
-                        onStepChanging: function (event, currentIndex, Index) {
-                            var curriculo = $('#curriculo').val();
-                            var areadeatuacao = $('#areadeatuacao').val();
+//                        onStepChanging: function (event, currentIndex, Index) {
+//                            var curriculo = $('#curriculo').val();
+//                            var areadeatuacao = $('#areadeatuacao').val();
 
                             //Valida
-                            if(curriculo == null || curriculo == '') {
-                                document.querySelector('#curriculo').classList.add("error");
-                                return false;
-                            } else {
-                                document.querySelector('#curriculo').classList.remove("error");
-                                return true;
-                            }
-                        },
+                            //if(curriculo == null || curriculo == '') {
+                            //    document.querySelector('#curriculo').classList.add("error");
+                            //    return false;
+                            //} else {
+                            //    document.querySelector('#curriculo').classList.remove("error");
+                            //    return true;
+                            //}
 
-                        onFinished: function (event, currentIndex) {
-                            $("#form").submit();
-                            // alert('teste');
-                        }
+//                            if (currentIndex === 7) {
+//                                $('#wizard').find('a[href="#finish"]').remove();
+//                                $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
+//                            }
+//                        }
+
                     });
                 });
             </script>
@@ -214,7 +215,7 @@
                     </section>
                 </section>
 
-                <h2>Certificados & Conquistas</h2>
+                <h2>Certificados e Conquistas</h2>
                 <section>
                     <section class="step" id="step_4">
                         <h2>Certificados e conquistas</h2>
@@ -269,17 +270,17 @@
                     </div>
                     <div class="p-3">
                         <label for="email" class="form-label">confirmar endereço de e-email</label>
-                        <input type="email" class="form-control" id="email" placeholder="exemplo@dominio.com" required>
+                        <input type="email" class="form-control" id="emailc" placeholder="exemplo@dominio.com" required>
                         <div class="valid-feedback">Tudo ok!</div>
                     </div>
                     <div class="p-3">
                         <label for="senha" class="form-label">Esolha uma senha</label>
-                        <input type="password" class="form-control" id="email" placeholder="" required>
+                        <input type="password" class="form-control" id="password" placeholder="" required>
                         <div class="valid-feedback">Tudo ok!</div>
                     </div>
                     <div class="p-3">
                         <label for="senha" class="form-label">Digite novamente a senha</label>
-                        <input type="password" class="form-control" id="email" placeholder="" required>
+                        <input type="password" class="form-control" id="passwordc" placeholder="" required>
                         <div class="valid-feedback">Tudo ok!</div>
                     </div>
                     <div class="form-check p-3">
