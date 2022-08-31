@@ -54,3 +54,11 @@ class Candidato(models.Model):
     data_atualizacao = models.DateTimeField(default=datetime.now, blank=True)
     class Meta:
         db_table = 'tb_candidatos'
+
+class Empresa(models.Model):
+    email = models.EmailField(max_length=50)
+    senha = models.CharField(max_length=20)
+    nome = models.CharField(max_length=20, blank=True)
+
+    def __str__(self):
+        return self.email
