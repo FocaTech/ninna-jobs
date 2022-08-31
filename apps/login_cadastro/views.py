@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 
 def cadastro_candidatos(request):
-    if request.method == 'POST' and candidato_email:
-        candidato_email = request.POST['email']
-        candidato_senha = request.POST['password']
-        candidato_senha_conf = request.POST['password2']
+    if request.method == 'POST':
+        candidato_email = request.POST['candidato_email']
+        candidato_senha = request.POST['candidato_email']
+        candidato_senha_conf = request.POST['candidato_senha_conf']
         if candidato_senha == candidato_senha_conf:
             return redirect ('cadastro_candidatos')
         candi_user = User.objects.create_user(candidato_email, candidato_senha)
@@ -17,19 +17,19 @@ def cadastro_candidatos(request):
         return redirect (request, 'login')
 
     else:
-        return render(request, 'formcandidato.html')
+        return render(request, 'cadastro.html')
         
 def cadastro_empresas(request):
-    if request.method == 'POST' and empresa_email:
-        empresa_email = request.POST['email']
-        empresa_senha = request.POST['password']
-        empresa_senha_conf = request.POST['password2']
+    if request.method == 'POST':
+        empresa_email = request.POST['empresa_email']
+        empresa_senha = request.POST['empresa_senha']
+        empresa_senha_conf = request.POST['empresa_senha_conf']
         empresa_user = User.objects.create_user(empresa_email, empresa_senha)
         empresa_user.save()
         return render (request, 'login')    
 
     else:
-        return render(request, 'formempresa.html')    
+        return render(request, 'cadastro.html')    
 
 def login(request):
     # PEGAR OS DADOS
