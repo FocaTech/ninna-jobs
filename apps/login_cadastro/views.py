@@ -9,9 +9,12 @@ def cadastro_candidatos(request):
         candidato_email = request.POST['email']
         candidato_senha = request.POST['password']
         candidato_senha_conf = request.POST['password2']
+        if candidato_senha == candidato_senha_conf:
+            return redirect ('cadastro_candidatos')
         candi_user = User.objects.create_user(candidato_email, candidato_senha)
         candi_user.save()
-        return render (request, 'login')
+        print('Usuário cadastrado com sucesso')
+        return redirect (request, 'login')
 
     else:
         return render(request, 'formcandidato.html')

@@ -67,7 +67,8 @@
             </script>
 
 
-            <form action="{% url 'cadastro_candidatos' %}" class="" method="post" a id="wizard">
+            <form action="{% url 'cadastro_candidatos' %}" class="" method="POST" a id="wizard">
+                {% csrf_token %}
                 <h2>Informações Iniciais</h2>
                 <section class="p-3">
                     <section class="step" id="step_1">
@@ -272,7 +273,7 @@
                         <div class="valid-feedback">Tudo ok!</div>
                     </div>
                     <div class="p-3">
-                        <label for="senha" class="form-label">Escolha uma senha</label>
+                        <label for="senha" class="form-label">Esolha uma senha</label>
                         <input type="password" class="form-control" id="email" placeholder="" required>
                         <div class="valid-feedback">Tudo ok!</div>
                     </div>
@@ -291,7 +292,7 @@
 
             </form>
         </div>
-        <script src="{% static '../ninna_jobs/static/js/botaoAdcExcluir.js' %}"></script>
-        <script src="{% static '../ninna_jobs/static/js/maskmoney.js' %}"></script>
+        <script src="{% static 'js/botaoAdcExcluir.js' %}"></script>
+        <script src="{% static 'js/maskmoney.js' %}"></script>
     </body>
 </html>
