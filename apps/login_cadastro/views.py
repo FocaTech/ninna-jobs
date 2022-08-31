@@ -7,7 +7,7 @@ from django.http import HttpResponse
 def cadastro_candidatos(request):
     if request.method == 'POST':
         candidato_email = request.POST['candidato_email']
-        candidato_senha = request.POST['candidato_email']
+        candidato_senha = request.POST['candidato_senha']
         candidato_senha_conf = request.POST['candidato_senha_conf']
         if candidato_senha == candidato_senha_conf:
             return redirect ('cadastro_candidatos')
