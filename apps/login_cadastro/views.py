@@ -3,6 +3,7 @@ from .models import Candidato, Empresa
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 
@@ -15,25 +16,29 @@ def cadastro_candidatos(request):
         print(candidato_nome, candidato_email, candidato_senha, candidato_senha_conf)
         if candidato_senha != candidato_senha_conf:
             return redirect ('cadastro_candidatos')
-        candi_user = User.objects.create_user(candidato_email, candidato_senha)
+        candi_user = User.objects.create_user(candidato_nome, candidato_email, candidato_senha)
         candi_user.save()
+        messages.success(request, 'Cadastro realizado com sucesso') 
         print('Usuário cadastrado com sucesso')
-        return redirect (request, 'formcandidato.html')
+        return redirect ('login')
 
     else:
-        return render(request, 'formcandidato.html')
+        return render(request, 'cadastro.html')
         
 def cadastro_empresas(request):
     if request.method == 'POST':
         empresa_email = request.POST['empresa_email']
         empresa_senha = request.POST['empresa_senha']
         empresa_senha_conf = request.POST['empresa_senha_conf']
+        print (empresa_email, empresa_senha)
         empresa_user = User.objects.create_user(empresa_email, empresa_senha)
-        empresa_user.save()
-        return render (request, 'formempresa.html')    
+        empresa_user.save() 
+        messages.success(request, 'Cadastro realizado com sucesso') 
+        return redirect('login')   
+       
 
     else:
-        return render(request, 'formempresa.html')    
+        return render(request, 'cadastro.html')    
 
 def login(request):
     # PEGAR OS DADOS
@@ -61,6 +66,7 @@ def login(request):
                 if user:
                     print("autenticado")
                     login_django(request, user)
+                    return redirect('dashboard')
                 else:
                     print("Email ou senha incorretos")
                 print(f" resultado do user: {user} \nresultado do nome: {nome}")
@@ -76,6 +82,7 @@ def login(request):
                 if user:
                     print("autenticado")
                     login_django(request, user)
+                    return request('empresa')
                 else:
                     print("Email ou senha incorretos")
                 print(f" resultado do user: {user} \nresultado do nome: {nome}")
@@ -93,12 +100,11 @@ def plataforma(request):
         return HttpResponse("tela de vagas")
     return redirect('login')
 
-"""def cadastro_empresas(request):
-    '''faz o cadastro das empresas'''
-    return render(request, 'formempresa.html')"""
-
 def arquivadas(request):
     return render(request, 'arquivadas.html')
 
 def empresa(request):
     return render(request, 'empresa.html')
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
