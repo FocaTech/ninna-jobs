@@ -12,4 +12,9 @@ def index(request):
     return render(request, 'index.html', dados)
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    vagas = Vagas.objects.all()
+
+    dados = {
+        'vagas' : vagas
+    }
+    return render(request, 'dashboard.html', dados)

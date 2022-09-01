@@ -1,3 +1,4 @@
+from apps import vaga
 from .models import Candidato, Empresa
 
 from django.shortcuts import render, redirect
@@ -6,6 +7,7 @@ from django.contrib.auth import login as login_django
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from vaga.models import Vagas
 
 def cadastro_candidatos(request):
     if request.method == 'POST':
@@ -18,13 +20,13 @@ def cadastro_candidatos(request):
             return redirect ('cadastro_candidatos')
         candidato_user = User.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha)
         candidato_user.save()
-        messages.success(request, 'Cadastro realizado com sucesso') 
+        messages.success(request, 'Cadastro realizado com sucesso')
         print('Usuário cadastrado com sucesso')
         return redirect ('login')
 
     else:
         return render(request, 'cadastro.html')
-        
+
 def cadastro_empresas(request):
     if request.method == 'POST':
         empresa_nome = request.POST['empresa_nome']
@@ -34,12 +36,12 @@ def cadastro_empresas(request):
         print (empresa_email, empresa_senha)
         empresa_user = User.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha)
         empresa_user.save()
-        messages.success(request, 'Cadastro realizado com sucesso') 
-        return redirect('login')   
-       
+        messages.success(request, 'Cadastro realizado com sucesso')
+        return redirect('login')
+
 
     else:
-        return render(request, 'cadastro.html')    
+        return render(request, 'cadastro.html')
 
 def login(request):
     # PEGAR OS DADOS
@@ -107,5 +109,3 @@ def arquivadas(request):
 def empresa(request):
     return render(request, 'empresa.html')
 
-def dashboard(request):
-    return render(request, 'dashboard.html')
