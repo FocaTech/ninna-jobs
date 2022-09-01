@@ -53,16 +53,18 @@
                     <div class="carousel-item active">
                     <div class="card-group">
                         <div class="card m-4">
-                            <img src="{% static 'img/logoninna.jpg' %}" class="card-img-top" alt="...">
+                            {% if vagas %}
+                            {% for vaga in vagas %}
+                            <img src="{{ vaga.logo_empresa.url }}" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title titulovaga">NomeDaVaga (tipoDeTrabalho)</h5>
+                                <h5 class="card-title titulovaga">{{vaga.nome_vaga}}</h5>
                                 <p>
-                                    <span class="info"><i class="bi bi-building"></i>NomeEmpresa</span>
-                                    <span class="info"><i class="bi bi-geo-alt"></i> LocalEmpresa</span>
+                                    <span class="info"><i class="bi bi-building"></i>{{vaga.nome_empresa}}</span>
+                                    <span class="info"><i class="bi bi-geo-alt"></i> {{vaga.local_empresa}}</span>
                                 </p>
                                 <p>
-                                    <span class="info"><i class="bi bi-file-earmark-text"></i> TipodeContrato</span>
-                                    <span class="info"><i class="bi bi-person-workspace"></i> PerfilProfissional</span>
+                                    <span class="info"><i class="bi bi-file-earmark-text"></i> {{vaga.tipo_contratacao}}</span>
+                                    <span class="info"><i class="bi bi-person-workspace"></i> {{vaga.tipo_trabalho}} </span>
                                 </p>
                             </div>
                             <div class="card-footer">
@@ -70,6 +72,8 @@
                                     Detalhes
                                 </button></small>
                             </div>
+                            {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="card m-4">
                             <img src="{% static 'img/logoninna.jpg' %}" class="card-img-top" alt="...">

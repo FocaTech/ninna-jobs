@@ -11,5 +11,5 @@ def index(request):
 
     return render(request, 'index.html', dados)
 
-def novo(request):
-    return render(request, 'novo.html')
+def dashboard(request):
+    return render(request, 'dashboard.html')
