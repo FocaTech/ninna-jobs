@@ -29,9 +29,3 @@
     border: 1px solid;
     color: black;
 }
-.container{
-    max-width: 900px;
-}
-@media (max-width: 600px){
-  
-}

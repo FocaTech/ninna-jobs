@@ -1,3 +1,8 @@
 {
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv"
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": false,
+    "emmet.includeLanguages": {
+        "django-html": "html"
+    }
 }
