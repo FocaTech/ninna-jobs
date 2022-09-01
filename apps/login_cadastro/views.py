@@ -16,8 +16,8 @@ def cadastro_candidatos(request):
         print(candidato_nome, candidato_email, candidato_senha, candidato_senha_conf)
         if candidato_senha != candidato_senha_conf:
             return redirect ('cadastro_candidatos')
-        candi_user = User.objects.create_user(candidato_nome, candidato_email, candidato_senha)
-        candi_user.save()
+        candidato_user = User.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha)
+        candidato_user.save()
         messages.success(request, 'Cadastro realizado com sucesso') 
         print('Usuário cadastrado com sucesso')
         return redirect ('login')
@@ -27,12 +27,13 @@ def cadastro_candidatos(request):
         
 def cadastro_empresas(request):
     if request.method == 'POST':
+        empresa_nome = request.POST['empresa_nome']
         empresa_email = request.POST['empresa_email']
         empresa_senha = request.POST['empresa_senha']
         empresa_senha_conf = request.POST['empresa_senha_conf']
         print (empresa_email, empresa_senha)
-        empresa_user = User.objects.create_user(empresa_email, empresa_senha)
-        empresa_user.save() 
+        empresa_user = User.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha)
+        empresa_user.save()
         messages.success(request, 'Cadastro realizado com sucesso') 
         return redirect('login')   
        
