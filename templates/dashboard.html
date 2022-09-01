@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'partials/header.html' %}
+  <main class="container">
+    <div class="right-column">
+      <div class="content">
+        <div class="page-header">
+          <h1>Vagas</h1>
+          <div class="filtros">
+            <form action="">
+              <select name="teste1" id="">
+                <option value="a0" selected disabled>Empresa</option>
+                <option value="a1">empresa1</option>
+                <option value="a2">empresa2</option>
+                <option value="a3">empresa3</option>
+                <option value="a4">empresa4</option>
+              </select>
+              <select name="teste2" id="">
+                <option value="a0" selected disabled>Vaga</option>
+                <option value="a1">vaga1</option>
+                <option value="a2">vaga2</option>
+                <option value="a3">vaga3</option>
+                <option value="a4">vaga4</option>
+              </select>
+              <select name="teste3" id="">
+                <option value="a0" selected disabled>Nível de experiência</option>
+                <option value="a1">experiência1</option>
+                <option value="a2">experiência2</option>
+                <option value="a3">experiência3</option>
+                <option value="a4">experiência4</option>
+              </select>
+            </form>
+          </div>
+        </div>
+        {% if vagas %}
+        {% for vaga in vagas %}
+        <div class="vagas">
+          <div class="lista-de-vagas">
+            <ul>
+              <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
+                <span class="informacao-de-inscricao">Inscrito</span>
+                <div class="vaga-wrapper">
+                  <img src="{{ vaga.logo_empresa.url }}" alt="">
+                  <div class="vaga-info">
+                    <h2>{{vaga.nome_vaga}}</h2>
+                    <p>
+                      <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> {{vaga.nome_empresa}}</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
+                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> {{vaga.local_empresa}}</span>
+                    </p>
+                    <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> {{vaga.principais_atividades}}</span></p>
+                    <p>{{vaga.perfil_profissional}}</p>
+                    <p>{{vaga.tipo_contratacao}}</p>
+                    <p>{{vaga.tipo_trabalho}}</p>
+                  </div>
+                </div>
+              </li>
+              
+            </ul>
+          </div>
+          <div class="informacoes-da-vaga collapse">
+            <h2>{{vaga.nome_vaga}}</h2>
+            <p>{{vaga.descricao_vaga}}</p>
+            <button class="btn btn-primary" id="modal-open">Candidatar-se à vaga</button>
+            <button class="btn btn-secondary" title="Favoritar"><i class="bi bi-star"></i></button>
+            <h3>Sobre a empresa</h3>
+            <!-- Não, Alice, mas já tem o logo da empresa ali do lado. Pra quê um aqui também? -->
+            <img class="informacoes-logo" src="{{ vaga.logo_empresa.url }}" alt="">
+            <p>{{vaga.descricao_empresa}}</p>
+          </div>
+        </div>
+        {% endfor%}
+        {% endif %}
+      </div>
+    </div>
+    <div class="left-column">
+      <div class="sidebar">
+        <div class="sidebar-user mb-3">
+          <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
+          <h2 class="sidebar-name h5 text-center">Lorem, ipsum dolor</h2>
+        </div>
+        <div class="sidebar-content">
+          <ul class="sidebar-menu">
+            <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
+            <!-- <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
+            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> -->
+            <li><a class="btn btn-primary" href="{% url 'arquivadas' %}" role="button">Minhas vagas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+  </footer>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam!</p>
+    </div>
+  </div>
+</html>
+{% endblock %}
