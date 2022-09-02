@@ -85,7 +85,7 @@ def login(request):
                 if user:
                     print("autenticado")
                     login_django(request, user)
-                    return request('empresa')
+                    return redirect('empresa')
                 else:
                     print("Email ou senha incorretos")
                 print(f" resultado do user: {user} \nresultado do nome: {nome}")
