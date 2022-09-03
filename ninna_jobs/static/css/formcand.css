@@ -30,12 +30,13 @@ section{
     flex-wrap: wrap!important;
     gap: .75em!important;
     margin-bottom: 8px!important;
+    border-radius: 0!important;
 }
 
-.form-control:focus{ 
-    border-color: inherit; 
-    -webkit-box-shadow: none; 
-    box-shadow: none; 
+.form-control:focus{
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .wizard .content {
