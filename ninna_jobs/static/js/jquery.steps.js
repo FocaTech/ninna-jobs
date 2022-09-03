@@ -283,11 +283,14 @@ function finishStep(wizard, state)
     {
         currentStep.addClass("done").removeClass("error");
         wizard.triggerHandler("finished", [state.currentIndex]);
+        $('#wizard').find('a[href="#finish"]').remove(); 
+        $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
+
     }
-    else
-    {
-        currentStep.addClass("error");
-    }
+    // else
+    // {
+    //     currentStep.addClass("error");
+    // }
 }
 
 /**
@@ -515,10 +518,10 @@ function goToStep(wizard, options, state, index)
             wizard.triggerHandler("stepChanged", [index, oldIndex]);
         });
     }
-    else
-    {
-        wizard.find(".steps li").eq(oldIndex).addClass("error");
-    }
+    // else
+    // {
+    //     wizard.find(".steps li").eq(oldIndex).addClass("error");
+    // }
 
     return true;
 }
