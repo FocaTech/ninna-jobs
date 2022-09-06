@@ -8,7 +8,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Vagas</a>
+            <a class="nav-link" href="/">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Vagas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Sobre Nós</a>
@@ -19,9 +22,18 @@
         </ul>
       </div>
       <div>
-        <a href="{% url 'login' %}">
+        <div class="dropdown">
+          <button class="dropdown-toggle botaoLogin mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Iniciar sessão
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'login' %}">Candidato</a></li>
+            <li><a class="dropdown-item" href="{% url 'login' %}">Empresa</a></li>
+          </ul>
+        </div>
+        {% comment %} <a href="{% url 'login' %}">
           <button class="px-3 mx-4 botaoLogin" id="login" name="login" type="button"> Fazer Login</button>
-        </a>
+        </a> {% endcomment %}
       </div>
       <a class="navbar-brand" href="#">
         <div class="navbar-logo">
@@ -33,4 +45,12 @@
   <div class="top-detail">
     <img src="{% static 'img/top-detail.png' %}">
   </div>
+  <script>
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.getAttribute('href') != '#' && location.pathname == link.pathname) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+  </script>
 </header>

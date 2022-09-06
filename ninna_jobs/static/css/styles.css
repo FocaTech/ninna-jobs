@@ -1,80 +1,10 @@
 :root {
     --border-color: #c9cbcb;
 }
-
-main.container {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 12px;
-}
-main {
-    margin-top: 2em;
-}
-.container :is(.sidebar, .content) {
-    background: #eff4f5;
-    padding: 1em 1.5em;
-    direction: ltr;
-}
-.container .right-column {
-    width: 100%;
-}
-.container .content {
-    position: relative;
-    width: 100%;
-    padding-top: 4.3em;
-    padding-bottom: 0;
-}
-.left-column {
-    width: 27%;
-}
-.page-header {
-    background: #dae0e38a;
-    padding: 7px 0;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-}
-.page-header h1 {
-    line-height: 1;
-    font-size: 24px;
-    background: #7eb627;
-    width: max-content;
-    padding: .3em .7em .3em .5em;
-    border-radius: 0 15px 15px 0;
-    margin: 0;
-    transform: translateX(-7px);
-    color: white;
-}
-
-.sidebar-menu {
-    padding: 0;
-    list-style: none;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    margin: 0;
-}
 body {
     background-color: #fcfdfd;
 }
 
-.sidebar-avatar {
-    display: block;
-    width: 100px;
-    aspect-ratio: 1;
-    border: 2px solid #d0dade;
-    margin: 0 auto;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.lista-de-vagas li {
-    list-style: none;
-}
 .navbar {
     background-color: #0e0062;
 }
@@ -95,6 +25,93 @@ body {
     border-radius: 20px;
     background: transparent;
     color: #fff;
+}
+header.fixed-top + * {
+    margin-top: 100px;
+}
+
+main.container {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 12px;
+}
+main {
+    margin-top: 2em;
+}
+.container :is(.sidebar, .content) {
+    background: #eff4f5;
+    padding: 1em 1.5em;
+    direction: ltr;
+}
+.container .right-column {
+    width: 100%;
+}
+.container .content {
+    position: relative;
+    width: 100%;
+}
+.left-column {
+    width: 27%;
+}
+.page-header {
+    background: #dae0e38a;
+    padding: 7px 0;
+    margin: -1em -1.5em 1em;
+    display: flex;
+}
+.page-header h1 {
+    line-height: 1;
+    font-size: 24px;
+    background: #7eb627;
+    width: max-content;
+    padding: .3em .7em .3em .5em;
+    border-radius: 0 15px 15px 0;
+    margin: 0;
+    transform: translateX(-7px);
+    color: white;
+    align-self: center;
+}
+.page-header h1 ~ * {
+    margin-right: 7px;
+}
+
+form.filtros {
+    flex: 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75em;
+    align-items: baseline;
+}
+form.filtros select {
+    flex: 1;
+    padding: .4em;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-menu {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    margin: 0;
+}
+.sidebar-avatar {
+    display: block;
+    width: 100px;
+    aspect-ratio: 1;
+    border: 2px solid #d0dade;
+    margin: 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.lista-de-vagas li {
+    list-style: none;
 }
 .vagas {
     display: flex;
@@ -138,7 +155,7 @@ body {
     font-size: 20px;
     font-weight: 600;
 }
-.lista-de-vagas p {
+.lista-de-vagas p, .vaga .card-text:not(:last-of-type) {
     margin-bottom: .3em;
 }
 .lista-de-vagas p:last-child {
@@ -162,7 +179,20 @@ body {
     padding: .05em .3em;
     text-transform: lowercase;
 }
-.info:not(:last-child)::after {
+ul.hide-bullets {
+    padding: 0;
+}
+ul:is(.hide-bullets, .inline-list) li {
+    list-style: none;
+}
+ul.hide-bullets > li + li {
+    margin-top: .3em;
+}
+ul.inline-list {
+    display: flex;
+    padding: 0;
+}
+ul.inline-list li:not(:last-child)::after {
     content: "";
     display: inline-block;
     background: currentColor;
@@ -171,31 +201,13 @@ body {
     width: 1px;
     margin-left: 7px;
     margin-right: 7px;
-    vertical-align: middle;
-    transform: translateY(-10%);
+    vertical-align: -.125em;
 }
 .informacoes-logo {
     float: right;
     width: 150px;
     margin-left: 10px;
     margin-bottom: 10px;
-}
-
-.filtros {
-    flex-grow: 1;
-    margin-right: 7px;
-}
-.filtros form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .75em;
-}
-.filtros form select {
-    flex-grow: 1;
-    padding: .4em;
-    background: transparent;
-    border: 0;
-    border-bottoM: 1px solid var(--border-color);
 }
 
 
@@ -220,7 +232,6 @@ body {
     z-index: -1;
 }
 
-
 .modal :is(.form-control, .form-select) {
     border-width: 0;
     border-bottom-width: 1px;
@@ -238,4 +249,13 @@ body {
 
 .modal-footer button {
     border-radius: 20px;
+}
+
+.outline {
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, .5));
+}
+
+.ar-2\/1 {
+    aspect-ratio: 2 / 1;
+    object-fit: contain;
 }

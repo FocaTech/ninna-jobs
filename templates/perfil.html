@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Perfil{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+{% endblock %}
+{% block body_class %}page-profile{% endblock %}
+{% block content %}
+  <main class="container">
+    <div class="right-column">
+      <div class="content">
+        <div class="profile-box">
+          <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
+          <h2 class="profile-name">Lorem ipsum dolor sit.</h2>
+        </div>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita nobis explicabo laborum ratione ea mollitia dolorum eaque autem nam sunt, blanditiis porro accusamus voluptatibus, eveniet ducimus officia corporis inventore, pariatur delectus nihil ullam veritatis consectetur! Explicabo neque molestias necessitatibus ab consectetur omnis amet libero eum accusantium deserunt, assumenda, totam doloremque, ad eligendi odio quos beatae dignissimos iusto nam maiores fugit animi! Fugiat suscipit neque cum earum a vel aspernatur reiciendis sequi ullam necessitatibus accusantium facilis quasi, repellendus unde provident facere quibusdam illo molestiae eos totam explicabo eius vitae itaque! Adipisci!</p>
+      </div>
+    </div>
+    <!--<div class="left-column">
+      <div class="sidebar">
+        <div class="sidebar-user mb-3">
+          <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
+          <h2 class="sidebar-name h5 text-center">Lorem, ipsum dolor</h2>
+        </div>
+        <div class="sidebar-content">
+          <ul class="sidebar-menu">
+            <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
+            <! <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
+            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> >
+            <li><a class="btn btn-primary" href="{% url 'arquivadas' %}" role="button">Minhas vagas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>-->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam!</p>
+      </div>
+    </div>
+  </main>
+{% endblock %}

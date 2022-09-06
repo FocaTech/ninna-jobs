@@ -27,25 +27,26 @@
                     <h4>Crie uma conta</h4>
                     <div class="tabber">
                         <div class="tabber__tabs">
-                            <div class="tabber__tab active">
+                            <button type="button" class="tabber__tab active">
                                 Empresa
-                            </div>
-                            <div class="tabber__tab">
+                            </button>
+                            <button type="button" class="tabber__tab">
                                 Candidato
-                            </div>
+                            </button>
                         </div>
                         <div class="tabber__content">
                             <div id="empresa" class="active">
                                 <form action="{% url 'cadastro_empresas' %}" method="POST">
                                     {% csrf_token %}
+                                    <input type="hidden" name="tipo_conta" id="account-type" value="empresa">
                                     <div class="form-row">
                                         <div class="col-lg7">
-                                            <input type="text" name="empresa_nome" id="username" class="form-control my-3 p-3" placeholder="name" required>
+                                            <input type="text" name="empresa_nome" id="username" class="form-control my-3 p-3" placeholder="Nome" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-lg7">
-                                            <input type="text" name="empresa_email" id="email" class="form-control my-3 p-3" placeholder="Email" required>
+                                            <input type="text" name="empresa_email" id="email" class="form-control my-3 p-3" placeholder="E-mail" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -60,24 +61,24 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-lg7">
-                                            <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
-                                            <button type="submit" class="btn1 mt-3 mb-5">Criar conta</button>
+                                            <button type="submit" class="btn1 mt-3 mb-4">Criar conta</button>
                                         </div>
                                     </div>
-                                    <p>Já tem uma conta? <a href="#">Faça login</a></p>
+                                    <p class="mb-5">Já possui uma conta? <a href="{% url 'login' %}">Faça login</a></p>
                                 </form>
                             </div>
                             <div id="candidato">
                                 <form action="{% url 'cadastro_candidatos' %}" method="POST">
                                     {% csrf_token %}
+                                    <input type="hidden" name="tipo_conta" id="account-type" value="candidato">
                                     <div class="form-row">
                                         <div class="col-lg7">
-                                            <input type="text" name="candidato_nome" id="username" class="form-control my-3 p-3" placeholder="username" required>
+                                            <input type="text" name="candidato_nome" id="username" class="form-control my-3 p-3" placeholder="Nome" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-lg7">
-                                            <input type="text" name="candidato_email" id="email" class="form-control my-3 p-3" placeholder="Email" required>
+                                            <input type="text" name="candidato_email" id="email" class="form-control my-3 p-3" placeholder="E-mail" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -92,11 +93,10 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-lg7">
-                                            <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
-                                            <button type="submit" class="btn1 mt-3 mb-5">Criar conta</button>
+                                            <button type="submit" class="btn1 mt-3 mb-4">Criar conta</button>
                                         </div>
                                     </div>
-                                    <p>Já tem uma conta? <a href="{% url 'login' %}">Faça login</a></p>
+                                    <p class="mb-5">Já possui uma conta? <a href="{% url 'login' %}">Faça login</a></p>
                                 </form>
                             </div>
                         </div>

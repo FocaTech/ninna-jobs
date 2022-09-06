@@ -2,7 +2,7 @@
 
 <!doctype html>
 <html lang="pt-br">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="{% static 'css/tabber.css' %}">
 
     <title>Ninna-Login</title>
-  </head>
+</head>
 
-  <body class="body-form">
+<body class="body-form">
     <section class="form my-4 mx-5">
         <div class="container a">
             <div class="row no-gutters container-login">
@@ -34,60 +34,58 @@
                                 Candidato
                             </div>
                         </div>
-                       <div class="tabber__content">
-                        <div id="empresa" class="active">
-                            <form action="{% url 'login' %}" method="POST">
-                                {% csrf_token %}
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <input type="text" name="empresa_email" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="Email" required>
+                        <div class="tabber__content">
+                            <div id="empresa" class="active">
+                                <form action="{% url 'login' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="tipo_conta" id="account-type" value="empresa">
+                                    <div class="form-row">
+                                        <div class="col-lg7">
+                                            <input type="text" name="empresa_email" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="Email" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <input type="password"name="empresa_senha" id="empresa-senha" placeholder="Senha" class="form-control my-3 p-3" required>
+                                    <div class="form-row">
+                                        <div class="col-lg7">
+                                            <input type="password"name="empresa_senha" id="empresa-senha" placeholder="Senha" class="form-control my-3 p-3" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
-                                        <button type="submit" class="btn1 mt-3 mb-5">Login</button>
+                                    <div class="form-row">
+                                        <div class="col-lg7">
+                                            <button type="submit" class="btn1 mt-3 mb-4">Login</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="hidden" id="e" name="e" value="e">
-                                <a href="#">Esqueceu sua email?</a>
-                                <p> Não tem uma conta?<a href="{% url 'cadastro_empresas' %}">Registre aqui</a></p>
-                            </form>
+                                    <p class="mb-2"><a href="#">Esqueceu seu e-mail?</a></p>
+                                    <p class="mb-5">Não possui uma conta? <a href="{% url 'cadastro_empresas' %}">Registre-se aqui</a></p>
+                                </form>
+                            </div>
+                            <div id="candidato">
+                                <form action="{% url 'login' %}" method="POST"> {% csrf_token %}
+                                    <input type="hidden" name="tipo_conta" id="account-type" value="candidato">
+                                    <div class="form-row">
+                                        <div class="col-lg7">
+                                            <input type="text" name="candidato_email" id="candidato-cpf" class="form-control my-3 p-3" placeholder="Email" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-lg7">
+                                            <input type="password" name="candidato_senha" id="candidato-senha" placeholder="Senha" class="form-control my-3 p-3" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-lg7">
+                                            <button type="submit" class="btn1 mt-3 mb-4">Login</button>
+                                        </div>
+                                    </div>
+                                    <p class="mb-2"><a href="#">Esqueceu seu e-mail?</a></p>
+                                    <p class="mb-5">Não possui uma conta? <a href="{% url 'cadastro_candidatos' %}">Registre-se aqui</a></p>
+                                </form>
+                            </div>
                         </div>
-                        <div id="candidato">
-                            <form action="{% url 'login' %}" method="POST"> {% csrf_token %}
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <input type="text" name="candidato_email" id="candidato-cpf" class="form-control my-3 p-3" placeholder="Email" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <input type="password" name="candidato_senha" id="candidato-senha" placeholder="Senha" class="form-control my-3 p-3" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
-                                        <button type="submit" class="btn1 mt-3 mb-5">Login</button>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="c" name="c" value="c">
-                                <a href="#">Esqueceu seu email?</a>
-                                <p> Não tem uma conta?<a href="{% url 'cadastro_candidatos' %}">Registre aqui</a></p>
-                            </form>
-                        </div>
-                       </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>

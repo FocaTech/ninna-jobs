@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html class="base" lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,15 +9,14 @@
   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-icons.css' %}">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
-  <link rel="stylesheet" href="{% static 'css/modal.css' %}">
-  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" defer></script>
+  {% comment %} <link rel="stylesheet" href="{% static 'css/footer.css' %}"> {% endcomment %}
   <script src="{% static 'js/jquery-2.2.4.min.js' %}" defer></script>
-  <script src="{% static 'js/modal.js' %}" defer></script>
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}" defer></script>
   {% block head %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
+  {% block header %}{% include 'partials/header.html' %}{% endblock %}
   {% block content %}{% endblock %}
-  
+  {% comment %} {% block footer %}{% include 'partials/footer.html' %}{% endblock %} {% endcomment %}
 </body>
 </html>

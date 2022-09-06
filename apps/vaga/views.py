@@ -17,4 +17,8 @@ def dashboard(request):
     dados = {
         'vagas' : vagas
     }
+
     return render(request, 'dashboard.html', dados)
+
+def perfil(request):
+    return render(request, 'perfil.html')

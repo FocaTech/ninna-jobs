@@ -1,16 +1,30 @@
-.tabber {
-    width: 100%;
+:root {
+    --tabber-border-active: gray;
+    --tabber-border-hover: #2049b5;
+}
+.page-dashboard {
+    --tabber-border-active: #7eb627;
 }
 .tabber__tabs {
     display: flex;
+    gap: 2px;
 }
 .tabber__tab {
-    width: 100%;
+    flex: 1;
     text-align: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding-bottom: 2px;
+    transition-duration: .25s;
+}
+.tabber__tab:hover {
+    border-color: var(--tabber-border-hover);
 }
 .tabber__tab.active {
-    border-bottom: 3px solid gray;
-    padding-bottom: 2px;
+    border-color: var(--tabber-border-active);
+    cursor: auto;
 }
 .tabber__content > :not(.active) {
     display: none;

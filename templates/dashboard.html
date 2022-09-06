@@ -1,111 +1,89 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}título{% endblock %}
+{% block title %}Minhas vagas{% endblock %}
 {% block head %}
   <script src="{% static 'js/tabber.js' %}" defer></script>
   <link rel="stylesheet" href="{% static 'css/tabber.css' %}">
-  <link rel="stylesheet" href="{% static 'css/vagas.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 {% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
 {% block content %}
-{% include 'partials/header.html' %}
-  <main class="container" style="margin-top: 100px">
+  <main class="container">
     <div class="right-column">
-      <div class="content">
-        <div class="page-header">
+      <section class="content">
+        <header class="page-header">
           <h1>Minhas vagas</h1>
-          <div class="filtros">
-            <form action="">
-              <select name="teste1" id="">
-                <option value="a0" selected disabled>Empresa</option>
-                <option value="a1">empresa1</option>
-                <option value="a2">empresa2</option>
-                <option value="a3">empresa3</option>
-                <option value="a4">empresa4</option>
-              </select>
-              <select name="teste2" id="">
-                <option value="a0" selected disabled>Vaga</option>
-                <option value="a1">vaga1</option>
-                <option value="a2">vaga2</option>
-                <option value="a3">vaga3</option>
-                <option value="a4">vaga4</option>
-              </select>
-              <select name="teste3" id="">
-                <option value="a0" selected disabled>Nível de experiência</option>
-                <option value="a1">experiência1</option>
-                <option value="a2">experiência2</option>
-                <option value="a3">experiência3</option>
-                <option value="a4">experiência4</option>
-              </select>
-            </form>
-          </div>
-        </div>
+          <form action="" class="filtros">
+            <select name="teste1" id="">
+              <option value="a0" selected disabled>Empresa</option>
+              <option value="a1">empresa1</option>
+              <option value="a2">empresa2</option>
+              <option value="a3">empresa3</option>
+              <option value="a4">empresa4</option>
+            </select>
+            <select name="teste2" id="">
+              <option value="a0" selected disabled>Vaga</option>
+              <option value="a1">vaga1</option>
+              <option value="a2">vaga2</option>
+              <option value="a3">vaga3</option>
+              <option value="a4">vaga4</option>
+            </select>
+            <select name="teste3" id="">
+              <option value="a0" selected disabled>Nível de experiência</option>
+              <option value="a1">experiência1</option>
+              <option value="a2">experiência2</option>
+              <option value="a3">experiência3</option>
+              <option value="a4">experiência4</option>
+            </select>
+          </form>
+        </header>
         <div class="tabber">
           <div class="tabber__tabs">
-            <div class="tabber__tab active">Candidatadas</div>
-            <div class="tabber__tab">Favoritadas</div>
-            <div class="tabber__tab">Arquivadas</div>
+            <button type="button" class="tabber__tab active">Candidatadas</button>
+            <button type="button" class="tabber__tab">Favoritadas</button>
+            <button type="button" class="tabber__tab">Arquivadas</button>
           </div>
           <div class="tabber__content">
-            <div id="candidatadas" class="active">
-              <div class="row row-cols-3 g-3 py-2 px-1">
+            <section id="candidatadas" class="active">
+              <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
                 {% if vagas %}
                   {% for vaga in vagas %}
                     <div class="col">
-                      <div class="card">
-                        <img src="{{ vaga.logo_empresa.url }}" class="card-img-top" alt="">
-                        <div class="card-body">
+                      <div class="card h-100 vaga">
+                        <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
+                        <div class="card-body d-flex flex-column">
                           <h5 class="card-title">{{ vaga.nome_vaga }}</h5>
-                          <p class="card-text">{{ vaga.descricao_vaga }}</p>
-                          <a href="#" class="btn btn-primary">Detalhes</a>
+                          <ul class="hide-bullets">
+                            <li>
+                              <ul class="inline-list">
+                                <li><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
+                              </ul>
+                            </li>
+                            <li>
+                              <ul class="inline-list">
+                                <li><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
+                                <li><i class="bi bi-person-workspace" title="Tipo de trabalho"></i> {{ vaga.tipo_trabalho }} </li>
+                              </ul>
+                            </li>
+                          </ul>
+                          <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}']">
+                            Detalhes
+                          </button>
                         </div>
+                        {% include 'partials/modal-vaga.html' %}
                       </div>
                     </div>
                   {% endfor %}
                 {% endif %}
               </div>
-            </div>
-            <div id="favoritadas"></div>
-            <div id="arquivadas"></div>
+            </section>
+            <section id="favoritadas"></section>
+            <section id="arquivadas"></section>
           </div>
         </div>
-        {% comment %} {% if vagas %}
-        {% for vaga in vagas %}
-        <div class="vagas">
-          <div class="lista-de-vagas">
-            <ul>
-              <li data-bs-toggle="collapse" data-bs-target=".informacoes-da-vaga">
-                <span class="informacao-de-inscricao">Inscrito</span>
-                <div class="vaga-wrapper">
-                  <img src="{{ vaga.logo_empresa.url }}" alt="">
-                  <div class="vaga-info">
-                    <h2>{{vaga.nome_vaga}}</h2>
-                    <p>
-                      <span class="info info-nome"><i class="bi bi-building" title="Empresa"></i> {{vaga.nome_empresa}}</span><!-- dava pra usar `.vaga-info > p { display: flex }` também pra remover o(s) espaço(s) aqui, né?
-                    --><span class="info info-local"><i class="bi bi-geo-alt" title="Local"></i> {{vaga.local_empresa}}</span>
-                    </p>
-                    <p><span class="info info-informacoes"><i class="bi bi-briefcase" title="Informações"></i> {{vaga.principais_atividades}}</span></p>
-                    <p>{{vaga.perfil_profissional}}</p>
-                    <p>{{vaga.tipo_contratacao}}</p>
-                    <p>{{vaga.tipo_trabalho}}</p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="informacoes-da-vaga collapse">
-            <h2>{{vaga.nome_vaga}}</h2>
-            <p>{{vaga.descricao_vaga}}</p>
-            <button class="btn btn-primary" id="modal-open">Candidatar-se à vaga</button>
-            <button class="btn btn-secondary" title="Favoritar"><i class="bi bi-star"></i></button>
-            <h3>Sobre a empresa</h3>
-            <!-- Não, Alice, mas já tem o logo da empresa ali do lado. Pra quê um aqui também? -->
-            <img class="informacoes-logo" src="{{ vaga.logo_empresa.url }}" alt="">
-            <p>{{vaga.descricao_empresa}}</p>
-          </div>
-        </div>
-        {% endfor%}
-        {% endif %} {% endcomment %}
-      </div>
+        {% comment %} {% include 'partials/lista-antiga--.html' %} {% endcomment %}
+      </section>
     </div>
     <div class="left-column">
       <div class="sidebar">
@@ -125,9 +103,4 @@
       </div>
     </div>
   </main>
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam!</p>
-    </div>
-  </div>
 {% endblock %}

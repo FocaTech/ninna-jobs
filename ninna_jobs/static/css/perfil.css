@@ -1,0 +1,20 @@
+.profile-box .sidebar-avatar {
+    width: 125px;
+}
+.profile-box {
+    background-color: #e6ecee;
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+    margin-top: -65px;
+    margin-bottom: 15px;
+}
+.profile-name {
+    font-size: 24px;
+}
+.container .content {
+    margin-top: 50px;
+    padding-bottom: .5em;
+}
