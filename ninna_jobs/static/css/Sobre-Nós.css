@@ -1,0 +1,30 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.sobre-nos {
+    background: #D3D3D3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 60px;
+}
+.texto {
+    background-color: white; 
+    height: 300px;
+    margin-left: -50px;
+    width: 40vw;
+    padding: 30px;
+    font-size: 17px;
+}
+.texto h2 {
+    padding: 30px;
+    text-align: center;
+    font-size: 30px;
+}
+img {
+    height: auto;
+    width: 40vw;
+}
