@@ -1,0 +1,33 @@
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  margin-top: 30px;
+  gap: 20px;
+}
+.social {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: .5em;
+}
+.social li {
+  list-style: none;
+  font-size: 1.1em;
+  padding: 1em;
+  background-color: #7eb627;
+  border-radius: 50%;
+  height: 55px;
+  width: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.social a {
+  color: #fff;
+}
+.sobre {
+  max-width: 650px;
+  margin-right: 25px;
+}
