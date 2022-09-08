@@ -1,0 +1,36 @@
+body {
+    background-color: #ECEDEE;
+}
+
+.titulo {
+    padding: 40px;
+    text-align: center;
+}
+
+h2 {
+    color: #00257A;
+}
+
+footer {
+    background:#00257A;
+    text-align: center;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+footer p {
+    color: #ffffff;
+}
+
+ footer img {
+    width: 18px;
+    
+}
+
+.redes-socias {
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+}
