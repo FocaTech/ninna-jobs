@@ -1,5 +1,4 @@
-import email
-from apps import vaga
+from vaga.models import Vagas
 from .models import Users
 from django.contrib import auth
 from django.shortcuts import render, redirect
