@@ -17,6 +17,41 @@ def select(request):
     return render(request, 'empresa.html', dado)
 
 
+def vagas(request):
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+
+
+    dado = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+    }
+    if request.method == 'POST':
+        nome_vaga = request.POST['nomevaga']
+        nome_empresa = request.POST['nomeempresa']
+        contratacao = request.POST['contratacao']
+        local = request.POST['local']
+        perfil = request.POST['perfil']
+        salario = request.POST['salario']
+        descricao_empresa = request.POST['descricaoempresa']
+        descricao_vaga = request.POST['descricaovaga']
+        atuacao = request.POST['atuacao']
+        atividades = request.POST['atividades']
+        requisitos = request.POST['requisitos']
+        diferencial = request.POST['diferencial']
+        beneficios = request.POST['beneficios']
+        tipotrabalho = request.POST['tipotrabalho']
+        logo = request.FILES['logo']
+
+        vaga = Vagas.objects.create(nome_empresa=nome_empresa, nome_vaga=nome_vaga, tipo_contratacao = contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=atuacao, principais_atividades=atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipotrabalho, logo_empresa=logo)
+        vaga.save()
+        return redirect('index')
+    else:
+        return render(request, 'empresa.html', dado)
+
+
 
 
 

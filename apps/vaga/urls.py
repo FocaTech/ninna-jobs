@@ -7,4 +7,5 @@ urlpatterns = [
     path('perfil', views.perfil, name='perfil'),
     path('404', views.not_found, name='not_found'),
     path('conta/empresa', views.select, name='select'),
+    path('', views.vagas, name='vagas'),
 ]
