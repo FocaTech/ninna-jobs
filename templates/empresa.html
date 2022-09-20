@@ -111,7 +111,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body p-4">
-            <form action="" method="post" enctype="multipart/form-data">
+
+
+
+            <form action="{% url 'empresa' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
               <div class="row g-3 align-items-center mb-2">
                 <div class="col">
                 </div>
@@ -126,10 +130,9 @@
                 <div class="col">
                   <label class="form-label" for="contratacao">Tipo de Contratacao</label>
                   <select class="form-select" name="contratacao">
-                    <option value="" selected>Selecione</option>
-                    <option value="" selected>Selecione</option>
-                    <option value="" selected>Selecione</option>
-                    <option value="" selected>Selecione</option>
+                    {% for contratacao in contratacoes%}
+                    <option value="{{contratacao.contratacao}}">{{contratacao.contratacao}}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -137,11 +140,9 @@
                 <div class="col">
                   <label class="form-label" for="perfil">Perfil do Profissional</label>
                   <select class="form-select" name="perfil">
-                    <option value="" selected>Selecione</option>
-                    <option value="" selected>Selecione</option>
-                    <option value="" selected>Selecione</option>
-                    <option value="" selected>Selecione</option>
-                    <option value="" selected>Selecione</option>
+                    {% for perfil in perfis%}
+                    <option value="{{perfil.contratacao}}">{{perfil.contratacao}}</option>
+                    {% endfor %}
                   </select>
                 </div>
                 <div class="col">
@@ -161,9 +162,9 @@
                 <div class="col">
                   <label class="form-label" for="tipotrabalho">Tipo de trabalho</label>
                   <select class="form-select" name="tipotrabalho">
-                    <option value="remoto" selected>Remoto</option>
-                    <option value="presencial" selected>Presencial</option>
-                    <option value="hibrido" selected>Híbrido</option>
+                    {% for trabalho in trabalhos%}
+                    <option value="{{trabalho.trabalho}}">{{trabalho.trabalho}}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -183,11 +184,18 @@
                 <label class="form-label">Beneficios</label>
                 <textarea class="form-control" name="beneficios"></textarea>
               </div>
+
+              <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
             </form>
+
+
+
+
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Descartar</button>
-            <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
+
           </div>
         </div>
       </div>
