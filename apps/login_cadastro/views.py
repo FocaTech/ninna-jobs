@@ -116,11 +116,11 @@ def plataforma(request):
 def arquivadas(request):
     return render(request, 'arquivadas.html')
 
-def empresa(request):
-    vagas = Vagas.objects.all()
+# def empresa(request):
+#     vagas = Vagas.objects.all()
 
-    dados = {
-        'vagas' : vagas
-    }
+#     dados = {
+#         'vagas' : vagas
+#     }
 
-    return render(request, 'empresa.html', dados)
+#     return render(request, 'empresa.html', dados)

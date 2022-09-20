@@ -10,5 +10,5 @@ urlpatterns = [
 
     # para testar as partials
     path('arquivadas', views.arquivadas, name='arquivadas'),
-    path('empresa/', views.empresa, name='empresa'),
+    # path('empresa/', views.empresa, name='empresa'),
 ]

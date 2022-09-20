@@ -7,14 +7,25 @@ def select(request):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
+    vagas = Vagas.objects.all()
 
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
+        'vagas' : vagas
     }
 
     return render(request, 'empresa.html', dado)
+
+# def empresa(request):
+#     vagas = Vagas.objects.all()
+
+#     dados = {
+#         'vagas' : vagas
+#     }
+
+#     return render(request, 'empresa.html', dados)
 
 
 def vagas(request):
