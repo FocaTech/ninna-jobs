@@ -95,9 +95,100 @@
           <ul class="sidebar-menu">
             <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
             <li><a class="btn btn-primary" href="#" role="button">Vagas</a></li>
+            <li><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro-de-vaga">Cadastrar vaga</button></li>
             <li><a class="btn btn-primary" href="#" role="button">Banco de Talentos</a></li>
             <li><a class="btn btn-primary" href="#" role="button">Candidatos Favoritados</a></li>
           </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="cadastro-de-vaga" tabindex="-1" aria-labelledby="cadastro-de-vaga-label" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cadastro-de-vaga-label">Cadastrar vaga</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <form action="" method="post" enctype="multipart/form-data">
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col">
+                  <label class="form-label">Nome da Vaga</label>
+                  <input class="form-control" type="text" name="nomevaga">
+                </div>
+                <div class="col">
+                  <label class="form-label" for="contratacao">Tipo de Contratacao</label>
+                  <select class="form-select" name="contratacao">
+                    <option value="" selected>Selecione</option>
+                    <option value="" selected>Selecione</option>
+                    <option value="" selected>Selecione</option>
+                    <option value="" selected>Selecione</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col">
+                  <label class="form-label" for="perfil">Perfil do Profissional</label>
+                  <select class="form-select" name="perfil">
+                    <option value="" selected>Selecione</option>
+                    <option value="" selected>Selecione</option>
+                    <option value="" selected>Selecione</option>
+                    <option value="" selected>Selecione</option>
+                    <option value="" selected>Selecione</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label class="form-label">Salário</label>
+                  <input class="form-control" type="number" name="salario">
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Descrição da Vaga</label>
+                <textarea class="form-control" name="descricaovaga"></textarea>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col">
+                  <label class="form-label">Área de Atuação</label>
+                  <input class="form-control" type="text" name="atuacao">
+                </div>
+                <div class="col">
+                  <label class="form-label" for="tipotrabalho">Tipo de trabalho</label>
+                  <select class="form-select" name="tipotrabalho">
+                    <option value="remoto" selected>Remoto</option>
+                    <option value="presencial" selected>Presencial</option>
+                    <option value="hibrido" selected>Híbrido</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Principais Atividades</label>
+                <input class="form-control" type="text" name="atividades">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Requisitos</label>
+                <textarea class="form-control" type="text" name="requisitos"></textarea>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Diferencial</label>
+                <input class="form-control" type="text" name="diferencial">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Beneficios</label>
+                <textarea class="form-control" name="beneficios"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Descartar</button>
+            <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
+          </div>
         </div>
       </div>
     </div>
