@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Erro 404{% endblock %}
+{% block head %}
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    footer {
+      margin-top: auto;
+    }
+  </style>
+{% endblock %}
+{% block body_class %}page-404{% endblock %}
+{% block content %}
+  <main>
+    <div class="text-center h5">
+      <h1>404</h1>
+      <p>Página não encontrada</p>
+      <p>👉 <a href="/">Voltar à página inicial</a></p>
+    </div>
+  </main>
+{% endblock %}
