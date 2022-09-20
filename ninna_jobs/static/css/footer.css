@@ -1,17 +1,12 @@
-*{
-	margin:0;
-	padding:0;
-	box-sizing: border-box;
-}
-
-.body-footer{
+.footer{
+	background-color: #112455;
+  padding: 70px 0;
 	line-height: 1.5;
 	font-family: 'Poppins', sans-serif;
 }
-
 .container-footer{
 	max-width: 1170px;
-	margin:auto;
+	margin: auto;
 }
 .row{
 	display: flex;
@@ -19,10 +14,6 @@
 }
 ul{
 	list-style: none;
-}
-.footer{
-	background-color: #112455;
-    padding: 70px 0;
 }
 .footer-col{
    width: 25%;
