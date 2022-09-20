@@ -22,3 +22,6 @@ def dashboard(request):
 
 def perfil(request):
     return render(request, 'perfil.html')
+
+def not_found(request):
+    return render(request, '404.html')

@@ -118,4 +118,10 @@ def arquivadas(request):
     return render(request, 'arquivadas.html')
 
 def empresa(request):
-    return render(request, 'empresa.html')
+    vagas = Vagas.objects.all()
+
+    dados = {
+        'vagas' : vagas
+    }
+
+    return render(request, 'empresa.html', dados)
