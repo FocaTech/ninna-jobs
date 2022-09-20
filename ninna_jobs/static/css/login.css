@@ -11,8 +11,11 @@
     border-radius: 30px;
     box-shadow: 12px 12px 22px grey;
 }
-.img-login{
-    border-top-left-radius: 30px;
+.img-login {
+	background-image: url('/static/img/candidato.jpg');
+	background-size: cover;
+	background-position: center;
+	border-radius: 30px 0 0 30px;
 }
 .btn1{
     border: none;
@@ -34,5 +37,5 @@
     max-width: 900px;
 }
 @media (max-width: 600px){
-  
+
 }
