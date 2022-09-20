@@ -35,7 +35,7 @@
                         </div>
                        <div class="tabber__content">
                         <div id="login" class="active">
-                            <form action="{% url 'login' %}" method="POST">
+                            <form action="{% url 'longar_empresa' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
@@ -58,7 +58,7 @@
                             </form>
                         </div>
                         <div id="inscreva-se">
-                            <form action="{% url 'login' %}" method="POST"> {% csrf_token %}
+                            <form action="{% url 'longar_candidato' %}" method="POST"> {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
                                         <input type="text" name="candidato_usuario" class="form-control my-3 p-3" placeholder="digite um usuario" required>

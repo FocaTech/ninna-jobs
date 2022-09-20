@@ -35,11 +35,11 @@
                         </div>
                        <div class="tabber__content">
                         <div id="login" class="active">
-                            <form action="{% url 'login' %}" method="POST">
+                            <form action="{% url 'longar_empresa' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="text" name="empresa_email" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="Email" required>
+                                        <input type="email" name="empresa_email" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -58,10 +58,10 @@
                             </form>
                         </div>
                         <div id="inscreva-se">
-                            <form action="{% url 'login' %}" method="POST"> {% csrf_token %}
+                            <form action="{% url 'cadastro_candidatos' %}" method="POST"> {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="text" name="candidato_usuario" class="form-control my-3 p-3" placeholder="digite um usuario" required>
+                                        <input type="text" name="candidato_nome" class="form-control my-3 p-3" placeholder="digite um usuario" required>
                                     </div>
                                     <div class="col-lg7">
                                         <input type="text" name="candidato_email" class="form-control my-3 p-3" placeholder="Email" required>
@@ -72,7 +72,7 @@
                                         <input type="password" name="candidato_senha" id="candidato-senha" placeholder="Senha" class="form-control my-3 p-3" required>
                                     </div>
                                     <div class="col-lg7">
-                                        <input type="password" name="candidato_senhaconfirma" id="candidato-senha" placeholder="Repita sua senha" class="form-control my-3 p-3" required>
+                                        <input type="password" name="candidato_senha_conf" id="candidato-senha" placeholder="Repita sua senha" class="form-control my-3 p-3" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
