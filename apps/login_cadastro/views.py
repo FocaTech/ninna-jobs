@@ -22,7 +22,7 @@ def cadastro_candidato(request):
         candidato_user.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         print('Usuário cadastrado com sucesso')
-        return redirect ('login')
+        return redirect ('longar_candidato')
 
     else:
         return render(request, 'cadastro.html')
