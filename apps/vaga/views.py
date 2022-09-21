@@ -30,9 +30,9 @@ def select(request):
         diferencial = request.POST['diferencial']
         beneficios = request.POST['beneficios']
         tipotrabalho = request.POST['tipotrabalho']
-        #logo = request.FILES['logo']
+        logo = request.FILES.get('logo', 'img/logononna.jpg')
 
-        vaga = Vagas.objects.create(nome_vaga=nome_vaga, tipo_contratacao = contratacao, perfil_profissional=perfil, salario=salario, descricao_vaga=descricao_vaga, area_atuacao=atuacao, principais_atividades=atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipotrabalho)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, tipo_contratacao = contratacao, perfil_profissional=perfil, salario=salario, descricao_vaga=descricao_vaga, area_atuacao=atuacao, principais_atividades=atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipotrabalho, logo_empresa=logo)
         vaga.save()
         return redirect('index')
     else:
