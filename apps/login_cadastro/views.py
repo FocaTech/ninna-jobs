@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
 
 
-def cadastro_candidatos(request):
+def cadastro_candidato(request):
     if request.method == 'POST':
         candidato_nome = request.POST['candidato_nome']
         candidato_email = request.POST['candidato_email']
@@ -27,7 +27,7 @@ def cadastro_candidatos(request):
     else:
         return render(request, 'cadastro.html')
 
-def cadastro_empresas(request):
+def cadastro_empresa(request):
     if request.method == 'POST':
         empresa_nome = request.POST['empresa_nome']
         empresa_email = request.POST['empresa_email']

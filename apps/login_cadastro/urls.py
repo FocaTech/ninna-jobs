@@ -4,8 +4,8 @@ from . import views
 urlpatterns = [
     path('login/candidato/', views.longar_candidato, name='longar_candidato'),
     path('login/empresa/', views.longar_empresa, name='longar_empresa'),
-    path('cadastro/candidato/', views.cadastro_candidatos, name='cadastro_candidatos'),
-    path('cadastro/empresas/', views.cadastro_empresas, name='cadastro_empresas'),
+    path('cadastro/candidato/', views.cadastro_candidato, name='cadastro_candidato'),
+    path('cadastro/empresas/', views.cadastro_empresa, name='cadastro_empresa'),
 
 
     # para testar as partials
