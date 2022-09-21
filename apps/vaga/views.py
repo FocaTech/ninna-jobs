@@ -15,8 +15,28 @@ def select(request):
         'perfis' : perfis,
         'vagas' : vagas
     }
+    if request.method == 'POST':
+        nome_vaga = request.POST['nomevaga']
+        #nome_empresa = request.POST['nomeempresa']
+        contratacao = request.POST['contratacao']
+        #local = request.POST['local']
+        perfil = request.POST['perfil']
+        salario = request.POST['salario']
+        #descricao_empresa = request.POST['descricaoempresa']
+        descricao_vaga = request.POST['descricaovaga']
+        atuacao = request.POST['atuacao']
+        atividades = request.POST['atividades']
+        requisitos = request.POST['requisitos']
+        diferencial = request.POST['diferencial']
+        beneficios = request.POST['beneficios']
+        tipotrabalho = request.POST['tipotrabalho']
+        #logo = request.FILES['logo']
 
-    return render(request, 'empresa.html', dado)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, tipo_contratacao = contratacao, perfil_profissional=perfil, salario=salario, descricao_vaga=descricao_vaga, area_atuacao=atuacao, principais_atividades=atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipotrabalho)
+        vaga.save()
+        return redirect('index')
+    else:
+        return render(request, 'empresa.html', dado)
 
 # def empresa(request):
 #     vagas = Vagas.objects.all()
@@ -27,7 +47,7 @@ def select(request):
 
 #     return render(request, 'empresa.html', dados)
 
-
+'''
 def vagas(request):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
@@ -61,7 +81,7 @@ def vagas(request):
         return redirect('index')
     else:
         return render(request, 'empresa.html', dado)
-
+'''
 
 
 
