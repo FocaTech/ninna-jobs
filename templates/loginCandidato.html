@@ -19,9 +19,7 @@
     <section class="form my-4 mx-5">
         <div class="container a">
             <div class="row no-gutters container-login">
-                <div class="col-lg-5 p-0">
-                    <img src="{% static 'img/candidato.jpg' %}" alt="Ninna-Hub" class="img-fluid img-login">
-                </div>
+                <div class="col-lg-5 p-0 img-login"></div>
                 <div class="col-lg-7 px-5 pt-5 login-wrapper">
                     <h1 class="font-weight-bold py-3">Ninna Jobs</h1>
                     <div class="tabber">
@@ -34,7 +32,7 @@
                             </div>
                         </div>
                        <div class="tabber__content">
-                        <div id="login" class="active">
+                        <div id="login" class="active mb-4">
                             <form action="{% url 'longar_empresa' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-row">
@@ -50,7 +48,7 @@
                                 <div class="form-row">
                                     <div class="col-lg7">
                                         <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
-                                        <button type="submit" class="btn1 mt-3 mb-5">Login</button>
+                                        <button type="submit" class="btn1 mt-3 mb-4">Login</button>
                                     </div>
                                 </div>
                                 <input type="hidden" id="c" name="c" value="c">
@@ -78,7 +76,7 @@
                                 <div class="form-row">
                                     <div class="col-lg7">
                                         <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
-                                        <button type="submit" class="btn1 mt-3 mb-5">Enviar</button>
+                                        <button type="submit" class="btn1 mt-3 mb-4">Enviar</button>
                                     </div>
                                 </div>
                                 <input type="hidden" id="c" name="c" value="c">

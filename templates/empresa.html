@@ -114,7 +114,7 @@
 
 
 
-            <form action="{% url 'empresa' %}" method="post" enctype="multipart/form-data">
+            <form action="{% url 'select' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="row g-3 align-items-center mb-2">
                 <div class="col">
@@ -184,6 +184,8 @@
                 <label class="form-label">Beneficios</label>
                 <textarea class="form-control" name="beneficios"></textarea>
               </div>
+
+              <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
             </form>
 
 
@@ -193,7 +195,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Descartar</button>
-            <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
+
           </div>
         </div>
       </div>
