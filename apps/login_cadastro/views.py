@@ -25,7 +25,7 @@ def cadastro_candidato(request):
         return redirect ('longar_candidato')
 
     else:
-        return render(request, 'cadastro.html')
+        return render(request, 'loginCandidato.html')
 
 def cadastro_empresa(request):
     if request.method == 'POST':
@@ -41,7 +41,7 @@ def cadastro_empresa(request):
 
 
     else:
-        return render(request, 'cadastro.html')
+        return render(request, 'login.html')
 
 """def login(request):
     # PEGAR OS DADOS
@@ -63,33 +63,32 @@ def cadastro_empresa(request):
 
 # LOGAR CANDIDATO
 def longar_candidato(request):
-    candidato_email = None
-    candidato_email = None
-    if request == 'POST':
-        candidato_email = request.POST.get['candidato_email', None]
-        candidato_senha = request.POST.get['candidato_senha', None]
+
+    if request.method == 'POST':
+        print("entrou")
+        candidato_email = request.POST.get('candidato_email', None)
+        candidato_senha = request.POST.get('candidato_senha', None)
+        print(candidato_email, candidato_senha)
 
         if Users.objects.filter(email=candidato_email).exists():
             nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
             user = auth.authenticate(email=candidato_email, password=candidato_senha, funcao="CAN")
+            print(nome)
             if user:
+                auth.login(request, user)
                 print("autenticado")
                 return redirect('index')
-        else:
-            print("Email ou senha incorretos")
-            print(f" resultado do user: {user} \nresultado do nome: {nome}")
-            print("Email ou senha incorretos")
-        auth.login(request, user)
+
     return render(request, 'loginCandidato.html')
 
 # LOGAR EMPRESA
 def longar_empresa(request):
     empresa_email = None
     empresa_email = None
-    if request == 'POST':
-        empresa_email = request.POST.get['empresa_email', None]
-        empresa_senha = request.POST.get['empresa_senha', None]
-
+    if request.method == 'POST':
+        empresa_email = request.POST.get('empresa_email', None)
+        empresa_senha = request.POST.get('empresa_senha', None)
+        print(empresa_email, empresa_senha)
         if Users.objects.filter(email=empresa_email).exists():
             nome = Users.objects.filter(email=empresa_email).values_list('username', flat=True).get()
             user = auth.authenticate(username=nome, password=empresa_senha, funcao="EMP")
