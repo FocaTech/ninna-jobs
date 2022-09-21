@@ -12,19 +12,33 @@
     padding: 60px;
 }
 .texto {
-    background-color: white; 
-    height: 300px;
+    background-color: white;
     margin-left: -50px;
     width: 40vw;
     padding: 30px;
     font-size: 17px;
 }
 .texto h2 {
-    padding: 30px;
     text-align: center;
     font-size: 30px;
 }
-img {
+.sobre-nos img {
     height: auto;
     width: 40vw;
+}
+
+.form-control{
+    outline: none!important;
+    box-shadow: none!important;
+    border: none!important;
+    flex-grow: 1!important;
+    padding: .4em!important;
+    background: transparent!important;
+    border: 0!important;
+    border-bottom: 1px solid rgb(108, 108, 108)!important;
+    display: flex!important;
+    flex-wrap: wrap!important;
+    gap: .75em!important;
+    margin-bottom: 8px!important;
+    border-radius: 0!important;
 }
