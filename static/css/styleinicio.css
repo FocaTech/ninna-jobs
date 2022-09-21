@@ -10,10 +10,25 @@
     text-transform: uppercase;
 }
 
-.titulovaga{
-
+.titulo-cardInicio{
+        font-weight: 900;
+        font-size: 28px;
+        text-transform: uppercase;
+        color: #dae1f5;
 }
 
+.card-cadastrar{
+    background-image: url('/static/img/card.jpg');
+    background-size: cover;
+    height: 380px;
+    border-radius: 30px;
+}
+.card-cadastrar-body{
+    background-color: rgba(0, 0, 0, 0.5);
+    color: whitesmoke;
+    height: auto;
+    flex: unset;
+}
 .carousel-control:is(.left.left, .right.right) {
     background-image: none;
 }
@@ -34,4 +49,20 @@
 .modal-footer.justify-content-between::before,
 .modal-footer.justify-content-between::after {
     content: unset
+}
+
+.form-control{
+    outline: none!important;
+    box-shadow: none!important;
+    border: none!important;
+    flex-grow: 1!important;
+    padding: .4em!important;
+    background: transparent!important;
+    border: 0!important;
+    border-bottom: 1px solid rgb(108, 108, 108)!important;
+    display: flex!important;
+    flex-wrap: wrap!important;
+    gap: .75em!important;
+    margin-bottom: 8px!important;
+    border-radius: 0!important;
 }
