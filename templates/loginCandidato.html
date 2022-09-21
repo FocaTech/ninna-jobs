@@ -33,16 +33,16 @@
                         </div>
                        <div class="tabber__content">
                         <div id="login" class="active mb-4">
-                            <form action="{% url 'longar_empresa' %}" method="POST">
+                            <form action="{% url 'longar_candidato' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="text" name="empresa_email" id="empresa-cnpj" class="form-control my-3 p-3" placeholder="Email" required>
+                                        <input type="text" name="candidato_email" id="candidato_email" class="form-control my-3 p-3" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <input type="password"name="empresa_senha" id="empresa-senha" placeholder="Senha" class="form-control my-3 p-3" required>
+                                        <input type="password"name="candidato_senha" id="candidato_senha" placeholder="Senha" class="form-control my-3 p-3" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
