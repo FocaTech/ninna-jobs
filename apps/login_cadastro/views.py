@@ -37,7 +37,7 @@ def cadastro_empresa(request):
         empresa_user = Users.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha, funcao = "EMP")
         empresa_user.save()
         messages.success(request, 'Cadastro realizado com sucesso')
-        return redirect('login')
+        return redirect('longar_empresa')
 
 
     else:
