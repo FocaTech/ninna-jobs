@@ -16,23 +16,23 @@ def select(request):
         'vagas' : vagas
     }
     if request.method == 'POST':
-        nome_vaga = request.POST['nomevaga']
-        #nome_empresa = request.POST['nomeempresa']
-        contratacao = request.POST['contratacao']
-        #local = request.POST['local']
+        nome_vaga = request.POST['nome_vaga']
+        nome_empresa = request.POST['nome_empresa']
+        tipo_contratacao = request.POST['tipo_contratacao']
+        local = request.POST['local']
         perfil = request.POST['perfil']
         salario = request.POST['salario']
-        #descricao_empresa = request.POST['descricaoempresa']
-        descricao_vaga = request.POST['descricaovaga']
-        atuacao = request.POST['atuacao']
-        atividades = request.POST['atividades']
+        descricao_empresa = request.POST['descricao_empresa']
+        descricao_vaga = request.POST['descricao_vaga']
+        area_atuacao = request.POST['area_atuacao']
+        principais_atividades = request.POST['principais_atividades']
         requisitos = request.POST['requisitos']
         diferencial = request.POST['diferencial']
         beneficios = request.POST['beneficios']
-        tipotrabalho = request.POST['tipotrabalho']
-        logo = request.FILES.get('logo', 'img/logononna.jpg')
+        tipo_trabalho = request.POST['tipo_trabalho']
+        logo_empresa = request.FILES['logo_empresa']
 
-        vaga = Vagas.objects.create(nome_vaga=nome_vaga, tipo_contratacao = contratacao, perfil_profissional=perfil, salario=salario, descricao_vaga=descricao_vaga, area_atuacao=atuacao, principais_atividades=atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipotrabalho, logo_empresa=logo)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, nome_empresa=nome_empresa, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
         return redirect('index')
     else:

@@ -29,30 +29,28 @@
 
         <form action="{% url 'select' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          <div class="row g-3 align-items-center mb-2">
-            <div class="col">
-            </div>
-            <div class="col">
-            </div>
+          <div class="mb-2">
+            <label class="form-label">Logo da Empresa</label>
+            <input class="p-1" type="file" name="logo_empresa">
           </div>
           <div class="row g-3 align-items-center mb-2">
-            <div>
-              <label class="form-label">Logo da Empresa</label>
-              <input class="p-1" type="file">
-            </div>
-            <div>
+            <div class="col">
               <label class="form-label">Nome da Empresa</label>
-              <input class="form-control" type="text" name="nomeEmpresa">
+              <input class="form-control" type="text" name="nome_empresa">
+            </div>
+            <div class="col">
+              <label class="form-label">Local da Empresa</label>
+              <input class="form-control" type="text" name="local">
             </div>
           </div>
           <div class="row g-3 align-items-center mb-2">
             <div class="col">
               <label class="form-label">Nome da Vaga</label>
-              <input class="form-control" type="text" name="nomevaga">
+              <input class="form-control" type="text" name="nome_vaga">
             </div>
             <div class="col">
               <label class="form-label" for="contratacao">Tipo de Contratacao</label>
-              <select class="form-select" name="contratacao">
+              <select class="form-select" name="tipo_contratacao">
                 {% for contratacao in contratacoes%}
                 <option value="{{contratacao.contratacao}}">{{contratacao.contratacao}}</option>
                 {% endfor %}
@@ -75,20 +73,20 @@
           </div>
           <div class="mb-2">
             <label class="form-label">Descrição da Vaga</label>
-            <textarea class="form-control" name="descricaovaga"></textarea>
+            <textarea class="form-control" name="descricao_vaga"></textarea>
           </div>
           <div class="mb-2">
             <label class="form-label">Descrição da Empresa</label>
-            <textarea class="form-control" name="descricaoempresa"></textarea>
+            <textarea class="form-control" name="descricao_empresa"></textarea>
           </div>
           <div class="row g-3 align-items-center mb-2">
             <div class="col">
               <label class="form-label">Área de Atuação</label>
-              <input class="form-control" type="text" name="atuacao">
+              <input class="form-control" type="text" name="area_atuacao">
             </div>
             <div class="col">
               <label class="form-label" for="tipotrabalho">Tipo de trabalho</label>
-              <select class="form-select" name="tipotrabalho">
+              <select class="form-select" name="tipo_trabalho">
                 {% for trabalho in trabalhos%}
                 <option value="{{trabalho.trabalho}}">{{trabalho.trabalho}}</option>
                 {% endfor %}
@@ -97,7 +95,7 @@
           </div>
           <div class="mb-2">
             <label class="form-label">Principais Atividades</label>
-            <input class="form-control" type="text" name="atividades">
+            <input class="form-control" type="text" name="principais_atividades">
           </div>
           <div class="mb-2">
             <label class="form-label">Requisitos</label>
