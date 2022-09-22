@@ -28,6 +28,19 @@
 <main>
     <div>
         <div class="card text-center tamanho card-cadastrar">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                </div>
+            </div>
             <div class="card-body card-cadastrar-body m-auto">
                 <h5 class="titulo-cardInicio">Banco de Talentos - Ninna Jobs</h5>
                 <p class="card-text p-3">Cadastre-se e aproveite oportunidades para conseguir um emprego</p>
@@ -74,7 +87,7 @@
     </div>
     </div>
     <div class="container mb-4 text-center">
-        <a class="btn btn-secondary" href="#">Ver todas as vagas</a>
+        <a class="btn btn-secondary" href="{% url 'vagas' %}">Ver todas as vagas</a>
     </div>
 </main>
 <div id="sobre-nos" class="section-cotent">

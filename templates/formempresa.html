@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/forms.css'%}">
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms.css'%}">
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
@@ -20,6 +20,7 @@
         <h1 class="display-6 text-center pt-5 mt-5 titulo">Cadastro - <strong>Empresa</strong></h1>
         <div class="containerFormEmpresa p-5">
             <form class="" method="POST" action="" novalidate>
+                <input name="logoStartup" type="file" class="sidebar-avatar avatar" id="logoStartup" accept="image/*" required>
                 <div class="row">
                     <div class="col-md-8">
                         <label for="razaosocial" class="form-label">Razão Social</label>
@@ -75,7 +76,7 @@
                             <div class="invalid-feedback">
                                 Por favor, escolha um estado valido
                             </div>
-                        </div>  
+                        </div>
                     </div>
                     <div>
                         <div class="row py-1">
@@ -106,15 +107,15 @@
                 <div class="d-flex justify-content-between p-5">
                     <div>
                         <button class="btn botaoenviarformempresa" type="submit" name="enviarFormEmpresa" id="enviar">Enviar</button>
-                    </div>     
+                    </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="step" id="step_2">   
-    </div>                         
+    <div class="step" id="step_2">
+    </div>
 </div>
-</div>  
+</div>
 
 </div>
 </body>

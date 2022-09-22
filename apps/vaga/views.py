@@ -115,3 +115,12 @@ def not_found(request):
 
 def talentos(request):
     return render(request, 'bancodetalentos.html')
+
+def vagas(request):
+    vagas = Vagas.objects.all()
+
+    dados = {
+        'vagas' : vagas
+    }
+
+    return render(request, 'vagas.html', dados)

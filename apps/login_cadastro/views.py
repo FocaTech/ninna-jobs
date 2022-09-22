@@ -25,7 +25,7 @@ def cadastro_candidato(request):
         return redirect ('longar_candidato')
 
     else:
-        return render(request, 'loginCandidato.html')
+        return render(request, 'formcandidato.html')
 
 def cadastro_empresa(request):
     if request.method == 'POST':
@@ -41,7 +41,7 @@ def cadastro_empresa(request):
 
 
     else:
-        return render(request, 'login.html')
+        return render(request, 'formempresa.html')
 
 """def login(request):
     # PEGAR OS DADOS
@@ -101,7 +101,7 @@ def longar_empresa(request):
         else:
             print("Email ou senha incorretos")
 
-    return render(request, 'login.html')
+    return render(request, 'formempresa.html')
 
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
     return (empresa_email == "" or empresa_senha == "") or (candidato_email == "" or candidato_senha == "")

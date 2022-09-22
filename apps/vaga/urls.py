@@ -8,6 +8,6 @@ urlpatterns = [
     path('perfilempresa', views.perfilempresa, name='perfilempresa'),
     path('404', views.not_found, name='not_found'),
     path('empresa', views.select, name='select'),
-    #path('vagas', views.vagas, name='vagas'),
+    path('vagas', views.vagas, name='vagas'),
     path('talentos', views.talentos, name='talentos'),
 ]
