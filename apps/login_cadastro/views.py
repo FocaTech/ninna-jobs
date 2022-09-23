@@ -72,7 +72,7 @@ def longar_candidato(request):
 
         if Users.objects.filter(email=candidato_email).exists():
             nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
-            user = auth.authenticate(request, username=nome, password=candidato_senha)
+            user = auth.authenticate(request, username=nome, password=candidato_senha, funcao = "CAN")
             print(nome)
             print(user)
             if user:
