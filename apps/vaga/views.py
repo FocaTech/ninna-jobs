@@ -114,7 +114,16 @@ def not_found(request):
     return render(request, '404.html')
 
 def talentos(request):
-    return render(request, 'bancodetalentos.html')
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+
+    dado = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+    }
+    return render(request, 'bancodetalentos.html', dado)
 
 def vagas(request):
     vagas = Vagas.objects.all()
