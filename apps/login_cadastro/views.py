@@ -30,6 +30,7 @@ def cadastro_candidato(request):
         return redirect ('longar_candidato')
     else:
         return render(request, 'formcandidato.html')
+        
 
 def cadastro_empresa(request):
     if request.method == 'POST':
