@@ -1,6 +1,6 @@
 from vaga.models import Vagas
 from .models import Users
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.shortcuts import render, redirect
 from rolepermissions.decorators  import has_permission_decorator
 from django.contrib.auth import authenticate
@@ -65,7 +65,6 @@ def cadastro_empresa(request):
 def logar_candidato(request):
 
     if request.method == 'POST':
-        print("entrou")
         candidato_email = request.POST.get('candidato_email', None)
         candidato_senha = request.POST.get('candidato_senha', None)
         print(candidato_email, candidato_senha)
@@ -79,6 +78,7 @@ def logar_candidato(request):
                 auth.login(request, user)
                 print("autenticado")
                 return redirect('index')
+        messages.error(request, "candidato não cadastrado")
 
     return render(request, 'loginCandidato.html')
 
