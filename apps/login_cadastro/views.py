@@ -115,6 +115,10 @@ def plataforma(request):
 def arquivadas(request):
     return render(request, 'arquivadas.html')
 
+
+def cadastro_candidato_2(request):
+    return render(request, 'formcandidato.html')
+
 # def empresa(request):
 #     vagas = Vagas.objects.all()
 

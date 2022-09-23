@@ -7,7 +7,7 @@ urlpatterns = [
     path('cadastro/candidato/', views.cadastro_candidato, name='cadastro_candidato'),
     path('cadastro/empresas/', views.cadastro_empresa, name='cadastro_empresa'),
 
-
+    path('cadastrar/candidato/', views.cadastro_candidato_2, name='cadastro_candidato_2'),
     # para testar as partials
     path('arquivadas', views.arquivadas, name='arquivadas'),
     # path('empresa/', views.empresa, name='empresa'),
