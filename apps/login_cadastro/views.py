@@ -8,7 +8,6 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
 
-
 def cadastro_candidato(request):
     if request.method == 'POST':
         candidato_nome = request.POST['candidato_nome']
@@ -18,12 +17,17 @@ def cadastro_candidato(request):
         print(candidato_email, candidato_senha, candidato_senha_conf)
         if candidato_senha != candidato_senha_conf:
             return redirect ('cadastro_candidatos')
+        if Users.objects.filter(email=candidato_email).exists():
+            messages.error(request, 'Usuario ja cadastrado')
+            return redirect('longar_candidato')
+        if Users.objects.filter(username=candidato_nome).exists():
+            messages.error(request, 'Usuario ja cadastrado')
+            return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         print('Usuário cadastrado com sucesso')
         return redirect ('longar_candidato')
-
     else:
         return render(request, 'formcandidato.html')
 
@@ -43,25 +47,7 @@ def cadastro_empresa(request):
     else:
         return render(request, 'formempresa.html')
 
-"""def login(request):
-    # PEGAR OS DADOS
-    candidato_email = None
-    candidato_senha = None
-    if request.method == 'POST':
-        empresa_email = request.POST.get('empresa_email', None)
-        empresa_senha = request.POST.get('empresa_senha', None)
-        print(empresa_email, empresa_senha)
 
-        if empresa_email == None or empresa_senha == None:
-            candidato_email = request.POST.get('candidato_email', None)
-            candidato_senha = request.POST.get('candidato_senha', None)
-            print(candidato_email, candidato_senha)
-
-        if nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
-            print("Os campos não podem estar vazios")
-            return redirect('login')"""
-
-# LOGAR CANDIDATO
 def logar_candidato(request):
 
     if request.method == 'POST':
