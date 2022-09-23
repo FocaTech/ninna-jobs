@@ -62,7 +62,7 @@ def cadastro_empresa(request):
             return redirect('login')"""
 
 # LOGAR CANDIDATO
-def longar_candidato(request):
+def logar_candidato(request):
 
     if request.method == 'POST':
         print("entrou")
@@ -83,7 +83,7 @@ def longar_candidato(request):
     return render(request, 'loginCandidato.html')
 
 # LOGAR EMPRESA
-def longar_empresa(request):
+def logar_empresa(request):
     empresa_email = None
     empresa_email = None
     if request.method == 'POST':
