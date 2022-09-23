@@ -1,6 +1,6 @@
 from vaga.models import Vagas
 from .models import Users
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.shortcuts import render, redirect
 from rolepermissions.decorators  import has_permission_decorator
 from django.contrib.auth import authenticate
@@ -62,27 +62,28 @@ def cadastro_empresa(request):
             return redirect('login')"""
 
 # LOGAR CANDIDATO
-def longar_candidato(request):
+def logar_candidato(request):
 
     if request.method == 'POST':
-        print("entrou")
         candidato_email = request.POST.get('candidato_email', None)
         candidato_senha = request.POST.get('candidato_senha', None)
         print(candidato_email, candidato_senha)
 
         if Users.objects.filter(email=candidato_email).exists():
             nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
-            user = auth.authenticate(email=candidato_email, password=candidato_senha, funcao="CAN")
+            user = auth.authenticate(request, username=nome, password=candidato_senha, funcao = "CAN")
             print(nome)
+            print(user)
             if user:
                 auth.login(request, user)
                 print("autenticado")
                 return redirect('index')
+        messages.error(request, "candidato não cadastrado")
 
     return render(request, 'loginCandidato.html')
 
 # LOGAR EMPRESA
-def longar_empresa(request):
+def logar_empresa(request):
     empresa_email = None
     empresa_email = None
     if request.method == 'POST':
@@ -114,6 +115,10 @@ def plataforma(request):
 
 def arquivadas(request):
     return render(request, 'arquivadas.html')
+
+
+def cadastro_candidato_2(request):
+    return render(request, 'formcandidato.html')
 
 # def empresa(request):
 #     vagas = Vagas.objects.all()
