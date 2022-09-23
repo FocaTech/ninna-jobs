@@ -72,8 +72,9 @@ def longar_candidato(request):
 
         if Users.objects.filter(email=candidato_email).exists():
             nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
-            user = auth.authenticate(email=candidato_email, password=candidato_senha, funcao="CAN")
+            user = auth.authenticate(request, username=nome, password=candidato_senha)
             print(nome)
+            print(user)
             if user:
                 auth.login(request, user)
                 print("autenticado")
