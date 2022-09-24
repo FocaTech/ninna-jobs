@@ -133,3 +133,6 @@ def vagas(request):
     }
 
     return render(request, 'vagas.html', dados)
+
+def vagas_salvas(request):
+    return render(request, 'salvas.html')
