@@ -134,5 +134,6 @@ def vagas(request):
 
     return render(request, 'vagas.html', dados)
 
-def vagas_salvas(request):
+def vagas_salvas(request, pk):
+    print(f"A PK ta vindo{pk}")
     return render(request, 'salvas.html')
