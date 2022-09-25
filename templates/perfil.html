@@ -1,120 +1,141 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}Perfil{% endblock %}
-{% block head %}
-  <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
-{% endblock %}
-{% block body_class %}page-profile{% endblock %}
-{% block content %}
-  <main class="container">
-    <div class="right-column">
-      <div class="content">
-        <div class="profile-box">
-          <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
-          <h2 class="profile-name">Maria Alice Teixeira da Costa</h2>
-          <div class="redesocial"><a class="linklinkedin" href="#"><i class="bi bi-linkedin m-2"></a></i><a class="linkwapp" href="#"><i class="bi bi-whatsapp m-2"></i></a><a href="#"><i class="bi bi-envelope"></i></a></div>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block title %}Perfil{% endblock %}
+    {% block head %}
+    <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+    {% endblock %}
+    {% block body_class %}page-profile{% endblock %}
+    {% block content %}
+    <main class="container">
+        <div class="right-column">
+        <div class="content">
+            <div class="profile-box">
+            <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
+            <h2 class="profile-name">Maria Alice Teixeira da Costa</h2>
+            <div class="redesocial"><a class="linklinkedin" href="#"><i class="bi bi-linkedin m-2 azul"></a></i><a class="linkwapp" href="#"><i class="bi bi-whatsapp m-2"></i></a><a href="#"><i class="bi bi-envelope"></i></a></div>
+
+            <div class="div-enviar-mensagem">
+                <button type="button" class="btn bt-enviar btn-outline-primary"> <i class="bi bi-send aviao"></i> <p class="msg-btn-enviar">Enviar mensagem</p></button>
+
+                <button type="button" class="btn btn-primary" title="Favoritar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16" >
+                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"></path>
+                    </svg>
+
+                </button>
+            </div>
+            </div>
+            <div>
+                <div class="div-sobre">
+                    <div class="secaoperfil py-4">
+                    <h3 class="tituloperfil">Sobre</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab reprehenderit est officiis voluptatem nam nobis beatae amet, accusantium officia expedita quod saepe exercitationem ipsam recusandae sapiente in. Labore, a dolore?</p>
+                </div>
+            </div>
+            <div class="div-saiba-mais">
+                <h3>Saiba mais</h3>
+                <img src="{% static 'img/seta-baixo.png' %}" alt="" class="img-seta">
+            </div>
+
+            <div class="div-informacoes">
+                <div class="secaoperfil py-4">
+                    <h3 class="tituloperfil">Principais areas de atuação</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <div class="row">
+                    <p class="col">area 1</p>
+                    <p class="col">area 2</p>
+                    <p class="col">area 3</p>
+                    </div>
+                </div>
+                <div class="secaoperfil py-4">
+                    <h3 class="tituloperfil">Disponibilidade</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <div class="row">
+                    <p class="col">Trabalho tempo integral</p>
+                    </div>
+                </div>
+                <div class="secaoperfil py-4">
+                    <h3 class="tituloperfil">Dados Pessoais</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <div class="row">
+                    <p class="col">Data de Nascimento:00/00/0000</p>
+                    <p class="col">Genero: TransViado</p>
+                    </div>
+                    <div class="row">
+                    <p class="col">Cidade: Cidade</p>
+                    <p class="col">Estado: estado</p>
+                    </div>
+                </div>
+                <div class="secaoperfil py-4">
+                    <h3 class="tituloperfil">Experiencia Profissional</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <div class="row">
+                    <p class="col">Empresa: empresa</p>
+                    <p class="col">Cargo: cargo</p>
+                    </div>
+                    <p>Fale um pouco sobre Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias nulla odio voluptates ea reprehenderit eos? Non quaerat dolor modi praesentium consequuntur, optio hic commodi explicabo quis amet accusantium? Delectus, iusto.</p>
+                    <div class="row">
+                    <p class="col">Inicio: mes/ano</p>
+                    <p class="col">Saida: mes/ano</p>
+                    </div>
+                </div>
+                <div class="secaoperfil py-4">
+                    <h3 class="tituloperfil">Formação Academica</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <div class="row">
+                    <p class="col">Instituição: loren ipsun </p>
+                    <p class="col">Formação: loren Ipsun</p>
+                    <p class="col">Curso: loren Ipsun</p>
+                    </div>
+                    <div class="row">
+                    <p class="col">Inicio: mes/ano</p>
+                    <p class="col">Conclusão/Previsão: mes/ano</p>
+                    </div>
+                </div>
+                <div class="secaoperfil py-4">
+                    <h3 class="tituloperfil">Idiomas</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <div class="row">
+                    <p class="col">Idioma: loren </p>
+                    <p class="col">Nivel: loren</p>
+                    </div>
+                </div>
+                <div class="secaoperfil py-4">
+                    <h3>Certificados e Conquistas</h3>
+                    <span class="spanperfil mb-4"></span>
+                    <div class="row">
+                    <p class="col">Titulo: loren </p>
+                    <p class="col">Tipo: loren</p>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sint cupiditate hic. Ab id amet quaerat. Fugiat quam consequuntur, voluptates, exercitationem amet fugit magni ipsa, voluptatem nisi ducimus a vel?</p>
+                </div>
+                </div>
+            </div>
+
         </div>
-        <div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Biografia</h3>
-            <span class="spanperfil mb-4"></span>
-            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab reprehenderit est officiis voluptatem nam nobis beatae amet, accusantium officia expedita quod saepe exercitationem ipsam recusandae sapiente in. Labore, a dolore?</p>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Principais areas de atuação</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">area 1</p>
-              <p class="col">area 2</p>
-              <p class="col">area 3</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Disponibilidade</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Trabalho tempo integral</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Dados Pessoais</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Data de Nascimento:00/00/0000</p>
-              <p class="col">Genero: TransViado</p>
-            </div>
-            <div class="row">
-              <p class="col">Cidade: Cidade</p>
-              <p class="col">Estado: estado</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Experiencia Profissional</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Empresa: empresa</p>
-              <p class="col">Cargo: cargo</p>
-            </div>
-            <p>Fale um pouco sobre Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias nulla odio voluptates ea reprehenderit eos? Non quaerat dolor modi praesentium consequuntur, optio hic commodi explicabo quis amet accusantium? Delectus, iusto.</p>
-            <div class="row">
-              <p class="col">Inicio: mes/ano</p>
-              <p class="col">Saida: mes/ano</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Formação Academica</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Instituição: loren ipsun </p>
-              <p class="col">Formação: loren Ipsun</p>
-              <p class="col">Curso: loren Ipsun</p>
-            </div>
-            <div class="row">
-              <p class="col">Inicio: mes/ano</p>
-              <p class="col">Conclusão/Previsão: mes/ano</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Idiomas</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Idioma: loren </p>
-              <p class="col">Nivel: loren</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3>Certificados e Conquistas</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Titulo: loren </p>
-              <p class="col">Tipo: loren</p>
-            </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sint cupiditate hic. Ab id amet quaerat. Fugiat quam consequuntur, voluptates, exercitationem amet fugit magni ipsa, voluptatem nisi ducimus a vel?</p>
-          </div>
         </div>
-      </div>
-    </div>
-    <!--<div class="left-column">
-      <div class="sidebar">
-        <div class="sidebar-user mb-3">
-          <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
-          <h2 class="sidebar-name h5 text-center">Lorem, ipsum dolor</h2>
+        <!--<div class="left-column">
+        <div class="sidebar">
+            <div class="sidebar-user mb-3">
+            <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
+            <h2 class="sidebar-name h5 text-center">Lorem, ipsum dolor</h2>
+            </div>
+            <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
+                <! <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
+                <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> >
+                <li><a class="btn btn-primary" href="{% url 'arquivadas' %}" role="button">Minhas vagas</a></li>
+                <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
+            </ul>
+            </div>
         </div>
-        <div class="sidebar-content">
-          <ul class="sidebar-menu">
-            <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
-            <! <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
-            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> >
-            <li><a class="btn btn-primary" href="{% url 'arquivadas' %}" role="button">Minhas vagas</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
-          </ul>
+        </div>-->
+        <div class="modal" id="modal">
+        <div class="modal-content">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam! cu</p>
         </div>
-      </div>
-    </div>-->
-    <div class="modal" id="modal">
-      <div class="modal-content">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam! cu</p>
-      </div>
-    </div>
-  </main>
-{% endblock %}
+        </div>
+    </main>
+    {% endblock %}
