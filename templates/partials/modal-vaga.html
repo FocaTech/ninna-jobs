@@ -36,6 +36,7 @@
         <h5 class="subtituloVaga">Beneficios</h5>
         <p>{{ vaga.beneficios }}</p>
       </div>
+    {% if user.is_authenticated %}
       <div class="modal-footer justify-content-between">
         <div>
           <a href="{% url 'vagas_salvas' vaga.id user.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
@@ -45,6 +46,14 @@
           <button type="button" class="btn btn-primary">Candidatar-se</button>
         </div>
       </div>
+    {% else %}
+      <div class="modal-footer justify-content-between">
+        <div>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <a href="{% url 'longar_candidato' %}" type="button" class="btn btn-primary">Candidatar-se</button>
+        </div>
+      </div>
+    {% endif %}
     </div>
   </div>
 </div>
