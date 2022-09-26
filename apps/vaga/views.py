@@ -134,9 +134,13 @@ def vagas(request):
 
     return render(request, 'vagas.html', dados)
 
-def vagas_salvas(request, pk_vaga, pk_user):
+def tela_de_vagas_salvas(request):
+    return render(request, 'salvas.html')
+
+def salvar_vaga(request, pk_vaga, pk_user):
     if request.user.is_authenticated:
         print(f"A PK ta vindo{pk_vaga}")
         print(f"A PK ta vindo{pk_user}")
-        return render(request, 'salvas.html')
+        return redirect(tela_de_vagas_salvas)
+        # return render(request, 'salvas.html')
     return redirect('login')
