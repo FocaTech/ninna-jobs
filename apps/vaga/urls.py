@@ -9,6 +9,7 @@ urlpatterns = [
     path('404', views.not_found, name='not_found'),
     path('empresa', views.select, name='select'),
     path('vagas', views.vagas, name='vagas'),
-    path('vagas_salvas/<int:pk_vaga>/<int:pk_user>', views.vagas_salvas, name='vagas_salvas'),
+    path('salvar_vaga/<int:pk_vaga>/<int:pk_user>', views.salvar_vaga, name='salvar_vaga'),
+    path('tela_de_vagas_salvas', views.tela_de_vagas_salvas, name='tela_de_vagas_salvas'),
     path('talentos', views.talentos, name='talentos'),
 ]
