@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional
+from .models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional, VagasSalvas
 
 class ListandoVagas(admin.ModelAdmin):
     list_display = ('id', 'nome_vaga', 'nome_empresa', 'local_empresa', )
@@ -12,3 +12,4 @@ admin.site.register(Vagas, ListandoVagas)
 admin.site.register(TipoContratacao)
 admin.site.register(TipoTrabalho)
 admin.site.register(PerfilProfissional)
+admin.site.register(VagasSalvas)
