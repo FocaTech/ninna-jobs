@@ -1,6 +1,6 @@
 from pickletools import read_uint8
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional
+from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas
 
 def select(request):
     contratacoes = TipoContratacao.objects.all()
@@ -141,6 +141,11 @@ def salvar_vaga(request, pk_vaga, pk_user):
     if request.user.is_authenticated:
         print(f"A PK ta vindo{pk_vaga}")
         print(f"A PK ta vindo{pk_user}")
+        # id_cadidato = request.POST['pk_user']
+        id_cadidato = pk_user
+        id_vaga = pk_vaga
+        vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
+        vaga_salva.save()
         return redirect(tela_de_vagas_salvas)
         # return render(request, 'salvas.html')
     return redirect('login')
