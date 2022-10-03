@@ -1,5 +1,6 @@
 from vaga.models import Vagas
 from .models import Users, Candidato, Empresa
+from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
 from rolepermissions.decorators  import has_permission_decorator
@@ -25,6 +26,8 @@ def cadastro_candidato(request):
             return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
+        # candidato_user_na_tablela_user = User.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha)
+        # candidato_user_na_tablela_user.save()
         candidato = Candidato.objects.create(email=candidato_email, senha=candidato_senha, nome=candidato_nome, nivel_prog="None", nivel_ing="None")
         candidato.save()
         messages.success(request, 'Cadastro realizado com sucesso')
