@@ -1,6 +1,7 @@
 from pickletools import read_uint8
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas
+from login_cadastro.models import Users
 
 def select(request):
     contratacoes = TipoContratacao.objects.all()
@@ -139,11 +140,14 @@ def tela_de_vagas_salvas(request):
 
 def salvar_vaga(request, pk_vaga, pk_user):
     if request.user.is_authenticated:
-        print(f"A PK ta vindo{pk_vaga}")
-        print(f"A PK ta vindo{pk_user}")
+        print(f"A PK do user{pk_user}")
+        print(f"A PK da vaga{pk_vaga}")
         # id_cadidato = request.POST['pk_user']
-        id_cadidato = pk_user
+        id_cadidato = get_object_or_404(Users, pk=request.user.id)
         id_vaga = pk_vaga
+
+        user = get_object_or_404(Users, pk=request.user.id)
+
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
         return redirect(tela_de_vagas_salvas)
