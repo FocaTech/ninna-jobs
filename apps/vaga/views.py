@@ -138,18 +138,31 @@ def vagas(request):
 def tela_de_vagas_salvas(request):
     return render(request, 'salvas.html')
 
-def salvar_vaga(request, pk_vaga, pk_user):
+def salvar_vaga(request, pk_vaga):
+    print('entrou no salvar vaga')
     if request.user.is_authenticated:
-        print(f"A PK do user{pk_user}")
-        print(f"A PK da vaga{pk_vaga}")
-        # id_cadidato = request.POST['pk_user']
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-        id_vaga = pk_vaga
 
-        user = get_object_or_404(Users, pk=request.user.id)
+        id_vaga = Vagas.objects.filter(id=pk_vaga).values_list('nome_vaga', flat=True).get()
+
+        id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
+
+        # id_vaga = pk_vaga
+
+        print(f"A PK do user {id_cadidato}")
+        print(f"O tipo do user {type(id_cadidato)}")
+        print(f"A PK da vaga {id_vaga}")
+        print(f"O tipo do vaga {type(id_vaga)}")
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
+
+        # print(f"A PK do user{pk_user}")
+        # print(f"A PK da vaga{pk_vaga}")
+        # id_cadidato = request.POST['pk_user']
+
+        # user = get_object_or_404(Users, pk=request.user.id)
+        # vaga = get_object_or_404(Vagas, pk=request.user.id)
         return redirect(tela_de_vagas_salvas)
         # return render(request, 'salvas.html')
     return redirect('login')
