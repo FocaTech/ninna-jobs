@@ -73,6 +73,11 @@ def logar_candidato(request):
         messages.error(request, "candidato não cadastrado")
 
     return render(request, 'loginCandidato.html')
+    
+def logout(request):
+    '''Desloga uma pessoa'''
+    auth.logout(request)
+    return redirect('index')
 
 # LOGAR EMPRESA
 def logar_empresa(request):

@@ -26,28 +26,50 @@
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
 <main>
-    <div>
-        <div class="card text-center tamanho card-cadastrar">
-            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
+    {% if user.is_authenticated %}
+        <div>
+            <div class="card text-center tamanho card-cadastrar">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
                     </div>
                 </div>
+                <div class="card-body card-cadastrar-body m-auto">
+                    <h5 class="titulo-cardInicio">Banco de Talentos - Ninna Jobs</h5>
+                </div>
             </div>
-            <div class="card-body card-cadastrar-body m-auto">
-                <h5 class="titulo-cardInicio">Banco de Talentos - Ninna Jobs</h5>
-                <p class="card-text p-3">Cadastre-se e aproveite oportunidades para conseguir um emprego</p>
-                <a href="#" class="btn btn-primary">Cadastre-se</a>
+    {% else %}
+        <div>
+            <div class="card text-center tamanho card-cadastrar">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body card-cadastrar-body m-auto">
+                    <h5 class="titulo-cardInicio">Banco de Talentos - Ninna Jobs</h5>
+                    <p class="card-text p-3">Cadastre-se e aproveite oportunidades para conseguir um emprego</p>
+                    <a href="{% url 'longar_candidato' %}" class="btn btn-primary">Cadastre-se</a>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
     <div class="title-section text-center pt-5 mt-5">
         <h2 class="mt-5 titulohome">Vagas</h2>
         <span></span>
