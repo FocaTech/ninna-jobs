@@ -3,7 +3,7 @@ from .models import Users, Candidato, Empresa, AreaDeInteresse, Genero, Estado, 
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-# from rolepermissions.decorators  import has_permission_decorator
+from rolepermissions.decorators  import has_permission_decorator
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.http import HttpResponse
@@ -120,22 +120,13 @@ def cadastro_candidato_2(request):
     #idioma = NivelIdioma.objects.all()
 
 
-<<<<<<< HEAD
-
     dados = {
         #'area' : area,
         'generos' : generos,
         'estados' : estados
     }
     return render(request, 'formcandidato.html', dados)
-=======
-    #dados = {
-        #'contratacoes' : contratacoes,
-        #'trabalhos' : trabalhos,
-    #}
-    return render(request, 'formcandidato.html')
 
 # def tela_404(request, exception):
     '''ERRO 404'''
 #     return render(request, '404.html')
->>>>>>> 96960e6e7cfa75968186df11c5d17af9ce4abe2d
