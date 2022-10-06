@@ -3,7 +3,7 @@ from .models import Users, Candidato, Empresa
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-from rolepermissions.decorators  import has_permission_decorator
+# from rolepermissions.decorators  import has_permission_decorator
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.http import HttpResponse
@@ -110,13 +110,16 @@ def arquivadas(request):
 
 
 def cadastro_candidato_2(request):
+    #contratacoes = TipoContratacao.objects.all()
+
+    #vagas = Vagas.objects.all()
+
+    #dados = {
+        #'contratacoes' : contratacoes,
+        #'trabalhos' : trabalhos,
+    #}
     return render(request, 'formcandidato.html')
 
-# def empresa(request):
-#     vagas = Vagas.objects.all()
-
-#     dados = {
-#         'vagas' : vagas
-#     }
-
-#     return render(request, 'empresa.html', dados)
+# def tela_404(request, exception):
+    '''ERRO 404'''
+#     return render(request, '404.html')
