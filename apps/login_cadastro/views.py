@@ -110,13 +110,12 @@ def arquivadas(request):
 
 
 def cadastro_candidato_2(request):
+    #contratacoes = TipoContratacao.objects.all()
+
+    #vagas = Vagas.objects.all()
+
+    #dados = {
+        #'contratacoes' : contratacoes,
+        #'trabalhos' : trabalhos,
+    #}
     return render(request, 'formcandidato.html')
-
-# def empresa(request):
-#     vagas = Vagas.objects.all()
-
-#     dados = {
-#         'vagas' : vagas
-#     }
-
-#     return render(request, 'empresa.html', dados)
