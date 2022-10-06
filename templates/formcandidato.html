@@ -159,9 +159,9 @@
                                 <label for="genero">Genêro</label>
                                 <select class="form-control" id="genero" name="genero" required>
                                     <option value=""></option>
-                                    <option value="feminino">Feminino</option>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="prefiroNaoInformar">Prefiro não Informar</option>
+                                    {% for genero in generos%}
+                                    <option value="{{genero.genero}}">{{genero.genero}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -175,7 +175,9 @@
                                 <label for="validationCustom04" class="form-label">Estado</label>
                                 <select class="form-select" id="validationCustom04" required>
                                     <option selected disabled value="">Escolha...</option>
-                                    <option>...</option>
+                                    {% for estado in estados%}
+                                    <option value="{{estado.estado}}">{{estado.estado}}</option>
+                                    {% endfor %}
                                 </select>
                                 <div class="invalid-feedback">Por favor, escolha um estado valido</div>
                             </div>

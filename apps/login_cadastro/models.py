@@ -134,7 +134,7 @@ class NumeroInscritos(models.Model):
 
 '''
 
-'''
+
 #Tabela para adicionar as opções da area de interesse
 class AreaDeInteresse(models.Model):
     area = models.CharField(max_length=30)
@@ -217,4 +217,3 @@ class NivelIdioma(models.Model):
 
     class Meta:
         db_table = 'tb_NivelIdioma'
-'''
