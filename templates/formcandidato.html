@@ -108,10 +108,9 @@
                             <div class="col-md-6 p-3">
                                 <label for="areadeatuacao" class="form-label">Area de interesse</label>
                                 <select class="form-control form-itens" id="areadeatuacao" name="areadeatuacao" required>
-                                    <option value=""></option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
+                                    {% for area in areas%}
+                                    <option value="{{area.area}}">{{area.area}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -158,7 +157,6 @@
                             <div class="col-md-8 p-3">
                                 <label for="genero">Genêro</label>
                                 <select class="form-control" id="genero" name="genero" required>
-                                    <option value=""></option>
                                     {% for genero in generos%}
                                     <option value="{{genero.genero}}">{{genero.genero}}</option>
                                     {% endfor %}
@@ -174,7 +172,6 @@
                             <div class="col-md-6 p-3">
                                 <label for="validationCustom04" class="form-label">Estado</label>
                                 <select class="form-select" id="validationCustom04" required>
-                                    <option selected disabled value="">Escolha...</option>
                                     {% for estado in estados%}
                                     <option value="{{estado.estado}}">{{estado.estado}}</option>
                                     {% endfor %}

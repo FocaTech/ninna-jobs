@@ -14,11 +14,18 @@ class UsersAdmin(admin_auth_django.UserAdmin):
         ('Funcao', {'fields': ('funcao',)}),
     )
 
+
+class ListandoEstados(admin.ModelAdmin):
+    list_display = ('id', 'estado', 'sigla')
+    list_display_links = ('id', 'estado', 'sigla')
+    list_per_page = 10
+
+
 admin.site.register(Candidato)
 admin.site.register(Empresa)
 admin.site.register(AreaDeInteresse)
 admin.site.register(Genero)
-admin.site.register(Estado)
+admin.site.register(Estado, ListandoEstados)
 admin.site.register(FormacaoAcademica)
 admin.site.register(Mes)
 admin.site.register(Ano)
