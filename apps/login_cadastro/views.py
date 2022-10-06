@@ -1,5 +1,5 @@
 from vaga.models import Vagas
-from .models import Users, Candidato, Empresa
+from .models import Users, Candidato, Empresa, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
@@ -110,12 +110,20 @@ def arquivadas(request):
 
 
 def cadastro_candidato_2(request):
-    #contratacoes = TipoContratacao.objects.all()
+    #area = AreaDeInteresse.objects.all()
+    generos = Genero.objects.all()
+    estados = Estado.objects.all()
+    #formacao = FormacaoAcademica.objects.all()
+    #mes = Mes.objects.all()
+    #ano = Ano.objects.all()
+    #conquista = Conquista.objects.all()
+    #idioma = NivelIdioma.objects.all()
 
-    #vagas = Vagas.objects.all()
 
-    #dados = {
-        #'contratacoes' : contratacoes,
-        #'trabalhos' : trabalhos,
-    #}
-    return render(request, 'formcandidato.html')
+
+    dados = {
+        #'area' : area,
+        'generos' : generos,
+        'estados' : estados
+    }
+    return render(request, 'formcandidato.html', dados)

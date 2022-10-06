@@ -1,1 +1,1 @@
-    # path('empresa/', views.empresa, name='empresa'),
+AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
