@@ -3,7 +3,7 @@ from .models import Users, Candidato, Empresa, AreaDeInteresse, Genero, Estado, 
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-# from rolepermissions.decorators  import has_permission_decorator
+from rolepermissions.decorators  import has_permission_decorator
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.http import HttpResponse
@@ -34,7 +34,7 @@ def cadastro_candidato(request):
         print('Usuário cadastrado com sucesso')
         return redirect ('longar_candidato')
     else:
-        return render(request, 'formcandidato.html')
+        return render(request, 'loginCandidato.html')
 
 
 def cadastro_empresa(request):
@@ -51,7 +51,7 @@ def cadastro_empresa(request):
 
 
     else:
-        return render(request, 'formempresa.html')
+        return render(request, 'login.html')
 
 
 def logar_candidato(request):
@@ -99,7 +99,7 @@ def logar_empresa(request):
         else:
             print("Email ou senha incorretos")
 
-    return render(request, 'formempresa.html')
+    return render(request, 'login.html')
 
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
     return (empresa_email == "" or empresa_senha == "") or (candidato_email == "" or candidato_senha == "")
