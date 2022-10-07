@@ -113,6 +113,9 @@ def plataforma(request):
 def arquivadas(request):
     return render(request, 'arquivadas.html')
 
+def empresa(request):
+    return render(request, 'empresa.html')
+
 
 def cadastro_candidato_2(request):
     areas = AreaDeInteresse.objects.all()
