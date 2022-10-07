@@ -1,5 +1,14 @@
 {% load static %}
 <header class="fixed-top">
+  <style>
+  .botaologout{
+    background-color: transparent;
+    border: none;
+  }
+  .botaologout > img{
+    border-radius: 50%;
+  }
+    </style>
   <nav class="navbar navbar-dark navbar-expand-lg">
     {% if user.is_authenticated %}
     <div class="container">
@@ -12,17 +21,21 @@
             <a class="nav-link" href="{% url 'index' %}">Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard' %}">Vagas</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#">Sobre Nós</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contato</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          </li>
+        </ul>
+    </div>
+    <div>
+      <div class="dropdown">
+        <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img width="40" height="40" src="{% static 'img/candidato.jpg' %}" alt="share">
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Minha área</li>
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</li>
         </ul>
       </div>
       {% else %}
