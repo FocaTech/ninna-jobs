@@ -12,5 +12,5 @@ urlpatterns = [
     path('arquivadas', views.arquivadas, name='arquivadas'),
     # path('empresa/', views.empresa, name='empresa'),
 
-    path('logout', views.logout, name='logout')
+    path('sair', views.sair, name='sair')
 ]

@@ -3,7 +3,7 @@ from .models import Users, Candidato, Empresa, AreaDeInteresse, Genero, Estado, 
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-from rolepermissions.decorators  import has_permission_decorator
+# from rolepermissions.decorators  import has_permission_decorator
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.http import HttpResponse
@@ -73,8 +73,8 @@ def logar_candidato(request):
         messages.error(request, "candidato não cadastrado")
 
     return render(request, 'loginCandidato.html')
-    
-def logout(request):
+
+def sair(request):
     '''Desloga uma pessoa'''
     auth.logout(request)
     return redirect('index')
