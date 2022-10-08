@@ -8,7 +8,7 @@
   .botaologout > img{
     border-radius: 50%;
   }
-    </style>
+  </style>
   <nav class="navbar navbar-dark navbar-expand-lg">
     {% if user.is_authenticated %}
     <div class="container">
@@ -29,11 +29,22 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contato</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'sair' %}">Sair</a>
-          </li>
+        </ul>
+    </div>
+    <div>
+      <div class="dropdown">
+        <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img width="40" height="40" src="{% static 'img/candidato.jpg' %}" alt="share">
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Minha área</li>
+          <li><a class="dropdown-item" href="{% url 'sair' %}">Sair</li>
         </ul>
       </div>
+      {% comment %} <a href="{% url 'logar_candadato' %}">
+        <button class="px-3 mx-4 botaoLogin" id="login" name="login" type="button"> Fazer Login</button>
+      </a> {% endcomment %}
+    </div>
       {% else %}
       <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +65,7 @@
               <a class="nav-link" href="#">Contato</a>
             </li>
           </ul>
-      </div>
+        </div>
       <div>
         <div class="dropdown">
           <button class="dropdown-toggle botaoLogin mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
