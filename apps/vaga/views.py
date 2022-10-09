@@ -2,6 +2,7 @@ from pickletools import read_uint8
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas
 from login_cadastro.models import Users
+from django.contrib import messages
 
 def select(request):
     contratacoes = TipoContratacao.objects.all()
@@ -97,12 +98,19 @@ def index(request):
     return render(request, 'index.html', dados)
 
 def dashboard(request):
+    print('entrou')
     vagas = Vagas.objects.all()
+    print(vagas)
+    id_cadidato = get_object_or_404(Users, pk=request.user.id)
+    print(id_cadidato)
+    vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)
+    print(vagas_salvas_do_user)
+    # vagas_salvas_para_mostar = Vagas.objects.filter(id=vagas_salvas_do_user)
+    # print(vagas_salvas_para_mostar)
 
     dados = {
         'vagas' : vagas
     }
-
     return render(request, 'dashboard.html', dados)
 
 def perfil(request):
@@ -139,7 +147,6 @@ def tela_de_vagas_salvas(request):
     return render(request, 'salvas.html')
 
 def salvar_vaga(request, pk_vaga):
-    print('entrou no salvar vaga')
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -147,22 +154,10 @@ def salvar_vaga(request, pk_vaga):
 
         id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
 
-        # id_vaga = pk_vaga
-
-        print(f"A PK do user {id_cadidato}")
-        print(f"O tipo do user {type(id_cadidato)}")
-        print(f"A PK da vaga {id_vaga}")
-        print(f"O tipo do vaga {type(id_vaga)}")
+        if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
+            return redirect('index')
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
 
-        # print(f"A PK do user{pk_user}")
-        # print(f"A PK da vaga{pk_vaga}")
-        # id_cadidato = request.POST['pk_user']
-
-        # user = get_object_or_404(Users, pk=request.user.id)
-        # vaga = get_object_or_404(Vagas, pk=request.user.id)
-        return redirect(tela_de_vagas_salvas)
-        # return render(request, 'salvas.html')
-    return redirect('login')
+        return redirect('index')
