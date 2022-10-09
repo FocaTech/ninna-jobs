@@ -100,9 +100,13 @@ def index(request):
 def dashboard(request):
     print('entrou')
     vagas = Vagas.objects.all()
+    print(vagas)
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
     print(id_cadidato)
-    vagas = VagasSalvas.objects.all()
+    vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)
+    print(vagas_salvas_do_user)
+    # vagas_salvas_para_mostar = Vagas.objects.filter(id=vagas_salvas_do_user)
+    # print(vagas_salvas_para_mostar)
 
     dados = {
         'vagas' : vagas
@@ -151,7 +155,6 @@ def salvar_vaga(request, pk_vaga):
         id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
 
         if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
-            messages.error(request, 'Esta vaga ja foi salva')
             return redirect('index')
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
