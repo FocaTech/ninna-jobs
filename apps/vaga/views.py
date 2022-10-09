@@ -98,18 +98,18 @@ def index(request):
     return render(request, 'index.html', dados)
 
 def dashboard(request):
-    print('entrou')
     vagas = Vagas.objects.all()
-    print(vagas)
+
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
-    print(id_cadidato)
-    vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)
-    print(vagas_salvas_do_user)
-    # vagas_salvas_para_mostar = Vagas.objects.filter(id=vagas_salvas_do_user)
-    # print(vagas_salvas_para_mostar)
+    id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
+
+    for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
+        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
 
     dados = {
-        'vagas' : vagas
+        'vagas' : vagas,
+        'vagas_salvas' : lista_de_vagas_salvas_do_user,
     }
     return render(request, 'dashboard.html', dados)
 
