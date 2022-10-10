@@ -11,16 +11,13 @@ def acoes_empresa(request):
     return render(request, 'acoesEmpresa.html')
 
 def acoes_talento(request):
-    return render(request, 'acoesTalentos.html')
+    return render(request, 'acoesTalento.html')
 
 def graficos(request):
     return render(request, 'Graficos.html')
 
-def relatorio_emp(request):
-    return render(request, 'relatorioEmpresa.html')
-
-def relatorio_tal(request):
-    return render(request, 'relatorioTalento.html')
+def relatorio(request):
+    return render(request, 'relatorio.html')
 
 def detalhes_vagas(request):
     return render(request, 'detalhesVagasEmpresa.html')
