@@ -1,6 +1,16 @@
 {% load static %}
 <header class="fixed-top">
+  <style>
+  .botaologout{
+    background-color: transparent;
+    border: none;
+  }
+  .botaologout > img{
+    border-radius: 50%;
+  }
+  </style>
   <nav class="navbar navbar-dark navbar-expand-lg">
+    {% if user.is_authenticated %}
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -11,7 +21,7 @@
             <a class="nav-link" href="{% url 'index' %}">Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard' %}">Vagas</a>
+            <a class="nav-link" href="{% url 'vagas' %}">Vagas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Sobre Nós</a>
@@ -20,21 +30,57 @@
             <a class="nav-link" href="#">Contato</a>
           </li>
         </ul>
+    </div>
+    <div>
+      <div class="dropdown">
+        <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img width="40" height="40" src="{% static 'img/candidato.jpg' %}" alt="share">
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Minha área</li>
+          <li><a class="dropdown-item" href="{% url 'sair' %}">Sair</li>
+        </ul>
       </div>
+      {% comment %} <a href="{% url 'logar_candadato' %}">
+        <button class="px-3 mx-4 botaoLogin" id="login" name="login" type="button"> Fazer Login</button>
+      </a> {% endcomment %}
+    </div>
+      {% else %}
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'index' %}">Início</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'vagas' %}">Vagas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contato</a>
+            </li>
+          </ul>
+        </div>
       <div>
         <div class="dropdown">
           <button class="dropdown-toggle botaoLogin mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Iniciar sessão
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'longar_candidato' %}">Candidato</a></li>
-            <li><a class="dropdown-item" href="{% url 'longar_empresa' %}">Empresa</a></li>
+            <li><a class="dropdown-item" href="{% url 'longar_candidato' %}"><i class="bi bi-person"></i> Candidato</a></li>
+            <li><a class="dropdown-item" href="{% url 'longar_empresa' %}"><i class="bi bi-building"></i> Empresa</a></li>
           </ul>
         </div>
         {% comment %} <a href="{% url 'logar_candadato' %}">
           <button class="px-3 mx-4 botaoLogin" id="login" name="login" type="button"> Fazer Login</button>
         </a> {% endcomment %}
       </div>
+      {% endif %}
       <a class="navbar-brand" href="#">
         <div class="navbar-logo">
           <img src="{% static 'img/logoninna.jpg' %}" alt="">

@@ -1,13 +1,13 @@
 from vaga.models import Vagas
-from .models import Users
-from django.contrib import auth
+from .models import Users, Candidato, Empresa, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
+from django.contrib.auth.models import User
+from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-from rolepermissions.decorators  import has_permission_decorator
+from rolepermissions.decorators import has_permission_decorator
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
-
 
 def cadastro_candidato(request):
     if request.method == 'POST':
@@ -18,14 +18,24 @@ def cadastro_candidato(request):
         print(candidato_email, candidato_senha, candidato_senha_conf)
         if candidato_senha != candidato_senha_conf:
             return redirect ('cadastro_candidatos')
+        if Users.objects.filter(email=candidato_email).exists():
+            messages.error(request, 'Usuario ja cadastrado')
+            return redirect('longar_candidato')
+        if Users.objects.filter(username=candidato_nome).exists():
+            messages.error(request, 'Usuario ja cadastrado')
+            return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
+        # candidato_user_na_tablela_user = User.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha)
+        # candidato_user_na_tablela_user.save()
+        candidato = Candidato.objects.create(email=candidato_email, senha=candidato_senha, nome=candidato_nome, nivel_prog="None", nivel_ing="None")
+        candidato.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         print('Usuário cadastrado com sucesso')
         return redirect ('longar_candidato')
-
     else:
         return render(request, 'loginCandidato.html')
+
 
 def cadastro_empresa(request):
     if request.method == 'POST':
@@ -43,46 +53,34 @@ def cadastro_empresa(request):
     else:
         return render(request, 'login.html')
 
-"""def login(request):
-    # PEGAR OS DADOS
-    candidato_email = None
-    candidato_senha = None
-    if request.method == 'POST':
-        empresa_email = request.POST.get('empresa_email', None)
-        empresa_senha = request.POST.get('empresa_senha', None)
-        print(empresa_email, empresa_senha)
 
-        if empresa_email == None or empresa_senha == None:
-            candidato_email = request.POST.get('candidato_email', None)
-            candidato_senha = request.POST.get('candidato_senha', None)
-            print(candidato_email, candidato_senha)
-
-        if nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
-            print("Os campos não podem estar vazios")
-            return redirect('login')"""
-
-# LOGAR CANDIDATO
-def longar_candidato(request):
+def logar_candidato(request):
 
     if request.method == 'POST':
-        print("entrou")
         candidato_email = request.POST.get('candidato_email', None)
         candidato_senha = request.POST.get('candidato_senha', None)
         print(candidato_email, candidato_senha)
 
         if Users.objects.filter(email=candidato_email).exists():
             nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
-            user = auth.authenticate(email=candidato_email, password=candidato_senha, funcao="CAN")
+            user = auth.authenticate(request, username=nome, password=candidato_senha, funcao = "CAN")
             print(nome)
+            print(user)
             if user:
                 auth.login(request, user)
                 print("autenticado")
                 return redirect('index')
+        messages.error(request, "candidato não cadastrado")
 
     return render(request, 'loginCandidato.html')
 
+def sair(request):
+    '''Desloga uma pessoa'''
+    auth.logout(request)
+    return redirect('index')
+
 # LOGAR EMPRESA
-def longar_empresa(request):
+def logar_empresa(request):
     empresa_email = None
     empresa_email = None
     if request.method == 'POST':
@@ -115,11 +113,33 @@ def plataforma(request):
 def arquivadas(request):
     return render(request, 'arquivadas.html')
 
-# def empresa(request):
-#     vagas = Vagas.objects.all()
+def empresa(request):
+    return render(request, 'empresa.html')
 
-#     dados = {
-#         'vagas' : vagas
-#     }
 
-#     return render(request, 'empresa.html', dados)
+def cadastro_candidato_2(request):
+    areas = AreaDeInteresse.objects.all()
+    generos = Genero.objects.all()
+    estados = Estado.objects.all()
+    formacoes = FormacaoAcademica.objects.all()
+    meses = Mes.objects.all()
+    anos = Ano.objects.all()
+    conquistas = Conquista.objects.all()
+    niveis = NivelIdioma.objects.all()
+
+
+    dados = {
+        'areas' : areas,
+        'generos' : generos,
+        'estados' : estados,
+        'formacoes' : formacoes,
+        'meses' : meses,
+        'anos' : anos,
+        'conquistas' : conquistas,
+        'niveis' : niveis
+    }
+    return render(request, 'formcandidato.html', dados)
+
+# def tela_404(request, exception):
+    '''ERRO 404'''
+#     return render(request, '404.html')

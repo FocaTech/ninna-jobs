@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Admin{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/admin.css'%}" />
+{% block body_class %}
+{% endblock %}
+{% block content %}
+{% endblock %}
+    {% include 'partials/header.html' %}
+    <!-- navbar -->
+    <!-- conteudo principal-->
+    <main class="row">
+      {% include 'partials/sidebar/admin.html' %}
+      <div class="col-8">
+        <div>
+          <h2 class="text-center">Administradores</h2>
+          <div>
+            <!--Tabela das admin-->
+            <div class="col-sm-12 p-3">
+              <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
+                <thead>
+                  <div class="row">
+                    <div class="col">
+                      <tr>
+                        <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
+                          <th tabindex="0" rowspan="1" colspan="1" aria-label="Inativo">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="ativo">
+                              <label class="form-check-label" for="ativo" name="ativofiltro">Ativo</label>
+                            </div>
+                          </th>
+                          <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro">
+                              <label class="form-check-label" for="inativo">Inativo</label>
+                            </div>
+                          </th>
+                          <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th>
+                        </th>
+                      </tr>
+                    </div>
+                  </div>
+                  <tr>
+                    <th>Selecionar</th>
+                    <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
+                    <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
+                    <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Status: activate ">Status</th>
+                    <th class="d-none d-md-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Ações">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="empresas">
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
+                      </div>
+                    </td>
+                    <td class="sorting_1">Gabriel Anjo</td>
+                    <td class="d-none d-xl-table-cell">01/01/2021</td>
+                    <td><span class="badge bg-success">Ativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="empresas">
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
+                      </div>
+                    </td>
+                    <td class="sorting_1">Miguel Arcanjo</td>
+                    <td class="d-none d-xl-table-cell">01/01/2021</td>
+                    <td><span class="badge bg-danger">+6 meses Inativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="empresas">
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
+                      </div>
+                    </td>
+                    <td class="sorting_1">Rafael Anjo</td>
+                    <td class="d-none d-xl-table-cell">01/01/2021</td>
+                    <td><span class="badge bg-warning">6 meses inativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="button" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            adicionar
+          </button>
+        </div>
+      </div>
+    </main>
+      <!--Modal de adicionar um novo Administrador-->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Administrador</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!--Form para cadastrar um novo admin-->
+              <form class="row g-3 needs-validation" novalidate>
+                <div class="col-mb-6">
+                  <label for="perfilfoto">Selecione uma foto de perfil</label>
+                  <input id="perfilfoto" type="file" class="form-control" aria-label="file example" required>
+                  <div class="invalid-feedback">Example invalid form file feedback</div>
+                </div>
+                <div class="col-md-8">
+                  <label for="validationCustom01" class="form-label">Nome Completo</label>
+                  <input type="text" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationCustomUsername" class="form-label">Nome de Usuario</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                      Please choose a username.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="validationCustom01" class="form-label">Email</label>
+                  <input type="text" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="validationCustom01" class="form-label">Senha</label>
+                  <input type="password" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="validationCustom01" class="form-label">Repita a senha</label>
+                  <input type="password" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script>
+      $('#exampleModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)
+      var recipient = button.data('whatever')
+      var modal = $(this)
+      modal.find('.modal-title').text('New message to ' + recipient)
+      modal.find('.modal-body input').val(recipient)
+      })
+    </script>
+    <script>
+      var checkTodos = $("#checkTodos");
+      checkTodos.click(function () {
+        if ( $(this).is(':checked') ){
+          $('.marcar').prop("checked", true);
+        }else{
+          $('marcar').prop("checked", false);
+      }
+      });
+    </script>
+    <script src="/node_modules/chart.js/dist/chart.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/script.js"></script>
+{% endblock %}
+

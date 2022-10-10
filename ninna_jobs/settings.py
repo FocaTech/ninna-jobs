@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from distutils.debug import DEBUG
 from pathlib import Path
 import os, sys
 
@@ -24,6 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-sfo9%n%o4kblmmir+%haro!1aobi+a&9oqtaw#+h%tlis5qdkt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = False>>>>>>>>>>>>>   ERRO 404
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']  >>>>>>>>>>   ERRO 404
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -149,3 +152,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Papeis de Permissões
 
 ROLEPERMISSIONS_MODULE = 'ninna_jobs.roles'
+
+# Messages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success',
+}

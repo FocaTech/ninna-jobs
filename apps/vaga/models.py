@@ -1,4 +1,7 @@
+from tkinter import CASCADE
 from django.db import models
+from login_cadastro.models import Candidato
+from login_cadastro.models import Users
 
 class Vagas(models.Model):
     nome_vaga = models.CharField(max_length=100)
@@ -53,6 +56,9 @@ class PerfilProfissional(models.Model):
     class Meta:
         db_table = 'tb_PerfilProfissional'
 
+class VagasSalvas(models.Model):
+    id_cadidato = models.ForeignKey(Users, on_delete=models.CASCADE)
+    id_vaga = models.ForeignKey(Vagas, on_delete=models.CASCADE)
 
-
-# Create your models here.
+    # def __str__(self):
+    #     return self.id_cadidato
