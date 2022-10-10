@@ -1,22 +1,98 @@
 .profile-box .sidebar-avatar {
     width: 125px;
 }
+
+p {
+    font-size: 14px;
+}
+
 .profile-box {
     background-color: #e6ecee;
     max-width: 500px;
     margin: auto;
-    padding: 20px;
+    padding: 40px;
     text-align: center;
     border-radius: 20px;
     margin-top: -65px;
     margin-bottom: 15px;
+    height: 380px;
+    width: 300px;
 }
+
+.btn {
+    background: gold;
+    border-radius: 40px;
+    border: none;
+}
+
+.btn:hover {
+    background: orange;
+}
+
+.div-enviar-mensagem {
+    width: 100%;
+    display: flex;
+}
+
+.bt-enviar {
+    color: white;
+    background: #0e76a8;
+    width: 80%;
+    font-size: 14px;
+    margin-right: 10px;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.aviao {
+    margin-top: 5px;
+}
+
+.msg-btn-enviar{
+    margin-top: 17px;
+}
+
 .profile-name {
     font-size: 24px;
+    padding: 10px;
+    padding-top: 20px;
 }
+
+.div-sobre {
+    width: 100%;
+    background: #e6ecee;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.div-saiba-mais {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.div-saiba-mais h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.div-saiba-mais img {
+    width: 25px;
+    height: 25px;
+}
+
+.div-informacoes {
+    background: #e6ecee;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 .container .content {
     margin-top: 50px;
-    padding-bottom: .5em;
+    margin-bottom: 10px;
 }
 
 .bi{
@@ -34,8 +110,7 @@
 
 .tituloperfil{
     font-size: 24px;
-    font-weight: normal;
-    text-transform: uppercase;
+    font-weight: bold;
     display: block;
     margin-bottom: 20px;
 }
@@ -52,9 +127,10 @@ body{
 	padding:0;
 	font-family:"arial",heletica,sans-serif;
 	font-size:12px;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.356), rgb(255, 254, 254)), url("../img/mosaic-gde02ab7d3_1280.png");
+    background-image: linear-gradient(rgba(255, 255, 255, 0.356), rgb(255, 254, 254)), url("../img/background-purple.png");
     background-repeat: repeat-x;
     background-size: 500px;
+    overflow-x: hidden;
 
 	-webkit-animation: 10s linear 0s normal none infinite animate;
 	-moz-animation: 10s linear 0s normal none infinite animate;
