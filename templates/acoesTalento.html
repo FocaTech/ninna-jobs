@@ -1,246 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NinnaJobs - Admin{% endblock %}
+{% block head %}
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://kit.fontawesome.com/dfcc59a893.js" crossorigin="anonymous"></script>
-    <title>NinnaJobs - Admin Dashboard </title>
-  </head>
-  <body>
-    {% include 'partials/header.html' %}
-    <!-- navbar -->
-    <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="sidebar">
-      <div class="offcanvas-body p-0">
-        <nav class="navbar-dark">
-          <ul class="navbar-nav">
-            <li>
-              <div class="text-muted small fw-bold text-uppercase px-3">
-                NinnaJobs
-              </div>
-            </li>
-            <li>
-              <div class="sidebar-user">
-                <img src="images/imagem2.png" class="img-fluid rounded-circle my-3" name="imgperfiladmin" alt="Admin">
-                <div class="">Nome Admin</div>
-                <small>Admin 1</small>
-              </div>
-            </li>
-            <li>
-              <a href="#" class="nav-link px-3 active">
-                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
-                <span>Admin - Dashboard</span>
-              </a>
-            </li>
-            <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
-            <li>
-              <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                Relatorios
-              </div>
-            </li>
-            <li>
-              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#usuarios">
-                <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                <span>Usuarios</span>
-                <span class="ms-auto">
-                  <span class="right-icon">
-                    <i class="bi bi-chevron-down"></i>
-                  </span>
-                </span>
-              </a>
-              <div class="collapse" id="usuarios">
-                <ul class="navbar-nav ps-3">
-                  <li>
-                    <a href="#" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-building"></i></span>
-                      <span>Empresas</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-people"></i></span>
-                      <span>Talentos</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <a href="#" class="nav-link px-3">
-                <span class="me-2"><i class="bi bi-briefcase"></i></span>
-                <span>Vagas</span>
-              </a>
-            </li>
-            <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
-            <li>
-              <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                Mais Informações
-              </div>
-            </li>
-            <li>
-              <a href="#" class="nav-link px-3">
-                <span class="me-2"><i class="bi bi-graph-up"></i></span>
-                <span>Gráficos</span>
-              </a>
-            </li>
-            <li>
-              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#acoes">
-                <span class="me-2"><i class="bi bi-cursor"></i></span>
-                <span>Ações</span>
-                <span class="ms-auto">
-                  <span class="right-icon">
-                    <i class="bi bi-chevron-down"></i>
-                  </span>
-                </span>
-              </a>
-              <div class="collapse" id="acoes">
-                <ul class="navbar-nav ps-3">
-                  <li>
-                    <a href="#" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-building"></i></span>
-                      <span>Empresas</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-people"></i></span>
-                      <span>Talentos</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-gear"></i></span>
-                      <span>Admin</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
     <!-- conteudo principal-->
-    <main class="mt-5 pt-3">
-      <!--Botão voltar-->
-      <div> 
-        <a class="btn btn-primary m-3" href="index.html" role="button">Voltar</a>
-      </div>
-      <div>
-        <h2 class="text-center">Talentos</h2>
+    <main class="row">
+      {% include 'partials/sidebar/admin.html' %}
+      <div class="col-8">
+          <!--Botão voltar-->
         <div>
-          <!--Tabela das empresas-->
-          <div class="col-sm-12 p-3">
-            <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
-              <thead>
-                <div class="row">
-                  <div class="col">
-                    <tr>
-                      <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
-                        <th tabindex="0" rowspan="1" colspan="1" aria-label="Inativo">
-                          <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="ativo">
-                            <label class="form-check-label" for="ativo" name="ativofiltro">Ativo</label>
-                          </div>
+          <a class="btn btn-primary m-3" href="index.html" role="button">Voltar</a>
+        </div>
+        <div>
+          <h2 class="text-center">Talentos</h2>
+          <div>
+            <!--Tabela das empresas-->
+            <div class="col-sm-12 p-3">
+              <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
+                <thead>
+                  <div class="row">
+                    <div class="col">
+                      <tr>
+                        <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
+                          <th tabindex="0" rowspan="1" colspan="1" aria-label="Inativo">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="ativo">
+                              <label class="form-check-label" for="ativo" name="ativofiltro">Ativo</label>
+                            </div>
+                          </th>
+                          <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro">
+                              <label class="form-check-label" for="inativo">Inativo</label>
+                            </div>
+                          </th>
+                          <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th>
                         </th>
-                        <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">
-                          <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro">
-                            <label class="form-check-label" for="inativo">Inativo</label>
-                          </div>
-                        </th>
-                        <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th>
-                      </th>
-                    </tr>
+                      </tr>
+                    </div>
                   </div>
-                </div>
-                <tr>
-                  <th>Selecionar</th>
-                  <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
-                  <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
-                  <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultima Vaga Candidatada</th>
-                  <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Status: activate ">Status</th>
-                  <th class="d-none d-md-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Ações">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="empresas">
-                  <td>
-                    <div class="form-check">
-                      <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
-                    </div>
-                  </td>
-                  <td class="sorting_1">Maria Alice Teixeira da Costa</td>
-                  <td class="d-none d-xl-table-cell">01/01/2021</td>
-                  <td class="d-none d-xl-table-cell">31/06/2021</td>
-                  <td><span class="badge bg-success">Ativo</span></td>
-                  <td class="d-none d-md-table-cell">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ações
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="empresas">
-                  <td>
-                    <div class="form-check">
-                      <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
-                    </div>
-                  </td>
-                  <td class="sorting_1">Maria Aline Teixeira da Costa</td>
-                  <td class="d-none d-xl-table-cell">01/01/2021</td>
-                  <td class="d-none d-xl-table-cell">31/06/2021</td>
-                  <td><span class="badge bg-danger">+6 meses Inativo</span></td>
-                  <td class="d-none d-md-table-cell">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ações
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="empresas">
-                  <td>
-                    <div class="form-check">
-                      <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
-                    </div>
-                  </td>
-                  <td class="sorting_1">Erick Patrick Teixeira da Costa</td>
-                  <td class="d-none d-xl-table-cell">01/01/2021</td>
-                  <td class="d-none d-xl-table-cell">31/06/2021</td>
-                  <td><span class="badge bg-warning">6 meses inativo</span></td>
-                  <td class="d-none d-md-table-cell">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ações
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><button type="button" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr>
+                    <th>Selecionar</th>
+                    <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
+                    <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
+                    <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultima Vaga Lançada</th>
+                    <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Status: activate ">Status</th>
+                    <th class="d-none d-md-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Ações">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="empresas">
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
+                      </div>
+                    </td>
+                    <td class="sorting_1">Xbox</td>
+                    <td class="d-none d-xl-table-cell">01/01/2021</td>
+                    <td class="d-none d-xl-table-cell">31/06/2021</td>
+                    <td><span class="badge bg-success">Ativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="empresas">
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
+                      </div>
+                    </td>
+                    <td class="sorting_1">Nitendo</td>
+                    <td class="d-none d-xl-table-cell">01/01/2021</td>
+                    <td class="d-none d-xl-table-cell">31/06/2021</td>
+                    <td><span class="badge bg-danger">+6 meses Inativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="empresas">
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
+                      </div>
+                    </td>
+                    <td class="sorting_1">PlayStation</td>
+                    <td class="d-none d-xl-table-cell">01/01/2021</td>
+                    <td class="d-none d-xl-table-cell">31/06/2021</td>
+                    <td><span class="badge bg-warning">6 meses inativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="button" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-end fixed-top">
-        <button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="bi bi-plus-square"></i> Adicionar</button>
+        <div class="d-flex justify-content-end fixed-top">
+          <button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="bi bi-plus-square"></i> Adicionar</button>
+        </div>
       </div>
     </main>
     <!--Modal de adicionar nova empresa-->
@@ -274,8 +163,8 @@
     </div>
     <script>
       $('#exampleModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) 
-      var recipient = button.data('whatever') 
+      var button = $(event.relatedTarget)
+      var recipient = button.data('whatever')
       var modal = $(this)
       modal.find('.modal-title').text('New message to ' + recipient)
       modal.find('.modal-body input').val(recipient)
@@ -294,5 +183,5 @@
     <script src="../node_modules/chart.js/dist/chart.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/script.js"></script>
-  </body>
-</html>
+    {% endblock %}
+

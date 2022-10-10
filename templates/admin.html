@@ -1,142 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"/>
-    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
-    <link rel="stylesheet" href="css/admin.css" />
-    <title>NinnaJobs - Admin Dashboard </title>
-  </head>
-  <body>
-    {% include 'partials/header.html' %}
-    <!-- top navigation bar -->
-    <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="sidebar">
-      <div class="offcanvas-body p-0">
-        <nav class="navbar-dark">
-          <ul class="navbar-nav">
-            <li>
-              <div class="text-muted small fw-bold text-uppercase px-3">
-                NinnaJobs
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NinnaJobs - Admin{% endblock %}
+{% block head %}
+
+<script src="{% static 'node_modules/chart.js/dist/chart.js' %}" defer></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
+<script src="{% static 'js/jquery-3.5.1.js' %}" defer></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}" defer></script>
+<script src="{% static 'js/dataTables.bootstrap5.min.js' %}" defer></script>
+<script src="{% static 'js/charts.js' %}" defer></script>
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/admin.css' %}"/>
+{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+<main class="row">
+  {% include 'partials/sidebar/admin.html' %}
+  <div class="col-8">
+    <section>
+      <!--Cartões com informações sobre numeros de usuarios, vagas disponiveis, numero de matchs-->
+      <div class="row">
+          <div class="card col m-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col mt-0">
+                  <h6 class="card-title">Total de usuarios cadastratos</h6>
+                </div>
+                <div class="col-auto">
+                  <div class="avatar">
+                    <div class="avatar-title rounded-circle bg-primary-dark">
+                      &#x1F469;&#x1F3FB;&#x200D;&#x1F4BC;
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-            <li>
-              <div class="sidebar-user">
-                <img src="images/imagem2.png" class="img-fluid rounded-circle mb-2" alt="Linda Miller">
-                <div class="">Gabi</div>
-                <small>Admin 1</small>
+              <h2 class="display-5 mt-1 mb-3">00</h2>
+            </div>
+          </div>
+          <div class="card col m-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col mt-0">
+                  <h6 class="card-title">Número de matches</h6>
+                </div>
+                <div class="col-auto">
+                  <div class="avatar">
+                    <div class="avatar-title rounded-circle bg-primary-dark">
+                      &#129309;
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-            <li>
-              <a href="#" class="nav-link px-3 active">
-                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
-                <span>Admin - Dashboard</span>
-              </a>
-            </li>
-            <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
-            <li>
-              <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                Relatorios
+              <h2 class="display-5 mt-1 mb-3">00</h2>
+            </div>
+          </div>
+          <div class="card col m-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col mt-0">
+                  <h6 class="card-title">Vagas ativas</h6>
+                </div>
+                <div class="col-auto">
+                  <div class="avatar">
+                    <div class="avatar-title rounded-circle bg-primary-dark">
+                      &#128188;
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-            <li>
-              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#usuarios">
-                <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                <span>Usuarios</span>
-                <span class="ms-auto">
-                  <span class="right-icon">
-                    <i class="bi bi-chevron-down"></i>
-                  </span>
-                </span>
-              </a>
-              <div class="collapse" id="usuarios">
-                <ul class="navbar-nav ps-3">
-                  <li>
-                    <a href="#" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-building"></i></span>
-                      <span>Empresas</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-people"></i></span>
-                      <span>Talentos</span>
-                    </a>
-                  </li>
-                </ul>
+              <h2 class="display-5 mt-1 mb-3">00</h2>
+            </div>
+          </div>
+          <div class="card col m-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col mt-0">
+                  <h6 class="card-title">Total de empresas cadastradas</h6>
+                </div>
+                <div class="col-auto">
+                  <div class="avatar">
+                    <div class="avatar-title rounded-circle bg-primary-dark">
+                      &#127970;
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-            <li>
-              <a href="#" class="nav-link px-3">
-                <span class="me-2"><i class="bi bi-briefcase"></i></span>
-                <span>Vagas</span>
-              </a>
-            </li>
-            <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
-            <li>
-              <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                Mais Informações
-              </div>
-            </li>
-            <li>
-              <a href="Graficos.html" class="nav-link px-3">
-                <span class="me-2"><i class="bi bi-graph-up"></i></span>
-                <span>Gráficos</span>
-              </a>
-            </li>
-            <li>
-              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#acoes">
-                <span class="me-2"><i class="bi bi-cursor"></i></span>
-                <span>Ações</span>
-                <span class="ms-auto">
-                  <span class="right-icon">
-                    <i class="bi bi-chevron-down"></i>
-                  </span>
-                </span>
-              </a>
-              <div class="collapse" id="acoes">
-                <ul class="navbar-nav ps-3">
-                  <li>
-                    <a href="acoesEmpresa.html" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-building"></i></span>
-                      <span>Empresas</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="acoesTalento.html" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-people"></i></span>
-                      <span>Talentos</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="acoesadmin.html" class="nav-link px-3">
-                    <a href="acoesadmin.html" class="nav-link px-3">
-                      <span class="me-2"><i class="bi bi-gear"></i></span>
-                      <span>Admin</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </nav>
+              <h2 class="display-5 mt-1 mb-3">00</h2>
+            </div>
+          </div>
       </div>
-    </div>
-    <!-- offcanvas -->
-    <main class="mt-5 pt-3">
-      <div class="container-fluid">
+          <!--Graficos usuarios cadastrados e nivel de talentos-->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
+                Usuarios cadastrados
+            </div>
+            <div class="card-body">
+            <!--Onde os graficos devem ser renderizados neste canvas-->
+              <canvas class="totalusuarios" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
+                Nivel dos Talentos
+            </div>
+            <div class="card-body">
+            <!--Onde os graficos devem ser renderizados neste canvas-->
+              <canvas class="niveltalento" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="row">
           <div class="col-md-12">
-            <h4>Ultimas empresas cadastradas</h4>
+            <h6>Ultimas empresas cadastradas</h6>
           </div>
         </div>
         <!--Empresas cadastradas-->
         <div class="row">
           <div class="col-md-3 mb-3">
             <div class="card" style="width: 18rem;">
-              <img src="images/imagem2.png" class="card-img-top" alt="...">
+              <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title"><i class="bi bi-building"></i> Nome da Empresa</h5>
                 <div class="dropdown-center">
@@ -154,118 +147,14 @@
           </div>
         </div>
         <div class="row">
-          <!--Graficos usuarios cadastrados e nivel de talentos-->
-          <div class="row col">
-            <div class="col-md-6 mb-3">
-              <div class="card h-100">
-                <div class="card-header">
-                  <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
-                  Usuarios cadastrados
-                </div>
-                <div class="card-body">
-                  <canvas class="totalusuarios" width="400" height="200"></canvas>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <div class="card h-100">
-                <div class="card-header">
-                  <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
-                  Nivel dos Talentos
-                </div>
-                <div class="card-body">
-                  <canvas class="niveltalento" width="400" height="200"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--Cartões com informações sobre numeros de usuarios, vagas disponiveis, numero de matchs-->
-          <div class="row col">
-            <div class="col-sm-6">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <h5 class="card-title">Total de usuarios cadastratos</h5>
-                    </div>
-                    <div class="col-auto">
-                      <div class="avatar">
-                        <div class="avatar-title rounded-circle bg-primary-dark">
-                          <i class="fa-solid fa-users"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <h1 class="display-5 mt-1 mb-3">00</h1>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <h5 class="card-title">Número de matches</h5>
-                    </div>
-                    <div class="col-auto">
-                      <div class="avatar">
-                        <div class="avatar-title rounded-circle bg-primary-dark">
-                          <i class="fa-sharp fa-solid fa-handshake"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <h1 class="display-5 mt-1 mb-3">00</h1>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <h5 class="card-title">Vagas ativas</h5>
-                    </div>
-                    <div class="col-auto">
-                      <div class="avatar">
-                        <div class="avatar-title rounded-circle bg-primary-dark">
-                          <i class="fa-solid fa-briefcase"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <h1 class="display-5 mt-1 mb-3">00</h1>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col mt-0">
-                      <h5 class="card-title">Total de empresas cadastradas</h5>
-                    </div>
-                    <div class="col-auto">
-                      <div class="avatar">
-                        <div class="avatar-title rounded-circle bg-primary-dark">
-                          <i class="fa-sharp fa-solid fa-building"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <h1 class="display-5 mt-1 mb-3">00</h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="table-responsive">
-                  <table
-                    id="example"
-                    class="table table-striped data-table"
-                    style="width: 100%"
-                  >
-                  <p>Ultimos talentos cadastrados</p>
+                  <div class="col-md-12">
+                    <h4>Ultimos talentos registrados</h4>
+                  </div>
+                  <table id="example"class="table table-striped data-table"style="width: 100%">
                     <thead>
                       <tr>
                         <th>Nome</th>
@@ -301,13 +190,7 @@
           </div>
         </div>
       </div>
-    </main>
-    <script src="../node_modules/chart.js/dist/chart.js"></script>
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
-    <script src="./js/jquery-3.5.1.js"></script>
-    <script src="./js/jquery.dataTables.min.js"></script>
-    <script src="./js/dataTables.bootstrap5.min.js"></script>
-    <script src="./js/script.js"></script>
-  </body>
-</html>
+    </section>
+  </div>
+</main>
+{% endblock %}
