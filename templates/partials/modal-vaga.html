@@ -39,7 +39,7 @@
     {% if user.is_authenticated %}
       <div class="modal-footer justify-content-between">
         <div>
-
+          <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
         </div>
         <div>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
