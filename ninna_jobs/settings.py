@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ninna_jobs',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': '10041999',
         'HOST': 'localhost'
     }
 }
