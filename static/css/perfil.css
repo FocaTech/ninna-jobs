@@ -21,8 +21,12 @@ p {
 
 .btn {
     background: gold;
-    border-radius: 40px;
+    border-radius: 55px;
     border: none;
+}
+.baixar {
+   background-color: #0e76a8;
+   margin-right: 5px;
 }
 
 .btn:hover {
@@ -51,6 +55,7 @@ p {
 }
 
 .msg-btn-enviar{
+    font-size: 12px;
     margin-top: 17px;
 }
 
