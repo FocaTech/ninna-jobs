@@ -15,10 +15,6 @@
     <main class="row">
       {% include 'partials/sidebar/admin.html' %}
       <div class="col-8">
-        <!--Botão voltar-->
-        <div>
-          <a class="btn btn-primary m-3" href="admin.html" role="button">Voltar</a>
-        </div>
         <div>
           <h2 class="text-center">Administradores</h2>
           <div>
@@ -131,16 +127,61 @@
         </div>
       </div>
     </main>
-      <!--Modal de adicionar nova empresa-->
+      <!--Modal de adicionar um novo Administrador-->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar a Empresa, através de email?</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Administrador</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              ...
+              <!--Form para cadastrar um novo admin-->
+              <form class="row g-3 needs-validation" novalidate>
+                <div class="col-mb-6">
+                  <label for="perfilfoto">Selecione uma foto de perfil</label>
+                  <input id="perfilfoto" type="file" class="form-control" aria-label="file example" required>
+                  <div class="invalid-feedback">Example invalid form file feedback</div>
+                </div>
+                <div class="col-md-8">
+                  <label for="validationCustom01" class="form-label">Nome Completo</label>
+                  <input type="text" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationCustomUsername" class="form-label">Nome de Usuario</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                      Please choose a username.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="validationCustom01" class="form-label">Email</label>
+                  <input type="text" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="validationCustom01" class="form-label">Senha</label>
+                  <input type="password" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="validationCustom01" class="form-label">Repita a senha</label>
+                  <input type="password" class="form-control" id="validationCustom01" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+              </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>

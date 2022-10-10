@@ -19,58 +19,27 @@
                     </li>
                     <li>
                         <!--link para a pagina principal da dashboard-->
-                        <a href="#"role="button" class="nav-link px-3 active">
+                        <a href="{% url 'interface'%}"role="button" class="nav-link px-3 active">
                         <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                         <span>Admin - Dashboard</span>
                         </a>
                     </li>
-                    <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
-                    <li>
-                        <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                        Relatorios
-                        </div>
-                    </li>
-                    <li>
-                        <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#usuarios">
-                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                        <span>Usuarios</span>
-                        <span class="ms-auto">
-                            <span class="right-icon">
-                            <i class="bi bi-chevron-down"></i>
-                            </span>
-                        </span>
-                        </a>
-                        <div class="collapse" id="usuarios">
-                        <ul class="navbar-nav ps-3">
-                        <li>
-                        <a href="#" class="nav-link px-3">
-                            <span class="me-2"><i class="bi bi-building"></i></span>
-                            <span>Empresas</span>
-                        </a>
-                        </li>
-                        <li>
-                        <a href="#" class="nav-link px-3">
-                            <span class="me-2"><i class="bi bi-people"></i></span>
-                            <span>Talentos</span>
-                        </a>
-                        </li>
-                    </ul>
-                    </div>
+                    <hr class="dropdown-divider bg-dark bg-opacity-50">
                 </li>
                 <li>
-                    <a href="#" class="nav-link px-3">
-                    <span class="me-2"><i class="bi bi-briefcase"></i></span>
-                    <span>Vagas</span>
+                    <a href="{% url 'relatorio' %}" class="nav-link px-3">
+                    <span class="me-2"><i class="bi bi-journal-text"></i></span>
+                    <span>Relatorio</span>
                     </a>
                 </li>
-                <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
+                <li class="my-4"><hr class="dropdown-divider bg-dark bg-opacity-50" /></li>
                 <li>
                     <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
                     Mais Informações
                     </div>
                 </li>
                 <li>
-                    <a href="Graficos.html" class="nav-link px-3">
+                    <a href="{% url 'graficos' %}" class="nav-link px-3">
                     <span class="me-2"><i class="bi bi-graph-up"></i></span>
                     <span>Gráficos</span>
                     </a>
@@ -88,20 +57,19 @@
                     <div class="collapse" id="acoes">
                     <ul class="navbar-nav ps-3">
                         <li>
-                        <a href="acoesEmpresa.html" class="nav-link px-3">
+                        <a href="{% url 'acoes_empresa' %}" class="nav-link px-3">
                             <span class="me-2"><i class="bi bi-building"></i></span>
                             <span>Empresas</span>
                         </a>
                         </li>
                         <li>
-                        <a href="acoesTalento.html" class="nav-link px-3">
+                        <a href="{% url 'acoes_talento' %}" class="nav-link px-3">
                             <span class="me-2"><i class="bi bi-people"></i></span>
                             <span>Talentos</span>
                         </a>
                         </li>
                         <li>
-                        <a href="acoesadmin.html" class="nav-link px-3">
-                        <a href="acoesadmin.html" class="nav-link px-3">
+                        <a href="{% url 'acoes_admin' %}" class="nav-link px-3">
                             <span class="me-2"><i class="bi bi-gear"></i></span>
                             <span>Admin</span>
                         </a>
