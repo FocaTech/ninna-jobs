@@ -1,5 +1,5 @@
 from pickletools import read_uint8
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas
 from login_cadastro.models import Users
 from django.contrib import messages
@@ -161,3 +161,13 @@ def salvar_vaga(request, pk_vaga):
         vaga_salva.save()
 
         return redirect('index')
+
+def busca_vaga(request):
+    lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
+    if 'buscar' in request.GET:
+        nome_a_buscar = request.GET['buscar']
+        lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+    dados = {
+        'vagas' : lista_vagas
+    }
+    return render(request, 'vagas.html', dados)
