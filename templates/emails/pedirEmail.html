@@ -1,0 +1,4 @@
+<form action="{% url 'recuperar_senha' %}" method="POST"> {% csrf_token %}
+    <input type="text" name="email" placeholder="Digite seu email" required>
+    <button type="submit">Enviar Email</button>
+</form>
