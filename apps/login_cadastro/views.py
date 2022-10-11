@@ -9,6 +9,13 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
 
+# pro email
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+
+
 def cadastro_candidato(request):
     if request.method == 'POST':
         candidato_nome = request.POST['candidato_nome']
@@ -98,45 +105,33 @@ def logar_empresa(request):
     return render(request, 'loginEmpresa.html')
 
 def recuperar_senha(request):
-    # if request.method == 'POST':
-    #     email = request.POST.get('email', None)
-    #     if Candidato.objects.filter(email=email).exists():# vê se é email de um cadidato
-    #         senha_canditato = Candidato.objects.filter(email=email).values_list('senha', flat=True).get()
-    #         print(f"senha candidato: {senha_canditato}")
-    #         html_content = render_to_string('email/recuperar_senha.html', {'senha' : senha_canditato})
-    #         text_content = strip_tags(html_content)
+    if request.method == 'POST':
+        email = request.POST.get('email', None)
+        if Candidato.objects.filter(email=email).exists():# vê se é email de um cadidato
+            senha_canditato = Candidato.objects.filter(email=email).values_list('senha', flat=True).get()
+            print(f"senha candidato: {senha_canditato}")
+            html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_canditato})
+            text_content = strip_tags(html_content)
 
-    #         email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
-    #         email.attach_alternative(html_content, 'text/html')
-    #         email.send()
+            email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
+            email.attach_alternative(html_content, 'text/html')
+            print('chegou aqui')
+            email.send()
+            print('enviou o email para empresa')
+        # vê se é email de uma empresa
+        elif Empresa.objects.filter(email=email).exists():
+            senha_empresa = Empresa.objects.filter(email=email).values_list('senha', flat=True).get()
+            print(f"senha empresa: {senha_empresa}")
+            html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_empresa})
+            text_content = strip_tags(html_content)
 
-    #     # vê se é email de uma empresa
-    #     elif Empresa.objects.filter(email=email).exists():
-    #         senha_empresa = Empresa.objects.filter(email=email).values_list('senha', flat=True).get()
-    #         print(f"senha empresa: {senha_empresa}")
-    #         html_content = render_to_string('email/recuperar_senha.html', {'senha' : senha_empresa})
-    #         text_content = strip_tags(html_content)
-
-    #         email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
-    #         email.attach_alternative(html_content, 'text/html')
-    #         email.send()
-    #         print('enviou o email para empresa')
-
-
-    #         # try:
-    #         #     senha_canditato = Candidato.objects.filter(email=email).values_list('senha', flat=True).get()
-    #         #     senha_empresa = Empresa.objects.filter(email=email).values_list('senha', flat=True).get()
-    #         # except:
-    #         #     if senha_canditato != None:
-    #         #         print(email, senha_canditato)
-    #         #     elif senha_empresa != None:
-    #         #         print(email, senha_empresa)
-    #         #     pass
-    #         # if senha_canditato !=
-    #         # send_mail("assunto", "esse é o email", "ninnajobs72@gmail.com", [email])
-    #     else:
-    #         print('email não cadastrado')
-    return render(request, 'emails/pedirEmail.html')
+            email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
+            email.attach_alternative(html_content, 'text/html')
+            email.send()
+            print('enviou o email para empresa')
+        else:
+            print('email não cadastrado')
+    return render(request, 'pedirEmail.html')
 
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
     return (empresa_email == "" or empresa_senha == "") or (candidato_email == "" or candidato_senha == "")
