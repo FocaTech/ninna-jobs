@@ -12,4 +12,5 @@ urlpatterns = [
     path('salvar_vaga/<int:pk_vaga>/', views.salvar_vaga, name='salvar_vaga'),
     path('tela_de_vagas_salvas', views.tela_de_vagas_salvas, name='tela_de_vagas_salvas'),
     path('talentos', views.talentos, name='talentos'),
+    path('buscar', views.busca_vaga, name='buscar'),
 ]
