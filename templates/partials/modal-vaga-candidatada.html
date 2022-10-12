@@ -1,45 +1,45 @@
-<div class="modal fade" data-modal-id="{{ vaga_salva.nome_vaga }}" tabindex="-1" {#aria-labelledby="exampleModalLabel" #}aria-hidden="true">
+<div class="modal fade" data-modal-id="{{ vaga_candidatada.descricao_vaga }}" tabindex="-1" {#aria-labelledby="exampleModalLabel" #}aria-hidden="true">
     <div class="modal-dialog{# modal-lg#}">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title h5 titulovaga" id="modalVaga">{{ vaga_salva.nome_vaga }} ({{ vaga_salva.tipo_trabalho }})</h4>
+          <h4 class="modal-title h5 titulovaga" id="modalVaga">{{ vaga_candidatada.nome_vaga }} ({{ vaga_candidatada.tipo_trabalho }})</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <ul class="hide-bullets">
             <li>
               <ul class="inline-list">
-                <li class="info" id="nomeEmpresa"><i class="bi bi-building" title="Empresa"></i> {{ vaga_salva.nome_empresa }}</li>
-                <li class="info" id="localEmpresa"><i class="bi bi-geo-alt" title="Local"></i> {{ vaga_salva.local_empresa }}</li>
+                <li class="info" id="nomeEmpresa"><i class="bi bi-building" title="Empresa"></i> {{ vaga_candidatada.nome_empresa }}</li>
+                <li class="info" id="localEmpresa"><i class="bi bi-geo-alt" title="Local"></i> {{ vaga_candidatada.local_empresa }}</li>
               </ul>
             </li>
             <li>
               <ul class="inline-list">
-                <li class="info" id="tipoDeContrato"><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga_salva.tipo_contratacao }}</li>
-                <li class="info" id="perfilProfissional"><i class="bi bi-person-workspace" title="Perfil profissional"></i> {{ vaga_salva.perfil_profissional }}</li>
-                <li class="info" id="salario">R$ {{ vaga_salva.salario }}</li>
+                <li class="info" id="tipoDeContrato"><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga_candidatada.tipo_contratacao }}</li>
+                <li class="info" id="perfilProfissional"><i class="bi bi-person-workspace" title="Perfil profissional"></i> {{ vaga_candidatada.perfil_profissional }}</li>
+                <li class="info" id="salario">R$ {{ vaga_candidatada.salario }}</li>
               </ul>
             </li>
           </ul>
           <h5 class="subtituloVaga">Principais atividades</h5>
-          <p>{{ vaga_salva.principais_atividades }}</p>
+          <p>{{ vaga_candidatada.principais_atividades }}</p>
           <h5 class="subtituloVaga">Requísitos</h5>
-          <p>{{ vaga_salva.requisitos }}</p>
+          <p>{{ vaga_candidatada.requisitos }}</p>
           <h5 class="subtituloVaga">Diferencial</h5>
-          <p>{{ vaga_salva.diferencial }}</p>
+          <p>{{ vaga_candidatada.diferencial }}</p>
           <h5 class="subtituloVaga">Descrição da vaga</h5>
-          <p>{{ vaga_salva.descricao_vaga }}</p>
+          <p>{{ vaga_candidatada.descricao_vaga }}</p>
           <h5 class="subtituloVaga">Descrição da empressa</h5>
-          <p>{{ vaga_salva.descricao_empresa }}</p>
+          <p>{{ vaga_candidatada.descricao_empresa }}</p>
           <h5 class="subtituloVaga">Area atuacao</h5>
-          <p>{{ vaga_salva.area_atuacao }}</p>
+          <p>{{ vaga_candidatada.area_atuacao }}</p>
           <h5 class="subtituloVaga">Beneficios</h5>
-          <p>{{ vaga_salva.beneficios }}</p>
+          <p>{{ vaga_candidatada.beneficios }}</p>
         </div>
       {% if user.is_authenticated %}
         <div class="modal-footer justify-content-between">
           <div>
-
+            <a href="{% url 'salvar_vaga' vaga_candidatada.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
           </div>
           <div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
