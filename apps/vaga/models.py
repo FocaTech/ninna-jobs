@@ -62,3 +62,10 @@ class VagasSalvas(models.Model):
 
     # def __str__(self):
     #     return self.id_cadidato
+
+class VagasCandidatadas(models.Model):
+    id_cadidato = models.ForeignKey(Users, on_delete=models.CASCADE)
+    id_vaga = models.ForeignKey(Vagas, on_delete=models.CASCADE)
+
+    # def __str__(self):
+    #     return self.id_cadidato

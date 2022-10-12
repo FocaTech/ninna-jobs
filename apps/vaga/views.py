@@ -1,6 +1,6 @@
 from pickletools import read_uint8
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
-from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas
+from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
 from login_cadastro.models import Users
 from django.contrib import messages
 
@@ -99,16 +99,21 @@ def index(request):
 
 def dashboard(request):
     vagas = Vagas.objects.all()
-
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
+
     id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
     lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
-
     for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
         lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
 
+    id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+    lista_de_vagas_candidatadas_do_user = []# lista vazia para adicionar as vagas salvas
+    for vagas_candidatadas in id_das_vagas_candidatadas_do_user:# desempacotar esse queryset em objetos
+        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+
     dados = {
         'vagas' : vagas,
+        'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
     }
     return render(request, 'dashboard.html', dados)
@@ -158,6 +163,22 @@ def salvar_vaga(request, pk_vaga):
             return redirect('index')
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
+        vaga_salva.save()
+
+        return redirect('index')
+
+def candidatar_a_vaga(request, pk_vaga):
+    if request.user.is_authenticated:
+        id_cadidato = get_object_or_404(Users, pk=request.user.id)
+
+        id_vaga = Vagas.objects.filter(id=pk_vaga).values_list('nome_vaga', flat=True).get()
+
+        id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
+
+        if VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
+            return redirect('index')
+
+        vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
 
         return redirect('index')

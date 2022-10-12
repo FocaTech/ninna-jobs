@@ -15,8 +15,8 @@ class Candidato(models.Model):
     email = models.EmailField(max_length=50)
     senha = models.CharField(max_length=20)
     nome = models.CharField(max_length=20, blank=True)
-    nivel_prog = models.CharField(max_length=20, blank=True)
-    nivel_ing = models.CharField(max_length=20, blank=True)
+    # nivel_prog = models.CharField(max_length=20, blank=True)
+    # nivel_ing = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return self.email
@@ -25,8 +25,8 @@ class Empresa(models.Model):
     email = models.EmailField(max_length=50)
     senha = models.CharField(max_length=20)
     nome = models.CharField(max_length=20, blank=True)
-    ramo = models.CharField(max_length=20, blank=True)
-    localizacao = models.CharField(max_length=20, blank=True)
+    # ramo = models.CharField(max_length=20, blank=True)
+    # localizacao = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return self.email
