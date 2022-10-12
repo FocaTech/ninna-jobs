@@ -161,6 +161,9 @@ def salvar_vaga(request, pk_vaga):
 
         if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
             print('essa vaga ja esta no BD')
+            vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
+            print(vaga_salva_desfavoritar)
+            vaga_salva_desfavoritar.delete()
             return redirect('dashboard')
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
