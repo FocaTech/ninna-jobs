@@ -24,7 +24,6 @@ def cadastro_candidato(request):
         candidato_email = request.POST['candidato_email']
         candidato_senha = request.POST['candidato_senha']
         candidato_senha_conf = request.POST['candidato_senha_conf']
-        print(candidato_email, candidato_senha, candidato_senha_conf)
         if candidato_senha != candidato_senha_conf:
             return redirect ('cadastro_candidatos')
         if Users.objects.filter(email=candidato_email).exists():
@@ -35,12 +34,9 @@ def cadastro_candidato(request):
             return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
-        # candidato_user_na_tablela_user = User.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha)
-        # candidato_user_na_tablela_user.save()
-        candidato = Candidato.objects.create(email=candidato_email, senha=candidato_senha, nome=candidato_nome, nivel_prog="None", nivel_ing="None")
+        candidato = Candidato.objects.create(email=candidato_email, senha=candidato_senha, nome=candidato_nome)
         candidato.save()
         messages.success(request, 'Cadastro realizado com sucesso')
-        print('Usuário cadastrado com sucesso')
         return redirect ('longar_candidato')
     else:
         return render(request, 'loginCandidato.html')
@@ -51,15 +47,23 @@ def cadastro_empresa(request):
         empresa_email = request.POST['empresa_email']
         empresa_senha = request.POST['empresa_senha']
         empresa_senha_conf = request.POST['empresa_senha_conf']
-        print (empresa_email, empresa_senha)
+        if empresa_senha != empresa_senha_conf:
+            print('senhas não são iguais')
+            return redirect ('cadastro_empresa')
+        if Users.objects.filter(email=empresa_email).exists():
+            messages.error(request, 'Usuario ja cadastrado')
+            return redirect('cadastro_empresa')
+        if Users.objects.filter(username=empresa_nome).exists():
+            messages.error(request, 'Usuario ja cadastrado')
+            return redirect('cadastro_empresa')
         empresa_user = Users.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha, funcao = "EMP")
         empresa_user.save()
+        empresa = Empresa.objects.create(email=empresa_email, senha=empresa_senha, nome=empresa_nome)
+        empresa.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         return redirect('longar_empresa')
-
-
     else:
-        return render(request, 'login.html')
+        return render(request, 'loginEmpresa.html')
 
 def logar_candidato(request):
     if request.method == 'POST':
@@ -80,10 +84,6 @@ def logar_candidato(request):
 
     return render(request, 'loginCandidato.html')
 
-def sair(request):
-    '''Desloga uma pessoa'''
-    auth.logout(request)
-    return redirect('index')
 
 def logar_empresa(request):
     empresa_email = None
@@ -111,29 +111,27 @@ def recuperar_senha(request):
         email = request.POST.get('email', None)
         if Candidato.objects.filter(email=email).exists():# vê se é email de um cadidato
             senha_canditato = Candidato.objects.filter(email=email).values_list('senha', flat=True).get()
-            print(f"senha candidato: {senha_canditato}")
             html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_canditato})
             text_content = strip_tags(html_content)
-
             email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
             email.attach_alternative(html_content, 'text/html')
-            print('chegou aqui')
             email.send()
-            print('enviou o email para empresa')
-        # vê se é email de uma empresa
-        elif Empresa.objects.filter(email=email).exists():
+        elif Empresa.objects.filter(email=email).exists():# vê se é email de uma empresa
             senha_empresa = Empresa.objects.filter(email=email).values_list('senha', flat=True).get()
             print(f"senha empresa: {senha_empresa}")
             html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_empresa})
             text_content = strip_tags(html_content)
-
             email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
             email.attach_alternative(html_content, 'text/html')
             email.send()
-            print('enviou o email para empresa')
         else:
-            print('email não cadastrado')
+            return redirect('recuperar_senha')
     return render(request, 'pedirEmail.html')
+
+def sair(request):
+    '''Desloga uma pessoa'''
+    auth.logout(request)
+    return redirect('index')
 
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):
     return (empresa_email == "" or empresa_senha == "") or (candidato_email == "" or candidato_senha == "")
