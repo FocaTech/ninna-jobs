@@ -13,8 +13,7 @@
   <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" defer></script>
   <script src="{% static 'js/jquery-2.2.4.min.js' %}" defer></script>
   <script src="{% static 'js/modal.js' %}" defer></script>
-</head>
-<body>
+
 
   {% include 'partials/header.html' %}
   <main class="container">
@@ -144,10 +143,10 @@
         <img class="avatar" src="assets/img/placeholder.svg" alt="">
         <div class="sidebar-content">
           <ul class="sidebar-menu">
-            <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
-            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li>
-            <li><a class="btn btn-primary" href="arquivadas.html" role="button">Vagas arquivadas</a></li>
+            <li><a class="btn btn-primary" href="{% url 'perfil' %}" role="button">Perfil</a></li>
+            <li><a class="btn btn-primary" href="{% url 'dashboard' %}" role="button">Candidaturas feitas</a></li>
+            <li><a class="btn btn-primary" href="{% url 'tela_de_vagas_salvas' %}" role="button">Vagas salvas</a></li>
+            <li><a class="btn btn-primary" href="{% url 'arquivadas' %}" role="button">Vagas arquivadas</a></li>
             <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
           </ul>
         </div>
