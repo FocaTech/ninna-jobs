@@ -23,6 +23,7 @@
         <div class="tabber">
           <div class="tabber__tabs">
             <button type="button" class="tabber__tab active">Candidatadas</button>
+            <button type="button" class="tabber__tab active">Candidatadas2</button>
             <button type="button" class="tabber__tab">Favoritadas</button>
             <button type="button" class="tabber__tab">Arquivadas</button>
           </div>
@@ -57,6 +58,43 @@
                         {% include 'partials/modal-vaga.html' %}
                       </div>
                     </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </section>
+
+            <section id="candidatadas2">
+              <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
+                {% if vagas_candidatadas %}
+                  {% for vagas_candidatadas_queryset in vagas_candidatadas %}
+                    {% for vaga_candidatada in vagas_candidatadas_queryset %}
+                      <div class="col">
+                        <div class="card h-100 vaga">
+                          <img src="{{ vaga_candidatada.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
+                          <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ vaga_candidatada.nome_vaga }}</h5>
+                            <ul class="hide-bullets">
+                              <li>
+                                <ul class="inline-list">
+                                  <li><i class="bi bi-building" title="Empresa"></i> {{ vaga_candidatada.nome_empresa }}</li>
+                                  <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga_candidatada.local_empresa }}</li>
+                                </ul>
+                              </li>
+                              <li>
+                                <ul class="inline-list">
+                                  <li><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga_candidatada.tipo_contratacao }}</li>
+                                  <li><i class="bi bi-person-workspace" title="Tipo de trabalho"></i> {{ vaga_candidatada.tipo_trabalho }} </li>
+                                </ul>
+                              </li>
+                            </ul>
+                            <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga_salva.nome_vaga }}']">
+                              Detalhes
+                            </button>
+                          </div>
+                          {% include 'partials/modal-vaga-salva.html' %}
+                        </div>
+                      </div>
+                    {% endfor %}
                   {% endfor %}
                 {% endif %}
               </div>
