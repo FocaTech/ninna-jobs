@@ -15,6 +15,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
+from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
+
 
 def cadastro_candidato(request):
     if request.method == 'POST':
@@ -146,7 +148,16 @@ def arquivadas(request):
     return render(request, 'arquivadas.html')
 
 def empresa(request):
-    return render(request, 'empresa.html')
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+
+    dado = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+    }
+    return render(request, 'empresa.html', dado)
 
 def cadastro_candidato_2(request):
     areas = AreaDeInteresse.objects.all()
