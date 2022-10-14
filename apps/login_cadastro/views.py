@@ -84,7 +84,6 @@ def logar_candidato(request):
 
     return render(request, 'loginCandidato.html')
 
-
 def logar_empresa(request):
     empresa_email = None
     empresa_email = None
@@ -94,8 +93,9 @@ def logar_empresa(request):
         print(empresa_email, empresa_senha)
         if Users.objects.filter(email=empresa_email).exists():
             nome = Users.objects.filter(email=empresa_email).values_list('username', flat=True).get()
-            user = auth.authenticate(username=nome, password=empresa_senha, funcao="EMP")
+            user = auth.authenticate(request, username=nome, password=empresa_senha, funcao="EMP")
             if user:
+                auth.login(request, user)
                 print("autenticado")
                 return redirect('empresa')
             else:
