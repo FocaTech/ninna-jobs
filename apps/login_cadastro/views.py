@@ -70,7 +70,6 @@ def logar_candidato(request):
         candidato_email = request.POST.get('candidato_email', None)
         candidato_senha = request.POST.get('candidato_senha', None)
         print(candidato_email, candidato_senha)
-
         if Users.objects.filter(email=candidato_email).exists():
             nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
             user = auth.authenticate(request, username=nome, password=candidato_senha, funcao = "CAN")
@@ -97,7 +96,7 @@ def logar_empresa(request):
             if user:
                 auth.login(request, user)
                 print("autenticado")
-                return redirect('empresa')
+                return redirect('index')
             else:
                 print("Email ou senha incorretos")
                 print(f" resultado do user: {user} \nresultado do nome: {nome}")
@@ -179,7 +178,3 @@ def cadastro_candidato_2(request):
         'niveis' : niveis
     }
     return render(request, 'formcandidato.html', dados)
-
-# def tela_404(request, exception):
-    '''ERRO 404'''
-#     return render(request, '404.html')

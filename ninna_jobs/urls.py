@@ -11,4 +11,4 @@ urlpatterns = [
     path('ninna/', include("admin.urls"))
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
-# handler404 = "login_cadastro.views.tela_404"     ERRO 404
+# handler404 = "vaga.views.tela_404"     ERRO 404

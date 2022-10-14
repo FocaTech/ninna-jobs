@@ -38,11 +38,14 @@
           </button>
           <ul class="dropdown-menu">
           {% if user.is_superuser %}
-          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Minha área</li>
+          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Minha Área</li>
           <li><a class="dropdown-item" href="{% url 'interface' %}">Admin</li>
           <li><a class="dropdown-item" href="{% url 'sair' %}">Sair</li>
-          {% else %}
-          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Minha área</li>
+          {% elif user.funcao == "EMP" %}
+          <li><a class="dropdown-item" href="{% url 'empresa' %}">Minha Área</li>
+          <li><a class="dropdown-item" href="{% url 'sair' %}">Sair</li>
+          {% elif user.funcao == "CAN" %}
+          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Minha Área</li>
           <li><a class="dropdown-item" href="{% url 'sair' %}">Sair</li>
           {% endif %}
         </ul>
