@@ -1,9 +1,9 @@
 from vaga.models import Vagas
-from .models import Users, Candidato, Empresa, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
+from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-from rolepermissions.decorators import has_permission_decorator
+from rolepermissions.decorators import has_permission_decorator, has_role_decorator
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.http import HttpResponse
@@ -34,7 +34,7 @@ def cadastro_candidato(request):
             return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
-        candidato = Candidato.objects.create(email=candidato_email, senha=candidato_senha, nome=candidato_nome)
+        candidato = Users.objects.create(email=candidato_email, senha=candidato_senha, nome=candidato_nome)
         candidato.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         return redirect ('longar_candidato')
@@ -58,7 +58,7 @@ def cadastro_empresa(request):
             return redirect('cadastro_empresa')
         empresa_user = Users.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha, funcao = "EMP")
         empresa_user.save()
-        empresa = Empresa.objects.create(email=empresa_email, senha=empresa_senha, nome=empresa_nome)
+        empresa = Users.objects.create(email=empresa_email, senha=empresa_senha, nome=empresa_nome)
         empresa.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         return redirect('longar_empresa')
@@ -108,15 +108,15 @@ def logar_empresa(request):
 def recuperar_senha(request):
     if request.method == 'POST':
         email = request.POST.get('email', None)
-        if Candidato.objects.filter(email=email).exists():# vê se é email de um cadidato
-            senha_canditato = Candidato.objects.filter(email=email).values_list('senha', flat=True).get()
+        if Users.objects.filter(email=email).exists():# vê se é email de um cadidato
+            senha_canditato = Users.objects.filter(email=email).values_list('senha', flat=True).get()
             html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_canditato})
             text_content = strip_tags(html_content)
             email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
             email.attach_alternative(html_content, 'text/html')
             email.send()
-        elif Empresa.objects.filter(email=email).exists():# vê se é email de uma empresa
-            senha_empresa = Empresa.objects.filter(email=email).values_list('senha', flat=True).get()
+        elif Users.objects.filter(email=email).exists():# vê se é email de uma empresa
+            senha_empresa = Users.objects.filter(email=email).values_list('senha', flat=True).get()
             print(f"senha empresa: {senha_empresa}")
             html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_empresa})
             text_content = strip_tags(html_content)
@@ -144,7 +144,8 @@ def plataforma(request):
 def arquivadas(request):
     return render(request, 'arquivadas.html')
 
-def empresa(request):
+@has_role_decorator('empresa')
+def empresa(request, *args, **kwargs):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
@@ -156,6 +157,7 @@ def empresa(request):
     }
     return render(request, 'empresa.html', dado)
 
+@has_role_decorator('candidato')
 def cadastro_candidato_2(request):
     areas = AreaDeInteresse.objects.all()
     generos = Genero.objects.all()

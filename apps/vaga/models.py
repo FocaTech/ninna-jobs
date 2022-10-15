@@ -1,6 +1,5 @@
 from tkinter import CASCADE
 from django.db import models
-from login_cadastro.models import Candidato
 from login_cadastro.models import Users
 
 class Vagas(models.Model):
