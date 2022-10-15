@@ -180,3 +180,10 @@ def cadastro_candidato_2(request):
         'niveis' : niveis
     }
     return render(request, 'formcandidato.html', dados)
+
+# def tela_404(request, exception):
+    '''ERRO 404'''
+#     return render(request, '404.html')
+
+def formempresa(request):
+    return render(request, 'formempresa.html')
