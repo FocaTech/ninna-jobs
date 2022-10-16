@@ -89,13 +89,36 @@ def vagas(request):
 
 
 def index(request):
-    vagas = Vagas.objects.all()
+    if request.user.is_authenticated:
 
-    dados = {
-        'vagas' : vagas
-    }
+        vagas = Vagas.objects.all()
 
-    return render(request, 'index.html', dados)
+        id_cadidato = get_object_or_404(Users, pk=request.user.id)
+
+        id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+        lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
+        for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
+            lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+
+        ids_de_vagas_salvas = []
+        for vaga_salva in lista_de_vagas_salvas_do_user:
+            for vaga_salvaa in vaga_salva:
+                ids_de_vagas_salvas.append(vaga_salvaa.id)
+
+        dados = {
+            'vagas' : vagas,
+            'ids_de_vagas_salvas' : ids_de_vagas_salvas,
+        }
+
+        return render(request, 'index.html', dados)
+    else:
+        vagas = Vagas.objects.all()
+
+        dados = {
+            'vagas' : vagas,
+        }
+
+        return render(request, 'index.html', dados)
 
 def dashboard(request):
     vagas = Vagas.objects.all()
@@ -106,10 +129,10 @@ def dashboard(request):
     for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
         lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
 
-    id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
-    lista_de_vagas_candidatadas_do_user = []# lista vazia para adicionar as vagas salvas
-    for vagas_candidatadas in id_das_vagas_candidatadas_do_user:# desempacotar esse queryset em objetos
-        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+    id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+    lista_de_vagas_candidatadas_do_user = []
+    for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
 
     dados = {
         'vagas' : vagas,
@@ -160,9 +183,7 @@ def salvar_vaga(request, pk_vaga):
         id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
 
         if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
-            print('essa vaga ja esta no BD')
             vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
-            print(vaga_salva_desfavoritar)
             vaga_salva_desfavoritar.delete()
             return redirect('dashboard')
 
