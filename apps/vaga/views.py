@@ -2,6 +2,7 @@ from pickletools import read_uint8
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
 from login_cadastro.models import Users
+from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 
 def select(request):
@@ -120,6 +121,7 @@ def index(request):
 
         return render(request, 'index.html', dados)
 
+@has_role_decorator('candidato')
 def dashboard(request):
     vagas = Vagas.objects.all()
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
@@ -147,8 +149,9 @@ def perfil(request):
 def perfilempresa(request):
     return render(request, 'perfilEmpresa.html')
 
-def not_found(request):
-    return render(request, '404.html')
+# def tela_404(request, exception):
+    '''ERRO 404'''
+#     return render(request, '404.html')
 
 def talentos(request):
     contratacoes = TipoContratacao.objects.all()
@@ -174,6 +177,7 @@ def vagas(request):
 def tela_de_vagas_salvas(request):
     return render(request, 'salvas.html')
 
+@has_role_decorator('candidato')
 def salvar_vaga(request, pk_vaga):
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
@@ -192,6 +196,7 @@ def salvar_vaga(request, pk_vaga):
 
         return redirect('index')
 
+@has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vaga):
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)

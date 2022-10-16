@@ -1,6 +1,6 @@
 import imp
 from django.contrib import admin
-from .models import Users, Candidato, Empresa, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
+from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
 from django.contrib.auth import admin as admin_auth_django
 from .forms import UserChangeForm, UserCreationForm
 
@@ -21,8 +21,6 @@ class ListandoEstados(admin.ModelAdmin):
     list_per_page = 10
 
 
-admin.site.register(Candidato)
-admin.site.register(Empresa)
 admin.site.register(AreaDeInteresse)
 admin.site.register(Genero)
 admin.site.register(Estado, ListandoEstados)

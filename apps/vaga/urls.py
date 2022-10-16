@@ -6,7 +6,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('perfil', views.perfil, name='perfil'),
     path('perfilempresa', views.perfilempresa, name='perfilempresa'),
-    path('404', views.not_found, name='not_found'),
     path('empresa', views.select, name='select'),
     path('vagas', views.vagas, name='vagas'),
     path('salvar_vaga/<int:pk_vaga>/', views.salvar_vaga, name='salvar_vaga'),
