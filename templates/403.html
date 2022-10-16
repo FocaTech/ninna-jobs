@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Erro 403{% endblock %}
+{% block head %}
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    footer {
+      margin-top: auto;
+    }
+  </style>
+{% endblock %}
+{% block body_class %}page-403{% endblock %}
+{% block content %}
+  <main>
+    <div class="text-center h5">
+      <h1>403</h1>
+      <p>acesso negado</p>
+      <p>👉 <a href="/">Voltar à página inicial</a></p>
+    </div>
+  </main>
+{% endblock %}

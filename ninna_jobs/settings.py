@@ -160,8 +160,9 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
 }
 
-# Email
+CSRF_FAILURE_VIEW = 'csrf.csrf_failure' #403 custumizado
 
+# Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_FROM_EMAIL = 'ninnajobs72@gmail.com'
