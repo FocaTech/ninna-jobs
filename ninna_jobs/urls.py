@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from django.views.generic import RedirectView
+from django.template.response import TemplateResponse
 
 urlpatterns = [
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), #debug false
@@ -16,4 +17,5 @@ urlpatterns = [
     path('ninna/', include("admin.urls"))
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
-# handler404 = "vaga.views.tela_404"
+if settings.DEBUG:
+    urlpatterns.append(url(r'^', TemplateResponse, {'template': '404.html'}))
