@@ -150,10 +150,13 @@ def empresa(request, *args, **kwargs):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
+    vagas = Vagas.objects.all()
+
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
+        'vagas' : vagas
     }
     return render(request, 'empresa.html', dado)
 
