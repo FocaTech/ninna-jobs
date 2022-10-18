@@ -183,5 +183,3 @@ def cadastro_candidato_2(request):
     }
     return render(request, 'formcandidato.html', dados)
 
-def formempresa(request):
-    return render(request, 'formempresa.html')

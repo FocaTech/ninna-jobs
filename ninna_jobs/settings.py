@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'login_cadastro',
     'vaga',
     'rolepermissions',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
