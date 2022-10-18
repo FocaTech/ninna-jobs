@@ -149,10 +149,6 @@ def perfil(request):
 def perfilempresa(request):
     return render(request, 'perfilEmpresa.html')
 
-def tela_404(request, exception):
-    '''ERRO 404'''
-    return render(request, '404.html')
-
 def talentos(request):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
