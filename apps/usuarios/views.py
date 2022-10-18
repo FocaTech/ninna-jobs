@@ -5,7 +5,7 @@ from .models import Empresa
 def formempresa(request):
     return render(request, 'formempresa.html')
 
-def CadastroEmpresa2(request):
+def registro(request):
     if request.method == 'POST':
         img_perfil_empresa = request.FILES['img_perfil_empresa']
         razao_social = request.POST['razao_social']
@@ -17,11 +17,11 @@ def CadastroEmpresa2(request):
         estado = request.POST['estado']
         cep = request.POST['cep']
         ramo_de_atividade = request.POST['ramo_de_atividade']
-        descricao_empresa = request.POST['descricaoempresa']
+        descricao_empresa = request.POST['descricao_empresa']
 
 
         vaga = Empresa.objects.create(img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
         vaga.save()
         return redirect('index')
     else:
-        return render(request, 'formulario.html')
+        return render(request, 'formempresa.html')

@@ -13,3 +13,6 @@ class Empresa(models.Model):
     ramo_de_atividade = models.CharField(max_length=150)
     descricao_empresa = models.TextField()
 
+    def __str__(self):
+        return self.nome_fantasia
+
