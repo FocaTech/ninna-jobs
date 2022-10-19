@@ -156,9 +156,10 @@ def talentos(request):
 
 def vagas(request):
     vagas = Vagas.objects.all()
-    vagas_paginadas = Paginator(vagas, 6)
-    page_num = request.GET.get('page')
-    vagas = vagas_paginadas.get_page(page_num)
+    if len(vagas) > 0:
+        vagas_paginadas = Paginator(vagas, 6)
+        page_num = request.GET.get('page')
+        vagas = vagas_paginadas.get_page(page_num)
     dados = {
         'vagas' : vagas
     }
