@@ -23,7 +23,7 @@
 
         <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
           {% if vagas %}
-            {% for vaga in vagas %}
+            {% for vaga in vagas.object_list %}
               <div class="col">
                 <div class="card h-100 vaga">
                   <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
@@ -56,6 +56,43 @@
       </section>
     </div>
   </main>
+<!-- ##### Pagination ##### -->
+  <section class="top-catagory-area section-padding-20-0">
+  <div class="container">
+      {% if vagas.has_other_pages %}
+      <ul class="pagination">
+          {% if vagas.has_previous %}
+          <li class="page-item">
+              <a href="?page={{ vagas.previous_page_number }}" class="page-link">&laquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+              <a class="page-link">&laquo;</a>
+          </li>
+          {% endif %}
+          {% for pagina in vagas.paginator.page_range %}
+          {% if vagas.number == pagina %}
+          <li class="page-item active">
+              <a class="page-link">{{ pagina }}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+              <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          {% if vagas.has_next %}
+          <li class="page-item">
+              <a href="?page={{ vagas.next_page_number }}" class="page-link">&raquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+              <a class="page-link">&raquo;</a>
+          </li>
+          {% endif %}
+      </ul>
+      {% endif %}
+  </div>
   <script>
     $('input#txt_pesquisa').quicksearch('#nomevaga li');
 </script>
