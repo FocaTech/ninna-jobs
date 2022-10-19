@@ -1,0 +1,9 @@
+<form action="{% url 'recuperar_senha' %}" method="POST"> {% csrf_token %}
+    <input type="text" name="email" placeholder="Digite seu email" required>
+    <button type="submit">Enviar Email</button>
+</form>
+<form action="{% url 'validar_codigo' %}" method="POST"> {% csrf_token %}
+    <h3>digite o código de segurança que enviamos para o seu email</h3>
+    <input type="text" name="codigo_do_user" placeholder="Ex:. XT83D4 " required>
+    <button type="submit">Enviar Email</button>
+</form>
