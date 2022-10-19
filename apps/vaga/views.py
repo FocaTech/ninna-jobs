@@ -5,6 +5,7 @@ from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, Va
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 def select(request):
     contratacoes = TipoContratacao.objects.all()
@@ -92,35 +93,26 @@ def vagas(request):
 
 def index(request):
     if request.user.is_authenticated:
-
         vagas = Vagas.objects.all()
-
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-
         id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
         lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
         for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
             lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
-
         ids_de_vagas_salvas = []
         for vaga_salva in lista_de_vagas_salvas_do_user:
             for vaga_salvaa in vaga_salva:
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
-
         dados = {
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
-
-        return render(request, 'index.html', dados)
     else:
         vagas = Vagas.objects.all()
-
         dados = {
             'vagas' : vagas,
         }
-
-        return render(request, 'index.html', dados)
+    return render(request, 'index.html', dados)
 
 @has_role_decorator('candidato')
 def dashboard(request):
@@ -150,10 +142,6 @@ def perfil(request):
 def perfilempresa(request):
     return render(request, 'perfilEmpresa.html')
 
-def tela_404(request, exception):
-    '''ERRO 404'''
-    return render(request, '404.html')
-
 def talentos(request):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
@@ -168,11 +156,12 @@ def talentos(request):
 
 def vagas(request):
     vagas = Vagas.objects.all()
-
+    vagas_paginadas = Paginator(vagas, 6)
+    page_num = request.GET.get('page')
+    vagas = vagas_paginadas.get_page(page_num)
     dados = {
         'vagas' : vagas
     }
-
     return render(request, 'vagas.html', dados)
 
 def tela_de_vagas_salvas(request):
@@ -214,17 +203,12 @@ def salvar_vaga(request, pk_vaga):
 def candidatar_a_vaga(request, pk_vaga):
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-
         id_vaga = Vagas.objects.filter(id=pk_vaga).values_list('nome_vaga', flat=True).get()
-
         id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
-
         if VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
             return redirect('index')
-
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
-
         return redirect('index')
 
 def busca_vaga(request):

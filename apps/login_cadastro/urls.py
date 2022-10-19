@@ -13,7 +13,7 @@ urlpatterns = [
     # para testar as partials
     path('arquivadas', views.arquivadas, name='arquivadas'),
     path('empresa/', views.empresa, name='empresa'),
-    path('formulario/empresa/', views.formempresa, name='formempresa'),
+    
 
     path('sair', views.sair, name='sair') #sair
 ]
