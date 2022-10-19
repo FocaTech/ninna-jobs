@@ -23,7 +23,7 @@
 
         <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
           {% if vagas %}
-            {% for vaga in vagas.object_list %}
+            {% for vaga in vagas %}
               <div class="col">
                 <div class="card h-100 vaga">
                   <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
