@@ -13,10 +13,10 @@
       <section class="content">
         <header class="page-header">
           <h1>Vagas lançadas</h1>
-          <form action="" class="filtros">
+          <form method='GET' action="{% url 'buscar' %}" class="filtros">
             <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input name="filtro" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+              <input name="buscar" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
             </div>
           </form>
           <!--<form action="" class="filtros">
