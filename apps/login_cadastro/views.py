@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
+import random
 
 # pro email
 from django.core.mail import send_mail, EmailMultiAlternatives
@@ -105,27 +106,49 @@ def logar_empresa(request):
 
     return render(request, 'loginEmpresa.html')
 
+codigo = ''
+def criar_codigo_de_segurança():
+    global codigo
+    caracteres_para_codigo = ['A', 1, 'B', 'C', 'D', 2, 'E', 'F', 'G', 3, 'H', 'I', 'J', 4, 'K', 'L', 'M', 5, 'N', 'O', 'P', 6, 'Q', 'R', 'S', 7, 'T', 'U', 'V', 8, 'W', 'X', 'Y', 9, 'Z']
+
+    codigo = []
+    for i in range(0,6):
+        codigo.append(str(random.choice(caracteres_para_codigo)))
+
+    def convertTuple(tup):
+        str =  ''.join(tup)
+        return str
+
+    codigo = convertTuple(codigo)
+
+email_do_user_atual = ''
 def recuperar_senha(request):
     if request.method == 'POST':
+        global email_do_user_atual
         email = request.POST.get('email', None)
-        if Users.objects.filter(email=email).exists():# vê se é email de um cadidato
-            senha_canditato = Users.objects.filter(email=email).values_list('senha', flat=True).get()
-            html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_canditato})
-            text_content = strip_tags(html_content)
-            email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
-            email.attach_alternative(html_content, 'text/html')
-            email.send()
-        elif Users.objects.filter(email=email).exists():# vê se é email de uma empresa
-            senha_empresa = Users.objects.filter(email=email).values_list('senha', flat=True).get()
-            print(f"senha empresa: {senha_empresa}")
-            html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_empresa})
+        email_do_user_atual = email
+        if Users.objects.filter(email=email).exists():
+            criar_codigo_de_segurança()
+            senha_canditato = Users.objects.filter(email=email).values_list('password', flat=True).get()
+            html_content = render_to_string('emails/recuperar_senha.html', {'senha' : senha_canditato, "codigo" : codigo})
             text_content = strip_tags(html_content)
             email = EmailMultiAlternatives('Recuperar senha', text_content, settings.EMAIL_HOST_USER, [email])
             email.attach_alternative(html_content, 'text/html')
             email.send()
         else:
             return redirect('recuperar_senha')
-    return render(request, 'pedirEmail.html')
+    return render(request, 'emails/pedirEmail2.html')
+    # return render(request, 'pedirEmail.html')
+
+def validar_codigo(request):
+    if request.method == 'POST':
+        codigo_do_user = request.POST.get('codigo_do_user', None)
+        if codigo_do_user == codigo:
+            print("o codigo é igual")
+            print(email_do_user_atual)
+        else:
+            return redirect('recuperar_senha')
+    return render(request, 'emails/pedirEmail2.html')
 
 def sair(request):
     '''Desloga uma pessoa'''
