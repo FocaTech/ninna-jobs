@@ -1,3 +1,4 @@
+from audioop import reverse
 from pickletools import read_uint8
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
@@ -189,7 +190,20 @@ def salvar_vaga(request, pk_vaga):
         if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
             vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
             vaga_salva_desfavoritar.delete()
-            return redirect('dashboard')
+
+            # LABORATORIO
+            # url = reverse('index',)
+            # print(url)
+            # print(request)
+            # # <WSGIRequest: GET '/salvar_vaga/11/'>
+            # # url = request
+            # # print(type(url))
+            # if request == '/salvar_vaga/11/':
+            #     print('são iguais')
+            # else:
+            #     print('não são iguais')
+
+            return redirect("index")
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
