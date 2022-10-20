@@ -35,8 +35,6 @@ def cadastro_candidato(request):
             return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
-        candidato = Users.objects.create(email=candidato_email, senha=candidato_senha, nome=candidato_nome)
-        candidato.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         return redirect ('longar_candidato')
     else:
@@ -59,8 +57,6 @@ def cadastro_empresa(request):
             return redirect('cadastro_empresa')
         empresa_user = Users.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha, funcao = "EMP")
         empresa_user.save()
-        empresa = Users.objects.create(email=empresa_email, senha=empresa_senha, nome=empresa_nome)
-        empresa.save()
         messages.success(request, 'Cadastro realizado com sucesso')
         return redirect('longar_empresa')
     else:
