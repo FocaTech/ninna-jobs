@@ -103,7 +103,7 @@ def index(request):
         for vaga_salva in lista_de_vagas_salvas_do_user:
             for vaga_salvaa in vaga_salva:
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
-        vagas_paginadas = Paginator(vagas, 3)
+        vagas_paginadas = Paginator(vagas, 6)
         page_num = request.GET.get('page')
         vagas = vagas_paginadas.get_page(page_num)
         dados = {
@@ -112,7 +112,7 @@ def index(request):
         }
     else:
         vagas = Vagas.objects.all()
-        vagas_paginadas = Paginator(vagas, 3)
+        vagas_paginadas = Paginator(vagas, 6)
         page_num = request.GET.get('page')
         vagas = vagas_paginadas.get_page(page_num)
         dados = {
