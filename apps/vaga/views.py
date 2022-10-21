@@ -1,5 +1,7 @@
 from audioop import reverse
 from pickletools import read_uint8
+import re
+from urllib import request
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
 from login_cadastro.models import Users
@@ -88,11 +90,9 @@ def vagas(request):
         return render(request, 'empresa.html', dado)
 '''
 
-
-
-
 def index(request):
     if request.user.is_authenticated:
+        globals()[request] = request
         vagas = Vagas.objects.all()
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
         id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
@@ -103,12 +103,20 @@ def index(request):
         for vaga_salva in lista_de_vagas_salvas_do_user:
             for vaga_salvaa in vaga_salva:
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
+
+        vagas_paginadas = Paginator(vagas, 6)
+        page_num = request.GET.get('page')
+        vagas = vagas_paginadas.get_page(page_num)
+
         dados = {
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
     else:
         vagas = Vagas.objects.all()
+        vagas_paginadas = Paginator(vagas, 6)
+        page_num = request.GET.get('page')
+        vagas = vagas_paginadas.get_page(page_num)
         dados = {
             'vagas' : vagas,
         }
@@ -213,11 +221,65 @@ def candidatar_a_vaga(request, pk_vaga):
         return redirect('index')
 
 def busca_vaga(request):
+    '''barra de busca da dash e empresa'''
+    listar_vagas_salvas_e_candidatadas(request)
     lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
-    dados = {
-        'vagas' : lista_vagas
-    }
-    return render(request, 'vagas.html', dados)
+        dados = {
+            'vagas' : lista_vagas
+        }
+        return render(request, 'vagas.html', dados)
+    elif 'bash' in request.GET:
+        nome_a_buscar = request.GET['bash']
+        busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
+        busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
+        dados = {
+            'vagas_candidatadas' : busca_candidatadas,
+            'vagas_salvas':busca_salvas
+        }
+        return render(request, 'dashboard.html', dados)
+    elif 'bempresa' in request.GET:
+        lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
+        nome_a_buscar = request.GET['bempresa']
+        busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+        busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
+        dados = {
+            # 'vagas_candidatadas' : busca_candidatadas,
+            'vagas':busca_vagas
+        }
+        return render(request, 'empresa.html', dados)
+
+def reducao_codigo_busca(lista_nomes, nome_a_buscar):
+    lista_salva = []#onde vai salvar a pesquisa das candidatadas
+    caracters = "!@#$%¨&*()_-+=§´`{}[]ª~^º;:.,><?/°\|"
+    for nomes in lista_nomes:
+        for nome in nomes:
+            nome = str(nome)
+            for i in range(0,len(caracters)):
+                nome = nome.replace(caracters[i],"")
+                nome_a_buscar = nome_a_buscar.replace(caracters[i],"")
+            nome = nome.lower()
+            nome_a_buscar = nome_a_buscar.lower()
+            padrao = re.compile(nome_a_buscar)
+            busca = re.search(padrao, nome)
+            if busca:
+                lista_salva.append(nomes)
+    return lista_salva
+
+def listar_vagas_salvas_e_candidatadas(request):
+    '''vai gerar duas listas, estatas que estao logo aqui em baixo, os nomes são auto-explicativos'''
+    global lista_de_vagas_candidatadas_do_user
+    global lista_de_vagas_salvas_do_user
+    id_cadidato = get_object_or_404(Users, pk=request.user.id)
+
+    id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
+    for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
+        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+
+    id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+    lista_de_vagas_candidatadas_do_user = []
+    for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
