@@ -2,7 +2,7 @@ from vaga.models import Vagas
 from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from rolepermissions.decorators import has_permission_decorator, has_role_decorator
 from django.contrib.auth import authenticate
 from django.contrib import messages
@@ -146,6 +146,18 @@ def validar_codigo(request):
         if codigo_do_user == codigo:
             print("o codigo é igual")
             print(email_do_user_atual)
+            # r = Users.objects.get(pk=receita_id)
+            user_para_mudar_senha = get_object_or_404(Users, email=email_do_user_atual)
+            print(user_para_mudar_senha.username)
+            # r.nome_receita = request.POST['nome_receita']
+            # r.ingredientes = request.POST['ingredientes']
+            # r.modo_preparo = request.POST['modo_preparo']
+            # r.tempo_preparo = request.POST['tempo_preparo']
+            # r.rendimento = request.POST['rendimento']
+            # r.categoria = request.POST['categoria']
+            # if 'foto_receita' in request.FILES:
+            #     r.foto_receita = request.FILES['foto_receita']
+            # r.save()
         else:
             return redirect('recuperar_senha')
     return render(request, 'emails/pedirEmail2.html')
