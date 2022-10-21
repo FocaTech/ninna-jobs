@@ -27,7 +27,7 @@ class Vagas(models.Model):
 
 class TipoTrabalho(models.Model):
     trabalho = models.CharField(max_length=50)
-    descricao = models.TextField()
+    descricao = models.TextField(max_length=500)
 
     def __str__(self):
         return self.trabalho
@@ -37,7 +37,7 @@ class TipoTrabalho(models.Model):
 
 class TipoContratacao(models.Model):
     contratacao = models.CharField(max_length=50)
-    descricao = models.TextField()
+    descricao = models.TextField(max_length=500)
 
     def __str__(self):
         return self.contratacao
@@ -47,7 +47,7 @@ class TipoContratacao(models.Model):
 
 class PerfilProfissional(models.Model):
     contratacao = models.CharField(max_length=50)
-    descricao = models.TextField()
+    descricao = models.TextField(max_length=500)
 
     def __str__(self):
         return self.contratacao

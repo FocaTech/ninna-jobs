@@ -90,9 +90,6 @@ def vagas(request):
         return render(request, 'empresa.html', dado)
 '''
 
-
-
-
 def index(request):
     if request.user.is_authenticated:
         globals()[request] = request
