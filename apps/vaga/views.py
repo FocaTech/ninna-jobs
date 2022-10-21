@@ -234,33 +234,44 @@ def busca_vaga(request):
     return render(request, 'vagas.html', dados)
 
 def bash(request):
-    '''barra de busca da dash'''
+    '''barra de busca da dash e empresa'''
     listar_vagas_salvas_e_candidatadas(request)
-    lista_vagas_candidatadas = lista_de_vagas_candidatadas_do_user
-    lista_vagas_salvas = lista_de_vagas_salvas_do_user
-    lista_candidatadas = []#onde vai salvar a pesquisa das candidatadas
-    lista_salvas = []#onde vai salvar as favoritas
     if 'bash' in request.GET:
         nome_a_buscar = request.GET['bash']
-        for nomes in lista_vagas_candidatadas:
-            for nome in nomes:
-                nome = str(nome)
-                padrao = re.compile(nome_a_buscar)
-                busca = re.search(padrao, nome)
-                if busca:
-                    lista_candidatadas.append(nomes)
-        for nomes in lista_vagas_salvas:
-            for nome in nomes:
-                nome = str(nome)
-                padrao = re.compile(nome_a_buscar)
-                busca = re.search(padrao, nome)
-                if busca:
-                    lista_salvas.append(nomes)
-    dados = {
-        'vagas_candidatadas' : lista_candidatadas,
-        'vagas_salvas':lista_salvas
-    }
-    return render(request, 'dashboard.html', dados)
+        busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
+        busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
+        dados = {
+            'vagas_candidatadas' : busca_candidatadas,
+            'vagas_salvas':busca_salvas
+        }
+        return render(request, 'dashboard.html', dados)
+    if 'bempresa' in request.GET:
+        lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
+        nome_a_buscar = request.GET['bempresa']
+        busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+        busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
+        dados = {
+            # 'vagas_candidatadas' : busca_candidatadas,
+            'vagas':busca_vagas
+        }
+        return render(request, 'empresa.html', dados)
+
+def reducao_codigo_busca(lista_nomes, nome_a_buscar):
+    lista_salva = []#onde vai salvar a pesquisa das candidatadas
+    caracters = "!@#$%¨&*()_-+=§´`{}[]ª~^º;:.,><?/°\|"
+    for nomes in lista_nomes:
+        for nome in nomes:
+            nome = str(nome)
+            for i in range(0,len(caracters)):
+                nome = nome.replace(caracters[i],"")
+                nome_a_buscar = nome_a_buscar.replace(caracters[i],"")
+            nome = nome.lower()
+            nome_a_buscar = nome_a_buscar.lower()
+            padrao = re.compile(nome_a_buscar)
+            busca = re.search(padrao, nome)
+            if busca:
+                lista_salva.append(nomes)
+    return lista_salva
 
 def listar_vagas_salvas_e_candidatadas(request):
     '''vai gerar duas listas, estatas que estao logo aqui em baixo, os nomes são auto-explicativos'''

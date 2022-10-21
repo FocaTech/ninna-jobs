@@ -16,4 +16,5 @@ urlpatterns = [
     path('talentos', views.talentos, name='talentos'),
     path('buscar', views.busca_vaga, name='buscar'),
     path('bash', views.bash, name='bash'),
+    path('bempresa', views.bash, name='bempresa'),
 ]
