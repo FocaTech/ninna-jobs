@@ -1,5 +1,6 @@
 from audioop import reverse
 from pickletools import read_uint8
+import re
 from urllib import request
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
@@ -224,11 +225,6 @@ def candidatar_a_vaga(request, pk_vaga):
 
 def busca_vaga(request):
     lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
-
-    listar_vagas_salvas_e_candidatadas(request)
-    print(lista_de_vagas_candidatadas_do_user)
-    print(lista_de_vagas_salvas_do_user)
-    
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
@@ -237,8 +233,35 @@ def busca_vaga(request):
     }
     return render(request, 'vagas.html', dados)
 
-lista_de_vagas_candidatadas_do_user = []
-lista_de_vagas_salvas_do_user = []
+def bash(request):
+    '''barra de busca da dash'''
+    listar_vagas_salvas_e_candidatadas(request)
+    lista_vagas_candidatadas = lista_de_vagas_candidatadas_do_user
+    lista_vagas_salvas = lista_de_vagas_salvas_do_user
+    lista_candidatadas = []#onde vai salvar a pesquisa das candidatadas
+    lista_salvas = []#onde vai salvar as favoritas
+    if 'bash' in request.GET:
+        nome_a_buscar = request.GET['bash']
+        for nomes in lista_vagas_candidatadas:
+            for nome in nomes:
+                nome = str(nome)
+                padrao = re.compile(nome_a_buscar)
+                busca = re.search(padrao, nome)
+                if busca:
+                    lista_candidatadas.append(nomes)
+        for nomes in lista_vagas_salvas:
+            for nome in nomes:
+                nome = str(nome)
+                padrao = re.compile(nome_a_buscar)
+                busca = re.search(padrao, nome)
+                if busca:
+                    lista_salvas.append(nomes)
+    dados = {
+        'vagas_candidatadas' : lista_candidatadas,
+        'vagas_salvas':lista_salvas
+    }
+    return render(request, 'dashboard.html', dados)
+
 def listar_vagas_salvas_e_candidatadas(request):
     '''vai gerar duas listas, estatas que estao logo aqui em baixo, os nomes são auto-explicativos'''
     global lista_de_vagas_candidatadas_do_user
