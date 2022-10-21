@@ -15,6 +15,6 @@ urlpatterns = [
     path('tela_de_vagas_salvas', views.tela_de_vagas_salvas, name='tela_de_vagas_salvas'),
     path('talentos', views.talentos, name='talentos'),
     path('buscar', views.busca_vaga, name='buscar'),
-    path('bash', views.bash, name='bash'),
-    path('bempresa', views.bash, name='bempresa'),
+    path('bash', views.busca_vaga, name='bash'),
+    path('bempresa', views.busca_vaga, name='bempresa'),
 ]

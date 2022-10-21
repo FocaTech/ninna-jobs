@@ -224,19 +224,17 @@ def candidatar_a_vaga(request, pk_vaga):
         return redirect('index')
 
 def busca_vaga(request):
+    '''barra de busca da dash e empresa'''
+    listar_vagas_salvas_e_candidatadas(request)
     lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
-    dados = {
-        'vagas' : lista_vagas
-    }
-    return render(request, 'vagas.html', dados)
-
-def bash(request):
-    '''barra de busca da dash e empresa'''
-    listar_vagas_salvas_e_candidatadas(request)
-    if 'bash' in request.GET:
+        dados = {
+            'vagas' : lista_vagas
+        }
+        return render(request, 'vagas.html', dados)
+    elif 'bash' in request.GET:
         nome_a_buscar = request.GET['bash']
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
@@ -245,7 +243,7 @@ def bash(request):
             'vagas_salvas':busca_salvas
         }
         return render(request, 'dashboard.html', dados)
-    if 'bempresa' in request.GET:
+    elif 'bempresa' in request.GET:
         lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
         nome_a_buscar = request.GET['bempresa']
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)

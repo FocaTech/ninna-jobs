@@ -3,20 +3,20 @@ from django.db import models
 from login_cadastro.models import Users
 
 class Vagas(models.Model):
-    nome_vaga = models.CharField(max_length=100)
-    nome_empresa = models.CharField(max_length=100)
+    nome_vaga = models.CharField(max_length=50)
+    nome_empresa = models.CharField(max_length=50)
     logo_empresa = models.ImageField(upload_to= 'logos/%Y/%m/%d', blank=False, null=False)
     tipo_contratacao = models.CharField(max_length=50)
     local_empresa = models.CharField(max_length=100)
     perfil_profissional = models.CharField(max_length=50)
     salario = models.FloatField()
-    descricao_empresa = models.TextField()
-    descricao_vaga = models.TextField()
+    descricao_empresa = models.TextField(max_length=500)
+    descricao_vaga = models.TextField(max_length=500)
     area_atuacao = models.CharField(max_length=50)
     principais_atividades = models.CharField(max_length=200)
     requisitos = models.CharField(max_length=200)
     diferencial = models.CharField(max_length=200)
-    beneficios = models.TextField()
+    beneficios = models.TextField(max_length=500)
     tipo_trabalho = models.CharField(max_length=50)
 
     def __str__(self):
