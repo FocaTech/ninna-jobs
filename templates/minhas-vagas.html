@@ -12,44 +12,14 @@
     <div class="right-column">
       <section class="content">
         <header class="page-header">
-          <h1>Vagas lançadas</h1>
-          <form method='GET' action="{% url 'bempresa' %}" class="filtros">
+          <h1>Minhas Vagas</h1>
+          <form method='GET' action="{% url 'bagas' %}" class="filtros">
             <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input name="bempresa" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+              <input name="bagas" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
             </div>
           </form>
-          <!--<form action="" class="filtros">
-            <select name="teste1" id="">
-              <option value="a0" selected disabled>Empresa</option>
-              <option value="a1">empresa1</option>
-              <option value="a2">empresa2</option>
-              <option value="a3">empresa3</option>
-              <option value="a4">empresa4</option>
-            </select>
-            <select name="teste2" id="">
-              <option value="a0" selected disabled>Vaga</option>
-              <option value="a1">vaga1</option>
-              <option value="a2">vaga2</option>
-              <option value="a3">vaga3</option>
-              <option value="a4">vaga4</option>
-            </select>
-            <select name="teste3" id="">
-              <option value="a0" selected disabled>Nível de experiência</option>
-              <option value="a1">experiência1</option>
-              <option value="a2">experiência2</option>
-              <option value="a3">experiência3</option>
-              <option value="a4">experiência4</option>
-            </select>
-          </form>-->
         </header>
-        <div class="tabber">
-          <div class="tabber__tabs">
-            <button type="button" class="tabber__tab active">Abertas</button>
-            <button type="button" class="tabber__tab">Favoritadas</button>
-            <button type="button" class="tabber__tab">Arquivadas</button>
-          </div>
-          {% include 'partials/_alertas.html' %}
           <div class="tabber__content">
             <section id="abertas" class="active">
               <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
@@ -84,9 +54,45 @@
                   {% endfor %}
                 {% endif %}
               </div>
+              <!-- ##### Pagination ##### -->
+              <section class="top-catagory-area section-padding-20-0">
+                  <div class="container">
+                      {% if vagas.has_other_pages %}
+                      <ul class="pagination">
+                          {% if vagas.has_previous %}
+                          <li class="page-item">
+                              <a href="?page={{ vagas.previous_page_number }}" class="page-link">&laquo;</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item disabled">
+                              <a class="page-link">&laquo;</a>
+                          </li>
+                          {% endif %}
+                          {% for pagina in vagas.paginator.page_range %}
+                          {% if vagas.number == pagina %}
+                          <li class="page-item active">
+                              <a class="page-link">{{ pagina }}</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item">
+                              <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
+                          </li>
+                          {% endif %}
+                          {% endfor %}
+                          {% if vagas.has_next %}
+                          <li class="page-item">
+                              <a href="?page={{ vagas.next_page_number }}" class="page-link">&raquo;</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item disabled">
+                              <a class="page-link">&raquo;</a>
+                          </li>
+                          {% endif %}
+                      </ul>
+                      {% endif %}
+                  </div>
+                  </section>
             </section>
-            <section id="favoritadas"></section>
-            <section id="arquivadas"></section>
           </div>
         </div>
         {% comment %} {% include 'partials/lista-antiga--.html' %} {% endcomment %}

@@ -1,6 +1,7 @@
 from audioop import reverse
 from pickletools import read_uint8
 import re
+from tkinter import E
 from urllib import request
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
@@ -24,7 +25,6 @@ def select(request):
     }
     if request.method == 'POST':
         nome_vaga = request.POST['nome_vaga']
-        nome_empresa = request.POST['nome_empresa']
         tipo_contratacao = request.POST['tipo_contratacao']
         local = request.POST['local']
         perfil = request.POST['perfil']
@@ -38,10 +38,12 @@ def select(request):
         beneficios = request.POST['beneficios']
         tipo_trabalho = request.POST['tipo_trabalho']
         logo_empresa = request.FILES['logo_empresa']
-
-        vaga = Vagas.objects.create(nome_vaga=nome_vaga, nome_empresa=nome_empresa, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
+        user = get_object_or_404(Users, pk=request.user.id)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, nome_empresa=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
-        return redirect('index')
+        if vaga:
+            messages.success(request, 'Vaga salva com Sucesso')
+        return redirect('empresa')
     else:
         return render(request, 'empresa.html', dado)
 
@@ -220,6 +222,18 @@ def candidatar_a_vaga(request, pk_vaga):
         vaga_salva.save()
         return redirect('index')
 
+def minhas_vagas(request):
+    '''vagas cadastradas especificas da empresa'''
+    if request.user.is_authenticated:
+        id = request.user.id
+        vagas = Vagas.objects.order_by('nome_vaga').filter(nome_empresa=id)
+        dados = {
+            'vagas' : vagas
+        }
+        return render(request, 'minhas-vagas.html', dados)
+    else:
+        return redirect('index')
+
 def busca_vaga(request):
     '''barra de busca da dash e empresa'''
     listar_vagas_salvas_e_candidatadas(request)
@@ -241,7 +255,6 @@ def busca_vaga(request):
         }
         return render(request, 'dashboard.html', dados)
     elif 'bempresa' in request.GET:
-        lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
         nome_a_buscar = request.GET['bempresa']
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
@@ -250,6 +263,15 @@ def busca_vaga(request):
             'vagas':busca_vagas
         }
         return render(request, 'empresa.html', dados)
+    elif 'bagas' in request.GET:
+        id = request.user.id
+        lista_vagas = lista_vagas.filter(nome_empresa=id)
+        nome_a_buscar = request.GET['bagas']
+        lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+        dados = {
+            'vagas' : lista_vagas
+        }
+        return render(request, 'vagas.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas
