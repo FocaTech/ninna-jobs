@@ -1,3 +1,4 @@
+from datetime import datetime
 from tkinter import CASCADE
 from django.db import models
 from login_cadastro.models import Users
@@ -18,6 +19,7 @@ class Vagas(models.Model):
     diferencial = models.CharField(max_length=200)
     beneficios = models.TextField(max_length=500)
     tipo_trabalho = models.CharField(max_length=50)
+    data_vaga = models.DateField(default=datetime.now, blank=True)
 
     def __str__(self):
         return self.nome_vaga

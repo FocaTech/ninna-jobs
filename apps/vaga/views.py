@@ -1,9 +1,5 @@
-from audioop import reverse
-from pickletools import read_uint8
 import re
-from tkinter import E
-from urllib import request
-from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
@@ -109,13 +105,12 @@ def index(request):
         vagas_paginadas = Paginator(vagas, 6)
         page_num = request.GET.get('page')
         vagas = vagas_paginadas.get_page(page_num)
-
         dados = {
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
     else:
-        vagas = Vagas.objects.all()
+        vagas = Vagas.objects.order_by('data_vaga').filter()
         vagas_paginadas = Paginator(vagas, 6)
         page_num = request.GET.get('page')
         vagas = vagas_paginadas.get_page(page_num)
@@ -165,7 +160,7 @@ def talentos(request):
     return render(request, 'bancodetalentos.html', dado)
 
 def vagas(request):
-    vagas = Vagas.objects.all()
+    vagas = Vagas.objects.order_by('data_vaga').filter()
     if len(vagas) > 0:
         vagas_paginadas = Paginator(vagas, 6)
         page_num = request.GET.get('page')
@@ -235,9 +230,9 @@ def minhas_vagas(request):
         return redirect('index')
 
 def busca_vaga(request):
-    '''barra de busca da dash e empresa'''
+    '''barras de busca da dash, empresa e vagas'''
     listar_vagas_salvas_e_candidatadas(request)
-    lista_vagas = Vagas.objects.order_by('nome_vaga').filter()
+    lista_vagas = Vagas.objects.order_by('data_vaga').filter()
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
