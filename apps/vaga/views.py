@@ -221,7 +221,7 @@ def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
     if request.user.is_authenticated:
         id = request.user.id
-        vagas = Vagas.objects.order_by('nome_vaga').filter(nome_empresa=id)
+        vagas = Vagas.objects.order_by('data_vaga').filter(nome_empresa=id)
         dados = {
             'vagas' : vagas
         }
