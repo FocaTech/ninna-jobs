@@ -15,14 +15,14 @@
     <title>Ninna-Login</title>
   </head>
 
-  <body class="body-form">
+    <body class="body-form">
     <section class="form my-4 mx-5">
         <div class="container a">
             <div class="row no-gutters container-login">
                 <div class="col-lg-5 p-0 img-login"></div>
                 <div class="col-lg-7 px-5 pt-5 login-wrapper">
                     <h1 class="font-weight-bold py-3">Ninna Jobs</h1>
-
+<!--
                     <div class="tabber">
                         <div class="tabber__tabs">
                             <div class="tabber__tab active">
@@ -51,15 +51,16 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-lg7">
-                                        <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> -->
+                                        <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> --><!--
                                         <button type="submit" class="btn1 mt-3 mb-4">Login</button>
                                     </div>
                                 </div>
                                 <a href="{% url 'recuperar_senha' %}">Esqueceu sua senha?</a>
                             </form>
                         </div>
-
+                    -->
                         <div id="inscreva-se">
+                            <h2>Cadastre-se</h2>
                             <form action="{% url 'cadastro_candidato' %}" method="POST"> {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
@@ -85,9 +86,9 @@
                                 </div>
                                 <input type="hidden" id="c" name="c" value="c">
 
-                        </form>
+                            </form>
                         </div>
-                       </div>
+                        </div>
                     </div>
                 </div>
             </div>

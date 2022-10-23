@@ -21,3 +21,6 @@ def relatorio(request):
 
 def detalhes_vagas(request):
     return render(request, 'detalhesVagasEmpresa.html')
+
+def acoes_vaga(request):
+    return render(request, 'acoesVagas.html')
