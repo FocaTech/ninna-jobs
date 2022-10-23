@@ -1,4 +1,5 @@
 import re
+from xml.etree.ElementInclude import include
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
 from login_cadastro.models import Users
@@ -7,6 +8,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 
 def select(request):
+    '''cria e salva vagas'''
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
@@ -87,6 +89,49 @@ def vagas(request):
     else:
         return render(request, 'empresa.html', dado)
 '''
+
+def editar_vagas(request, pk_vagas):
+    '''Editar uma vaga'''
+    vagas = get_object_or_404(Vagas, pk=pk_vagas)
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+    vaga_a_editar = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'vaga':vagas,
+    }
+    return render(request, 'editar_vaga.html', vaga_a_editar)
+
+def atualizar_vagas(request):
+    '''Atualizar a vaga editada'''
+    if request.method == 'POST':
+        pk_vaga = request.POST['pk_vagas']
+        v = Vagas.objects.get(pk=pk_vaga)
+        v.nome_vaga = request.POST['nome_vaga']
+        v.tipo_contratacao = request.POST['tipo_contratacao']
+        v.local_empresa = request.POST.get('local', False)
+        v.perfil_profissional = request.POST['perfil']
+        v.salario = request.POST['salario']
+        v.descricao_empresa = request.POST['descricao_empresa']
+        v.descricao_vaga = request.POST['descricao_vaga']
+        v.area_atuacao = request.POST['area_atuacao']
+        v.principais_atividades = request.POST['principais_atividades']
+        v.requisitos = request.POST['requisitos']
+        v.diferencial = request.POST['diferencial']
+        v.beneficios = request.POST['beneficios']
+        v.tipo_trabalho = request.POST['tipo_trabalho']
+        if 'logo_empresa' in request.FILES:
+            v.logo_empresa = request.FILES['logo_empresa']
+        v.save()
+    return redirect('minhas-vagas')
+
+def deleta_vaga(request, pk_vaga):
+    '''Apaga vaga'''
+    receita = get_object_or_404(Vagas, pk=pk_vaga)
+    receita.delete()
+    return redirect('minhas-vagas')
 
 def index(request):
     if request.user.is_authenticated:
@@ -206,11 +251,11 @@ def salvar_vaga(request, pk_vaga):
         return redirect('index')
 
 @has_role_decorator('candidato')
-def candidatar_a_vaga(request, pk_vaga):
+def candidatar_a_vaga(request, pk_vagas):
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-        id_vaga = Vagas.objects.filter(id=pk_vaga).values_list('nome_vaga', flat=True).get()
-        id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
+        id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
+        id_vaga = get_object_or_404(Vagas, pk=pk_vagas)
         if VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
             return redirect('index')
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
@@ -220,9 +265,15 @@ def candidatar_a_vaga(request, pk_vaga):
 def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
     if request.user.is_authenticated:
+        contratacoes = TipoContratacao.objects.all()
+        trabalhos = TipoTrabalho.objects.all()
+        perfis = PerfilProfissional.objects.all()
         id = request.user.id
         vagas = Vagas.objects.order_by('data_vaga').filter(nome_empresa=id)
         dados = {
+            'contratacoes' : contratacoes,
+            'trabalhos' : trabalhos,
+            'perfis' : perfis,
             'vagas' : vagas
         }
         return render(request, 'minhas-vagas.html', dados)
