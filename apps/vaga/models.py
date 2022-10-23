@@ -1,5 +1,4 @@
 from datetime import datetime
-from tkinter import CASCADE
 from django.db import models
 from login_cadastro.models import Users
 
