@@ -54,16 +54,16 @@
                             </div>
                             <div class="col">
                                 <label class="form-label">Salário</label>
-                                <input class="form-control" type="number" name="salario" value="{{ vaga.salario }}" required>
+                                <input class="form-control" type="number" name="salario" value="{{vaga.salario}}" required>
                             </div>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Descrição da Vaga</label>
-                                <textarea class="form-control" name="descricao_vaga" required>{{vaga.descricao_vaga}}</textarea>
+                                <textarea class="form-control" name="descricao_vaga" maxlength="499" style="resize: none" required>{{vaga.descricao_vaga}}</textarea>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Descrição da Empresa</label>
-                                <textarea class="form-control" name="descricao_empresa" required>{{vaga.descricao_empresa}}</textarea>
+                                <textarea class="form-control" name="descricao_empresa" maxlength="499" style="resize: none" required>{{vaga.descricao_empresa}}</textarea>
                             </div>
                             <div class="row g-3 align-items-center mb-2">
                             <div class="col">
@@ -85,7 +85,7 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Requisitos</label>
-                                <textarea class="form-control" type="text" name="requisitos" required>{{vaga.requisitos}}</textarea>
+                                <textarea class="form-control" type="text" name="requisitos" maxlength="499" style="resize: none" required>{{vaga.requisitos}}</textarea>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Diferencial</label>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Beneficios</label>
-                                <textarea class="form-control" name="beneficios" required>{{vaga.beneficios}}</textarea>
+                                <textarea class="form-control" name="beneficios" maxlength="499" style="resize: none" required>{{vaga.beneficios}}</textarea>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-4">
                                 <div class="single-best-receipe-area mb-30">

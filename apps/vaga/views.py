@@ -95,6 +95,7 @@ def editar_vagas(request, pk_vagas):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
+    vagas.salario = int(vagas.salario)
     vaga_a_editar = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
@@ -264,11 +265,11 @@ def candidatar_a_vaga(request, pk_vagas):
 def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
     if request.user.is_authenticated:
+        id = request.user.id
+        vagas = Vagas.objects.order_by('data_vaga').filter(nome_empresa=id)
         contratacoes = TipoContratacao.objects.all()
         trabalhos = TipoTrabalho.objects.all()
         perfis = PerfilProfissional.objects.all()
-        id = request.user.id
-        vagas = Vagas.objects.order_by('data_vaga').filter(nome_empresa=id)
         dados = {
             'contratacoes' : contratacoes,
             'trabalhos' : trabalhos,

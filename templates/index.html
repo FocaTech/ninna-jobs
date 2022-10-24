@@ -133,19 +133,19 @@
                         <div class="contato-form">
                             <p class="full-row">
                                 <label for="name-id">Nome:</label>
-                                <input class="form-control" type="text" id="name-id" name="name-id" placeholder="Nome">
+                                <input class="form-control" type="text" id="name-id" name="name-id" placeholder="Nome" maxlength="100" required>
                             </p>
                             <p class="full-row">
                                 <label for="email-id">E-mail:</label>
-                                <input type="text" class="form-control" id="email-id" name="email-id" placeholder="E-mail">
+                                <input type="text" class="form-control" id="email-id" name="email-id" placeholder="E-mail" maxlength="100" required>
                             </p>
                             <p class="full-row">
                                 <label for="subject-id">Assunto:</label>
-                                <input type="text" class="form-control" id="subject-id" name="subject-id" placeholder="Assunto">
+                                <input type="text" class="form-control" id="subject-id" name="subject-id" placeholder="Assunto" maxlength="100" required>
                             </p>
                             <p class="full-row">
                                 <label for="message">Mensagem:</label>
-                                <textarea name="message" class="form-control" id="message" rows="6"></textarea>
+                                <textarea name="message" class="form-control" id="message" rows="6" style="resize: none" maxlength="499" required></textarea>
                             </p>
                             <input class="mainBtn" type="submit" name="" value="Send Message">
                         </div>
