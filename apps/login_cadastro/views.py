@@ -1,20 +1,18 @@
 from vaga.models import Vagas
 from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
-from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import get_object_or_404, render, redirect
-from rolepermissions.decorators import has_permission_decorator, has_role_decorator
-from django.contrib.auth import authenticate
+from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
+import random
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 
-
 # pro email
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings

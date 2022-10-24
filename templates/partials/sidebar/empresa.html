@@ -8,6 +8,7 @@
     <div class="sidebar-content">
       <ul class="sidebar-menu">
         <li><a class="btn btn-primary" href="{% url 'perfilempresa' %}" role="button">Perfil</a></li>
+        <li><a class="btn btn-primary" href="{% url 'minhas-vagas' %}" role="button">Minhas vagas</a></li>
         <li><a class="btn btn-primary" href="{% url 'select' %}" role="button">Vagas</a></li>
         <li><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro-de-vaga">Cadastrar vaga</button></li>
         <li><a class="btn btn-primary" href="{% url 'talentos' %}"role="button">Banco de Talentos</a></li>
@@ -30,22 +31,18 @@
           {% csrf_token %}
           <div class="mb-2">
             <label class="form-label">Logo da Empresa</label>
-            <input class="p-1" type="file" name="logo_empresa">
-          </div>
-          <div class="row g-3 align-items-center mb-2">
-            <div class="col">
-              <label class="form-label">Nome da Empresa</label>
-              <input class="form-control" type="text" name="nome_empresa">
-            </div>
-            <div class="col">
-              <label class="form-label">Local da Empresa</label>
-              <input class="form-control" type="text" name="local">
-            </div>
+            <input class="p-1" type="file" name="logo_empresa" required>
           </div>
           <div class="row g-3 align-items-center mb-2">
             <div class="col">
               <label class="form-label">Nome da Vaga</label>
-              <input class="form-control" type="text" name="nome_vaga">
+              <input class="form-control" type="text" name="nome_vaga" maxlength="79" required>
+            </div>
+          </div>
+          <div class="row g-3 align-items-center mb-2">
+            <div class="col">
+              <label class="form-label">Local da Empresa</label>
+              <input class="form-control" type="text" name="local" maxlength="99" required>
             </div>
             <div class="col">
               <label class="form-label" for="contratacao">Tipo de Contratacao</label>
@@ -67,21 +64,21 @@
             </div>
             <div class="col">
               <label class="form-label">Salário</label>
-              <input class="form-control" type="number" name="salario">
+              <input class="form-control" type="number" name="salario" min="100" max="10000000" required>
             </div>
           </div>
           <div class="mb-2">
             <label class="form-label">Descrição da Vaga</label>
-            <textarea class="form-control" name="descricao_vaga"></textarea>
+            <textarea class="form-control" name="descricao_vaga" maxlength="499" style="resize: none" required></textarea>
           </div>
           <div class="mb-2">
             <label class="form-label">Descrição da Empresa</label>
-            <textarea class="form-control" name="descricao_empresa"></textarea>
+            <textarea class="form-control" name="descricao_empresa" maxlength="499" style="resize: none" required></textarea>
           </div>
           <div class="row g-3 align-items-center mb-2">
             <div class="col">
               <label class="form-label">Área de Atuação</label>
-              <input class="form-control" type="text" name="area_atuacao">
+              <input class="form-control" type="text" name="area_atuacao" maxlength='79' required>
             </div>
             <div class="col">
               <label class="form-label" for="tipotrabalho">Tipo de trabalho</label>
@@ -94,28 +91,25 @@
           </div>
           <div class="mb-2">
             <label class="form-label">Principais Atividades</label>
-            <input class="form-control" type="text" name="principais_atividades">
+            <input class="form-control" type="text" name="principais_atividades" maxlength='199' required>
           </div>
           <div class="mb-2">
             <label class="form-label">Requisitos</label>
-            <textarea class="form-control" type="text" name="requisitos"></textarea>
+            <textarea class="form-control" type="text" name="requisitos" maxlength="499" style="resize: none" required></textarea>
           </div>
           <div class="mb-2">
             <label class="form-label">Diferencial</label>
-            <input class="form-control" type="text" name="diferencial">
+            <input class="form-control" type="text" name="diferencial" maxlength='200'>
           </div>
           <div class="mb-2">
             <label class="form-label">Beneficios</label>
-            <textarea class="form-control" name="beneficios"></textarea>
+            <textarea class="form-control" name="beneficios" maxlength="499" style="resize: none" required></textarea>
           </div>
-
           <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
         </form>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Descartar</button>
-
       </div>
     </div>
   </div>

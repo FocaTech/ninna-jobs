@@ -13,10 +13,10 @@
       <section class="content">
         <header class="page-header">
           <h1>Vagas lançadas</h1>
-          <form method='GET' action="" class="filtros">
+          <form method='GET' action="{% url 'bempresa' %}" class="filtros">
             <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input name="" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+              <input name="bempresa" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
             </div>
           </form>
           <!--<form action="" class="filtros">
@@ -49,6 +49,7 @@
             <button type="button" class="tabber__tab">Favoritadas</button>
             <button type="button" class="tabber__tab">Arquivadas</button>
           </div>
+          {% include 'partials/_alertas.html' %}
           <div class="tabber__content">
             <section id="abertas" class="active">
               <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">

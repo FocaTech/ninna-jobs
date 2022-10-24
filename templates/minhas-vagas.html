@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Minhas vagas{% endblock %}
+{% block head %}
+  <script src="{% static 'js/tabber.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'css/tabber.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+  <main class="container">
+    <div class="right-column">
+      <section class="content">
+        <header class="page-header">
+          <h1>Minhas Vagas</h1>
+          <form method='GET' action="{% url 'bagas' %}" class="filtros">
+            <div class="form-group input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+              <input name="bagas" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+            </div>
+          </form>
+        </header>
+          <div class="tabber__content">
+            <section id="abertas" class="active">
+              <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
+                {% if vagas %}
+                  {% for vaga in vagas %}
+                    <div class="col">
+                      <div class="card h-100 vaga">
+                        <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
+                        <div class="card-body d-flex flex-column">
+                          <h5 class="card-title">{{ vaga.nome_vaga }}</h5>
+                          <ul class="hide-bullets">
+                            <li>
+                              <ul class="inline-list">
+                                <li><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
+                              </ul>
+                            </li>
+                            <li>
+                              <ul class="inline-list">
+                                <li><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
+                                <li><i class="bi bi-person-workspace" title="Tipo de trabalho"></i> {{ vaga.tipo_trabalho }} </li>
+                              </ul>
+                            </li>
+                          </ul>
+                          <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}']">
+                            Detalhes
+                          </button>
+                        </div>
+                        <div class="modal fade" data-modal-id="{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}" tabindex="-1" {#aria-labelledby="exampleModalLabel" #}aria-hidden="true">
+                          <div class="modal-dialog{# modal-lg#}">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title h5 titulovaga" id="modalVaga">{{ vaga.nome_vaga }} ({{ vaga.tipo_trabalho }})</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <ul class="hide-bullets">
+                                  <li>
+                                    <ul class="inline-list">
+                                      <li class="info" id="nomeEmpresa"><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                      <li class="info" id="localEmpresa"><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
+                                    </ul>
+                                  </li>
+                                  <li>
+                                    <ul class="inline-list">
+                                      <li class="info" id="tipoDeContrato"><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
+                                      <li class="info" id="perfilProfissional"><i class="bi bi-person-workspace" title="Perfil profissional"></i> {{ vaga.perfil_profissional }}</li>
+                                      <li class="info" id="salario">R$ {{ vaga.salario }}</li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                                <h5 class="subtituloVaga">Principais atividades</h5>
+                                <p>{{ vaga.principais_atividades }}</p>
+                                <h5 class="subtituloVaga">Requísitos</h5>
+                                <p>{{ vaga.requisitos }}</p>
+                                <h5 class="subtituloVaga">Diferencial</h5>
+                                <p>{{ vaga.diferencial }}</p>
+                                <h5 class="subtituloVaga">Descrição da vaga</h5>
+                                <p>{{ vaga.descricao_vaga }}</p>
+                                <h5 class="subtituloVaga">Descrição da empressa</h5>
+                                <p>{{ vaga.descricao_empresa }}</p>
+                                <h5 class="subtituloVaga">Area atuacao</h5>
+                                <p>{{ vaga.area_atuacao }}</p>
+                                <h5 class="subtituloVaga">Beneficios</h5>
+                                <p>{{ vaga.beneficios }}</p>
+                              </div>
+                              <div class="modal-footer justify-content-between">
+                                <div>
+                                  {% if vaga.id in ids_de_vagas_salvas %}
+                                  <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star-fill"></i></a>
+                                  {% else %}
+                                  <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
+                                  {% endif %}
+                                </div>
+                                {% if user.funcao == "EMP" %}
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                  <div class="single-best-receipe-area mb-30">
+                                    <div class="receipe-content">
+                                      <a href="{% url 'editar' vaga.id %}">
+                                          <a href="{% url 'editar' vaga.id %}" type="button" class="btn btn-success">Editar</a>
+                                          <a href="{% url 'deletar' vaga.id %}" type="button" class="btn btn-danger">Deletar</a>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                                {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <!-- ##### Pagination ##### -->
+              <section class="top-catagory-area section-padding-20-0">
+                  <div class="container">
+                      {% if vagas.has_other_pages %}
+                      <ul class="pagination">
+                          {% if vagas.has_previous %}
+                          <li class="page-item">
+                              <a href="?page={{ vagas.previous_page_number }}" class="page-link">&laquo;</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item disabled">
+                              <a class="page-link">&laquo;</a>
+                          </li>
+                          {% endif %}
+                          {% for pagina in vagas.paginator.page_range %}
+                          {% if vagas.number == pagina %}
+                          <li class="page-item active">
+                              <a class="page-link">{{ pagina }}</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item">
+                              <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
+                          </li>
+                          {% endif %}
+                          {% endfor %}
+                          {% if vagas.has_next %}
+                          <li class="page-item">
+                              <a href="?page={{ vagas.next_page_number }}" class="page-link">&raquo;</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item disabled">
+                              <a class="page-link">&raquo;</a>
+                          </li>
+                          {% endif %}
+                      </ul>
+                      {% endif %}
+                  </div>
+                  </section>
+            </section>
+          </div>
+        </div>
+        {% comment %} {% include 'partials/lista-antiga--.html' %} {% endcomment %}
+      </section>
+    </div>
+    {% include 'partials/sidebar/empresa.html' %}
+  </main>
+{% endblock %}
