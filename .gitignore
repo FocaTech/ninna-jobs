@@ -161,4 +161,4 @@ cython_debug/
 #.idea/
 
 teste.py
-apps/vaga/migrations/0001_initial.py
+apps/vaga/migrations
