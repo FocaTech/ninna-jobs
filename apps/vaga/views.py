@@ -1,5 +1,4 @@
 import re
-from xml.etree.ElementInclude import include
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import TipoContratacao, TipoTrabalho, Vagas, PerfilProfissional, VagasSalvas, VagasCandidatadas
 from login_cadastro.models import Users
