@@ -3,118 +3,84 @@
 {% load static %}
 {% block title %}Perfil empresa{% endblock %}
 {% block head %}
+  <script src="{% static 'js/tabber.js' %}" defer></script>
   <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tabber.css' %}">
 {% endblock %}
 {% block body_class %}page-profile{% endblock %}
 {% block content %}
-  <main class="container">
-    <div class="right-column">
-      <div class="content">
-        <div class="profile-box">
-          <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
-          <h2 class="profile-name">{{ user.username }}</h2>
-          <div class="redesocial"><a class="linklinkedin" href="#"><i class="bi bi-linkedin m-2"></a></i><a class="linkwapp" href="#"><i class="bi bi-whatsapp m-2"></i></a><a href="#"><i class="bi bi-envelope"></i></a></div>
-        </div>
-        <div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Biografia</h3>
-            <span class="spanperfil mb-4"></span>
-            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab reprehenderit est officiis voluptatem nam nobis beatae amet, accusantium officia expedita quod saepe exercitationem ipsam recusandae sapiente in. Labore, a dolore?</p>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Principais areas de atuação</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">area 1</p>
-              <p class="col">area 2</p>
-              <p class="col">area 3</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Disponibilidade</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Trabalho tempo integral</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Dados Pessoais</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Data de Nascimento:00/00/0000</p>
-              <p class="col">Genero: TransViado</p>
-            </div>
-            <div class="row">
-              <p class="col">Cidade: Cidade</p>
-              <p class="col">Estado: estado</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Experiencia Profissional</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Empresa: empresa</p>
-              <p class="col">Cargo: cargo</p>
-            </div>
-            <p>Fale um pouco sobre Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias nulla odio voluptates ea reprehenderit eos? Non quaerat dolor modi praesentium consequuntur, optio hic commodi explicabo quis amet accusantium? Delectus, iusto.</p>
-            <div class="row">
-              <p class="col">Inicio: mes/ano</p>
-              <p class="col">Saida: mes/ano</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Formação Academica</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Instituição: loren ipsun </p>
-              <p class="col">Formação: loren Ipsun</p>
-              <p class="col">Curso: loren Ipsun</p>
-            </div>
-            <div class="row">
-              <p class="col">Inicio: mes/ano</p>
-              <p class="col">Conclusão/Previsão: mes/ano</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3 class="tituloperfil">Idiomas</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Idioma: loren </p>
-              <p class="col">Nivel: loren</p>
-            </div>
-          </div>
-          <div class="secaoperfil py-4">
-            <h3>Certificados e Conquistas</h3>
-            <span class="spanperfil mb-4"></span>
-            <div class="row">
-              <p class="col">Titulo: loren </p>
-              <p class="col">Tipo: loren</p>
-            </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sint cupiditate hic. Ab id amet quaerat. Fugiat quam consequuntur, voluptates, exercitationem amet fugit magni ipsa, voluptatem nisi ducimus a vel?</p>
-          </div>
-        </div>
-      </div>
+  <main class="p-2 position-relative">
+    <div class="position-sticky top-50 end-0 botaoContatoperfil w-25">
+      <ul id="abaredes">
+        <li class="nav-item py-2">
+          <a class="nav-link" href="#"><i class="bi bi-whatsapp"></i></a>
+        </li>
+        <li class="nav-item py-1">
+          <a class="nav-link" href="#"><i class="bi bi-linkedin"></i></a>
+        </li>
+        <li class="nav-item py-1">
+          <a class="nav-link" href="#"><i class="bi bi-envelope"></i></a>
+        </li>
+        <li class="nav-item py-1">
+          <button><i class="bi bi-star"></i></button>
+        </li>
+      </ul>
     </div>
-    <!--<div class="left-column">
-      <div class="sidebar">
-        <div class="sidebar-user mb-3">
-          <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
-          <h2 class="sidebar-name h5 text-center">Lorem, ipsum dolor</h2>
+    <div class="bg-light w-75 position-relative m-auto p-5">
+      <img src="{% static 'img/placeholder.svg' %}" alt="" class="rounded-circle w-25 position-absolute top-0 start-50 translate-middle">
+      <h2 class="text-center p-5 mt-3">Nome Da Empresa</h2>
+      <div class="tabber p-4">
+        <div class="tabber__tabs p-3">
+          <button type="button" class="tabber__tab active">Sobre</button>
+          <button type="button" class="tabber__tab">Vagas</button>
         </div>
-        <div class="sidebar-content">
-          <ul class="sidebar-menu">
-            <li><a class="btn btn-primary" href="#" role="button">Perfil</a></li>
-            <! <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
-            <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> >
-            <li><a class="btn btn-primary" href="{% url 'arquivadas' %}" role="button">Minhas vagas</a></li>
-            <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
-          </ul>
+        <div class="tabber__content p-5">
+          <section id="Sobre" class="active px-5">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus magnam minima? Quo recusandae autem ea nobis accusamus! Ipsa dolore impedit alias! Dolores laudantium a sit at quia ea consequatur.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus cum molestias perspiciatis inventore sapiente earum debitis aliquid tempore totam, quis quo! Optio ut obcaecati numquam ratione voluptas laborum nemo ad!
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae officiis facilis quis alias delectus iste quaerat rerum corporis. Veniam earum blanditiis tempora culpa commodi maiores nostrum? Cumque qui minus dicta.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet praesentium, velit quasi fuga quaerat quos perspiciatis numquam impedit doloribus enim maxime nisi porro natus facilis explicabo fugit. Labore, sed iure?
+
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ab id velit tempore cum quo necessitatibus aperiam ducimus, illo amet excepturi ad perspiciatis aliquam, nostrum quas eveniet vel maiores nemo?
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam praesentium hic maxime delectus sequi repellat eius laboriosam, non excepturi dolores, blanditiis rerum ut, mollitia aspernatur! Illo consequatur quae soluta ab!
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo ut quia corrupti nam? Ipsum, perferendis sunt facilis fugiat laboriosam recusandae nulla, qui laborum a beatae perspiciatis assumenda odit amet exercitationem.
+            </p>
+          </section>
+          <section id="Vagas" class="p-5">
+            <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
+              {% if vagas %}
+              {% for vaga in vagas %}
+                  <div class="col">
+                      <div class="card h-100 vaga">
+                          <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
+                          <div class="card-body d-flex flex-column">
+                              <h5 class="card-title">{{ vaga.nome_vaga }}</h5>
+                              <ul class="hide-bullets">
+                                  <li>
+                                      <ul class="inline-list">
+                                          <li><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                          <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
+                                      </ul>
+                                  </li>
+                                  <li>
+                                      <ul class="inline-list">
+                                          <li><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
+                                          <li><i class="bi bi-person-workspace" title="Tipo de trabalho"></i> {{ vaga.tipo_trabalho }} </li>
+                                      </ul>
+                                  </li>
+                              </ul>
+                              <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}']">
+                                  Detalhes
+                              </button>
+                          </div>
+                      {% include 'partials/modal-vaga.html' %}
+                  </div>
+              </div>
+              {% endfor %}
+              {% endif %}
+          </div>
+          </section>
         </div>
-      </div>
-    </div>-->
-    <div class="modal" id="modal">
-      <div class="modal-content">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi consequatur pariatur veniam! cu</p>
       </div>
     </div>
   </main>
