@@ -84,13 +84,12 @@
             Entrar
           </button>
           <div class="dropdown-menu">
-            <form class="px-4 py-3" action='{% url "longar_candidato" %}' method="POST" >
-              {% csrf_token %}
+            <form class="px-4 py-3" method="POST" action="{%url 'longar_candidato'%}"> {% csrf_token %}
               <div class="mb-3">
-                <input type="email" class="form-control"  name="candidato_email" id="candidato_email" placeholder="Email">
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Email" name="candidato_email">
               </div>
               <div class="mb-3">
-                <input type="password" class="form-control" name="candidato_senha" id="candidato_senha" placeholder="Senha">
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Senha" name="candidato_senha">
               </div>
               <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
