@@ -27,6 +27,7 @@
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
+{% include 'partials/_alertas.html' %}
 <main>
     <div class="position-relative">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -57,8 +58,8 @@
                 <p class="card-text p-1 mt-2 h5">Candidato: Cadastre-se e aproveite oportunidades</p>
                 <p class="card-text p-1 h5">Empresa: Cadastre-se e anuncie sua vaga </p>
                 <div class="m-3">
-                    <a href="{% url 'longar_candidato' %}" class="btn btn-primary mx-5">Sou Empresa</a>
-                    <a href="{% url 'longar_candidato' %}" class="btn btn-primary mx-5">Sou Candidato</a>
+                    <a href="{% url 'cadastro_empresa' %}" class="btn btn-primary mx-5">Sou Empresa</a>
+                    <a href="{% url 'cadastro_candidato' %}" class="btn btn-primary mx-5">Sou Candidato</a>
                 </div>
                 {% endif %}
             </div>
@@ -91,7 +92,7 @@
                                 </ul>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}']">
+                        <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']"> 
                             Detalhes
                         </button>
                     </div>
@@ -133,19 +134,19 @@
                         <div class="contato-form">
                             <p class="full-row">
                                 <label for="name-id">Nome:</label>
-                                <input class="form-control" type="text" id="name-id" name="name-id" placeholder="Nome">
+                                <input class="form-control" type="text" id="name-id" name="name-id" placeholder="Nome" maxlength="100" required>
                             </p>
                             <p class="full-row">
                                 <label for="email-id">E-mail:</label>
-                                <input type="text" class="form-control" id="email-id" name="email-id" placeholder="E-mail">
+                                <input type="text" class="form-control" id="email-id" name="email-id" placeholder="E-mail" maxlength="100" required>
                             </p>
                             <p class="full-row">
                                 <label for="subject-id">Assunto:</label>
-                                <input type="text" class="form-control" id="subject-id" name="subject-id" placeholder="Assunto">
+                                <input type="text" class="form-control" id="subject-id" name="subject-id" placeholder="Assunto" maxlength="100" required>
                             </p>
                             <p class="full-row">
                                 <label for="message">Mensagem:</label>
-                                <textarea name="message" class="form-control" id="message" rows="6"></textarea>
+                                <textarea name="message" class="form-control" id="message" rows="6" style="resize: none" maxlength="499" required></textarea>
                             </p>
                             <input class="mainBtn" type="submit" name="" value="Send Message">
                         </div>

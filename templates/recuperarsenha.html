@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!--meta tags-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--css e bootstrap-->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/recuperesenha.css' %}">
+
+    <title>Recuperação de senha</title>
+     <!--link script-->
+     <script src="https://kit.fontawesome.com/dfcc59a893.js" crossorigin="anonymous"></script>
+</head>
+<body>
+     <div class="div-box">
+         <div class="div-h2">
+         <h2>Recuperação de senha</h2>
+         <hr>
+        </div>
+
+        <div class="div-p">
+            <p>Para recuperar a sua senha, informe seu endereço de email que nós enviaremos um link para a alteração da senha.</p>
+        </div>
+        <form action="{% url 'recuperar_senha' %}" method="POST"> {% csrf_token %}
+            {% include 'partials/_alertas.html' %}
+            <div class="div-email">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="E-mail" aria-label="Recipient's username" aria-describedby="basic-addon2" name="email" type="email">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa-regular fa-envelope-open"></i></span>
+                </div>
+            </div>
+
+            <div class="div-enviar">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+     </div>
+</body>
+</html>
