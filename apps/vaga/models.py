@@ -7,7 +7,7 @@ class Vagas(models.Model):
     nome_empresa = models.ForeignKey(Users, on_delete=models.CASCADE)
     logo_empresa = models.ImageField(upload_to= 'logos/%Y/%m/%d', blank=False, null=False)
     tipo_contratacao = models.CharField(max_length=80)
-    local_empresa = models.CharField(max_length=70)
+    local_empresa = models.CharField(max_length=200)
     perfil_profissional = models.CharField(max_length=80)
     salario = models.FloatField()
     descricao_empresa = models.TextField(max_length=500)
@@ -18,7 +18,7 @@ class Vagas(models.Model):
     diferencial = models.CharField(max_length=300)
     beneficios = models.TextField(max_length=500)
     tipo_trabalho = models.CharField(max_length=80)
-    data_vaga = models.DateField(default=datetime.now, blank=True)
+    data_vaga = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
         return self.nome_vaga

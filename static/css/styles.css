@@ -209,6 +209,9 @@ ul.inline-list li:not(:last-child)::after {
     margin-left: 10px;
     margin-bottom: 10px;
 }
+.card-title{
+    width: 100%;
+}
 
 
 .btn-primary {

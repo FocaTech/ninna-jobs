@@ -138,7 +138,7 @@ def deleta_vaga(request, pk_vaga):
 def index(request):
     if request.user.is_authenticated:
         globals()[request] = request
-        vagas = Vagas.objects.all()
+        vagas = Vagas.objects.get_queryset().order_by('id')
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
         id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
         lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
@@ -156,7 +156,7 @@ def index(request):
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
     else:
-        vagas = Vagas.objects.order_by('data_vaga').filter()
+        vagas = Vagas.objects.order_by('-data_vaga').filter()
         vagas = paginar(vagas, request)
         dados = {
             'vagas' : vagas,
@@ -202,7 +202,7 @@ def talentos(request):
     return render(request, 'bancodetalentos.html', dado)
 
 def vagas(request):
-    vagas = Vagas.objects.order_by('data_vaga').filter()
+    vagas = Vagas.objects.order_by('-data_vaga').filter()
     vagas = paginar(vagas, request)
     dados = {
         'vagas' : vagas
@@ -261,7 +261,7 @@ def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
     if request.user.is_authenticated:
         id = request.user.id
-        vagas = Vagas.objects.order_by('data_vaga').filter(nome_empresa=id)
+        vagas = Vagas.objects.order_by('-data_vaga').filter(nome_empresa=id)
         contratacoes = TipoContratacao.objects.all()
         trabalhos = TipoTrabalho.objects.all()
         perfis = PerfilProfissional.objects.all()
@@ -279,7 +279,7 @@ def minhas_vagas(request):
 def busca_vaga(request):
     '''barras de busca da dash, empresa e vagas'''
     listar_vagas_salvas_e_candidatadas(request)
-    lista_vagas = Vagas.objects.order_by('data_vaga').filter()
+    lista_vagas = Vagas.objects.order_by('-data_vaga').filter()
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         messages.success(request, f"Resultados de '{nome_a_buscar}' ")
