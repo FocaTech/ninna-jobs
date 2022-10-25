@@ -36,7 +36,7 @@
           <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img width="40" height="40" src="{% static 'img/candidato.jpg' %}" alt="share">
           </button>
-          <ul class="dropdown-menu">
+        <ul class="dropdown-menu">
           {% if user.is_superuser %}
           <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
           <li><a class="dropdown-item" href="{% url 'interface' %}"><i class="bi bi-speedometer2"></i> Admin</li>
