@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.div-box{
+    background: #f6f6f6;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 50px;
+    border-radius: 20px;
+}
+
+h2{
+  text-align: center;
+  color: rgb(94, 94, 93);
+}
+
+hr{
+margin-top: 30px;
+}
+
+.div-p{
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.div-email{
+    padding: 30px;
+}
+
+.div-enviar{
+    text-align: center;
+}
