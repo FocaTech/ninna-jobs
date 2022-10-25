@@ -27,6 +27,7 @@
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
+{% include 'partials/_alertas.html' %}
 <main>
     <div class="position-relative">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -57,8 +58,8 @@
                 <p class="card-text p-1 mt-2 h5">Candidato: Cadastre-se e aproveite oportunidades</p>
                 <p class="card-text p-1 h5">Empresa: Cadastre-se e anuncie sua vaga </p>
                 <div class="m-3">
-                    <a href="{% url 'longar_candidato' %}" class="btn btn-primary mx-5">Sou Empresa</a>
-                    <a href="{% url 'longar_candidato' %}" class="btn btn-primary mx-5">Sou Candidato</a>
+                    <a href="{% url 'cadastro_empresa' %}" class="btn btn-primary mx-5">Sou Empresa</a>
+                    <a href="{% url 'cadastro_candidato' %}" class="btn btn-primary mx-5">Sou Candidato</a>
                 </div>
                 {% endif %}
             </div>

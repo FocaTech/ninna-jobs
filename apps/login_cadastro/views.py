@@ -33,7 +33,7 @@ def cadastro_candidato(request):
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
         messages.success(request, 'Cadastro realizado com sucesso')
-        return redirect ('longar_candidato')
+        return redirect ('index')
     else:
         return render(request, 'loginCandidato.html')
 
@@ -55,7 +55,7 @@ def cadastro_empresa(request):
         empresa_user = Users.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha, funcao = "EMP")
         empresa_user.save()
         messages.success(request, 'Cadastro realizado com sucesso')
-        return redirect('longar_empresa')
+        return redirect('index')
     else:
         return render(request, 'loginEmpresa.html')
 
@@ -75,7 +75,7 @@ def logar_candidato(request):
                 return redirect('index')
         messages.error(request, "candidato não cadastrado")
 
-    return render(request, 'loginCandidato.html')
+    return render(request, 'index.html')
 
 def logar_empresa(request):
     empresa_email = None

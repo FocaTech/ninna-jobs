@@ -147,18 +147,14 @@ def index(request):
             for vaga_salvaa in vaga_salva:
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
 
-        vagas_paginadas = Paginator(vagas, 6)
-        page_num = request.GET.get('page')
-        vagas = vagas_paginadas.get_page(page_num)
+        vagas = paginar(vagas, request)
         dados = {
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
     else:
         vagas = Vagas.objects.order_by('data_vaga').filter()
-        vagas_paginadas = Paginator(vagas, 6)
-        page_num = request.GET.get('page')
-        vagas = vagas_paginadas.get_page(page_num)
+        vagas = paginar(vagas, request)
         dados = {
             'vagas' : vagas,
         }
@@ -179,6 +175,10 @@ def dashboard(request):
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
 
+    vagas = paginar(vagas, request)
+    lista_de_vagas_candidatadas_do_user = paginar(vagas, request)
+    id_das_vagas_salvas_do_user = paginar(vagas, request)
+
     dados = {
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
@@ -196,7 +196,6 @@ def talentos(request):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
-
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
@@ -206,10 +205,7 @@ def talentos(request):
 
 def vagas(request):
     vagas = Vagas.objects.order_by('data_vaga').filter()
-    if len(vagas) > 0:
-        vagas_paginadas = Paginator(vagas, 6)
-        page_num = request.GET.get('page')
-        vagas = vagas_paginadas.get_page(page_num)
+    vagas = paginar(vagas, request)
     dados = {
         'vagas' : vagas
     }
@@ -270,6 +266,7 @@ def minhas_vagas(request):
         contratacoes = TipoContratacao.objects.all()
         trabalhos = TipoTrabalho.objects.all()
         perfis = PerfilProfissional.objects.all()
+        vagas = paginar(vagas, request)
         dados = {
             'contratacoes' : contratacoes,
             'trabalhos' : trabalhos,
@@ -295,6 +292,7 @@ def busca_vaga(request):
         nome_a_buscar = request.GET['bash']
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
+        busca_candidatadas = paginar(busca_candidatadas, request)
         dados = {
             'vagas_candidatadas' : busca_candidatadas,
             'vagas_salvas':busca_salvas
@@ -351,3 +349,10 @@ def listar_vagas_salvas_e_candidatadas(request):
     lista_de_vagas_candidatadas_do_user = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
+
+def paginar(vagas, request):
+    if len(vagas) > 0:
+        vagas_paginadas = Paginator(vagas, 6)
+        page_num = request.GET.get('page')
+        vagas = vagas_paginadas.get_page(page_num)
+    return vagas
