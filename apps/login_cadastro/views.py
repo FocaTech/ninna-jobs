@@ -76,9 +76,9 @@ def logar_candidato(request):
             if user:
                 auth.login(request, user)
                 print("autenticado")
+                messages.success(request, 'Login realizado com sucesso')
                 return redirect('index')
         messages.error(request, "candidato não cadastrado")
-
     return render(request, 'index.html')
 
 def logar_empresa(request):
@@ -288,6 +288,7 @@ def alterar_senha(request):
 def sair(request):
     '''Desloga uma pessoa'''
     auth.logout(request)
+    messages.error(request, 'Deslogado')
     return redirect('index')
 
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):

@@ -125,6 +125,7 @@ def atualizar_vagas(request):
         if 'logo_empresa' in request.FILES:
             v.logo_empresa = request.FILES['logo_empresa']
         v.save()
+        messages.success(request, 'Vaga editada')
     return redirect('minhas-vagas')
 
 def deleta_vaga(request, pk_vaga):
@@ -148,6 +149,7 @@ def index(request):
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
 
         vagas = paginar(vagas, request)
+        ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
         dados = {
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
@@ -174,11 +176,6 @@ def dashboard(request):
     lista_de_vagas_candidatadas_do_user = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
-
-    vagas = paginar(vagas, request)
-    lista_de_vagas_candidatadas_do_user = paginar(vagas, request)
-    id_das_vagas_salvas_do_user = paginar(vagas, request)
-
     dados = {
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
@@ -226,7 +223,7 @@ def salvar_vaga(request, pk_vaga):
         if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
             vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
             vaga_salva_desfavoritar.delete()
-
+            messages.warning(request, 'Desfavoritada')
             # LABORATORIO
             # url = reverse('index',)
             # print(url)
@@ -243,7 +240,7 @@ def salvar_vaga(request, pk_vaga):
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
-
+        messages.success(request, 'Favoritada')
         return redirect('index')
 
 @has_role_decorator('candidato')
@@ -256,6 +253,7 @@ def candidatar_a_vaga(request, pk_vagas):
             return redirect('index')
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
+        messages.success(request, 'Candidatado')
         return redirect('index')
 
 def minhas_vagas(request):
@@ -281,6 +279,7 @@ def busca_vaga(request):
     '''barras de busca da dash, empresa e vagas'''
     listar_vagas_salvas_e_candidatadas(request)
     lista_vagas = Vagas.objects.order_by('data_vaga').filter()
+    messages.success(request, 'Resultados')
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
