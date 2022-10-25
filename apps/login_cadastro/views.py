@@ -1,3 +1,5 @@
+from operator import index
+import re
 from vaga.models import Vagas
 from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
 from django.contrib import auth, messages
@@ -75,7 +77,7 @@ def logar_candidato(request):
                 return redirect('index')
         messages.error(request, "candidato não cadastrado")
 
-    return render(request, 'loginCandidato.html')
+    return render(request, 'header.html')
 
 def logar_empresa(request):
     empresa_email = None
@@ -96,8 +98,7 @@ def logar_empresa(request):
                 print(f" resultado do user: {user} \nresultado do nome: {nome}")
         else:
             print("Email ou senha incorretos")
-
-    return render(request, 'loginEmpresa.html')
+    return redirect (index)
 
 codigo = ''
 def criar_codigo_de_segurança():
