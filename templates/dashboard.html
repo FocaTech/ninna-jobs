@@ -8,7 +8,6 @@
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
-{% include 'partials/_alertas.html' %}
   <main class="container">
     <div class="right-column">
       <section class="content">
@@ -27,6 +26,7 @@
             <button type="button" class="tabber__tab">Favoritadas</button>
             <button type="button" class="tabber__tab">Arquivadas</button>
           </div>
+          {% include 'partials/_alertas.html' %}
           <div class="tabber__content">
             <section id="candidatadas" class="active">
               <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">

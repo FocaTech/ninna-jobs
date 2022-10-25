@@ -36,7 +36,7 @@ def cadastro_candidato(request):
             return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
-        messages.success(request, 'Cadastro realizado com sucesso')
+        messages.success(request, 'Cadastro realizado com Sucesso')
         return redirect ('index')
     else:
         return render(request, 'loginCandidato.html')
@@ -76,7 +76,7 @@ def logar_candidato(request):
             if user:
                 auth.login(request, user)
                 print("autenticado")
-                messages.success(request, 'Login realizado com sucesso')
+                messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {nome}')
                 return redirect('index')
         messages.error(request, "candidato não cadastrado")
     return render(request, 'index.html')
