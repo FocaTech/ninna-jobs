@@ -236,12 +236,12 @@ def salvar_vaga(request, pk_vaga):
             # else:
             #     print('não são iguais')
 
-            return redirect("index")
+            return redirect("dashboard")
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
         messages.success(request, 'Favoritada')
-        return redirect('index')
+        return redirect('vagas')
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
@@ -254,7 +254,7 @@ def candidatar_a_vaga(request, pk_vagas):
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
         messages.success(request, 'Candidatado')
-        return redirect('index')
+        return redirect('vagas')
 
 def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
