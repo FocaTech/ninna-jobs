@@ -315,7 +315,7 @@ def busca_vaga(request):
         dados = {
             'vagas' : lista_vagas
         }
-        return render(request, 'vagas.html', dados)
+        return render(request, 'minhas-vagas.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas
