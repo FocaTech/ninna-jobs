@@ -1,3 +1,5 @@
+from operator import index
+import re
 from vaga.models import Vagas
 from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
 from django.contrib import auth, messages
@@ -36,7 +38,7 @@ def cadastro_candidato(request):
             return redirect('longar_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
-        messages.success(request, 'Cadastro realizado com sucesso')
+        messages.success(request, 'Cadastro realizado com Sucesso')
         return redirect ('index')
     else:
         return render(request, 'loginCandidato.html')
@@ -63,7 +65,7 @@ def cadastro_empresa(request):
     else:
         return render(request, 'loginEmpresa.html')
 
-def logar_candidato(request):
+def logar(request):
     if request.method == 'POST':
         candidato_email = request.POST.get('candidato_email', None)
         candidato_senha = request.POST.get('candidato_senha', None)
@@ -79,6 +81,24 @@ def logar_candidato(request):
                 return redirect('index')
         messages.error(request, "candidato não cadastrado")
 
+    return render(request, 'header.html')
+
+def logar_candidato(request):
+    if request.method == 'POST':
+        candidato_email = request.POST.get('candidato_email', None)
+        candidato_senha = request.POST.get('candidato_senha', None)
+        print(candidato_email, candidato_senha)
+        if Users.objects.filter(email=candidato_email).exists():
+            nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
+            user = auth.authenticate(request, username=nome, password=candidato_senha, funcao = "CAN")
+            print(nome)
+            print(user)
+            if user:
+                auth.login(request, user)
+                print("autenticado")
+                messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {nome}')
+                return redirect('index')
+        messages.error(request, "candidato não cadastrado")
     return render(request, 'index.html')
 
 def logar_empresa(request):
@@ -100,8 +120,7 @@ def logar_empresa(request):
                 print(f" resultado do user: {user} \nresultado do nome: {nome}")
         else:
             print("Email ou senha incorretos")
-
-    return render(request, 'loginEmpresa.html')
+    return redirect (index)
 
 email_do_user_atual = ''
 def recuperar_senha(request):
@@ -288,6 +307,7 @@ def alterar_senha(request):
 def sair(request):
     '''Desloga uma pessoa'''
     auth.logout(request)
+    messages.error(request, 'Deslogado')
     return redirect('index')
 
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):

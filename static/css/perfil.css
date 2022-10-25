@@ -156,6 +156,20 @@ body::after {
     left: 0;
 }
 
+
+/* Perfil da empresa*/
+.botaoContatoperfil{
+    border-radius: 3em 0.5em 0.5em 3em;
+}
+#abaredes{
+    width: 8em;
+    background: hsla(285, 100%, 53%, 0.101);
+    font-weight: bold;
+    font-size: large;
+    text-align: left;
+    border-radius: 0.5em 4em 4em 0.5em ;
+}
+
 @-webkit-keyframes animate {
 	from {background-position:0 0;}
 	to {background-position: 500px 0;}

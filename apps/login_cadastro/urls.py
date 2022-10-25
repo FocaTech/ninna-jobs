@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('login/', views.logar, name='logar'),
     path('login/candidato/', views.logar_candidato, name='longar_candidato'),
     path('login/empresa/', views.logar_empresa, name='longar_empresa'),
     path('recuperar_senha/', views.recuperar_senha, name='recuperar_senha'),
@@ -15,7 +16,6 @@ urlpatterns = [
     # para testar as partials
     path('arquivadas', views.arquivadas, name='arquivadas'),
     path('empresa/', views.empresa, name='empresa'),
-
 
     path('sair', views.sair, name='sair') #sair
 ]

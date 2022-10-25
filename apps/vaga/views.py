@@ -39,8 +39,8 @@ def select(request):
         vaga = Vagas.objects.create(nome_vaga=nome_vaga, nome_empresa=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
         if vaga:
-            messages.success(request, 'Vaga salva com Sucesso')
-        return redirect('empresa')
+            messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
+        return redirect('minhas-vagas')
     else:
         return render(request, 'empresa.html', dado)
 
@@ -125,12 +125,14 @@ def atualizar_vagas(request):
         if 'logo_empresa' in request.FILES:
             v.logo_empresa = request.FILES['logo_empresa']
         v.save()
+        messages.success(request, f"Vaga '{v.nome_vaga}' editada")
     return redirect('minhas-vagas')
 
 def deleta_vaga(request, pk_vaga):
     '''Apaga vaga'''
-    receita = get_object_or_404(Vagas, pk=pk_vaga)
-    receita.delete()
+    vaga = get_object_or_404(Vagas, pk=pk_vaga)
+    messages.error(request, f"Vaga '{vaga.nome_vaga}' deletada")
+    vaga.delete()
     return redirect('minhas-vagas')
 
 def index(request):
@@ -148,6 +150,7 @@ def index(request):
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
 
         vagas = paginar(vagas, request)
+        ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
         dados = {
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
@@ -174,11 +177,6 @@ def dashboard(request):
     lista_de_vagas_candidatadas_do_user = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
-
-    vagas = paginar(vagas, request)
-    lista_de_vagas_candidatadas_do_user = paginar(vagas, request)
-    id_das_vagas_salvas_do_user = paginar(vagas, request)
-
     dados = {
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
@@ -226,7 +224,7 @@ def salvar_vaga(request, pk_vaga):
         if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
             vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
             vaga_salva_desfavoritar.delete()
-
+            messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
             # LABORATORIO
             # url = reverse('index',)
             # print(url)
@@ -239,12 +237,12 @@ def salvar_vaga(request, pk_vaga):
             # else:
             #     print('não são iguais')
 
-            return redirect("index")
+            return redirect("dashboard")
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
-
-        return redirect('index')
+        messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
+        return redirect('vagas')
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
@@ -256,7 +254,8 @@ def candidatar_a_vaga(request, pk_vagas):
             return redirect('index')
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
-        return redirect('index')
+        messages.success(request, f"Candidatado em '{id_vaga.nome_vaga}'")
+        return redirect('vagas')
 
 def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
@@ -283,6 +282,7 @@ def busca_vaga(request):
     lista_vagas = Vagas.objects.order_by('data_vaga').filter()
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
+        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         dados = {
             'vagas' : lista_vagas
@@ -290,6 +290,7 @@ def busca_vaga(request):
         return render(request, 'vagas.html', dados)
     elif 'bash' in request.GET:
         nome_a_buscar = request.GET['bash']
+        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
         busca_candidatadas = paginar(busca_candidatadas, request)
@@ -300,6 +301,7 @@ def busca_vaga(request):
         return render(request, 'dashboard.html', dados)
     elif 'bempresa' in request.GET:
         nome_a_buscar = request.GET['bempresa']
+        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         dados = {
@@ -311,11 +313,12 @@ def busca_vaga(request):
         id = request.user.id
         lista_vagas = lista_vagas.filter(nome_empresa=id)
         nome_a_buscar = request.GET['bagas']
+        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         dados = {
             'vagas' : lista_vagas
         }
-        return render(request, 'vagas.html', dados)
+        return render(request, 'minhas-vagas.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas

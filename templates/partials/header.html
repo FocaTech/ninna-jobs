@@ -36,7 +36,7 @@
           <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img width="40" height="40" src="{% static 'img/candidato.jpg' %}" alt="share">
           </button>
-          <ul class="dropdown-menu">
+        <ul class="dropdown-menu">
           {% if user.is_superuser %}
           <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
           <li><a class="dropdown-item" href="{% url 'interface' %}"><i class="bi bi-speedometer2"></i> Admin</li>
@@ -83,6 +83,15 @@
           <button class="dropdown-toggle botaoLogin mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Entrar
           </button>
+<<<<<<< HEAD
+          <div class="dropdown-menu" method="post" action="{%url 'longar_candidato'%}"> {% csrf_token %}
+            <form class="px-4 py-3">
+              <div class="mb-3">
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Email" name="email">
+              </div>
+              <div class="mb-3">
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Senha" name="senha">
+=======
           <div class="dropdown-menu">
             <form class="px-4 py-3" action='{% url "longar_candidato" %}' method="POST" >
               {% csrf_token %}
@@ -91,6 +100,7 @@
               </div>
               <div class="mb-3">
                 <input type="password" class="form-control" name="candidato_senha" id="candidato_senha" placeholder="Senha">
+>>>>>>> 9a908cf66101d5987bd05e5d38c1c229b6c6af8d
               </div>
               <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
