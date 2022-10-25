@@ -246,6 +246,7 @@ def salvar_vaga(request, pk_vaga):
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
+    print('entrou')
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
         id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
