@@ -65,24 +65,6 @@ def cadastro_empresa(request):
     else:
         return render(request, 'loginEmpresa.html')
 
-def logar(request):
-    if request.method == 'POST':
-        candidato_email = request.POST.get('candidato_email', None)
-        candidato_senha = request.POST.get('candidato_senha', None)
-        print(candidato_email, candidato_senha)
-        if Users.objects.filter(email=candidato_email).exists():
-            nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
-            user = auth.authenticate(request, username=nome, password=candidato_senha, funcao = "CAN")
-            print(nome)
-            print(user)
-            if user:
-                auth.login(request, user)
-                print("autenticado")
-                return redirect('index')
-        messages.error(request, "candidato não cadastrado")
-
-    return render(request, 'header.html')
-
 def logar_candidato(request):
     if request.method == 'POST':
         candidato_email = request.POST.get('candidato_email', None)
