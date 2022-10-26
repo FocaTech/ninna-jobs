@@ -52,11 +52,11 @@
         </div>
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="card-body p-4 card-cadastrar-body m-auto">
-                <h1 class="titulo-cardInicio mb-3">Banco de Talentos - Ninna Jobs</h1>
+                <h1 class="titulo-cardInicio">Banco de Talentos - Ninna Jobs</h1>
                 {% if not user.is_authenticated %}
-                <p class="card-text p-1 mt-2 h5">Candidato: Cadastre-se e aproveite oportunidades</p>
+                <p class="card-text p-1 mt-3 h5">Candidato: Cadastre-se e aproveite oportunidades</p>
                 <p class="card-text p-1 h5">Empresa: Cadastre-se e anuncie sua vaga </p>
-                <div class="m-3">
+                <div class="m-3 mb-0">
                     <a href="{% url 'cadastro_empresa' %}" class="btn btn-primary mx-5">Sou Empresa</a>
                     <a href="{% url 'cadastro_candidato' %}" class="btn btn-primary mx-5">Sou Candidato</a>
                 </div>
