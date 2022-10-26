@@ -1,8 +1,13 @@
 :root {
     --border-color: #c9cbcb;
+    --main\footer-spacing: 2.5rem;
 }
 body {
     background-color: #fcfdfd;
+}
+
+body > main {
+	margin-bottom: var(--main\footer-spacing);
 }
 
 .navbar {
