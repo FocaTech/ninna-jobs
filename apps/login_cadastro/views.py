@@ -338,7 +338,6 @@ def empresa(request, *args, **kwargs):
     }
     return render(request, 'empresa.html', dado)
 
-@has_role_decorator('candidato')
 def cadastro_candidato_2(request):
     areas = AreaDeInteresse.objects.all()
     generos = Genero.objects.all()
