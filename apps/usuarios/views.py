@@ -37,7 +37,7 @@ def cadastro_candidato_2(request):
     anos = Ano.objects.all()
     conquistas = Conquista.objects.all()
     niveis = NivelIdioma.objects.all()
-
+    locais = City.objects.all()
 
     dados = {
         'areas' : areas,
@@ -47,7 +47,8 @@ def cadastro_candidato_2(request):
         'meses' : meses,
         'anos' : anos,
         'conquistas' : conquistas,
-        'niveis' : niveis
+        'niveis' : niveis,
+        'locais':locais
     }
     '''
     if request.method == 'POST':

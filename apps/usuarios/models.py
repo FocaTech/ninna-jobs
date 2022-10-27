@@ -18,8 +18,6 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nome_fantasia
 
-
-
 class Candidato(models.Model):
     #Criando os models do curriculo do candidato
 
@@ -36,8 +34,6 @@ class Candidato(models.Model):
     cpf_do_candidato = models.CharField(max_length=15)
     data_nascimento = models.DateField()
     genero_candidato = models.CharField(max_length=100)
-    cidade = models.CharField(max_length=100)
-    estado = models.CharField(max_length=50)
     telefone = models.CharField(max_length=20)
     cep = models.CharField(max_length=20)
     sobre_o_candidato = models.TextField()
@@ -65,3 +61,10 @@ class Candidato(models.Model):
     #Idiomas
     idioma = models.CharField(max_length=20)
     nivel_idioma = models.CharField(max_length=15)
+
+class City(models.Model):#cidades e estados
+	name = models.CharField(max_length=60)#nome da cidade
+	state = models.CharField(max_length=100)#nome do estado
+    # python manage.py loaddata city
+	def __unicode__(self):
+		return self.name
