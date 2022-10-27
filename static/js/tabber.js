@@ -13,10 +13,10 @@
     }
   });
 
-  if (location.hash != '' && !!document.querySelector('.tabber')) {
+  if (location.search != '' && !!document.querySelector('.tabber')) {
     document.querySelectorAll('.tabber__tab').forEach(tab => {
       const tabName = tab.innerText.toLowerCase().replaceAll(' ', '-');
-      if (tabName == location.hash.slice(1)) {
+      if (tabName == location.search.slice(1)) {
         changeTab(tab, tabName);
       }
     });
