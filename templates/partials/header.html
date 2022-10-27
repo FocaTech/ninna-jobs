@@ -36,23 +36,23 @@
           <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img width="40" height="40" src="{% static 'img/candidato.jpg' %}" alt="share">
           </button>
-        <ul class="dropdown-menu">
-          {% if user.is_superuser %}
-          <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
-          <li><a class="dropdown-item" href="{% url 'interface' %}"><i class="bi bi-speedometer2"></i> Admin</li>
-          <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
-          {% elif user.funcao == "EMP" %}
-          <li><a class="dropdown-item" href="{% url 'empresa' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
-          <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-square"></i> Editar Perfil</li>
-          <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
-          {% elif user.funcao == "CAN" %}
-          <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
-          <li><a class="dropdown-item" href='#'><i class="bi bi-pencil-square"></i> Editar Curriculo</li>
-          <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-briefcase"></i> Vagas Favoritadas</li>
-          <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
-          {% endif %}
-        </ul>
-      </div>
+          <ul class="dropdown-menu">
+            {% if user.is_superuser %}
+            <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
+            <li><a class="dropdown-item" href="{% url 'interface' %}"><i class="bi bi-speedometer2"></i> Admin</li>
+            <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
+            {% elif user.funcao == "EMP" %}
+            <li><a class="dropdown-item" href="{% url 'empresa' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
+            <li><a class="dropdown-item" href="{% url 'perfilempresa' %}"><i class="bi bi-pencil-square"></i> Editar Perfil</li>
+            <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
+            {% elif user.funcao == "CAN" %}
+            <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
+            <li><a class="dropdown-item" href="{% url 'cadastro_candidato_2' %}"><i class="bi bi-pencil-square"></i> Editar Curriculo</li>
+            <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-briefcase"></i> Vagas Favoritadas</li>
+            <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
+            {% endif %}
+          </ul>
+        </div>
       {% comment %} <a href="{% url 'logar_candadato' %}">
         <button class="px-3 mx-4 botaoLogin" id="login" name="login" type="button"> Fazer Login</button>
       </a> {% endcomment %}
@@ -95,7 +95,7 @@
             </form>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'recuperar_senha' %}">Esqueceu sua senha?</a>
-            <a class="dropdown-item" href="#">Criar Nova Conta</a>
+            <a class="dropdown-item" href="{% url 'cadastro_candidato' %}">Criar Nova Conta</a>
           </div>
         </div>
         {% comment %} <a href="{% url 'logar_candadato' %}">
@@ -103,7 +103,7 @@
         </a> {% endcomment %}
       </div>
       {% endif %}
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="{% url 'index' %}">
         <div class="navbar-logo">
           <img src="{% static 'img/logoninna.jpg' %}" alt="">
         </div>
