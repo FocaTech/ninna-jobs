@@ -19,12 +19,12 @@ class Empresa(models.Model):
         return self.nome_fantasia
 
 
-'''
-class Curriculo(models.Model):
+
+class Candidato(models.Model):
     #Criando os models do curriculo do candidato
 
     #Informações Iniciais
-    curriculo = models.FileField(blank=True)
+    curriculo = models.FileField(upload_to= 'curriculo/%Y/%m/%d',blank=True, null=False)
     tipo_contratacao = models.CharField(max_length=15)
     salario_pretendido = models.DecimalField(max_digits=8, decimal_places=2)
     area_interesse = models.CharField(max_length=30)
@@ -65,4 +65,3 @@ class Curriculo(models.Model):
     #Idiomas
     idioma = models.CharField(max_length=20)
     nivel_idioma = models.CharField(max_length=15)
-'''

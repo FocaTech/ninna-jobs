@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Empresa
-
+from .models import Empresa, Candidato
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -27,8 +26,9 @@ def registro(request):
         return render(request, 'formempresa.html')
 
 
-'''
+
 def cadastro_candidato_2(request):
+    '''
     areas = AreaDeInteresse.objects.all()
     generos = Genero.objects.all()
     estados = Estado.objects.all()
@@ -49,6 +49,7 @@ def cadastro_candidato_2(request):
         'conquistas' : conquistas,
         'niveis' : niveis
     }
+    '''
     if request.method == 'POST':
         curriculo_pdf = request.FILES['curriculo_pdf']
         tipo_contratacao = request.POST['tipo_contratacao']
@@ -87,11 +88,10 @@ def cadastro_candidato_2(request):
         idioma = request.POST['idioma']
         nivel_idioma = request.POST['nivel_idioma']
 
-        vaga = Curriculo.objects.create(curriculo_pdf=curriculo_pdf, tipo_contratacao = tipo_contratacao, salario_pretendido=salario_pretendido, area_interesse= area_interesse, linkedin=linkedin, rede_social=rede_social, imagem_perfil=imagem_perfil, nome_do_candidato=nome_do_candidato, cpf_do_candidato=cpf_do_candidato, data_nascimento=data_nascimento, genero_candidato=genero_candidato, cidade=cidade, estado=estado, telefone=telefone, cep=cep, sobre_o_candidato=sobre_o_candidato, instituicao_ensino=instituicao_ensino, formacao=formacao, curso=curso, mes_inicio=mes_inicio, ano_inicio=ano_inicio, mes_termino=mes_termino, ano_termino=ano_termino, titulo=titulo, tipo_conquista=tipo_conquista, descricao_conquista=descricao_conquista, empresa_onde_trabalhou=empresa_onde_trabalhou, cargo_exercido=cargo_exercido, descricao_de_atividades=descricao_de_atividades, mes_inicio_emprego=mes_inicio_emprego, ano_inicio_emprego=ano_inicio_emprego, mes_demissao=mes_demissao, ano_demissao=ano_demissao, emprego_atual=emprego_atual, idioma=idioma, nivel_idioma=nivel_idioma)
+        vaga = Candidato.objects.create(curriculo_pdf=curriculo_pdf, tipo_contratacao = tipo_contratacao, salario_pretendido=salario_pretendido, area_interesse= area_interesse, linkedin=linkedin, rede_social=rede_social, imagem_perfil=imagem_perfil, nome_do_candidato=nome_do_candidato, cpf_do_candidato=cpf_do_candidato, data_nascimento=data_nascimento, genero_candidato=genero_candidato, cidade=cidade, estado=estado, telefone=telefone, cep=cep, sobre_o_candidato=sobre_o_candidato, instituicao_ensino=instituicao_ensino, formacao=formacao, curso=curso, mes_inicio=mes_inicio, ano_inicio=ano_inicio, mes_termino=mes_termino, ano_termino=ano_termino, titulo=titulo, tipo_conquista=tipo_conquista, descricao_conquista=descricao_conquista, empresa_onde_trabalhou=empresa_onde_trabalhou, cargo_exercido=cargo_exercido, descricao_de_atividades=descricao_de_atividades, mes_inicio_emprego=mes_inicio_emprego, ano_inicio_emprego=ano_inicio_emprego, mes_demissao=mes_demissao, ano_demissao=ano_demissao, emprego_atual=emprego_atual, idioma=idioma, nivel_idioma=nivel_idioma)
         vaga.save()
         return redirect('index')
     else:
-        return render(request, 'formcandidato.html', dados)
+        return render(request, 'formcandidato.html')
 
 
-'''

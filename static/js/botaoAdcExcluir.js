@@ -16,14 +16,14 @@ $(document).ready(function(){
                 <div class="row">\
                     <div class="col-md-8 py-2">\
                         <label for="instituicao" class="form-label">Instituição</label>\
-                        <input type="text" class="form-control" id="instituicao" value="instituicao" required>\
+                        <input type="text" name="instituicao_ensino" class="form-control" id="instituicao" value="instituicao" required>\
                         <div class="valid-feedback">\
                             Tudo ok!\
                         </div>\
                     </div>\
                     <div class="col-md-4 py-2">\
                         <label for="nivelformacao" class="form-label">Formação</label>\
-                        <select class="form-select" id="nivelformacao" required>\
+                        <select class="form-select" name="formacao" id="nivelformacao" required>\
                             <option selected disabled value="">Escolha...</option>\
                             <option value="EF">Ensino Fundamental Completo</option>\
                             <option value="EM">Ensino Médio Completo</option>\
@@ -43,14 +43,14 @@ $(document).ready(function(){
                 </div>\
                 <div class="py-2">\
                     <label for="curso" class="form-label">Curso</label>\
-                    <input type="text" class="form-control" id="curso" required>\
+                    <input type="text" name="curso" class="form-control" id="curso" required>\
                 <div class="invalid-feedback">\
                     Por favor, informe um curso.\
                 </div>\
                 <div class="row py-2">\
                     <div class="col-md-3">\
                         <label for="mesInicio" class="form-label">Inicio</label>\
-                        <select class="form-select" id="mesInicio" required>\
+                        <select class="form-select" name="mes_inicio" id="mesInicio" required>\
                             <option selected disabled value=""></option>\
                             <option value="janeiro">Janeneiro</option>\
                             <option value="fevereiro">Fevereiro</option>\
@@ -59,7 +59,7 @@ $(document).ready(function(){
                     </div>\
                     <div class="col-md-3 py-2">\
                         <label for="anoInicio" class="form-label"></label>\
-                        <select class="form-select" id="anoInicio" required>\
+                        <select class="form-select" name="ano_inicio" id="anoInicio" required>\
                             <option selected disabled value=""></option>\
                             <option value="2022">2022</option>\
                             <option value="2021">2021</option>\
@@ -68,7 +68,7 @@ $(document).ready(function(){
                     </div> \
                     <div class="col-md-3">\
                         <label for="mesconclusao" class="form-label">Conclusão/Previsão</label>\
-                        <select class="form-select" id="mesconclusao" required>\
+                        <select class="form-select" name="mes_termino" id="mesconclusao" required>\
                             <option selected disabled value=""></option>\
                             <option value="janeiro">Janeiro</option>\
                             <option value="fevereiro">Fevereio</option>\
@@ -77,7 +77,7 @@ $(document).ready(function(){
                     </div> \
                     <div class="col-md-3 py-2">\
                         <label for="anoconclusao" class="form-label"></label>\
-                        <select class="form-select" id="anoconclusao" required>\
+                        <select class="form-select" name="ano_termino" id="anoconclusao" required>\
                             <option selected disabled value=""></option>\
                             <option value="2022">2022</option>\
                             <option value="2021">2021</option>\
@@ -237,5 +237,5 @@ $(document).ready(function(){
                 </div>\
             </div>\
         ')
-    })      
+    })
 });
