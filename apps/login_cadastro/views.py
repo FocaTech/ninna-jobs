@@ -39,15 +39,14 @@ def cadastro_candidato(request):
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
         messages.success(request, 'Cadastro realizado com Sucesso')
-
+        # loga direto
         user = auth.authenticate(request, username=candidato_nome, password=candidato_senha, funcao = "CAM")
         print(user)
         if user:
             auth.login(request, user)
             print("autenticado")
-            messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {candidato_nome}')
+            # messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {candidato_nome}')
             return redirect('index')
-
         return redirect ('index')
     else:
         return render(request, 'loginCandidato.html')
@@ -70,15 +69,12 @@ def cadastro_empresa(request):
         empresa_user = Users.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha, funcao = "EMP")
         empresa_user.save()
         messages.success(request, 'Cadastro realizado com sucesso')
-
+        # loga direto
         user = auth.authenticate(request, username=empresa_nome, password=empresa_senha, funcao = "EMP")
-        print(user)
         if user:
             auth.login(request, user)
-            print("autenticado")
-            messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {empresa_nome}')
+            # messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {empresa_nome}')
             return redirect('index')
-
         return redirect('index')
     else:
         return render(request, 'loginEmpresa.html')
