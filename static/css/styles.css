@@ -200,6 +200,16 @@ ul.inline-list {
     display: flex;
     padding: 0;
 }
+ul.inline-list li {
+	display: inline-flex;
+	align-items: center;
+	word-break: break-word;
+	line-height: 1;
+	max-width: 51%;
+}
+ul.inline-list li i.bi {
+    margin-right: 5px;
+}
 ul.inline-list li:not(:last-child)::after {
     content: "";
     display: inline-block;
