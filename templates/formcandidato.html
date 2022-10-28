@@ -152,17 +152,21 @@
                             <div class="invalid-feedback">Por favor, informe um cep valido.</div>
                         </div>
                         <div class="col-md-4">
-                            <label for="cidade" class="form-label">Cidade</label>
-                            <input name="cidade" type="text" class="form-control" id="cidade"size="40"  required>
-                            <div class="invalid-feedback">Informe sua cidade e estado.</div>
-                        </div>
-                        <div class="col-md-4">
                             <label for="estado" class="form-label">Estado</label>
-                            <select name="estado" class="form-select" id="uf"required>
-                                <option value="Ceará">Ceará</option>
-                                <option value="Tocantins">Tocantins</option>
+                            <select method='GET' name="estado" class="form-select" id="uf" action='{% url "cadastro_candidato_2" %}' required >
+                                {% for estado in estados %}
+                                <option value="{{ estado }}">{{estado}}</option>
+                                {% endfor %}
                             </select>
                             <div class="invalid-feedback">Por favor, escolha um estado valido</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cidade" class="form-label">Cidade</label>
+                            <select name="cidade" class="form-select" id="uf"required>
+                                {% for i in cidades %}
+                                <option value="{{ i }}">{{i}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="row py-2">

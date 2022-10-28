@@ -16,5 +16,5 @@ urlpatterns = [
     path('', include("vaga.urls")),
     path('usuarios/', include("usuarios.urls")),
     path('ninna/', include("admin.urls")),
-    url(r'^', TemplateResponse, {'template': '404.html'})
+    url(r'^', TemplateResponse, {'template': '404.html'}),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
