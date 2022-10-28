@@ -13,7 +13,8 @@
 <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
 <main>
     <div class="w-75 m-auto sDois" >
-        <form action="" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+        <form action="{% url 'Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+            {% csrf_token %}
             <section class="step py-5 mb-3" id="step_6">
                 <h2> Dados Pessoais</h2>
                 <div class="col-md-12 py-2">
@@ -109,8 +110,7 @@
                 </div>
             </section>
             <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</button>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</button>
-
+            <a href="{% url 'cadastro_candidato_2' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
     </div>
 </main>

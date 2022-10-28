@@ -1,4 +1,4 @@
-{%{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}Minhas vagas{% endblock %}
 {% block head %}
@@ -13,7 +13,8 @@
 <main>
     <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
     <div class="w-75 m-auto sCinco">
-        <form action="" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+        <form action="{% url 'Experiencia_profissional' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+            {% csrf_token %}
             <section class="step py-5 border-bottom" id="step_5">
                 <h2 >Experiência Profissional</h2>
                 <div>
@@ -92,7 +93,7 @@
                 </div>
             </section>
             <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</button>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</button>
+            <a href="{% url 'Formacao_academica' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
     </div>
 </main>

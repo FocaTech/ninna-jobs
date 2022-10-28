@@ -26,23 +26,24 @@ def registro(request):
     else:
         return render(request, 'formempresa.html')
 
-
-
 def cadastro_candidato_2(request):
-    locais = City.objects.all()
-    estado = []
-    cidades = []
-    for local in locais:
-        if not local.state in estado:
-            estado.append(local.state)
-        if not local.name in cidades:
-            cidades.append(local.name)
-    cidades = sorted(cidades)
-    estado = sorted(estado)
-    dados = {
-        'estados':estado,
-        'cidades':cidades
-    }
+    #pega cidades
+    # locais = City.objects.all()
+    # estado = []
+    # cidades = []
+    # for local in locais:
+    #     if not local.state in estado:
+    #         estado.append(local.state)
+    #     if not local.name in cidades:
+    #         cidades.append(local.name)
+    # cidades = sorted(cidades)
+    # estado = sorted(estado)
+    # dados = {
+    #     'estados':estado,
+    #     'cidades':cidades
+    # }
+
+
     # areas = AreaDeInteresse.objects.all()
     # generos = Genero.objects.all()
     # estados = Estado.objects.all()
@@ -107,6 +108,22 @@ def cadastro_candidato_2(request):
     #     vaga.save()
     #     return redirect('index')
     # else:
-    return render(request, 'formcandidato.html', dados)
+    return render(request, 'formcandidato.html')
 
+def Informacoes_iniciais(request):
+    return render(request, 'partials/Usuarios/sessaoDois.html')
 
+def Dados_pessoais(request):
+    return render(request, 'partials/Usuarios/sessaoTres.html')
+
+def Formacao_academica(request):
+    return render(request, 'partials/Usuarios/sessaoQuatro.html')
+
+def Certificados_conquistas(request):
+    return render(request, 'partials/Usuarios/sessaoCinco.html')
+
+def Experiencia_profissional(request):
+    return render(request, 'partials/Usuarios/sessaoSeis.html')
+
+def salvando_perfil(request):
+    return redirect('perfil')

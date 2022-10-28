@@ -13,7 +13,8 @@
 <main>
     <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
     <div class="w-75 m-auto sQuatro">
-        <form action="" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+        <form action="{% url 'Certificados_conquistas' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+            {% csrf_token %}
             <section class="step py-5 border-bottom" id="step_4">
                 <h2>Certificados e conquistas</h2>
                 <p for="certificados" class="form-label">Você pode informar sobre cursos, trabalho voluntário e outros reconhecimentos</p>
@@ -56,8 +57,8 @@
                 </div>
             </section>
             <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</button>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</button>
-        </form>
+            <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+         </form>
     </div>
 </main>
 {% endblock %}

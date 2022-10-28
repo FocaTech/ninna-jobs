@@ -3,5 +3,11 @@ from . import views
 
 urlpatterns = [
     path('formulario/empresa/', views.registro, name='registro'),
-    path('cadastrar/candidato/', views.cadastro_candidato_2, name='cadastro_candidato_2'),
+    path('Informacoes/Iniciais/', views.cadastro_candidato_2, name='cadastro_candidato_2'),#form 1
+    path('Dados/Pessoais/', views.Informacoes_iniciais, name='Informacoes_iniciais'),#form 2
+    path('Formacao/Academica/', views.Dados_pessoais, name='Dados_Pessoais'),#form 3
+    path('Certificados/Conquistas/', views.Formacao_academica, name='Formacao_academica'),#form 4
+    path('Experiencia/Profissional/', views.Certificados_conquistas, name='Certificados_conquistas'),#form 5
+    path('Nivel/Idioma/', views.Experiencia_profissional, name='Experiencia_profissional'),#form 6
+    path('Salvando/Perfil/', views.salvando_perfil, name='salvando_perfil'),#salvando perfil
 ]
