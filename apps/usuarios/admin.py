@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Empresa
+from .models import City, Empresa
 
 class Listando(admin.ModelAdmin):
     list_display = ('id', 'nome_fantasia', )
@@ -9,6 +9,13 @@ class Listando(admin.ModelAdmin):
 
 admin.site.register(Empresa, Listando)
 
+class Locais(admin.ModelAdmin):
+    list_display = ('id', 'name', 'state')
+    list_display_links = ('id', 'name', 'state')
+    search_fields = ('name',)
+    list_per_page = 100
+    
+admin.site.register(City, Locais)
 
 # class ListandoCandidato(admin.ModelAdmin):
 #     list_display = ('id', 'nome_do_candidato', )
