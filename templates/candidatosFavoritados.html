@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Banco de Talentos{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% endblock %}
+{% block body_class %}page-talentos{% endblock %}
+{% block content %}
+    <main class="container">
+        <div class="right-column">
+            <div class="content">
+                <header class="page-header">
+                    <h1>Candidatos Favoritados</h1>
+                    <form action="" class="filtros">
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            <input name="filtro" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+                        </div>
+                    </form>
+                </header>
+                <h2 class="h5 mb-3 text-secondary">Escolha o melhor candidato para a vaga</h2>
+                <ul class="w3-ul w3-card-4">
+                    <li class="w3-bar">
+                        <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star-fill"></i></span>
+                        <a href="#" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i></a>
+                        <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                        <img src="{% static 'img/candidato.jpg' %}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                        <div class="w3-bar-item">
+                            <span class="w3-large">Maria Alice Teixeira da Costa</span><br>
+                            <span>Area de atuação 1</span>
+                            <span>Nivel Profissional: Junior</span>
+                            <span>Formação academica: superior</span>
+                            <span>curso: anus</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% include 'partials/sidebar/empresa.html' %}
+</main>
+{% endblock %}
