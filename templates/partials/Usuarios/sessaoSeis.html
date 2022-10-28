@@ -13,7 +13,8 @@
 <main>
     <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
     <div class="w-75 m-auto sSeis">
-        <form action="" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+        <form action="{% url 'salvando_perfil' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+            {% csrf_token %}
             <section class="step py-5 mb-3" id="step_6">
                 <h2>Idiomas</h2>
                 <p for="idiomas" class="form-label">Adicione os idiomas que mais domina</p>
@@ -60,8 +61,8 @@
                     </button>
                 </div>
             </section>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Fim</button>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</button>
+            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">salvar perfil</button>
+            <a href="{% url 'Certificados_conquistas' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
     </div>
 </main>
