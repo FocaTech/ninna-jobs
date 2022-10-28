@@ -27,23 +27,6 @@ def registro(request):
         return render(request, 'formempresa.html')
 
 def cadastro_candidato_2(request):
-    #pega cidades
-    # locais = City.objects.all()
-    # estado = []
-    # cidades = []
-    # for local in locais:
-    #     if not local.state in estado:
-    #         estado.append(local.state)
-    #     if not local.name in cidades:
-    #         cidades.append(local.name)
-    # cidades = sorted(cidades)
-    # estado = sorted(estado)
-    # dados = {
-    #     'estados':estado,
-    #     'cidades':cidades
-    # }
-
-
     # areas = AreaDeInteresse.objects.all()
     # generos = Genero.objects.all()
     # estados = Estado.objects.all()
@@ -111,7 +94,23 @@ def cadastro_candidato_2(request):
     return render(request, 'formcandidato.html')
 
 def Informacoes_iniciais(request):
-    return render(request, 'partials/Usuarios/sessaoDois.html')
+    #pega cidades
+    locais = City.objects.all()
+    estado = []
+    cidades = []
+    for local in locais:
+        if not local.state in estado:
+            estado.append(local.state)
+        if not local.name in cidades:
+            cidades.append(local.name)
+    cidades = sorted(cidades)
+    estado = sorted(estado)
+    dados = {
+        'estados':estado,
+        'cidades':cidades
+    }
+
+    return render(request, 'partials/Usuarios/sessaoDois.html', dados)
 
 def Dados_pessoais(request):
     return render(request, 'partials/Usuarios/sessaoTres.html')

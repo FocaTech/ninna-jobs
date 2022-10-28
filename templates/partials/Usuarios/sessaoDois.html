@@ -83,18 +83,23 @@
                         <div class="invalid-feedback">Por favor, informe um cep valido.</div>
                     </div>
                     <div class="col-md-4">
-                        <label for="cidade" class="form-label">Cidade</label>
-                        <input name="cidade" type="text" class="form-control" id="cidade"size="40"  required>
-                        <div class="invalid-feedback">Informe sua cidade e estado.</div>
-                    </div>
-                    <div class="col-md-4">
                         <label for="estado" class="form-label">Estado</label>
                         <select name="estado" class="form-select" id="uf"required>
                             <option selected disabled value="">Escolha</option>
-                            <option value="Ceará">Ceará</option>
-                            <option value="Tocantins">Tocantins</option>
+                            {% for estado in estados %}
+                            <option value="{{estado}}">{{estado}}</option>
+                            {% endfor %}
                         </select>
                         <div class="invalid-feedback">Por favor, escolha um estado valido</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <select name="estado" class="form-select" id="uf"required>
+                            <option selected disabled value="">Escolha</option>
+                            {% for cidade in cidades %}
+                            <option value="{{cidade}}">{{cidade}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="row py-2">
@@ -106,7 +111,7 @@
                 </div>
                 <div class="form-floating">
                     <textarea name="sobre_o_candidato" class="form-control" placeholder="comente" id="floatingTextarea" style="height: 100px"></textarea>
-                    <label for="floatingTextarea">Fale um pouco sobre você.</label>
+                    <label for="floatingTextarea">Fale um pouco sobre você</label>
                 </div>
             </section>
             <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</button>
