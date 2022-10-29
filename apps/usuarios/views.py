@@ -1,6 +1,6 @@
-from urllib import request
-from django.shortcuts import render, redirect
-from .models import City, Empresa
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import City, Empresa, Interesses, Informações_Iniciais
+from login_cadastro.models import Users
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -18,7 +18,6 @@ def registro(request):
         cep = request.POST['cep']
         ramo_de_atividade = request.POST['ramo_de_atividade']
         descricao_empresa = request.POST['descricao_empresa']
-
 
         vaga = Empresa.objects.create(img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
         vaga.save()
@@ -91,9 +90,26 @@ def cadastro_candidato_2(request):
     #     vaga.save()
     #     return redirect('index')
     # else:
-    return render(request, 'formcandidato.html')
+    interesses = Interesses.objects.all()
+    dados = {
+            'interesses':interesses
+        }
+    return render(request, 'formcandidato.html', dados)
 
 def Informacoes_iniciais(request):
+    if request.method == 'POST':
+        usuario = get_object_or_404(Users, pk=request.user.id)
+        curriculo = request.FILES['curriculo']
+        estagio = request.POST.get('estagio', None)
+        pj = request.POST.get('tipo_pj', None)
+        clt = request.POST.get('tipo_clt', None)
+        flex = request.POST.get('tipo_flex', None)
+        salario_pretendido = request.POST['salario_pretendido']
+        area_interesse = request.POST['area_interesse']
+        linkedin = request.POST['linkedin']
+        rede_social = request.POST['rede_social']
+        informacoes1 = Informações_Iniciais.objects.create(user=usuario,curriculo=curriculo, estagio=estagio, pj=pj, clt=clt,flex=flex, salario_pretendido=salario_pretendido,areas_interesse=area_interesse,linkedin=linkedin,rede_social=rede_social)
+        informacoes1.save()
     #pega cidades
     locais = City.objects.all()
     estado = []
@@ -107,7 +123,7 @@ def Informacoes_iniciais(request):
     estado = sorted(estado)
     dados = {
         'estados':estado,
-        'cidades':cidades
+        'cidades':cidades,
     }
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)

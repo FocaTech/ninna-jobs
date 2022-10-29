@@ -162,7 +162,6 @@ cython_debug/
 #.idea/
 
 teste.py
-<<<<<<< HEAD
 apps/vaga/migrations
-=======
->>>>>>> 10eddcb73071e08547024f2c5dcc522f451fa2f0
+#minha venv
+danilo

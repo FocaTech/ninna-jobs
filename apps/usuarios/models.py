@@ -19,28 +19,27 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nome_fantasia
 
+class Interesses(models.Model):
+    areas_interesse = models.CharField(max_length=30)
+    def __str__(self):
+        return self.areas_interesse
+
 
 #Criando os models do curriculo do candidato
 class Informações_Iniciais(models.Model):
     #Informações Iniciais
-    AREAS_DE_INTERESSE = (
-        ('ES', 'Esportes'),
-        ('AR', 'Arte'),
-        ('BL', 'Blog'),
-        ('VL', 'Vlogging'),
-        ('DE', 'Design Gráfico'),
-        ('VI', 'Viagens'),
-    )
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    curriculo = models.FileField(upload_to='curriculo/%Y/%m/%d',blank=True, null=False)
-    estagio = models.BooleanField(default=False)
-    pj = models.BooleanField(default=False)
-    clt = models.BooleanField(default=False)
-    flex = models.BooleanField(default=False)
-    salario_pretendido = models.DecimalField(max_digits=8, decimal_places=2)
-    areas_interesse = models.CharField(max_length=2, choices=AREAS_DE_INTERESSE, blank=False, null=False,default='ES')
+    curriculo = models.FileField(upload_to='curriculo/%Y/%m/%d', blank=False)
+    estagio = models.CharField(max_length=7,blank=True, null=True)
+    pj = models.CharField(max_length=7,blank=True,null=True)
+    clt = models.CharField(max_length=7,blank=True,null=True)
+    flex = models.CharField(max_length=7,blank=True,null=True)
+    salario_pretendido = models.IntegerField(blank=True,null=True)
     linkedin = models.URLField()
     rede_social = models.URLField()
+    areas_interesse = models.CharField(max_length=30)
+    def __str__(self):
+        return self.areas_interesse
 
 class Dados_Pessoais(models.Model):
     #Dados Pessoais
@@ -58,6 +57,8 @@ class Dados_Pessoais(models.Model):
     telefone = models.IntegerField()
     cep = models.CharField(max_length=20)
     sobre_o_candidato = models.TextField(max_length=400)
+    def __str__(self):
+        return self.nome_do_candidato
 
 class Formacao_Academica(models.Model):
     #Formação Acadêmica
@@ -79,6 +80,8 @@ class Formacao_Academica(models.Model):
     curso = models.CharField(max_length=50)
     data_inicio = models.DateField()
     data_termino = models.DateField()
+    def __str__(self):
+        return self.instituicao_ensino
 
 class Certificados_Conquistas(models.Model):
     #Certificados e Conquistas
@@ -91,6 +94,8 @@ class Certificados_Conquistas(models.Model):
     titulo = models.CharField(max_length=100)
     tipo_conquista = models.CharField(max_length=2, choices=TIPOS, blank=False, null=False, default='RE')
     descricao_conquista = models.TextField(max_length=400)
+    def __str__(self):
+        return self.titulo
 
 class Experiência_Profissional(models.Model):
     #Experiência Profissional
@@ -101,6 +106,8 @@ class Experiência_Profissional(models.Model):
     inicio_emprego = models.DateField()
     demissao = models.DateField()
     emprego_atual = models.BooleanField(default=False)
+    def __str__(self):
+        return self.cargo_exercido
 
 class Idiomas(models.Model):
     IDIOMAS = (
@@ -112,6 +119,8 @@ class Idiomas(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     idioma = models.CharField(max_length=2, choices=IDIOMAS, blank=False, null=False, default='BA')
     nivel_idioma = models.CharField(max_length=15)
+    def __str__(self):
+        return self.nivel_idioma
 
 class City(models.Model):#cidades e estados
 	name = models.CharField(max_length=60)#nome da cidade
