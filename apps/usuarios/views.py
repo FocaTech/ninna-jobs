@@ -66,7 +66,6 @@ def Informacoes_iniciais(request):
 
 def Dados_pessoais(request):
     global informacoes2
-    print(request.FILES['imagem_perfil'])
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         imagem_perfil = request.FILES['imagem_perfil']
