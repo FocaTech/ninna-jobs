@@ -13,13 +13,13 @@
 <main>
     <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
     <div class="w-75 m-auto sSeis">
-        <form action="{% url 'Informacoes_iniciais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+        <form action="{% url 'Informacoes_iniciais' %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
             {% csrf_token %}
             <section class="step py-5 border-bottom" id="step_1">
                 <h2>Informações Iniciais</h2>
                 <div class="col-md-12 py-2">
                     <label for="curriculo" class="form-label">Seu curriculo em pdf</label>
-                    <input id="curriculo" name="curriculo_pdf" type="file" class="form-control form-itens" aria-label="curriculo" accept="application/pdf" required>
+                    <input id="curriculo" name="curriculo" type="file" class="form-control form-itens" aria-label="curriculo" accept="application/pdf" required>
                     <div class="valid-feedback">
                         Tudo ok!
                     </div>
@@ -31,19 +31,19 @@
                     <p class="text-sm-start">O tipo de contrato que está disposto a aceitar.</p>
                     <div class="row py-2">
                         <div class="form-check input-group col">
-                            <input id="estagio" class="form-check-input aoMenosUm " type="checkbox" value="estagio" name="estagio">
+                            <input id="estagio" class="form-check-input aoMenosUm " type="checkbox" value="estagio" name="estagio" >
                             <label class="form-check-label mx-2" for="estagio">Estágio</label>
                         </div>
                         <div class="form-check input-group col">
-                            <input id="pj" class="form-check-input aoMenosUm" type="checkbox" value="pj" name="tipo_contratacao">
+                            <input id="pj" class="form-check-input aoMenosUm" type="checkbox" value="pj" name="tipo_pj">
                             <label class="form-check-label mx-2" for="pj">PJ</label>
                         </div>
                         <div class="form-check input-group col">
-                            <input id="clt" class="form-check-input aoMenosUm" type="checkbox" value="clt" name="tipo_contratacao">
+                            <input id="clt" class="form-check-input aoMenosUm" type="checkbox" value="clt" name="tipo_clt">
                             <label class="form-check-label mx-2" for="clt">CLT</label>
                         </div>
                         <div class="form-check input-group col">
-                            <input id="flex" class="form-check-input aoMenosUm" type="checkbox" value="flex" name="tipo_contratacao">
+                            <input id="flex" class="form-check-input aoMenosUm" type="checkbox" value="flex" name="tipo_flex">
                             <label class="form-check-label mx-2" for="flex">Flex</label>
                         </div>
                         <div>
@@ -59,13 +59,15 @@
                 <div class="row py-2">
                     <div class="col-md-6">
                         <label  for="salario" class="form-label">Salario pretendido</label>
-                        <input name="salario_pretendido" type="text" class="form-control form-itens"id="salario"placeholder="R$ 0,00">
+                        <input class="form-control" type="number" name="salario_pretendido" min="100" max="10000000" required>
                     </div>
                     <div class="col-md-6">
                         <label for="areadeatuacao" class="form-label">Area de interesse</label>
                         <select class="form-control form-itens" id="areadeatuacao" name="area_interesse" required>
                             <option selected disabled value="">Escolha...</option>
-                                    <option value="basico">Informatica</option>
+                            {% for interesse in interesses %}
+                                <option value="{{interesse}}">{{interesse}}</option>
+                            {% endfor %}
                         </select>
                         <div class="valid-feedback">
                             Tudo ok!
@@ -78,11 +80,11 @@
                 <div class="row py-2">
                     <div class="col-md-6">
                         <label  for="linkedin" class="form-label">linkedin</label>
-                        <input  type="text" class="form-control" placeholder="https://www.linkedin.com/in/alice-costa-89a11148/" name="linkedin">
+                        <input  type="text" class="form-control" placeholder="https://www.linkedin.com/in/alice-costa-89a11148/" maxlength="10" name="linkedin">
                     </div>
                     <div class="col-md-6">
                         <label  for="midia" class="form-label">Outra midia social</label>
-                        <input  type="text" class="form-control" id="midiaSocial" placeholder="Instagram, facebook, twitter" name="rede_social" >
+                        <input  type="text" class="form-control" id="midiaSocial" placeholder="Instagram, facebook, twitter" maxlength="10" name="rede_social" >
                     </div>
                 </div>
             </section>
