@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="col-md-8 py-2">
                                     <label for="instituicao" class="form-label">Instituição</label>
-                                    <input type="text" name="instituicao_ensino" class="form-control" id="instituicao"required>
+                                    <input type="text" name="instituicao_ensino" class="form-control" maxlength="100" id="instituicao"required>
                                     <div class="valid-feedback">
                                         Tudo ok!
                                     </div>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="py-2">
                                 <label for="curso" class="form-label">Curso</label>
-                                <input type="text" name="curso" class="form-control" id="curso" required>
+                                <input type="text" name="curso" class="form-control" id="curso" maxlength="100" required>
                             <div class="invalid-feedback">
                                 Por favor, informe um curso.
                             </div>
@@ -72,7 +72,7 @@
                                         <option value="marco">Março</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 py-2">
+                                <div class="col-md-3 py-2 mt-3">
                                     <label for="anoInicio" class="form-label"></label>
                                     <select class="form-select" name="ano_inicio" id="anoInicio" required>
                                         <option selected disabled value=""></option>
@@ -90,7 +90,7 @@
                                         <option value="marco">Março</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 py-2">
+                                <div class="col-md-3 py-2 mt-3">
                                     <label for="anoconclusao" class="form-label"></label>
                                     <select class="form-select" name="ano_termino" id="anoconclusao" required>
                                         <option selected disabled value=""></option>
