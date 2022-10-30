@@ -46,7 +46,7 @@ class Dados_Pessoais(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     nome_do_candidato = models.CharField(max_length=150)
     imagem_perfil = models.ImageField(upload_to= 'perfil/%Y/%m/%d', blank=False, null=False)
-    cpf_do_candidato = models.IntegerField()
+    cpf_do_candidato = models.BigIntegerField()
     data_nascimento = models.DateField()
     genero = models.CharField(max_length=9)
     telefone = models.IntegerField()

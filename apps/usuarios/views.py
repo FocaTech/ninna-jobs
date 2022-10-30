@@ -81,6 +81,8 @@ def Dados_pessoais(request):
         cidade = request.POST['cidade']
         telefone = request.POST['telefone']
         sobre_candidato = request.POST['sobre_candidato']
+        cpf = int(cpf)
+        cep = int(cep)
         informacoes2 = Dados_Pessoais.objects.create(user=usuario,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone,sobre_candidato=sobre_candidato)
     return render(request, 'partials/Usuarios/sessaoTres.html')
 
