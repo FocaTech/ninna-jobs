@@ -29,12 +29,12 @@ class Interesses(models.Model):
 class Informações_Iniciais(models.Model):
     #Informações Iniciais
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    curriculo = models.FileField(upload_to='curriculo/%Y/%m/%d', blank=False)
+    curriculo = models.FileField(upload_to='curriculo/%Y/%m/%d', blank=False, null=False)
     estagio = models.CharField(max_length=7,blank=True, null=True)
     pj = models.CharField(max_length=7,blank=True,null=True)
     clt = models.CharField(max_length=7,blank=True,null=True)
     flex = models.CharField(max_length=7,blank=True,null=True)
-    salario_pretendido = models.IntegerField(blank=True,null=True)
+    salario_pretendido = models.IntegerField()
     linkedin = models.URLField()
     rede_social = models.URLField()
     areas_interesse = models.CharField(max_length=30)
@@ -43,20 +43,17 @@ class Informações_Iniciais(models.Model):
 
 class Dados_Pessoais(models.Model):
     #Dados Pessoais
-    GENEROS = (
-        ('MA', 'Masculino'),
-        ('FE', 'Feminino'),
-        ('OU', 'Outro')
-    )
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     nome_do_candidato = models.CharField(max_length=150)
     imagem_perfil = models.ImageField(upload_to= 'perfil/%Y/%m/%d', blank=False, null=False)
     cpf_do_candidato = models.IntegerField()
     data_nascimento = models.DateField()
-    genero = models.CharField(max_length=2, choices=GENEROS, blank=False, null=False,default='MA')
+    genero = models.CharField(max_length=9)
     telefone = models.IntegerField()
-    cep = models.CharField(max_length=20)
-    sobre_o_candidato = models.TextField(max_length=400)
+    cep = models.IntegerField()
+    estado = models.CharField(max_length=60)
+    cidade = models.CharField(max_length=60)
+    sobre_candidato = models.TextField(max_length=400, blank=True,null=True)
     def __str__(self):
         return self.nome_do_candidato
 
