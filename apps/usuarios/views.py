@@ -103,7 +103,11 @@ def empresa(request, *args, **kwargs):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
-    vagas = Vagas.objects.all()
+    empresa_atual = get_object_or_404(Users, pk=request.user.id)
+    print(empresa_atual)
+
+    vagas = Vagas.objects.filter(nome_empresa=empresa_atual)
+    print(vagas)
 
     dado = {
         'contratacoes' : contratacoes,
