@@ -256,7 +256,7 @@ def candidatar_a_vaga(request, pk_vagas):
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
         messages.success(request, f"Candidatado em '{id_vaga.nome_vaga}'")
-        return redirect('vagas')
+        return redirect('index')
 
 def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
