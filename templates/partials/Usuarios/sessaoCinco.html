@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="{% static 'js/botaoAdcExcluir.js' %}"defer></script>
 <script src="{% static 'js/maskmoney.js' %}" defer></script>
 <script src="{% static 'js/form.js' %}" defer></script>
@@ -26,7 +27,7 @@
                                 </button>
                             </div>
                             <div class="col-md-6 py-2">
-                                <label for="empresa" class="form-label">Empresa</label><input type="text" class="form-control" id="empresa" required/>
+                                <label for="empresa" class="form-label">Empresa</label><input type="text" class="form-control" id="empresa" maxlength="100" required/>
                                 <div class="valid-feedback">
                                     Tudo ok!
                                 </div>
@@ -35,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 py-2">
-                                <label for="cargo" class="form-label">Cargo</label><input type="text" class="form-control" id="cargo" required />
+                                <label for="cargo" class="form-label">Cargo</label><input type="text" class="form-control" id="cargo" maxlength="100" required />
                                 <div class="valid-feedback">
                                     Tudo ok!
                                 </div>
@@ -44,7 +45,10 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="form-floating py-2"><textarea class="form-control" placeholder="Fale um pouco sobre" id="floatingTextarea" style="height: 100px;"></textarea><label for="floatingTextarea">Fale um pouco sobre.</label></div>
+                                <div class="form-floating py-2">
+                                    <textarea class="form-control" placeholder="Fale um pouco sobre" maxlength="100" id="floatingTextarea" style="height: 100px;"></textarea>
+                                    <label for="floatingTextarea">Fale um pouco sobre.</label>
+                                </div>
                             </div>
                             <div class="row py-2">
                                 <div class="col-md-3">
@@ -56,7 +60,7 @@
                                         <option value="marco">Março</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 py-2">
+                                <div class="col-md-3 py-2 mt-3">
                                     <label for="entrada" class="form-label"></label>
                                     <select class="form-select" id="entrada" required>
                                         <option selected disabled value="">Ano</option>
@@ -65,7 +69,7 @@
                                         <option value="2020">2020</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" id="saidaMes">
                                     <label for="messaida" class="form-label">Saida</label>
                                     <select class="form-select" id="mesconclusao" required>
                                         <option selected disabled value="">Mês</option>
@@ -74,16 +78,18 @@
                                         <option value="marco">Março</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 py-2">
+                                <div class="col-md-3 py-2 mt-4" id="saidaAno">
                                     <label for="saida" class="form-label"></label>
-                                    <select class="form-select" id="saida" required>
+                                    <select class="form-select" id="anoconclusao" required>
                                         <option selected disabled value="">Ano</option>
                                         <option value="2022">2022</option>
                                         <option value="2021">2021</option>
                                         <option value="2020">2020</option>
                                     </select>
                                 </div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox"/><label class="form-check-label">É meu emprego atual</label></div>
+                                <div  class="form-check">
+                                    <input id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox"/>
+                                    <label class="form-check-label">É meu emprego atual</label></div>
                             </div>
                         </div>
                     </div>
