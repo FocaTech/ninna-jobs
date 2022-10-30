@@ -10,4 +10,5 @@ urlpatterns = [
     path('Experiencia/Profissional/', views.Certificados_conquistas, name='Certificados_conquistas'),#form 5
     path('Nivel/Idioma/', views.Experiencia_profissional, name='Experiencia_profissional'),#form 6
     path('Salvando/Perfil/', views.salvando_perfil, name='salvando_perfil'),#salvando perfil
+    path('empresa/', views.empresa, name='empresa'),#dashboard de empresa
 ]

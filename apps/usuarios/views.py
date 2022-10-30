@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import City, Dados_Pessoais, Empresa, Interesses, Informações_Iniciais
 from login_cadastro.models import Users
+from rolepermissions.decorators import has_role_decorator
+from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
+from vaga.models import Vagas
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -92,3 +95,24 @@ def Experiencia_profissional(request):
 
 def salvando_perfil(request):
     return redirect('perfil')
+
+@has_role_decorator('empresa')
+def empresa(request, *args, **kwargs):
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+
+    empresa_atual = get_object_or_404(Users, pk=request.user.id)
+    print(empresa_atual)
+
+    vagas = Vagas.objects.filter(nome_empresa=empresa_atual)
+    print(vagas)
+
+    dado = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'vagas' : vagas
+    }
+    return render(request, 'empresa.html', dado)
+
