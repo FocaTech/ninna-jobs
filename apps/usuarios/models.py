@@ -51,8 +51,8 @@ class Dados_Pessoais(models.Model):
     genero = models.CharField(max_length=9)
     telefone = models.IntegerField()
     cep = models.IntegerField()
-    estado = models.CharField(max_length=60)
-    cidade = models.CharField(max_length=60)
+    estado = models.CharField(max_length=60, default='Acre')
+    cidade = models.CharField(max_length=60, default='Acrelândia')
     sobre_candidato = models.TextField(max_length=400, blank=True,null=True)
     def __str__(self):
         return self.nome_do_candidato
