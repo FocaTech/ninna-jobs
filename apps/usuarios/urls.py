@@ -11,6 +11,6 @@ urlpatterns = [
     path('Nivel/Idioma/', views.Experiencia_profissional, name='Experiencia_profissional'),#form 6
     path('Salvando/Perfil/', views.salvando_perfil, name='salvando_perfil'),#salvando perfil
     path('empresa/', views.empresa, name='empresa'),#dashboard de empresa
-    path('apagar/<int:id_formacao>', views.deleta, name='apagar'),
-    path('adicionar', views.adicionar, name='adicionar'),
+    path('apagarF/<int:id_formacao>', views.deleta_formacao, name='apagarF'),
+    path('adicionarF', views.adicionar_formacao, name='adicionarF'),
 ]

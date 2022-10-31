@@ -88,7 +88,14 @@ def Dados_pessoais(request):
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
 def Formacao_academica(request):
-    global informacoes3
+    return render(request, 'partials/Usuarios/sessaoQuatro.html')
+
+def deleta_formacao(request, id_formacao):
+    nome = get_object_or_404(Formacao_Academica, pk=id_formacao)
+    nome.delete()
+    return redirect('Dados_Pessoais')
+
+def adicionar_formacao(request):
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         instituicao_ensino = request.POST['instituicao_ensino']
@@ -97,7 +104,9 @@ def Formacao_academica(request):
         data_inicio = request.POST['data_inicio']
         data_termino = request.POST['data_termino']
         informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
-    return render(request, 'partials/Usuarios/sessaoQuatro.html')
+        informacoes3.save()
+        print('ok')
+    return redirect('Dados_Pessoais')
 
 def Certificados_conquistas(request):
     return render(request, 'partials/Usuarios/sessaoCinco.html')
@@ -127,21 +136,3 @@ def empresa(request, *args, **kwargs):
         'vagas' : vagas
     }
     return render(request, 'empresa.html', dado)
-
-def deleta(request, id_formacao):
-    nome = get_object_or_404(Formacao_Academica, pk=id_formacao)
-    nome.delete()
-    return redirect('Dados_Pessoais')
-
-def adicionar(request):
-    if request.method == 'POST':
-        usuario = get_object_or_404(Users, pk=request.user.id)
-        instituicao_ensino = request.POST['instituicao_ensino']
-        formacao = request.POST['formacao']
-        curso = request.POST['curso']
-        data_inicio = request.POST['data_inicio']
-        data_termino = request.POST['data_termino']
-        informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
-        informacoes3.save()
-        print('ok')
-    return redirect('Dados_Pessoais')
