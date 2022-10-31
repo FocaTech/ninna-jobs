@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import City, Dados_Pessoais, Empresa, Interesses, Informações_Iniciais
+from .models import City, Dados_Pessoais, Empresa, Interesses, Informações_Iniciais, Formacao_Academica
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
@@ -36,7 +36,6 @@ def cadastro_candidato_2(request):
     return render(request, 'formcandidato.html', dados)
 
 def Informacoes_iniciais(request):
-    global informacoes1
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         curriculos = request.FILES['curriculo']
@@ -68,7 +67,6 @@ def Informacoes_iniciais(request):
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
 
 def Dados_pessoais(request):
-    global informacoes2
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         imagem_perfil = request.FILES['imagem_perfil']
@@ -84,9 +82,21 @@ def Dados_pessoais(request):
         cpf = int(cpf)
         cep = int(cep)
         informacoes2 = Dados_Pessoais.objects.create(user=usuario,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone,sobre_candidato=sobre_candidato)
-    return render(request, 'partials/Usuarios/sessaoTres.html')
+    id = request.user.id
+    formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=id)
+    dados = {'formacoes':formacoes}
+    return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
 def Formacao_academica(request):
+    global informacoes3
+    if request.method == 'POST':
+        usuario = get_object_or_404(Users, pk=request.user.id)
+        instituicao_ensino = request.POST['instituicao_ensino']
+        formacao = request.POST['formacao']
+        curso = request.POST['curso']
+        data_inicio = request.POST['data_inicio']
+        data_termino = request.POST['data_termino']
+        informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
     return render(request, 'partials/Usuarios/sessaoQuatro.html')
 
 def Certificados_conquistas(request):
@@ -118,3 +128,20 @@ def empresa(request, *args, **kwargs):
     }
     return render(request, 'empresa.html', dado)
 
+def deleta(request, id_formacao):
+    nome = get_object_or_404(Formacao_Academica, pk=id_formacao)
+    nome.delete()
+    return redirect('Dados_Pessoais')
+
+def adicionar(request):
+    if request.method == 'POST':
+        usuario = get_object_or_404(Users, pk=request.user.id)
+        instituicao_ensino = request.POST['instituicao_ensino']
+        formacao = request.POST['formacao']
+        curso = request.POST['curso']
+        data_inicio = request.POST['data_inicio']
+        data_termino = request.POST['data_termino']
+        informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
+        informacoes3.save()
+        print('ok')
+    return redirect('Dados_Pessoais')
