@@ -210,5 +210,6 @@ retornar users_can em dict
 81
     '''
 
-def listar_talentos_candidatados(request):
+def listar_talentos_candidatados(request, pk_vaga):
+    print(pk_vaga)
     return render(request, 'listar-talentos_candidatados.html')
