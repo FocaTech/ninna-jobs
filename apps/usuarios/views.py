@@ -30,8 +30,11 @@ def registro(request):
 
 def cadastro_candidato_2(request):
     interesses = Interesses.objects.all()
+    id = request.user.id
+    informacoes = Informações_Iniciais.objects.order_by().filter(user=id)
     dados = {
-            'interesses':interesses
+            'interesses':interesses,
+            'informacoes':informacoes
         }
     return render(request, 'formcandidato.html', dados)
 
@@ -48,6 +51,7 @@ def Informacoes_iniciais(request):
         linkedin = request.POST['linkedin']
         rede_social = request.POST['rede_social']
         informacoes1 = Informações_Iniciais.objects.create(user=usuario,curriculo=curriculos, estagio=estagio, pj=pj, clt=clt,flex=flex, salario_pretendido=salario_pretendido,areas_interesse=area_interesse,linkedin=linkedin,rede_social=rede_social)
+        informacoes1.save()
     #pega cidades
     locais = City.objects.all()
     estado = []
@@ -59,12 +63,30 @@ def Informacoes_iniciais(request):
             cidades.append(local.name)
     cidades = sorted(cidades)
     estado = sorted(estado)
+    id = request.user.id
+    dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=id)
     dados = {
         'estados':estado,
         'cidades':cidades,
+        'dados':dados_pessoais
     }
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
+
+def editando_informacoes_iniciais(request, id_infor):
+    if request.method == 'POST':
+        i = Informações_Iniciais.objects.get(pk=id_infor)
+        i.curriculo = request.FILES['curriculo']
+        i.estagio = request.POST.get('estagio', None)
+        i.pj = request.POST.get('tipo_pj', None)
+        i.clt = request.POST.get('tipo_clt', None)
+        i.flex = request.POST.get('tipo_flex', None)
+        i.salario_pretendido = request.POST['salario_pretendido']
+        i.areas_interesse = request.POST['area_interesse']
+        i.linkedin = request.POST['linkedin']
+        i.rede_social = request.POST['rede_social']
+        i.save()
+    return redirect('Informacoes_iniciais')
 
 def Dados_pessoais(request):
     if request.method == 'POST':
@@ -82,10 +104,31 @@ def Dados_pessoais(request):
         cpf = int(cpf)
         cep = int(cep)
         informacoes2 = Dados_Pessoais.objects.create(user=usuario,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone,sobre_candidato=sobre_candidato)
+        informacoes2.save()
     id = request.user.id
     formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=id)
     dados = {'formacoes':formacoes}
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
+
+def editando_dados_pessoais(request, id_dados):
+    if request.method == 'POST':
+        d = Dados_Pessoais.objects.get(pk=id_dados)
+        d.imagem_perfil = request.FILES['imagem_perfil']
+        d.nome_do_candidato = request.POST['nome_do_candidato']
+        d.data_nascimento = request.POST['data_nascimento']
+        d.genero = request.POST['genero_candidato']
+        d.estado = request.POST['estado']
+        d.cidade = request.POST['cidade']
+        d.telefone = request.POST['telefone']
+        d.sobre_candidato = request.POST['sobre_candidato']
+        cpf = request.POST['cpf_do_candidato']
+        cep = request.POST['cep']
+        cpf = int(cpf)
+        cep = int(cep)
+        d.cpf_do_candidato = cpf
+        d.cep = cep
+        d.save()
+    return redirect('Dados_Pessoais')
 
 def deleta_formacao(request, id_formacao):
     nome = get_object_or_404(Formacao_Academica, pk=id_formacao)
