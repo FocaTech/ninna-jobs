@@ -211,4 +211,4 @@ retornar users_can em dict
     '''
 
 def listar_talentos_candidatados(request):
-    return render(request, 'partials/modal-listar-cand.html')
+    return render(request, 'listar-talentos_candidatados.html')
