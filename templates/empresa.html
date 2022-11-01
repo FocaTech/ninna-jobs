@@ -74,11 +74,12 @@
                               </ul>
                             </li>
                           </ul>
-                          <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}']">
+                          <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
                             Detalhes
                           </button>
-                        </div>
-                        {% include 'partials/modal-vaga.html' %}
+                          <a href="{% url 'listar_talentos_candidatados' %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
+                          </div>
+                          {% include 'partials/modal-vaga.html' %}
                       </div>
                     </div>
                   {% endfor %}

@@ -231,3 +231,27 @@ def empresa(request, *args, **kwargs):
         'vagas' : vagas
     }
     return render(request, 'empresa.html', dado)
+
+'''
+FUNCAO
+recebe o id da vaga
+vaga_can = pega na tab VAG_CAN todos os objetos que correspondem ao id
+users_can = usando os ids dos candidatos, pegar os obj can da tabela
+retornar users_can em dict
+'''
+
+
+'''
+    in "empresa.html"
+
+77
+    <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
+    Detalhes
+    </button>
+    </div>
+    {% include 'partials/modal-listar-cand.html' %}
+81
+    '''
+
+def listar_talentos_candidatados(request):
+    return render(request, 'listar-talentos_candidatados.html')
