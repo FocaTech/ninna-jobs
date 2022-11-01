@@ -3,7 +3,7 @@ from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idio
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
-from vaga.models import Vagas
+from vaga.models import Vagas, VagasCandidatadas
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -240,19 +240,25 @@ users_can = usando os ids dos candidatos, pegar os obj can da tabela
 retornar users_can em dict
 '''
 
-
-'''
-    in "empresa.html"
-
-77
-    <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
-    Detalhes
-    </button>
-    </div>
-    {% include 'partials/modal-listar-cand.html' %}
-81
-    '''
-
 def listar_talentos_candidatados(request, pk_vaga):
     print(pk_vaga)
-    return render(request, 'listar-talentos_candidatados.html')
+    talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
+    print(f'talentos candidatados {talentos_candidatados}')
+
+    lista_de_talentos = []
+    for obj_vaga_candidatada in talentos_candidatados:
+        obj_talento = obj_vaga_candidatada.id_cadidato
+        print(f'objeto {obj_talento}')
+        print(f'id do talento{obj_talento.id}')
+        # print(f'id do talento {obj_vaga_candidatada.id_cadidato}')
+        # # pegar_os_talentos2 = get_object_or_404(Users, pk =obj_vaga_candidatada.id_cadidato)
+        # pegar_os_talentos = Users.objects.filter(id=obj_vaga_candidatada.id_cadidato)
+        lista_de_talentos.append(obj_talento)
+
+    print(lista_de_talentos)
+
+    dados = {
+        'lista_de_talentos' : lista_de_talentos
+    }
+
+    return render(request, 'listar-talentos_candidatados.html', dados)
