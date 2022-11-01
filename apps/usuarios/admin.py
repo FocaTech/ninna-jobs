@@ -31,12 +31,3 @@ class informaçoes(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(Informações_Iniciais, informaçoes)
-
-
-# class ListandoCandidato(admin.ModelAdmin):
-#     list_display = ('id', 'nome_do_candidato', )
-#     list_display_links = ('id', 'nome_do_candidato')
-#     search_fields = ('nome_do_candidato',)
-#     list_per_page = 10
-
-# admin.site.register(Candidato, ListandoCandidato)

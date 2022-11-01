@@ -15,7 +15,13 @@
 <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
 <main>
     <div class="w-75 m-auto sDois" >
+        {% if not dados %}
         <form action="{% url 'Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" enctype="multipart/form-data" novalidate>
+        {% else %}
+        {% for dado in dados %}
+        <form action="{% url 'editando_Dados_Pessoais' dado.id %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
+        {% endfor %}
+        {% endif %}
             {% csrf_token %}
             <section class="step py-5 mb-3" id="step_6">
                 <h2> Dados Pessoais</h2>
@@ -121,8 +127,11 @@
                     <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300"  style="height: 100px"></textarea>
                     <label for="floatingTextarea">Fale um pouco sobre você.</label>
                 </div>
+                <div class="form-floating">
+                    <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="bi bi-save"></i> Salvar</button>
+                </div>
             </section>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</button>
+            <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
             <a href="{% url 'cadastro_candidato_2' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
     </div>
