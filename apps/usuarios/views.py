@@ -117,3 +117,13 @@ def empresa(request, *args, **kwargs):
     }
     return render(request, 'empresa.html', dado)
 
+    '''
+    in "empresa.html"
+
+77  <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
+    Detalhes
+    </button>
+    </div>
+81  {% include 'partials/modal-listar-cand.html' %}
+    '''
+
