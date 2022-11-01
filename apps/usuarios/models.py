@@ -46,7 +46,7 @@ class Dados_Pessoais(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     nome_do_candidato = models.CharField(max_length=150)
     imagem_perfil = models.ImageField(upload_to= 'perfil/%Y/%m/%d', blank=False, null=False)
-    cpf_do_candidato = models.IntegerField()
+    cpf_do_candidato = models.BigIntegerField()
     data_nascimento = models.DateField()
     genero = models.CharField(max_length=9)
     telefone = models.IntegerField()
@@ -59,21 +59,9 @@ class Dados_Pessoais(models.Model):
 
 class Formacao_Academica(models.Model):
     #Formação Acadêmica
-    FORMACOES = (
-        ('EFC','Ensino Fundamental Completo'),
-        ('EMC','Ensino Médio Completo'),
-        ('TEC','Técnico'),
-        ('TNL','tecnólogo'),
-        ('BAC','Bacharelado'),
-        ('LIC','Licenciatura'),
-        ('PGD','Pós-graduação'),
-        ('MES','Mestrado'),
-        ('DOU','Doutorado'),
-        ('PDT','Pós-doutorado')
-    )
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     instituicao_ensino = models.CharField(max_length=200)
-    formacao = models.CharField(max_length=3, choices=FORMACOES, blank=False, null=False, default='EFC')
+    formacao = models.CharField(max_length=30)
     curso = models.CharField(max_length=50)
     data_inicio = models.DateField()
     data_termino = models.DateField()
@@ -82,14 +70,9 @@ class Formacao_Academica(models.Model):
 
 class Certificados_Conquistas(models.Model):
     #Certificados e Conquistas
-    TIPOS = (
-        ('CU','Curso'),
-        ('RE','Reconhecimento'),
-        ('TV','Trabalho Voluntário')
-    )
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=100)
-    tipo_conquista = models.CharField(max_length=2, choices=TIPOS, blank=False, null=False, default='RE')
+    tipo_conquista = models.CharField(max_length=22)
     descricao_conquista = models.TextField(max_length=400)
     def __str__(self):
         return self.titulo
@@ -102,19 +85,13 @@ class Experiência_Profissional(models.Model):
     descricao_de_atividades = models.TextField(max_length=400)
     inicio_emprego = models.DateField()
     demissao = models.DateField()
-    emprego_atual = models.BooleanField(default=False)
+    emprego_atual = models.CharField(max_length=20, blank=True,null=True)
     def __str__(self):
         return self.cargo_exercido
 
 class Idiomas(models.Model):
-    IDIOMAS = (
-        ('BA','Básico'),
-        ('IN','Intermediário'),
-        ('AV','avançado'),
-        ('NF','Nativo/Fluente')
-    )
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    idioma = models.CharField(max_length=2, choices=IDIOMAS, blank=False, null=False, default='BA')
+    idioma = models.CharField(max_length=16)
     nivel_idioma = models.CharField(max_length=15)
     def __str__(self):
         return self.nivel_idioma
