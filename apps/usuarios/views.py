@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import City, Dados_Pessoais, Empresa, Interesses, Informações_Iniciais, Formacao_Academica
+from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
@@ -87,9 +87,6 @@ def Dados_pessoais(request):
     dados = {'formacoes':formacoes}
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
-def Formacao_academica(request):
-    return render(request, 'partials/Usuarios/sessaoQuatro.html')
-
 def deleta_formacao(request, id_formacao):
     nome = get_object_or_404(Formacao_Academica, pk=id_formacao)
     nome.delete()
@@ -105,14 +102,69 @@ def adicionar_formacao(request):
         data_termino = request.POST['data_termino']
         informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
         informacoes3.save()
-        print('ok')
     return redirect('Dados_Pessoais')
 
+def Formacao_academica(request):
+    certificados = Certificados_Conquistas.objects.all()
+    dados = {'certificados':certificados}
+    return render(request, 'partials/Usuarios/sessaoQuatro.html', dados)
+
+def deleta_certificado(request, id_certificado):
+    nome = get_object_or_404(Certificados_Conquistas, pk=id_certificado)
+    nome.delete()
+    return redirect('Formacao_academica')
+
+def adicionar_certificado(request):
+    if request.method == 'POST':
+        usuario = get_object_or_404(Users, pk=request.user.id)
+        titulo = request.POST['titulo']
+        tipo = request.POST['tipo']
+        sobre_conquista = request.POST['sobre_conquista']
+        informacoes4 = Certificados_Conquistas.objects.create(user=usuario,titulo=titulo,tipo_conquista=tipo,descricao_conquista=sobre_conquista)
+        informacoes4.save()
+    return redirect('Formacao_academica')
+
 def Certificados_conquistas(request):
-    return render(request, 'partials/Usuarios/sessaoCinco.html')
+    experiencias = Experiência_Profissional.objects.all()
+    dados = {'experiencias':experiencias}
+    return render(request, 'partials/Usuarios/sessaoCinco.html', dados)
+
+def deleta_experiencia(request, id_experiencia):
+    nome = get_object_or_404(Experiência_Profissional, pk=id_experiencia)
+    nome.delete()
+    return redirect('Certificados_conquistas')
+
+def adicionar_experiencia(request):
+    if request.method == 'POST':
+        usuario = get_object_or_404(Users, pk=request.user.id)
+        empresa = request.POST['empresa']
+        cargo = request.POST['cargo']
+        sobre_contrato = request.POST['sobre_contrato']
+        data_contrato = request.POST['data_contrato']
+        data_demissao = request.POST['data_demissao']
+        meu_emprego = request.POST['meu_emprego']
+        informacoes5 = Experiência_Profissional.objects.create(user=usuario,empresa_onde_trabalhou=empresa,cargo_exercido=cargo,descricao_de_atividades=sobre_contrato,inicio_emprego=data_contrato,demissao=data_demissao,emprego_atual=meu_emprego)
+        informacoes5.save()
+    return redirect('Certificados_conquistas')
 
 def Experiencia_profissional(request):
-    return render(request, 'partials/Usuarios/sessaoSeis.html')
+    idioma = Idiomas.objects.all()
+    dados = {'idiomas':idioma}
+    return render(request, 'partials/Usuarios/sessaoSeis.html',dados)
+
+def deleta_idioma(requst, id_idioma):
+    nome = get_object_or_404(Idiomas, pk=id_idioma)
+    nome.delete()
+    return redirect('Experiencia_profissional')
+
+def adicionar_idioma(request):
+    if request.method == 'POST':
+        usuario = get_object_or_404(Users, pk=request.user.id)
+        idioma = request.POST['idioma']
+        nivel = request.POST['nivel']
+        informacoes6 = Idiomas.objects.create(user=usuario, idioma=idioma,nivel_idioma=nivel)
+        informacoes6.save()
+    return redirect('Experiencia_profissional')
 
 def salvando_perfil(request):
     return redirect('perfil')

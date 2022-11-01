@@ -85,7 +85,7 @@ class Experiência_Profissional(models.Model):
     descricao_de_atividades = models.TextField(max_length=400)
     inicio_emprego = models.DateField()
     demissao = models.DateField()
-    emprego_atual = models.BooleanField(default=False)
+    emprego_atual = models.CharField(max_length=20, blank=True,null=True)
     def __str__(self):
         return self.cargo_exercido
 

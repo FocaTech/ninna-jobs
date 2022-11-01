@@ -14,20 +14,16 @@
 <main>
     <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
     <div class="w-75 m-auto sCinco">
-        <form action="{% url 'Experiencia_profissional' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+        <form action="{% url 'adicionarE' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
             {% csrf_token %}
             <section class="step py-5 border-bottom" id="step_5">
                 <h2 >Experiência Profissional</h2>
                 <div>
                     <div class="experienciaProfissional" name="exluirXp">
                         <div id="xpProfissional" class="row py-2">
-                            <div class="text-center excluir">
-                                <button type="button" name="excluirXP" class="btn btn-primary float-end corBotao">
-                                    <i class="bi bi-trash"></i> Excluir
-                                </button>
-                            </div>
                             <div class="col-md-6 py-2">
-                                <label for="empresa" class="form-label">Empresa</label><input type="text" class="form-control" id="empresa" maxlength="100" required/>
+                                <label for="empresa" class="form-label">Empresa</label>
+                                <input name='empresa' type="text" class="form-control" id="empresa" maxlength="100" required/>
                                 <div class="valid-feedback">
                                     Tudo ok!
                                 </div>
@@ -36,7 +32,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6 py-2">
-                                <label for="cargo" class="form-label">Cargo</label><input type="text" class="form-control" id="cargo" maxlength="100" required />
+                                <label for="cargo" class="form-label">Cargo</label>
+                                <input name='cargo' type="text" class="form-control" id="cargo" maxlength="100" required />
                                 <div class="valid-feedback">
                                     Tudo ok!
                                 </div>
@@ -46,61 +43,57 @@
                             </div>
                             <div>
                                 <div class="form-floating py-2">
-                                    <textarea class="form-control" placeholder="Fale um pouco sobre" maxlength="100" id="floatingTextarea" style="height: 100px;"></textarea>
+                                    <textarea name='sobre_contrato' class="form-control" placeholder="Fale um pouco sobre" maxlength="100" id="floatingTextarea" style="height: 100px;"></textarea>
                                     <label for="floatingTextarea">Fale um pouco sobre.</label>
                                 </div>
                             </div>
                             <div class="row py-2">
-                                <div class="col-md-3">
-                                    <label for="entrada" class="form-label">Data de inicio</label>
-                                    <select class="form-select" id="entrada" required>
-                                        <option selected disabled value="">Mês</option>
-                                        <option value="janeiro">Janeiro</option>
-                                        <option value="fevereiro">Fevereiro</option>
-                                        <option value="marco">Março</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 py-2 mt-3">
-                                    <label for="entrada" class="form-label"></label>
-                                    <select class="form-select" id="entrada" required>
-                                        <option selected disabled value="">Ano</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2020">2020</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3" id="saidaMes">
-                                    <label for="messaida" class="form-label">Saida</label>
-                                    <select class="form-select" id="mesconclusao" required>
-                                        <option selected disabled value="">Mês</option>
-                                        <option value="janeiro">Janeiro</option>
-                                        <option value="fevereiro">Fevereiro</option>
-                                        <option value="marco">Março</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 py-2 mt-4" id="saidaAno">
-                                    <label for="saida" class="form-label"></label>
-                                    <select class="form-select" id="anoconclusao" required>
-                                        <option selected disabled value="">Ano</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                <div class="row py-2">
+                                    <div class="col-md-4">
+                                        <label for="data">Data de Contrato</label>
+                                        <input type="date" class="form-control" id="data" name="data_contrato" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="data">Data de Demissão</label>
+                                        <input type="date" class="form-control" id="data" name="data_demissao" required>
+                                    </div>
                                 </div>
                                 <div  class="form-check">
-                                    <input id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox"/>
+                                    <input name='meu_emprego' id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox" value="Emprego atual" />
                                     <label class="form-check-label">É meu emprego atual</label></div>
                             </div>
                         </div>
                     </div>
-                    <button type="button" name="adicionar" class="btn btn-primary m-2 col corBotao">
-                        <i class="bi bi-plus-lg"></i> Adicionar
-                    </button>
+                    <div class="p-3">
+                        <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="bi bi-plus-lg"></i>Adicionar</button>
+                    </div>
                 </div>
             </section>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</button>
+            <a href="{% url 'Experiencia_profissional' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
             <a href="{% url 'Formacao_academica' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
+        {% if experiencias %}
+        {% for experiencia in experiencias %}
+        <div class="row py-2">
+            <div class="col-md-4 py-2">
+                <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagarE' experiencia.id %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+            </div>
+                <h4>Nome da empresa</h4>
+                <li>{{ experiencia.empresa_onde_trabalhou}}</li>
+                <h4>Emprego</h4>
+                <li>{{ experiencia.cargo_exercido }}</li>
+                <h4>Sobre emprego</h4>
+                <li>{{ experiencia.descricao_de_atividades }}</li>
+                <h4>Contratado</h4>
+                <li>{{ experiencia.inicio_emprego }}</li>
+                <h4>Demissao</h4>
+                <li>{{ experiencia.demissao }}</li>
+                <h4>emprego atual</h4>
+                <li>{{ experiencia.emprego_atual }}</li>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
 </main>
 {% endblock %}
