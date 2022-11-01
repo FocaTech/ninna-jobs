@@ -1,0 +1,54 @@
+{% load static %}
+<div class="modal fade" data-modal-id="{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}" tabindex="-1" {#aria-labelledby="exampleModalLabel" #}aria-hidden="true">
+    {% comment %} <div class="modal fade" data-modal-id="{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}" tabindex="-1" {#aria-labelledby="exampleModalLabel" #}aria-hidden="true"> {% endcomment %}
+      <div class="modal-dialog{# modal-lg#}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title h5 titulovaga" id="modalVaga">{{ vaga.nome_vaga }} ({{ vaga.tipo_trabalho }})</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="w3-ul w3-card-4">
+                <li class="w3-bar">
+                  <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i></span>
+                    <a href="#" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i></a>
+                    <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                    <img src="{% static 'img/candidato.jpg' %}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                    <div class="w3-bar-item">
+                        <span class="w3-large">Maria Alice Teixeira da Costa</span><br>
+                        <span>Area de atuação 1</span>
+                        <span>Nivel Profissional: Junior</span>
+                        <span>Formação academica: superior</span>
+                        <span>curso: anus</span>
+                    </div>
+                </li>
+            </ul>
+          </div>
+        {% if user.is_authenticated %}
+          <div class="modal-footer justify-content-between">
+            <div>
+              {% if vaga.id in ids_de_vagas_salvas %}
+              <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star-fill"></i></a>
+              {% else %}
+              <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
+              {% endif %}
+            </div>
+            {% if not user.funcao == "EMP" %}
+            <div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+              <a href="{% url 'candidatar_a_vaga' vaga.id %}" type="button" class="btn btn-primary">Candidatar-se</a></button>
+            </div>
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="modal-footer justify-content-between">
+            <div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+              <a href="{% url 'longar_candidato' %}" type="button" class="btn btn-primary">Candidatar-se</a></button>
+              <a href="{% url 'longar_candidato' %}" type="button" class="btn btn-primary">Candidatar-se</a></button>
+            </div>
+          </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
