@@ -250,12 +250,8 @@ def listar_talentos_candidatados(request, pk_vaga):
         obj_talento = obj_vaga_candidatada.id_cadidato
         print(f'objeto {obj_talento}')
         print(f'id do talento{obj_talento.id}')
-        # print(f'id do talento {obj_vaga_candidatada.id_cadidato}')
-        # # pegar_os_talentos2 = get_object_or_404(Users, pk =obj_vaga_candidatada.id_cadidato)
-        # pegar_os_talentos = Users.objects.filter(id=obj_vaga_candidatada.id_cadidato)
         lista_de_talentos.append(obj_talento)
 
-    print(lista_de_talentos)
 
     dados = {
         'lista_de_talentos' : lista_de_talentos
