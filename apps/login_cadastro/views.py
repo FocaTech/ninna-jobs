@@ -20,6 +20,8 @@ from django.utils.html import strip_tags
 from django.conf import settings
 
 
+def acesso(request):
+    return render(request, 'acesso.html')
 
 def cadastro_candidato(request):
     if request.method == 'POST':

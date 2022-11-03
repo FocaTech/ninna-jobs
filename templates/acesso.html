@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--css e bootstrap-->
-    <link rel="stylesheet" href="./acesso.css">
-    <link rel="stylesheet" href="./bootstrap-5.2.1-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="{% static 'css/acesso.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
 
     <title>acesso rápido</title>
 </head>
@@ -15,19 +17,19 @@
     <div class="caixa">
 
         <div class="imagem">
-        <img src="./homem.png"  class="homem">
+        <img src="{% static 'img/homem.png' %}"  class="homem">
         </div>
 
         <div class="caixa1">
 
             <div class="texto">
-            <h5>Antes de prosseguir precisamos saber,<br> como você se identifica?</h5>
+            <h5>Antes de prosseguir, precisamos saber:<br> Como você se identifica?</h5>
             </div>
 
              <div class="botoes">
 
-            <button type="submit" class="btn btn-primary"> Empresa</button>
-            <button type="submit" class="btn btn-primary">Candidato</button>
+            <a href="{% url 'cadastro_empresa' %}" type="submit" class="btn btn-primary"> Empresa</a>
+            <a href="{% url 'cadastro_candidato' %}" type="submit" class="btn btn-primary">Candidato</a>
 
             </div>
         </div>

@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('login/candidato/', views.logar_candidato, name='longar_candidato'),
     path('login/empresa/', views.logar_empresa, name='longar_empresa'),
+    path('acesso', views.acesso, name='acesso'),
     path('recuperar_senha/', views.recuperar_senha, name='recuperar_senha'),
     path('conferir_token/<uidb64>/<token>,', views.conferir_token, name='conferir_token'),
     path('alterar_senha/', views.alterar_senha, name='alterar_senha'),
