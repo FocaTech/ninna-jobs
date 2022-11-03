@@ -1,0 +1,1 @@
+[{"model": "vaga.TipoTrabalho", "pk": 1, "fields": {"trabalho": "Presencial", "descricao": "s"}}, {"model": "vaga.TipoTrabalho", "pk": 2, "fields": {"trabalho": "Hibrido", "descricao": "s"}}, {"model": "vaga.TipoTrabalho", "pk": 3, "fields": {"trabalho": "Remoto", "descricao": "s"}}]
