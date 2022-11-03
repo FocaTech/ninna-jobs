@@ -4,178 +4,102 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
 <script src="{% static 'js/botaoAdcExcluir.js' %}"defer></script>
 <script src="{% static 'js/maskmoney.js' %}" defer></script>
+<script src="{% static 'js/form.js' %}" defer></script>
 {% endblock %}
-{% block body_class %}page-dashboard{% endblock %}
 {% block content %}
-{% include 'partials/_alertas.html' %}
 <main>
-    <div class="w-75 m-auto">
-        <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
-        <a href="#"></a>
-        <form action="{% url 'cadastro_candidato_2' %}" class="g-3 needs-validation position-relative" method="POST" id="wizard">
+    <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
+    <div class="w-75 m-auto sSeis">
+        {% if not informacoes %}
+        <form action="{% url 'Informacoes_iniciais' %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
+        {% else %}
+        {% for infor in informacoes %}
+        <form action="{% url 'editando_informacoes_iniciais' infor.id %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
+        {% endfor %}
+        {% endif %}
             {% csrf_token %}
             <section class="step py-5 border-bottom" id="step_1">
                 <h2>Informações Iniciais</h2>
-                <div class="col-md-12">
+                <div class="col-md-12 py-2">
                     <label for="curriculo" class="form-label">Seu curriculo em pdf</label>
-                    <input id="curriculo" name="curriculo_pdf" type="file" class="form-control form-itens" aria-label="curriculo" accept="application/pdf">
-                    <div class="invalid-feedback">Somente pdf</div>
+                    <input id="curriculo" name="curriculo" type="file" class="form-control form-itens" aria-label="curriculo" accept="application/pdf" required>
+                    <div class="valid-feedback">
+                        Tudo ok!
+                    </div>
+                    <div class="invalid-feedback">
+                        Campo obrigatorio
+                    </div>
                 </div>
-                <div class="tipoDeContrato">
+                <div class="tipoDeContrato py-2">
                     <p class="text-sm-start">O tipo de contrato que está disposto a aceitar.</p>
-                    <div class="row">
+                    <div class="row py-2">
                         <div class="form-check input-group col">
-                            <input id="estagio" class="form-check-input" type="checkbox" value="estagio" name="estagio">
+                            <input id="estagio" class="form-check-input aoMenosUm " type="checkbox" value="estagio" name="estagio" >
                             <label class="form-check-label mx-2" for="estagio">Estágio</label>
                         </div>
                         <div class="form-check input-group col">
-                            <input id="pj" class="form-check-input" type="checkbox" value="pj" name="tipo_contratacao">
+                            <input id="pj" class="form-check-input aoMenosUm" type="checkbox" value="pj" name="tipo_pj">
                             <label class="form-check-label mx-2" for="pj">PJ</label>
                         </div>
                         <div class="form-check input-group col">
-                            <input id="clt" class="form-check-input" type="checkbox" value="clt" name="tipo_contratacao">
+                            <input id="clt" class="form-check-input aoMenosUm" type="checkbox" value="clt" name="tipo_clt">
                             <label class="form-check-label mx-2" for="clt">CLT</label>
                         </div>
                         <div class="form-check input-group col">
-                            <input id="flex" class="form-check-input" type="checkbox" value="flex" name="tipo_contratacao">
+                            <input id="flex" class="form-check-input aoMenosUm" type="checkbox" value="flex" name="tipo_flex">
                             <label class="form-check-label mx-2" for="flex">Flex</label>
+                        </div>
+                        <div>
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo obrigatorio
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row py-2">
                     <div class="col-md-6">
                         <label  for="salario" class="form-label">Salario pretendido</label>
-                        <input name="salario_pretendido" type="text" class="form-control form-itens"id="salario"placeholder="R$ 0,00">
+                        <input class="form-control" type="number" name="salario_pretendido" min="100" max="10000000" required>
                     </div>
                     <div class="col-md-6">
                         <label for="areadeatuacao" class="form-label">Area de interesse</label>
                         <select class="form-control form-itens" id="areadeatuacao" name="area_interesse" required>
-                            <option value="Informática">Informática</option>
-                            <option value="Educação">Educação</option>
+                            <option selected disabled value="">Escolha...</option>
+                            {% for interesse in interesses %}
+                                <option value="{{interesse}}">{{interesse}}</option>
+                            {% endfor %}
                         </select>
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                        <div class="invalid-feedback">
+                            Campo obrigatorio
+                        </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row py-2">
                     <div class="col-md-6">
                         <label  for="linkedin" class="form-label">linkedin</label>
-                        <input  type="text" class="form-control" placeholder="https://www.linkedin.com/in/alice-costa-89a11148/" name="linkedin" required>
+                        <input  type="text" class="form-control" placeholder="https://www.linkedin.com/in/alice-costa-89a11148/" name="linkedin">
                     </div>
                     <div class="col-md-6">
                         <label  for="midia" class="form-label">Outra midia social</label>
                         <input  type="text" class="form-control" id="midiaSocial" placeholder="Instagram, facebook, twitter" name="rede_social" >
                     </div>
-                </div>
-            </section>
-            <section class="step py-5 border-bottom" id="step_2">
-                <h2> Dados Pessoais</h2>
-                <div class="col-md-12">
-                        <label for="imgperfil" class="form-label">Imagem de perfil</label>
-                        <input id="imgperfil" name="imagem_perfil" type="file" class="form-control" aria-label="imgperfil" accept="image/*" required>
-                        <div class="invalid-feedback">Por favor preencha este campo</div>
-                    </div>
-                    <div class="row">
-                            <div class="col-md-8">
-                                <label for="nome" class="form-label">Nome Completo</label>
-                                <input type="text" class="form-control" id="nome" value="nome" name="nome_do_candidato" required>
-                                <div class="valid-feedback">Tudo ok!</div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="cpf" class="form-label">CPF</label>
-                                <input name="cpf_do_candidato" type="text" class="form-control" id="cpf" required>
-                                <div class="valid-feedback">Tudo ok!</div>
-                            </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="data">Data de nascimento</label>
-                            <input type="date" class="form-control" id="data" name="data_nascimento" required>
-                            <div class="valid-feedback">Tudo ok!</div>
-                        </div>
-                        <div class="col-md-8">
-                            <label for="genero">Genêro</label>
-                            <select class="form-control" id="genero" name="genero_candidato" required>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Masculino">Feminino</option>
-                                <option value="Masculino">Outro</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="cep" class="form-label">Cep</label>
-                            <input type="text" name="cep" class="form-control" id="cep" size="10" maxlength="9"required>
-                            <div class="invalid-feedback">Por favor, informe um cep valido.</div>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="cidade" class="form-label">Cidade</label>
-                            <input name="cidade" type="text" class="form-control" id="cidade"size="40"  required>
-                            <div class="invalid-feedback">Informe sua cidade e estado.</div>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="estado" class="form-label">Estado</label>
-                            <select name="estado" class="form-select" id="uf"required>
-                                <option value="Ceará">Ceará</option>
-                                <option value="Tocantins">Tocantins</option>
-                            </select>
-                            <div class="invalid-feedback">Por favor, escolha um estado valido</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <label for="telefone" class="form-label">Telefone</label>
-                            <input type="number" class="form-control" id="telefone" name="telefone" placeholder="(00) 0 0000-0000" required>
-                            <div class="invalid-feedback">Informe um telefone valido.</div>
-                        </div>
-                    </div>
-                    <div class="form-floating">
-                        <textarea name="sobre_o_candidato" class="form-control" placeholder="comente" id="floatingTextarea" style="height: 100px"></textarea>
-                        <label for="floatingTextarea">Fale um pouco sobre você.</label>
-                    </div>
-                </section>
-            </section>
-            <section class="step py-5 border-bottom" id="step_3">
-                <div class="row">
-                    <h2>Formação Academica</h2>
-                    <div class="formacao"></div>
                     <div class="p-3">
-                        <button type="button" class="btn btn-primary m-2 col corBotao"id="adicionarformacao">
-                            <i class="bi bi-plus-lg"></i> Adicionar
-                        </button>
+                        <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="bi bi-save"></i> Salvar</button>
                     </div>
                 </div>
             </section>
-            <section class="step py-5 border-bottom" id="step_4">
-                <h2>Certificados e conquistas</h2>
-                <p for="certificados" class="form-label">Você pode informar sobre cursos, trabalho voluntário e outros reconhecimentos</p>
-                <div class="certificados"></div> <!--Div para incluir o novo form caso aperte o adicionar-->
-                <div class="">
-                    <button type="button" class="btn btn-primary m-2 col corBotao" id="adicionarcertificados">
-                        <i class="bi bi-plus-lg"></i> Adicionar
-                    </button>
-                </div>
-            </section>
-            <section class="step py-5 border-bottom" id="step_5">
-                <h2 >Experiência Profissional</h2>
-                <div>
-                    <div class="experienciaProfissional" id="exluirXp"></div>
-                    <button type="button" id="adicionar" class="btn btn-primary m-2 col corBotao">
-                        <i class="bi bi-plus-lg"></i> Adicionar
-                    </button>
-                </div>
-            </section>
-            <section class="step py-5 mb-3" id="step_6">
-                <h2>Idiomas</h2>
-                <p for="idiomas" class="form-label">Adicione os idiomas que mais domina</p>
-                <div class="idioma"></div>
-                <div>
-                    <button type="button" class="btn btn-primary m-2 col corBotao" id="adicionarIdioma">
-                        <i class="bi bi-plus-lg"></i> Adicionar
-                    </button>
-                </div>
-            </section>
-            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0"> Salvar e sair</button>
+            <button type="submit" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</button>
+            <a href="{% url 'Informacoes_iniciais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
+            <a href="{% url 'dashboard' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link Ou botão?-->
         </form>
     </div>
 </main>

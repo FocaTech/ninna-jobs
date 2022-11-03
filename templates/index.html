@@ -27,6 +27,7 @@
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
+{% include 'partials/_alertas.html' %}
 <main>
     <div class="position-relative">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -64,6 +65,7 @@
             </div>
         </div>
     </div>
+    <a href="#"name="vagas"></a>
     <div class="title-section text-center pt-5 mt-5">
         <h2 class="mt-5 titulohome">Vagas</h2>
         <span></span>
@@ -105,6 +107,7 @@
     <div class="container mb-4 text-center">
         <a class="btn btn-secondary" href="{% url 'vagas' %}">Ver todas as vagas</a>
     </div>
+    <a href="#"name="sobrenos"></a>
     <div id="sobre-nos" class="section-cotent">
         <div class="container">
             <div class="sobre-nos">
@@ -120,6 +123,7 @@
                 <div class="col-md-4 our-skills">
                 </div> <!-- /.col-md-3 -->
             </div>
+            <a href="#"name="contato"></a>
             <div id="contato" class="section-cotent">
                 <div class="container">
                     <div class="title-section text-center">

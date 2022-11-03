@@ -22,13 +22,13 @@
         </header>
         <div class="tabber">
           <div class="tabber__tabs">
-            <button type="button" class="tabber__tab active">Candidatadas</button>
+            <button type="button" class="tabber__tab">Candidatadas</button>
             <button type="button" class="tabber__tab">Favoritadas</button>
             <button type="button" class="tabber__tab">Arquivadas</button>
           </div>
           {% include 'partials/_alertas.html' %}
           <div class="tabber__content">
-            <section id="candidatadas" class="active">
+            <section id="candidatadas">
               <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
                 {% if vagas_candidatadas %}
                   {% for vagas_candidatadas_queryset in vagas_candidatadas %}
@@ -117,7 +117,7 @@
             <li><a class="btn btn-primary" href="{% url 'perfil' %}" role="button">Perfil</a></li>
             <!-- <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
             <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> -->
-            <li><a class="btn btn-primary" href="#" role="button">Ofertas recebidas</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Empresas Favoritadas</a></li>
           </ul>
         </div>
       </div>

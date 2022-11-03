@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Minhas vagas{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+<script src="{% static 'js/botaoAdcExcluir.js' %}"defer></script>
+<script src="{% static 'js/maskmoney.js' %}" defer></script>
+<script src="{% static 'js/form.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+<main>
+    <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
+    <div class="w-75 m-auto sSeis">
+        <form action="{% url 'adicionarI' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+            {% csrf_token %}
+            <section class="step py-5 mb-3" id="step_6">
+                <h2>Idiomas</h2>
+                <p for="idiomas" class="form-label">Adicione os idiomas que mais domina</p>
+                <div class="idioma py-3">
+                    <div>
+                        <div class="row py-3">
+                            <div class="col-md-8 py-2">
+                                <label for="idioma" class="form-label">Idioma</label>
+                                <input name='idioma' type="text" class="form-control" id="idioma" maxlength="10" required>
+                                <div class="valid-feedback">
+                                    Tudo ok!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Campo obrigatorio
+                                </div>
+                            </div>
+                            <div class="col-md-4 py-2">
+                                <label for="nivelDeConhecimento" class="form-label">Nivel</label>
+                                <select name='nivel' class="form-select" id="nivelConhecimento" required>
+                                    <option selected disabled value="">Escolha...</option>
+                                    <option value="basico">Básico</option>
+                                    <option value="intermediario">Intermediário</option>
+                                    <option value="avancado">avança</option>
+                                    <option value="nativoFluente">Nativo/Fluente</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Tudo ok!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Campo obrigatorio
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="bi bi-plus-lg"></i>Adicionar</button>
+                </div>
+            </section>
+            <a href="{% url 'salvando_perfil' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
+            <a href="{% url 'Certificados_conquistas' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+        </form>
+        {% if idiomas %}
+        {% for idioma in idiomas %}
+        <div class="row py-2">
+            <div class="col-md-4 py-2">
+                <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagarI' idioma.id %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+            </div>
+                <h4>Idioma</h4>
+                <li>{{ idioma.idioma }}</li>
+                <h4>Nivel</h4>
+                <li>{{ idioma.nivel_idioma }}</li>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

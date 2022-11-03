@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Minhas vagas{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+<script src="{% static 'js/botaoAdcExcluir.js' %}"defer></script>
+<script src="{% static 'js/maskmoney.js' %}" defer></script>
+<script src="{% static 'js/form.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+<main>
+    <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
+    <div class="w-75 m-auto sTres" >
+        <form action="{% url 'adicionarF' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <section class="step py-5 border-bottom" id="step_3">
+                <div class="row py-2">
+                    <h2>Formação Academica</h2>
+                    <div class="formacao">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-8 py-2">
+                                    <label for="instituicao" class="form-label">Instituição</label>
+                                    <input type="text" name="instituicao_ensino" class="form-control" maxlength="100" id="instituicao"required>
+                                    <div class="valid-feedback">
+                                        Tudo ok!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Campo obrigatorio
+                                    </div>
+                                </div>
+                                <div class="col-md-4 py-2">
+                                    <label for="nivelformacao" class="form-label">Formação</label>
+                                    <select class="form-select" name="formacao" id="nivelformacao" required>
+                                        <option selected disabled value="">Escolha...</option>
+                                        <option value="EF">Ensino Fundamental Completo</option>
+                                        <option value="EM">Ensino Médio Completo</option>
+                                        <option value="tecnico">Técnico</option>
+                                        <option value="tecnologo">tecnólogo</option>
+                                        <option value="bacharel">Bacharelado</option>
+                                        <option value="licenciatura">Licenciatura</option>
+                                        <option value="posGraduacao">Pós-graduação</option>
+                                        <option value="mestrado">Mestrado</option>
+                                        <option value="doutorado">Doutorado</option>
+                                        <option value="posDoutorado">Pós-doutorado</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Por favor, escolha uma opção valida
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2">
+                                <label for="curso" class="form-label">Curso</label>
+                                <input type="text" name="curso" class="form-control" id="curso" maxlength="100" required>
+                            <div class="invalid-feedback">
+                                Por favor, informe um curso.
+                            </div>
+                            <div class="row py-2">
+                                <div class="col-md-4">
+                                    <label for="data">Data de Inicio</label>
+                                    <input type="date" class="form-control" id="data" name="data_inicio" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="data">Conclusão/Previsão</label>
+                                    <input type="date" class="form-control" id="data" name="data_termino" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="bi bi-plus-lg"></i>Adicionar</button>
+                    </div>
+                </div>
+            </section>
+            <a href="{% url 'Formacao_academica' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
+            <a href="{% url 'Informacoes_iniciais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+        </form>
+    {% if formacoes %}
+    {% for formacao in formacoes %}
+    <div class="row py-2">
+        <div class="col-md-4 py-2">
+            <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagarF' formacao.id %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+        </div>
+            <h4>Instituição</h4>
+            <li>{{ formacao.instituicao_ensino }}</li>
+            <h4>Formação</h4>
+            <li>{{ formacao.formacao }}</li>
+            <h4>Curso</h4>
+            <li>{{ formacao.curso }}</li>
+            <h4>Data Inicio</h4>
+            <li>{{ formacao.data_inicio }}</li>
+            <h4>Conclusão/Previsão</h4>
+            <li>{{ formacao.data_termino }}</li>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    </div>
+</main>
+{% endblock %}

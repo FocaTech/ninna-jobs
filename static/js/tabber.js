@@ -1,8 +1,9 @@
 (function() {
   function changeTab(tab, tabName) {
-    document.querySelector('.tabber__tab.active').classList.remove('active');
+    ['.tabber__tab', '.tabber__content>']
+    .map(selector => document.querySelector(selector+'.active'))
+    .forEach(element => { if (!!element) element.classList.remove('active') });
     tab.classList.add('active');
-    document.querySelector('.tabber__content>.active').classList.remove('active');
     document.querySelector('.tabber__content>#'+tabName).classList.add('active');
   }
 
@@ -21,4 +22,13 @@
       }
     });
   }
+
+  (function() {
+    let tab = ['.tabber__tab', '.tabber__content>section'];
+    tab = [
+      tab.map(selector => document.querySelector(selector)),
+      tab.map(selector => document.querySelector(selector+'.active'))
+    ];
+    if (!!tab[0][0] && !tab[1][0] || !!tab[0][1] && !tab[1][1]) tab[0][0].click();
+  })();
 })();

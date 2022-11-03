@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Minhas vagas{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+<script src="{% static 'js/botaoAdcExcluir.js' %}"defer></script>
+<script src="{% static 'js/maskmoney.js' %}" defer></script>
+<script src="{% static 'js/form.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+<main>
+    <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
+    <div class="w-75 m-auto sQuatro">
+        <form action="{% url 'adicionarC' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" novalidate>
+            {% csrf_token %}
+            <section class="step py-5 border-bottom" id="step_4">
+                <h2>Certificados e conquistas</h2>
+                <p for="certificados" class="form-label">Você pode informar sobre cursos, trabalho voluntário e outros reconhecimentos</p>
+                <div class="certificados">
+                    <div class="row">
+                        <div class="col-md-6 py-2">
+                            <label for="certificadotitulo" class="form-label">Titulo</label>
+                            <input name='titulo' type="text" class="form-control" id="certificadotitulo" maxlength="100" required>
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo obrigatorio
+                            </div>
+                        </div>
+                        <div class="col-md-6 py-2">
+                            <label for="certificadotipo" class="form-label">Tipo</label>
+                            <select name='tipo' class="form-select" id="certificadotipo" required>
+                                <option selected disabled value="">Escolha</option>
+                                <option value="curso">Curso</option>
+                                <option value="reconhecimento">Reconhecimento</option>
+                                <option value="TV">Trabalho Voluntário</option>
+                            </select>
+                        </div>
+                        <div class="form-floating py-2">
+                            <textarea name='sobre_conquista' class="form-control" placeholder="Fale um pouco sobre" maxlength="100" id="floatingTextarea" style="height: 100px"></textarea>
+                            <label for="floatingTextarea">Fale um pouco sobre.</label>
+                        </div>
+                    </div>
+                </div> <!--Div para incluir o novo form caso aperte o adicionar-->
+                <div class="p-3">
+                    <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="bi bi-plus-lg"></i>Adicionar</button>
+                </div>
+            </section>
+            <a href="{% url 'Certificados_conquistas' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
+            <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+         </form>
+         {% if certificados %}
+         {% for certificado in certificados %}
+         <div class="row py-2">
+             <div class="col-md-4 py-2">
+                 <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagarC' certificado.id %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+             </div>
+                 <h4>Titulo</h4>
+                 <li>{{ certificado.titulo }}</li>
+                 <h4>Tipo</h4>
+                 <li>{{ certificado.tipo_conquista }}</li>
+                 <h4>Sobre Certificado</h4>
+                 <li>{{ certificado.descricao_conquista }}</li>
+             </div>
+         </div>
+         {% endfor %}
+         {% endif %}
+    </div>
+</main>
+{% endblock %}
