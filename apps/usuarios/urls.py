@@ -21,5 +21,5 @@ urlpatterns = [
     path('adicionarI', views.adicionar_idioma, name='adicionarI'),#adiciona novo idioma
     path('Salvando/Perfil/', views.salvando_perfil, name='salvando_perfil'),#salva perfil
     path('empresa/', views.empresa, name='empresa'),#dashboard de empresa
-    path('listar_candidatos/', views.listar_talentos_candidatados, name='listar_talentos_candidatados'),#dashboard de empresa
+    path('listar_candidatos/<int:pk_vaga>', views.listar_talentos_candidatados, name='listar_talentos_candidatados'),#dashboard de empresa
 ]
