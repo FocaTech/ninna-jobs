@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.caixa{
+    background: #f6f6f6;
+    width: 750px;
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 20px;
+    display: flex;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.imagem{
+    width: 100%;
+    float: none;
+}
+
+.homem{
+    border-radius:20px 0 20px;
+    max-width: 100%;
+    height: auto;
+   background-size: cover;
+}
+
+.texto{
+    margin-top: 110px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.botoes{
+    display: flex;
+}
+.botoes button{
+    margin-left: 50px;
+    margin-right: 50px;
+}
