@@ -1,0 +1,1 @@
+[{"model": "vaga.PerfilProfissional", "pk": 1, "fields": {"contratacao": "Júnior", "descricao": "s"}}, {"model": "vaga.PerfilProfissional", "pk": 2, "fields": {"contratacao": "Pleno", "descricao": "s"}}, {"model": "vaga.PerfilProfissional", "pk": 3, "fields": {"contratacao": "Sênior", "descricao": "s"}}]
