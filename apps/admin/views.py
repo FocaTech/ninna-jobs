@@ -6,7 +6,7 @@ from vaga.models import Vagas
 def interface(request):
     todos_os_can = Users.objects.filter(funcao='CAN')
     todas_as_emp = Users.objects.filter(funcao='EMP')
-    # vagas_ativas = Vagas.objects.filter(status=True)
+    vagas_ativas = Vagas.objects.filter(status=True)
     print(f"numero total de candidatos == {todos_os_can}")
     print(f"numero total de empresas == {todas_as_emp}")
     print(f"numero total de candidatos == {len(todos_os_can)}")
@@ -15,7 +15,7 @@ def interface(request):
     dados = {
         'numero_de_can' : len(todos_os_can),
         'numero_de_emp' : len(todas_as_emp),
-        # 'numero_de_vagas_ativas' : vagas_ativas,
+        'numero_de_vagas_ativas' : len(vagas_ativas),
     }
 
     return render(request, 'admin.html', dados)
