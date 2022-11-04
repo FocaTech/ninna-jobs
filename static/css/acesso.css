@@ -7,7 +7,7 @@
     background: #f6f6f6;
     width: 750px;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 180px;
     border-radius: 20px;
     display: flex;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -32,7 +32,7 @@
 .botoes{
     display: flex;
 }
-.botoes button{
+.botoes a{
     margin-left: 50px;
     margin-right: 50px;
 }
