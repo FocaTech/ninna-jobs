@@ -19,6 +19,7 @@ class Vagas(models.Model):
     beneficios = models.TextField(max_length=500)
     tipo_trabalho = models.CharField(max_length=80)
     data_vaga = models.DateTimeField(default=datetime.now, blank=True)
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nome_vaga
