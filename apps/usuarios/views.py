@@ -122,11 +122,11 @@ def editando_dados_pessoais(request, id_dados):
         d.telefone = request.POST['telefone']
         d.sobre_candidato = request.POST['sobre_candidato']
         cpf = request.POST['cpf_do_candidato']
-        cep = request.POST['cep']
         cpf = int(cpf)
-        cep = int(cep)
+        ceps = request.POST['cep']
+        ceps = int(ceps)
         d.cpf_do_candidato = cpf
-        d.cep = cep
+        d.cep = ceps
         d.save()
     return redirect('Dados_Pessoais')
 
@@ -185,7 +185,9 @@ def adicionar_experiencia(request):
         sobre_contrato = request.POST['sobre_contrato']
         data_contrato = request.POST['data_contrato']
         data_demissao = request.POST['data_demissao']
-        meu_emprego = request.POST['meu_emprego']
+        meu_emprego = request.POST.get('meu_emprego')
+        if meu_emprego == None:
+            meu_emprego = "Exonerado"
         informacoes5 = Experiência_Profissional.objects.create(user=usuario,empresa_onde_trabalhou=empresa,cargo_exercido=cargo,descricao_de_atividades=sobre_contrato,inicio_emprego=data_contrato,demissao=data_demissao,emprego_atual=meu_emprego)
         informacoes5.save()
     return redirect('Certificados_conquistas')

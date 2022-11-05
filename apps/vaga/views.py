@@ -5,6 +5,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.core.paginator import Paginator
+from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas
 
 def select(request):
     '''cria e salva vagas'''
@@ -185,7 +186,22 @@ def dashboard(request):
     return render(request, 'dashboard.html', dados)
 
 def perfil(request):
-    return render(request, 'perfil.html')
+    id = request.user.id
+    CC = Certificados_Conquistas.objects.order_by().filter(user=id)
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    EP = Experiência_Profissional.objects.order_by().filter(user=id)
+    FA = Formacao_Academica.objects.order_by().filter(user=id)
+    II = Informações_Iniciais.objects.order_by().filter(user=id)
+    I = Idiomas.objects.order_by().filter(user=id)
+    dados = {
+        'Certificados':CC,
+        'Dados':DP,
+        'Experiencia':EP,
+        'Formacao':FA,
+        'Informacoes':II,
+        'Idiomas':I
+    }
+    return render(request, 'perfil.html',dados)
 
 def perfilempresa(request):
     return render(request, 'perfilEmpresa.html')

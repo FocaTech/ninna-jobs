@@ -49,10 +49,10 @@ class Dados_Pessoais(models.Model):
     cpf_do_candidato = models.BigIntegerField()
     data_nascimento = models.DateField()
     genero = models.CharField(max_length=9)
-    telefone = models.IntegerField()
-    cep = models.IntegerField()
-    estado = models.CharField(max_length=60, default='Acre')
-    cidade = models.CharField(max_length=60, default='Acrelândia')
+    telefone = models.BigIntegerField()
+    cep = models.BigIntegerField()
+    estado = models.CharField(max_length=60)
+    cidade = models.CharField(max_length=60)
     sobre_candidato = models.TextField(max_length=400, blank=True,null=True)
     def __str__(self):
         return self.nome_do_candidato
