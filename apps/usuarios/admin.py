@@ -23,11 +23,3 @@ class interesse(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(Interesses, interesse)
-
-class informaçoes(admin.ModelAdmin):
-    list_display = ('id', 'curriculo','salario_pretendido')
-    list_display_links = ('id', 'curriculo')
-    search_fields = ('id',)
-    list_per_page = 10
-
-admin.site.register(Informações_Iniciais, informaçoes)
