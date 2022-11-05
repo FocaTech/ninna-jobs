@@ -10,14 +10,14 @@
         <div class="right-column">
         <div class="content">
             <div class="profile-box">
+            {% if Dados %}
             {% for dado in Dados %}
-            {% if not dado.imagem_perfil %}
-            <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
-            {% else %}
             <img src="{{ dado.imagem_perfil.url }}" alt="" class="sidebar-avatar">
-            {% endif %}
             <h2 class="profile-name">{{ dado.nome_do_candidato }}</h2>
             {% endfor %}
+            {% else %}
+            <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
+            {% endif %}
             <div class="redesocial"><a class="linklinkedin" href="#"><i class="bi bi-linkedin m-2 azul"></a></i><a class="linkwapp" href="#"><i class="bi bi-whatsapp m-2"></i></a><a href="#"><i class="bi bi-envelope"></i></a></div>
             <div class="div-enviar-mensagem">
                 <button type="button" class="btn bt-enviar btn-outline-primary"> <i class="bi bi-send aviao"></i> <p class="msg-btn-enviar">Enviar mensagem</p></button>
