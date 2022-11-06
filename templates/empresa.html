@@ -78,6 +78,7 @@
                             Detalhes
                           </button>
                           <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
+                          <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Arquivar Vaga</a>
                           </div>
                           {% include 'partials/modal-vaga.html' %}
                       </div>
