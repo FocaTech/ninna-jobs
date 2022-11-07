@@ -12,6 +12,7 @@ urlpatterns = [
     path('vagas', views.vagas, name='vagas'),
     path('salvar_vaga/<int:pk_vaga>/', views.salvar_vaga, name='salvar_vaga'),
     path('candidatar_a_vaga/<int:pk_vagas>/', views.candidatar_a_vaga, name='candidatar_a_vaga'),
+    path('arquivar_vaga/<int:pk_vaga>', views.arquivar_vaga, name='arquivar_vaga'),
     path('tela_de_vagas_salvas', views.tela_de_vagas_salvas, name='tela_de_vagas_salvas'),
     path('talentos', views.talentos, name='talentos'),
     path('buscar', views.busca_vaga, name='buscar'),#busca de todas as vagas

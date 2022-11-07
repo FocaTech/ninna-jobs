@@ -274,6 +274,29 @@ def candidatar_a_vaga(request, pk_vagas):
         messages.success(request, f"Candidatado em '{id_vaga.nome_vaga}'")
         return redirect('index')
 
+
+def arquivar_vaga(request, pk_vaga):
+
+    print(pk_vaga)
+    # print(pk_vaga)
+    # talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
+    # print(f'talentos candidatados {talentos_candidatados}')
+
+    # lista_de_talentos = []
+    # for obj_vaga_candidatada in talentos_candidatados:
+    #     obj_talento = obj_vaga_candidatada.id_cadidato
+    #     print(f'objeto {obj_talento}')
+    #     print(f'id do talento{obj_talento.id}')
+    #     lista_de_talentos.append(obj_talento)
+
+
+    # dados = {
+    #     'lista_de_talentos' : lista_de_talentos
+    # }
+
+    # return render(request, 'listar-talentos_candidatados.html', dados)
+    return render(request, 'empresa.html')
+
 def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''
     if request.user.is_authenticated:
