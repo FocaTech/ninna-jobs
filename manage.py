@@ -20,4 +20,12 @@ def main():
 
 if __name__ == '__main__':
     main()
-#python manage.py runserver
+
+# ajudar o front
+# python manage.py runserver
+# python manage.py loaddata city
+# python manage.py loaddata TipoTrabalho
+# python manage.py loaddata PerfilProfissional
+# python manage.py loaddata TipoContratacao
+# pip install -r requirements.txt
+# .\venv\Scripts\activate
