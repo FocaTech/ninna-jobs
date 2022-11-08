@@ -133,7 +133,7 @@ def deleta_vaga(request, pk_vaga):
 def index(request):
     if request.user.is_authenticated:
         # globals()[request] = request
-        vagas = Vagas.objects.get_queryset().order_by('id')
+        vagas = Vagas.objects.get_queryset().order_by('id').filter(status=True)
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
         id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
         lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
