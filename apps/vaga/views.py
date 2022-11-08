@@ -41,18 +41,12 @@ def select(request):
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
-        return redirect('minhas-vagas')
+        # return redirect('minhas-vagas')
+        return redirect('empresa')
+
     else:
         return render(request, 'empresa.html', dado)
 
-# def empresa(request):
-#     vagas = Vagas.objects.all()
-
-#     dados = {
-#         'vagas' : vagas
-#     }
-
-#     return render(request, 'empresa.html', dados)
 
 '''
 def vagas(request):
@@ -283,7 +277,7 @@ def arquivar_vaga(request, pk_vaga):
         vaga_para_ser_arquivada.status = True
     vaga_para_ser_arquivada.save()
     print(vaga_para_ser_arquivada.status)
-    return render(request, 'empresa.html')
+    return redirect('empresa')
 
 def minhas_vagas(request):
     '''vagas cadastradas especificas da empresa'''

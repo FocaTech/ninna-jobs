@@ -223,14 +223,15 @@ def empresa(request, *args, **kwargs):
     empresa_atual = get_object_or_404(Users, pk=request.user.id)
     print(empresa_atual)
 
-    vagas = Vagas.objects.filter(nome_empresa=empresa_atual)
-    print(vagas)
+    vagas = Vagas.objects.filter(nome_empresa=empresa_atual,status=True)
+    vagas_arquivadas = Vagas.objects.filter(status=False)
 
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
-        'vagas' : vagas
+        'vagas' : vagas,
+        'vagas_arquivadas' : vagas_arquivadas,
     }
     return render(request, 'empresa.html', dado)
 
