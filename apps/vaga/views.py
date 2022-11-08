@@ -274,7 +274,6 @@ def candidatar_a_vaga(request, pk_vagas):
         messages.success(request, f"Candidatado em '{id_vaga.nome_vaga}'")
         return redirect('index')
 
-
 def arquivar_vaga(request, pk_vaga):
 
     print(pk_vaga)
@@ -362,7 +361,7 @@ def busca_vaga(request):
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas
-    caracters = "!@#$%¨&*()_-+=§´`{}[]ª~^º;:.,><?/°\|"
+    caracters = "!@#$%¨&*()_-+=§´`{}[]ª~^º;:.,><?/°\| "
     for nomes in lista_nomes:
         for nome in nomes:
             nome = str(nome)
