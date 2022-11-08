@@ -3,7 +3,7 @@ from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idio
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
-from vaga.models import Vagas, VagasCandidatadas
+from vaga.models import Vagas, VagasCandidatadas, VagasSalvas
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -216,6 +216,7 @@ def salvando_perfil(request):
 
 @has_role_decorator('empresa')
 def empresa(request, *args, **kwargs):
+    '''dash de empresa'''
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
@@ -235,13 +236,27 @@ def empresa(request, *args, **kwargs):
     }
     return render(request, 'empresa.html', dado)
 
-'''
-FUNCAO
-recebe o id da vaga
-vaga_can = pega na tab VAG_CAN todos os objetos que correspondem ao id
-users_can = usando os ids dos candidatos, pegar os obj can da tabela
-retornar users_can em dict
-'''
+@has_role_decorator('candidato')
+def dashboard(request):
+    '''dash de candidato'''
+    vagas = Vagas.objects.all()
+    id_cadidato = get_object_or_404(Users, pk=request.user.id)
+
+    id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
+    for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
+        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+
+    id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+    lista_de_vagas_candidatadas_do_user = []
+    for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
+    dados = {
+        'vagas' : vagas,
+        'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
+        'vagas_salvas' : lista_de_vagas_salvas_do_user,
+    }
+    return render(request, 'dashboard.html', dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
     print(pk_vaga)

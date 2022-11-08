@@ -158,27 +158,6 @@ def index(request):
         }
     return render(request, 'index.html', dados)
 
-@has_role_decorator('candidato')
-def dashboard(request):
-    vagas = Vagas.objects.all()
-    id_cadidato = get_object_or_404(Users, pk=request.user.id)
-
-    id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
-    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
-    for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
-        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
-
-    id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
-    lista_de_vagas_candidatadas_do_user = []
-    for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
-        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
-    dados = {
-        'vagas' : vagas,
-        'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
-        'vagas_salvas' : lista_de_vagas_salvas_do_user,
-    }
-    return render(request, 'dashboard.html', dados)
-
 def perfil(request):
     id = request.user.id
     CC = Certificados_Conquistas.objects.order_by().filter(user=id)
@@ -235,24 +214,12 @@ def salvar_vaga(request, pk_vaga):
             vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
             vaga_salva_desfavoritar.delete()
             messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-            # LABORATORIO
-            # url = reverse('index',)
-            # print(url)
-            # print(request)
-            # # <WSGIRequest: GET '/salvar_vaga/11/'>
-            # # url = request
-            # # print(type(url))
-            # if request == '/salvar_vaga/11/':
-            #     print('são iguais')
-            # else:
-            #     print('não são iguais')
-
             return redirect("dashboard")
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
         messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-        return redirect('vagas')
+        return redirect("dashboard")
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
