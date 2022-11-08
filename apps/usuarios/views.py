@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
-from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
-from vaga.models import Vagas, VagasCandidatadas, VagasSalvas
+# from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
+from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
+from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -251,10 +252,17 @@ def dashboard(request):
     lista_de_vagas_candidatadas_do_user = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
+
+
+
+    vagas_arquivadas = listar_vagas_arquivadas()
+    print(vagas_arquivadas)
+
     dados = {
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
+        'vagas_arquivadas' : vagas_arquivadas,
     }
     return render(request, 'dashboard.html', dados)
 

@@ -327,7 +327,7 @@ def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     return lista_salva
 
 def listar_vagas_salvas_e_candidatadas(request):
-    '''vai gerar duas listas, estatas que estao logo aqui em baixo, os nomes são auto-explicativos'''
+    '''vai gerar duas listas, estas que estao logo aqui em baixo, os nomes são auto-explicativos'''
     global lista_de_vagas_candidatadas_do_user
     global lista_de_vagas_salvas_do_user
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
@@ -341,6 +341,10 @@ def listar_vagas_salvas_e_candidatadas(request):
     lista_de_vagas_candidatadas_do_user = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
+
+def listar_vagas_arquivadas():
+    lista_de_vagas_arquivadas = Vagas.objects.filter(status=False)
+    return lista_de_vagas_arquivadas
 
 def paginar(vagas, request):
     if len(vagas) > 0:
