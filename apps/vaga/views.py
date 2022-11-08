@@ -275,25 +275,14 @@ def candidatar_a_vaga(request, pk_vagas):
         return redirect('index')
 
 def arquivar_vaga(request, pk_vaga):
-
     print(pk_vaga)
-    # print(pk_vaga)
-    # talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
-    # print(f'talentos candidatados {talentos_candidatados}')
-
-    # lista_de_talentos = []
-    # for obj_vaga_candidatada in talentos_candidatados:
-    #     obj_talento = obj_vaga_candidatada.id_cadidato
-    #     print(f'objeto {obj_talento}')
-    #     print(f'id do talento{obj_talento.id}')
-    #     lista_de_talentos.append(obj_talento)
-
-
-    # dados = {
-    #     'lista_de_talentos' : lista_de_talentos
-    # }
-
-    # return render(request, 'listar-talentos_candidatados.html', dados)
+    vaga_para_ser_arquivada = get_object_or_404(Vagas, pk=pk_vaga)
+    if vaga_para_ser_arquivada.status == True:
+        vaga_para_ser_arquivada.status = False
+    else:
+        vaga_para_ser_arquivada.status = True
+    vaga_para_ser_arquivada.save()
+    print(vaga_para_ser_arquivada.status)
     return render(request, 'empresa.html')
 
 def minhas_vagas(request):
