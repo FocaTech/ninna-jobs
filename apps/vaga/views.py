@@ -210,10 +210,23 @@ def talentos(request):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
+
+    CC = Certificados_Conquistas.objects.order_by().filter(user=id)
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    EP = Experiência_Profissional.objects.order_by().filter(user=id)
+    FA = Formacao_Academica.objects.order_by().filter(user=id)
+    II = Informações_Iniciais.objects.order_by().filter(user=id)
+    I = Idiomas.objects.order_by().filter(user=id)
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
+        'Certificados':CC,
+        'Dados':DP,
+        'Experiencia':EP,
+        'Formacao':FA,
+        'Informacoes':II,
+        'Idiomas':I
     }
     return render(request, 'bancodetalentos.html', dado)
 
