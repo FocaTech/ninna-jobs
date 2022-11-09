@@ -1,0 +1,17 @@
+{% load static %}
+<div class="left-column">
+  <div class="sidebar">
+    <div class="sidebar-user mb-3">
+      <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
+      <h2 class="sidebar-name h5 text-center">{{ user.username }}</h2>
+    </div>
+    <div class="sidebar-content">
+      <ul class="sidebar-menu">
+        <li><a class="btn btn-primary" href="{% url 'perfil' %}" role="button">Perfil</a></li>
+        <!-- <li><a class="btn btn-primary" href="#" role="button">Candidaturas feitas</a></li>
+        <li><a class="btn btn-primary" href="salvas.html" role="button">Vagas salvas</a></li> -->
+        <li><a class="btn btn-primary" href="#" role="button">Empresas Favoritadas</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
