@@ -87,8 +87,45 @@
                 {% endif %}
               </div>
             </section>
-            <section id="favoritadas"></section>
-            <section id="arquivadas"></section>
+            <section id="favoritadas">
+
+            </section>
+            <section id="arquivadas">
+              <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
+                {% if vagas_arquivadas %}
+                  {% for vaga in vagas_arquivadas %}
+                    <div class="col">
+                      <div class="card h-100 vaga">
+                        <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
+                        <div class="card-body d-flex flex-column">
+                          <h5 class="card-title">{{ vaga.nome_vaga }}</h5>
+                          <ul class="hide-bullets">
+                            <li>
+                              <ul class="inline-list">
+                                <li><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
+                              </ul>
+                            </li>
+                            <li>
+                              <ul class="inline-list">
+                                <li><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
+                                <li><i class="bi bi-person-workspace" title="Tipo de trabalho"></i> {{ vaga.tipo_trabalho }} </li>
+                              </ul>
+                            </li>
+                          </ul>
+                          <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
+                            Detalhes
+                          </button>
+                          <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
+                          <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Desarquivar Vaga</a>
+                          </div>
+                          {% include 'partials/modal-vaga.html' %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </section>
           </div>
         </div>
         {% comment %} {% include 'partials/lista-antiga--.html' %} {% endcomment %}
