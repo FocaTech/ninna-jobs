@@ -47,7 +47,6 @@ def select(request):
     else:
         return render(request, 'empresa.html', dado)
 
-
 '''
 def vagas(request):
     contratacoes = TipoContratacao.objects.all()
