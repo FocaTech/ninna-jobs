@@ -184,14 +184,14 @@ def talentos(request):
     perfis = PerfilProfissional.objects.all()
     d = Dados_Pessoais.objects.all()
     i = Informações_Iniciais.objects.all()
-    c = Formacao_Academica.objects.all()
+    f = Formacao_Academica.objects.all()
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
-        'teste':d,
-        'teste1':i,
-        'teste2':c
+        'dados':d,
+        'info':i,
+        'form':f
     }
     return render(request, 'bancodetalentos.html', dado)
 

@@ -1,6 +1,7 @@
 from email.policy import default
 from django.db import models
 from login_cadastro.models import Users
+# from datetime import datetime
 
 class Empresa(models.Model):
     #user= models.OneToOneField(Users, on_delete=models.CASCADE)
@@ -54,6 +55,7 @@ class Dados_Pessoais(models.Model):
     estado = models.CharField(max_length=60)
     cidade = models.CharField(max_length=60)
     sobre_candidato = models.TextField(max_length=400, blank=True,null=True)
+    # data_dados = models.DateTimeField(default=datetime.now, blank=True)
     def __str__(self):
         return self.nome_do_candidato
 
