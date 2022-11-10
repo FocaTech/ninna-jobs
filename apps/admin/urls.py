@@ -10,5 +10,5 @@ urlpatterns = [
     path('relatorio', views.relatorio, name='relatorio'),
     path('detalhes-vagas', views.detalhes_vagas, name='detalhes_vagas'),
     path('acoes-vagas', views.acoes_vaga, name='acoes_vagas'),
-
+    path('api-charts', views.interface_charts, name='api-charts'),
 ]
