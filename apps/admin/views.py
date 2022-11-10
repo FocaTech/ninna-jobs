@@ -18,6 +18,7 @@ def interface(request):
         'numero_de_vagas_ativas' : len(vagas_ativas),
     }
 
+    dados["data"] = [dados["numero_de_can"], dados["numero_de_emp"]]
     return render(request, 'admin.html', dados)
 
 def acoes_admin(request):
