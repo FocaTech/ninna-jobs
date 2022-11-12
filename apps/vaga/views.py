@@ -182,7 +182,7 @@ def talentos(request):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
-    d = Dados_Pessoais.objects.all()
+    d = Dados_Pessoais.objects.order_by('data_dados')
     i = Informações_Iniciais.objects.all()
     f = Formacao_Academica.objects.all()
     dado = {

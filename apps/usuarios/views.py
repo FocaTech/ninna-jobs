@@ -5,6 +5,8 @@ from rolepermissions.decorators import has_role_decorator
 # from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
+from django.contrib import auth, messages
+
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -137,15 +139,20 @@ def deleta_formacao(request, id_formacao):
     return redirect('Dados_Pessoais')
 
 def adicionar_formacao(request):
-    if request.method == 'POST':
-        usuario = get_object_or_404(Users, pk=request.user.id)
-        instituicao_ensino = request.POST['instituicao_ensino']
-        formacao = request.POST['formacao']
-        curso = request.POST['curso']
-        data_inicio = request.POST['data_inicio']
-        data_termino = request.POST['data_termino']
-        informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
-        informacoes3.save()
+    id_user = request.user.id
+    contando = Formacao_Academica.objects.order_by().filter(user=id_user)
+    if len(contando) >= 5:
+        messages.error(request, 'No Maximo 5 fomaçoes')
+    else:
+        if request.method == 'POST':
+            usuario = get_object_or_404(Users, pk=id_user)
+            instituicao_ensino = request.POST['instituicao_ensino']
+            formacao = request.POST['formacao']
+            curso = request.POST['curso']
+            data_inicio = request.POST['data_inicio']
+            data_termino = request.POST['data_termino']
+            informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
+            informacoes3.save()
     return redirect('Dados_Pessoais')
 
 def Formacao_academica(request):
@@ -159,13 +166,18 @@ def deleta_certificado(request, id_certificado):
     return redirect('Formacao_academica')
 
 def adicionar_certificado(request):
-    if request.method == 'POST':
-        usuario = get_object_or_404(Users, pk=request.user.id)
-        titulo = request.POST['titulo']
-        tipo = request.POST['tipo']
-        sobre_conquista = request.POST['sobre_conquista']
-        informacoes4 = Certificados_Conquistas.objects.create(user=usuario,titulo=titulo,tipo_conquista=tipo,descricao_conquista=sobre_conquista)
-        informacoes4.save()
+    id_user = request.user.id
+    contando = Certificados_Conquistas.objects.order_by().filter(user=id_user)
+    if len(contando) >= 5:
+        messages.error(request, 'No Maximo 5 Certificados ou Conquistas')
+    else:
+        if request.method == 'POST':
+            usuario = get_object_or_404(Users, pk=request.user.id)
+            titulo = request.POST['titulo']
+            tipo = request.POST['tipo']
+            sobre_conquista = request.POST['sobre_conquista']
+            informacoes4 = Certificados_Conquistas.objects.create(user=usuario,titulo=titulo,tipo_conquista=tipo,descricao_conquista=sobre_conquista)
+            informacoes4.save()
     return redirect('Formacao_academica')
 
 def Certificados_conquistas(request):
@@ -179,18 +191,23 @@ def deleta_experiencia(request, id_experiencia):
     return redirect('Certificados_conquistas')
 
 def adicionar_experiencia(request):
-    if request.method == 'POST':
-        usuario = get_object_or_404(Users, pk=request.user.id)
-        empresa = request.POST['empresa']
-        cargo = request.POST['cargo']
-        sobre_contrato = request.POST['sobre_contrato']
-        data_contrato = request.POST['data_contrato']
-        data_demissao = request.POST['data_demissao']
-        meu_emprego = request.POST.get('meu_emprego')
-        if meu_emprego == None:
-            meu_emprego = "Exonerado"
-        informacoes5 = Experiência_Profissional.objects.create(user=usuario,empresa_onde_trabalhou=empresa,cargo_exercido=cargo,descricao_de_atividades=sobre_contrato,inicio_emprego=data_contrato,demissao=data_demissao,emprego_atual=meu_emprego)
-        informacoes5.save()
+    id_user = request.user.id
+    contando = Experiência_Profissional.objects.order_by().filter(user=id_user)
+    if len(contando) >= 5:
+        messages.error(request, 'No Maximo 5 Experiencias')
+    else:
+        if request.method == 'POST':
+            usuario = get_object_or_404(Users, pk=request.user.id)
+            empresa = request.POST['empresa']
+            cargo = request.POST['cargo']
+            sobre_contrato = request.POST['sobre_contrato']
+            data_contrato = request.POST['data_contrato']
+            data_demissao = request.POST['data_demissao']
+            meu_emprego = request.POST.get('meu_emprego')
+            if meu_emprego == None:
+                meu_emprego = "Exonerado"
+            informacoes5 = Experiência_Profissional.objects.create(user=usuario,empresa_onde_trabalhou=empresa,cargo_exercido=cargo,descricao_de_atividades=sobre_contrato,inicio_emprego=data_contrato,demissao=data_demissao,emprego_atual=meu_emprego)
+            informacoes5.save()
     return redirect('Certificados_conquistas')
 
 def Experiencia_profissional(request):
@@ -204,12 +221,17 @@ def deleta_idioma(requst, id_idioma):
     return redirect('Experiencia_profissional')
 
 def adicionar_idioma(request):
-    if request.method == 'POST':
-        usuario = get_object_or_404(Users, pk=request.user.id)
-        idioma = request.POST['idioma']
-        nivel = request.POST['nivel']
-        informacoes6 = Idiomas.objects.create(user=usuario, idioma=idioma,nivel_idioma=nivel)
-        informacoes6.save()
+    id_user = request.user.id
+    contando = Certificados_Conquistas.objects.order_by().filter(user=id_user)
+    if len(contando) >= 5:
+        messages.error(request, 'No Maximo 5 Idiomas')
+    else:
+        if request.method == 'POST':
+            usuario = get_object_or_404(Users, pk=request.user.id)
+            idioma = request.POST['idioma']
+            nivel = request.POST['nivel']
+            informacoes6 = Idiomas.objects.create(user=usuario, idioma=idioma,nivel_idioma=nivel)
+            informacoes6.save()
     return redirect('Experiencia_profissional')
 
 def salvando_perfil(request):
