@@ -17,6 +17,7 @@
             {% endfor %}
             {% else %}
             <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
+            <h2 class="profile-name">{{ user.username }}</h2>
             {% endif %}
             <div class="redesocial"><a class="linklinkedin" href="#"><i class="bi bi-linkedin m-2 azul"></a></i><a class="linkwapp" href="#"><i class="bi bi-whatsapp m-2"></i></a><a href="#"><i class="bi bi-envelope"></i></a></div>
             <div class="div-enviar-mensagem">
