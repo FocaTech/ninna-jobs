@@ -145,7 +145,10 @@ def index(request):
 
         vagas = paginar(vagas, request)
         ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
+        id = request.user.id
+        DP = Dados_Pessoais.objects.order_by().filter(user=id)
         dados = {
+            'Dados':DP,
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
@@ -198,7 +201,10 @@ def talentos(request):
 def vagas(request):
     vagas = Vagas.objects.order_by('-data_vaga').filter()
     vagas = paginar(vagas, request)
+    id = request.user.id
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
     dados = {
+        'Dados':DP,
         'vagas' : vagas
     }
     return render(request, 'vagas.html', dados)

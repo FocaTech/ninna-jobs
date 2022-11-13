@@ -35,7 +35,10 @@ def cadastro_candidato_2(request):
     interesses = Interesses.objects.all()
     id = request.user.id
     informacoes = Informações_Iniciais.objects.order_by().filter(user=id)
+    id = request.user.id
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
     dados = {
+            'Dados':DP,
             'interesses':interesses,
             'informacoes':informacoes
         }
@@ -110,7 +113,11 @@ def Dados_pessoais(request):
         informacoes2.save()
     id = request.user.id
     formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=id)
-    dados = {'formacoes':formacoes}
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    dados = {
+        'Dados':DP,
+        'formacoes':formacoes
+    }
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
 def editando_dados_pessoais(request, id_dados):
@@ -157,7 +164,12 @@ def adicionar_formacao(request):
 
 def Formacao_academica(request):
     certificados = Certificados_Conquistas.objects.all()
-    dados = {'certificados':certificados}
+    id = request.user.id
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    dados = {
+        'Dados':DP,
+        'certificados':certificados
+    }
     return render(request, 'partials/Usuarios/sessaoQuatro.html', dados)
 
 def deleta_certificado(request, id_certificado):
@@ -182,7 +194,12 @@ def adicionar_certificado(request):
 
 def Certificados_conquistas(request):
     experiencias = Experiência_Profissional.objects.all()
-    dados = {'experiencias':experiencias}
+    id = request.user.id
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    dados = {
+        'Dados':DP,
+        'experiencias':experiencias
+    }
     return render(request, 'partials/Usuarios/sessaoCinco.html', dados)
 
 def deleta_experiencia(request, id_experiencia):
@@ -212,7 +229,12 @@ def adicionar_experiencia(request):
 
 def Experiencia_profissional(request):
     idioma = Idiomas.objects.all()
-    dados = {'idiomas':idioma}
+    id = request.user.id
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    dados = {
+        'Dados':DP,
+        'idiomas':idioma
+        }
     return render(request, 'partials/Usuarios/sessaoSeis.html',dados)
 
 def deleta_idioma(requst, id_idioma):
@@ -284,8 +306,10 @@ def dashboard(request):
             if vagas_candidatadass.status == False:
                 lista_de_vagas_arquivas_do_user.append(vagas_candidatadass)
 
-
+    id = request.user.id
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
     dados = {
+        'Dados':DP,
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
