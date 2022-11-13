@@ -15,11 +15,6 @@
     <div class="w-75 m-auto sSeis">
         {% if not informacoes %}
         <form action="{% url 'Informacoes_iniciais' %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
-        {% else %}
-        {% for infor in informacoes %}
-        <form action="{% url 'editando_informacoes_iniciais' infor.id %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
-        {% endfor %}
-        {% endif %}
             {% csrf_token %}
             <section class="step py-5 border-bottom" id="step_1">
                 <h2>Informações Iniciais</h2>
@@ -92,14 +87,109 @@
                         <label  for="midia" class="form-label">Outra midia social</label>
                         <input  type="text" class="form-control" id="midiaSocial" placeholder="Instagram, facebook, twitter" name="rede_social" >
                     </div>
-                    <div class="p-3">
-                        <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
+        {% elif informacoes %}
+        <form action="{% url 'editando_informacoes_iniciais' %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
+            {% csrf_token %}
+            <section class="step py-5 border-bottom" id="step_1">
+                <h2>Informações Iniciais</h2>
+                <div class="col-md-12 py-2">
+                    <label for="curriculo" class="form-label">Seu curriculo em pdf - {{informacoes.curriculo}}</label>
+                    <input id="curriculo" name="curriculo" type="file" class="form-control form-itens" aria-label="curriculo" accept="application/pdf">
+                    <div class="valid-feedback">
+                        Tudo ok!
+                    </div>
+                    <div class="invalid-feedback">
+                        Campo obrigatorio
                     </div>
                 </div>
-            </section>
-            <a href="{% url 'Informacoes_iniciais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
-            <a href="{% url 'dashboard' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link Ou botão?-->
-        </form>
-    </div>
+                <div class="tipoDeContrato py-2">
+                    <p class="text-sm-start">O tipo de contrato que está disposto a aceitar.</p>
+                    <div class="row py-2">
+                        <div class="form-check input-group col">
+                            {% if informacoes.estagio == "estagio" %}
+                            <input id="estagio" class="form-check-input aoMenosUm " type="checkbox" value="estagio" name="estagio" checked>
+                            <label class="form-check-label mx-2" for="estagio" checked>Estágio</label>
+                            {% else %}
+                            <input id="estagio" class="form-check-input aoMenosUm " type="checkbox" value="estagio" name="estagio">
+                            <label class="form-check-label mx-2" for="estagio">Estágio</label>
+                            {% endif %}
+                        </div>
+                        <div class="form-check input-group col">
+                            {% if informacoes.pj == "pj" %}
+                            <input id="pj" class="form-check-input aoMenosUm" type="checkbox" value="pj" name="tipo_pj" checked>
+                            <label class="form-check-label mx-2" for="pj">PJ</label>
+                            {% else %}
+                            <input id="pj" class="form-check-input aoMenosUm" type="checkbox" value="pj" name="tipo_pj">
+                            <label class="form-check-label mx-2" for="pj">PJ</label>
+                            {% endif %}
+                        </div>
+                        <div class="form-check input-group col">
+                            {% if informacoes.clt == "clt" %}
+                            <input id="clt" class="form-check-input aoMenosUm" type="checkbox" value="clt" name="tipo_clt" checked>
+                            <label class="form-check-label mx-2" for="clt">CLT</label>
+                            {% else %}
+                            <input id="clt" class="form-check-input aoMenosUm" type="checkbox" value="clt" name="tipo_clt">
+                            <label class="form-check-label mx-2" for="clt">CLT</label>
+                            {% endif %}
+                        </div>
+                        <div class="form-check input-group col">
+                            {% if informacoes.flex == "flex" %}
+                            <input id="flex" class="form-check-input aoMenosUm" type="checkbox" value="flex" name="tipo_flex" checked>
+                            <label class="form-check-label mx-2" for="flex">Flex</label>
+                            {% else %}
+                            <input id="flex" class="form-check-input aoMenosUm" type="checkbox" value="flex" name="tipo_flex">
+                            <label class="form-check-label mx-2" for="flex">Flex</label>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo obrigatorio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-md-6">
+                        <label  for="salario" class="form-label">Salario pretendido</label>
+                        <input class="form-control" type="number" name="salario_pretendido" min="100" max="10000000" value="{{informacoes.salario_pretendido}}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="areadeatuacao" class="form-label">Area de interesse</label>
+                        <select class="form-control form-itens" id="areadeatuacao" name="area_interesse" required>
+                            <option value="{{informacoes.areas_interesse}}" selected>{{informacoes.areas_interesse}}</option>
+                            {% for interesse in interesses %}
+                                <option value="{{interesse}}">{{interesse}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                        <div class="invalid-feedback">
+                            Campo obrigatorio
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-md-6">
+                        <label  for="linkedin" class="form-label">linkedin</label>
+                        <input  type="text" class="form-control" placeholder="https://www.linkedin.com/in/alice-costa-89a11148/" value='{{informacoes.linkedin}}' name="linkedin">
+                    </div>
+                    <div class="col-md-6">
+                        <label  for="midia" class="form-label">Outra midia social</label>
+                        <input  type="text" class="form-control" id="midiaSocial" placeholder="Instagram, facebook, twitter" value='{{informacoes.rede_social}}' name="rede_social" >
+                    </div>
+        {% endif %}
+                <div class="p-3">
+                    <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
+                </div>
+            </div>
+        </section>
+        <a href="{% url 'Informacoes_iniciais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
+        <a href="{% url 'dashboard' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link Ou botão?-->
+    </form>
+</div>
 </main>
 {% endblock %}

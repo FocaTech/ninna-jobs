@@ -32,10 +32,10 @@ def registro(request):
         return render(request, 'formempresa.html')
 
 def cadastro_candidato_2(request):
+    id = request.user.id
     interesses = Interesses.objects.all()
-    id = request.user.id
-    informacoes = Informações_Iniciais.objects.order_by().filter(user=id)
-    id = request.user.id
+    informacoes = get_object_or_404(Informações_Iniciais, user=id)
+    informacoes.salario_pretendido = int(informacoes.salario_pretendido)
     DP = Dados_Pessoais.objects.order_by().filter(user=id)
     dados = {
             'Dados':DP,
@@ -71,18 +71,22 @@ def Informacoes_iniciais(request):
     estado = sorted(estado)
     id = request.user.id
     dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=id)
+    dados_can = get_object_or_404(Dados_Pessoais, user=id)
     dados = {
         'estados':estado,
         'cidades':cidades,
-        'Dados':dados_pessoais
+        'Dados':dados_pessoais,
+        'dados':dados_can
     }
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
 
-def editando_informacoes_iniciais(request, id_infor):
+def editando_informacoes_iniciais(request):
     if request.method == 'POST':
-        i = Informações_Iniciais.objects.get(pk=id_infor)
-        i.curriculo = request.FILES['curriculo']
+        id = request.user.id
+        i = Informações_Iniciais.objects.get(user=id)
+        if 'curriculo' in request.FILES:
+            i.curriculo = request.FILES['curriculo']
         i.estagio = request.POST.get('estagio', None)
         i.pj = request.POST.get('tipo_pj', None)
         i.clt = request.POST.get('tipo_clt', None)
@@ -120,12 +124,16 @@ def Dados_pessoais(request):
     }
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
-def editando_dados_pessoais(request, id_dados):
+def editando_dados_pessoais(request):
     if request.method == 'POST':
-        d = Dados_Pessoais.objects.get(pk=id_dados)
-        d.imagem_perfil = request.FILES['imagem_perfil']
+        d = Dados_Pessoais.objects.get(user=request.user.id)
+        if 'imagem_perfil' in request.FILES:
+            d.imagem_perfil = request.FILES['imagem_perfil']
         d.nome_do_candidato = request.POST['nome_do_candidato']
-        d.data_nascimento = request.POST['data_nascimento']
+        if request.POST['data_nascimento'] == "":
+            d.data_nascimento = d.data_nascimento
+        else:
+            d.data_nascimento = request.POST['data_nascimento']
         d.genero = request.POST['genero_candidato']
         d.estado = request.POST['estado']
         d.cidade = request.POST['cidade']
