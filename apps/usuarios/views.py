@@ -74,7 +74,7 @@ def Informacoes_iniciais(request):
     dados = {
         'estados':estado,
         'cidades':cidades,
-        'dados':dados_pessoais
+        'Dados':dados_pessoais
     }
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)

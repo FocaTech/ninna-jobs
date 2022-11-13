@@ -15,10 +15,10 @@
 <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
 <main>
     <div class="w-75 m-auto sDois" >
-        {% if not dados %}
+        {% if not Dados %}
         <form action="{% url 'Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" enctype="multipart/form-data" novalidate>
         {% else %}
-        {% for dado in dados %}
+        {% for dado in Dados %}
         <form action="{% url 'editando_Dados_Pessoais' dado.id %}" class="g-3 needs-validation position-relative" method="POST" enctype="multipart/form-data" id="formCand" novalidate>
         {% endfor %}
         {% endif %}
