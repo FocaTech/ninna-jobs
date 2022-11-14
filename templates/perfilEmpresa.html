@@ -28,7 +28,7 @@
       </ul>
     </div>
     <div class="bg-light w-75 position-relative m-auto p-5">
-      <img src="{% static 'img/placeholder.svg' %}" alt="" class="rounded-circle w-25 position-absolute top-0 start-50 translate-middle">
+      <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar avatar-empresa rounded-circle position-absolute top-0 start-50 translate-middle">
       <h2 class="text-center p-5 mt-3">Nome Da Empresa</h2>
       <div class="tabber p-4">
         <div class="tabber__tabs p-3">
@@ -36,7 +36,7 @@
           <button type="button" class="tabber__tab h4">Vagas</button>
         </div>
         <div class="tabber__content p-5">
-          <section id="Sobre" class="active px-5">
+          <section id="sobre" class="active px-5">
             <p class="h6 lh-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus magnam minima? Quo recusandae autem ea nobis accusamus! Ipsa dolore impedit alias! Dolores laudantium a sit at quia ea consequatur.
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus cum molestias perspiciatis inventore sapiente earum debitis aliquid tempore totam, quis quo! Optio ut obcaecati numquam ratione voluptas laborum nemo ad!
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae officiis facilis quis alias delectus iste quaerat rerum corporis. Veniam earum blanditiis tempora culpa commodi maiores nostrum? Cumque qui minus dicta.
@@ -47,7 +47,7 @@
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo ut quia corrupti nam? Ipsum, perferendis sunt facilis fugiat laboriosam recusandae nulla, qui laborum a beatae perspiciatis assumenda odit amet exercitationem.
             </p>
           </section>
-          <section id="Vagas" class="p-5">
+          <section id="vagas" class="p-5">
             <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
               {% if vagas %}
               {% for vaga in vagas %}

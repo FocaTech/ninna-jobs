@@ -476,3 +476,6 @@ def busca_talentos(request):
         'dados' : lista_talentos,
     }
     return render(request, 'bancodetalentos.html', dados)
+
+def empresas_favoritadas(request):
+    return render(request, 'empresasfavoritadas.html')
