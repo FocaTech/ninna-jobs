@@ -32,6 +32,7 @@ def registro(request):
         return render(request, 'formempresa.html')
 
 def cadastro_candidato_2(request):
+    '''começa todo o forms e traz os objetos ´para editar se existir'''
     id = request.user.id
     interesses = Interesses.objects.all()
     if len(Informações_Iniciais.objects.all()) > 0:
@@ -48,6 +49,7 @@ def cadastro_candidato_2(request):
     return render(request, 'formcandidato.html', dados)
 
 def Informacoes_iniciais(request):
+    '''pega o form candidato salva e ja lista o sessaoDois com alguns campos'''
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         curriculos = request.FILES['curriculo']
@@ -88,6 +90,7 @@ def Informacoes_iniciais(request):
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
 
 def editando_informacoes_iniciais(request):
+    '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
     if request.method == 'POST':
         id = request.user.id
         i = Informações_Iniciais.objects.get(user=id)
@@ -105,6 +108,7 @@ def editando_informacoes_iniciais(request):
     return redirect('Informacoes_iniciais')
 
 def Dados_pessoais(request):
+    '''Pega os dados do informacoes salva e dar alguns campos dos Formacoes'''
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         imagem_perfil = request.FILES['imagem_perfil']
@@ -131,6 +135,7 @@ def Dados_pessoais(request):
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
 def editando_dados_pessoais(request):
+    '''caso ele ja tenha preenchido ele vai ser direcionado aqui para editar'''
     if request.method == 'POST':
         d = Dados_Pessoais.objects.get(user=request.user.id)
         if 'imagem_perfil' in request.FILES:
@@ -155,11 +160,13 @@ def editando_dados_pessoais(request):
     return redirect('Dados_Pessoais')
 
 def deleta_formacao(request, id_formacao):
+    '''deleta as formacoes existentes'''
     nome = get_object_or_404(Formacao_Academica, pk=id_formacao)
     nome.delete()
     return redirect('Dados_Pessoais')
 
 def adicionar_formacao(request):
+    '''adiciona ate 5 formacoes e redireciona a mesma pagina'''
     id_user = request.user.id
     contando = Formacao_Academica.objects.order_by().filter(user=id_user)
     if len(contando) >= 5:
@@ -177,6 +184,7 @@ def adicionar_formacao(request):
     return redirect('Dados_Pessoais')
 
 def Formacao_academica(request):
+    '''renderiza a pagina e traz os certificados do candidato'''
     certificados = Certificados_Conquistas.objects.all()
     id = request.user.id
     DP = Dados_Pessoais.objects.order_by().filter(user=id)
@@ -187,11 +195,13 @@ def Formacao_academica(request):
     return render(request, 'partials/Usuarios/sessaoQuatro.html', dados)
 
 def deleta_certificado(request, id_certificado):
+    '''delta os certificados adicionados'''
     nome = get_object_or_404(Certificados_Conquistas, pk=id_certificado)
     nome.delete()
     return redirect('Formacao_academica')
 
 def adicionar_certificado(request):
+    '''adiciona ate 5 certificados e salva eles'''
     id_user = request.user.id
     contando = Certificados_Conquistas.objects.order_by().filter(user=id_user)
     if len(contando) >= 5:
@@ -207,6 +217,7 @@ def adicionar_certificado(request):
     return redirect('Formacao_academica')
 
 def Certificados_conquistas(request):
+    '''lista as experiencias'''
     experiencias = Experiência_Profissional.objects.all()
     id = request.user.id
     DP = Dados_Pessoais.objects.order_by().filter(user=id)
@@ -217,11 +228,13 @@ def Certificados_conquistas(request):
     return render(request, 'partials/Usuarios/sessaoCinco.html', dados)
 
 def deleta_experiencia(request, id_experiencia):
+    '''apaga os lugares onde o candidato ja Trabalhou ou trabalha'''
     nome = get_object_or_404(Experiência_Profissional, pk=id_experiencia)
     nome.delete()
     return redirect('Certificados_conquistas')
 
 def adicionar_experiencia(request):
+    '''salva ate 5 experiencias no banco e redireciona a mesma pagina'''
     id_user = request.user.id
     contando = Experiência_Profissional.objects.order_by().filter(user=id_user)
     if len(contando) >= 5:
@@ -242,6 +255,7 @@ def adicionar_experiencia(request):
     return redirect('Certificados_conquistas')
 
 def Experiencia_profissional(request):
+    '''mostra os idiomas e os lista'''
     idioma = Idiomas.objects.all()
     id = request.user.id
     DP = Dados_Pessoais.objects.order_by().filter(user=id)
@@ -252,11 +266,13 @@ def Experiencia_profissional(request):
     return render(request, 'partials/Usuarios/sessaoSeis.html',dados)
 
 def deleta_idioma(requst, id_idioma):
+    '''apaga os idiomas adicionados'''
     nome = get_object_or_404(Idiomas, pk=id_idioma)
     nome.delete()
     return redirect('Experiencia_profissional')
 
 def adicionar_idioma(request):
+    '''redireciona a mesma pagina de idiomas para listalos'''
     id_user = request.user.id
     contando = Certificados_Conquistas.objects.order_by().filter(user=id_user)
     if len(contando) >= 5:
@@ -269,9 +285,6 @@ def adicionar_idioma(request):
             informacoes6 = Idiomas.objects.create(user=usuario, idioma=idioma,nivel_idioma=nivel)
             informacoes6.save()
     return redirect('Experiencia_profissional')
-
-def salvando_perfil(request):
-    return redirect('perfil')
 
 @has_role_decorator('empresa')
 def empresa(request, *args, **kwargs):
@@ -332,6 +345,7 @@ def dashboard(request):
     return render(request, 'dashboard.html', dados)
 
 def perfil(request):
+    '''perfil do canditato que fez alguns dos forms'''
     id = request.user.id
     CC = Certificados_Conquistas.objects.order_by().filter(user=id)
     DP = Dados_Pessoais.objects.order_by().filter(user=id)

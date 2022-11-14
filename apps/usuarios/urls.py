@@ -19,7 +19,6 @@ urlpatterns = [
     path('adicionarE', views.adicionar_experiencia, name='adicionarE'),#adiciona nova Experiencia
     path('apagarI/<int:id_idioma>', views.deleta_idioma, name='apagarI'),#apaga Idiomas
     path('adicionarI', views.adicionar_idioma, name='adicionarI'),#adiciona novo idioma
-    path('Salvando/Perfil/', views.salvando_perfil, name='salvando_perfil'),#salva perfil
     path('empresa/', views.empresa, name='empresa'),#dashboard de empresa
     path('dashboard/', views.dashboard, name='dashboard'),
     path('perfil', views.perfil, name='perfil'),
