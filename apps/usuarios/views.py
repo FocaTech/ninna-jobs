@@ -403,3 +403,25 @@ def perfil_candidato(request, id_candidato):
         'Idiomas':I
     }
     return render(request, 'perfil.html',dados)
+
+def busca_talentos(request):
+    if 'busca_talentos' in request.GET:
+        lista_talentos = Dados_Pessoais.objects.order_by('-data_dados').filter()
+        nome_a_buscar = request.GET['busca_talentos']
+        lista_talentos = lista_talentos.filter(nome_do_candidato__icontains=nome_a_buscar)
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+    d = Dados_Pessoais.objects.order_by('-data_dados')
+    i = Informações_Iniciais.objects.all()
+    f = Formacao_Academica.objects.all()
+    dados = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'dados':d,
+        'info':i,
+        'form':f,
+        'dados' : lista_talentos,
+    }
+    return render(request, 'bancodetalentos.html', dados)

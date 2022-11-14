@@ -11,10 +11,10 @@
       <div class="content">
         <header class="page-header">
           <h1>Banco de Talentos</h1>
-          <form action="" class="filtros">
+          <form action="{% url 'busca_talentos' %}" class="filtros">
             <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input name="filtro" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+              <input name="busca_talentos" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
             </div>
           </form>
         </header>
