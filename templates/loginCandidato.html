@@ -61,6 +61,7 @@
                     -->
                         <div id="inscreva-se">
                             <h2>Cadastre-se</h2>
+                            {% include 'partials/_alertas.html' %}
                             <form action="{% url 'cadastro_candidato' %}" method="POST"> {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">

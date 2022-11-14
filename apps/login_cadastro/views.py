@@ -30,7 +30,8 @@ def cadastro_candidato(request):
         candidato_senha = request.POST['candidato_senha']
         candidato_senha_conf = request.POST['candidato_senha_conf']
         if candidato_senha != candidato_senha_conf:
-            return redirect ('cadastro_candidatos')
+            messages.error(request, 'Senhas diferentes')
+            return redirect ('cadastro_candidato')
         if Users.objects.filter(email=candidato_email).exists():
             messages.error(request, 'Usuario ja cadastrado')
             return redirect('longar_candidato')
