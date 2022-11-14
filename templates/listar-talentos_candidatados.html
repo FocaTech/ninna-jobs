@@ -22,6 +22,7 @@
             <img src="{{ d.imagem_perfil.url }}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
             <div class="w3-bar-item">
                 <span class="w3-large">{{d.nome_do_candidato}}</span><br>
+                
                 {% for i in info %}
                 {% if i.user == d.user %}
                 <p>
