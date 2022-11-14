@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Empresas favoritadas{% endblock %}
+{% block head %}
+  <script src="{% static 'js/tabber.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'css/tabber.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+  <main class="container">
+    <div class="right-column">
+      <section class="content">
+        <header class="page-header">
+          <h1>Empresas favoritadas</h1>
+          <form method='GET' action="{% url 'bash' %}" class="filtros">
+            <div class="form-group input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+              <input name="bash" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+            </div>
+          </form>
+        </header>
+        <section>
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <div class="card" style="width: 18rem;">
+                <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><i class="bi bi-building"></i> Nome da Empresa</h5>
+                  <div class="dropdown-center">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Informações
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Perfil</a></li>
+                      <li><a class="dropdown-item" href="#">Vagas ativas: 00</a></li>
+                      <li><a class="dropdown-item" href="#">Matches: 00</a></li>
+                    </ul>
+                  </div>
+                  <button><i class="bi bi-star-fill"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {% comment %} {% include 'partials/lista-antiga--.html' %} {% endcomment %}
+      </section>
+    </div>
+    {% include 'partials/sidebar/candidato.html' %}
+  </main>
+{% endblock %}
