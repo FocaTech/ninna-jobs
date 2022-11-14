@@ -364,56 +364,36 @@ def perfil(request):
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
-    # print(pk_vaga)
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
-    print(f'talentos candidatados {talentos_candidatados}')
 
     lista_de_talentos = []
     for obj_vaga_candidatada in talentos_candidatados:
         obj_talento = obj_vaga_candidatada.id_cadidato
-        print(f'objeto {obj_talento}')
-        print(f'id do talento{obj_talento.id}')
         lista_de_talentos.append(obj_talento)
-
-
-    # contratacoes = TipoContratacao.objects.all()
-    # trabalhos = TipoTrabalho.objects.all()
-    # perfis = PerfilProfissional.objects.all()
-
-
-
-
-
 
     dados_pessoais = []
     for talento in lista_de_talentos:
-        dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
-        dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
-    # print(f"dados =========== {dados_pessoais}")
+        # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
+        dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+        if len(dado_pessoal) != 0:
+            dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+
     informacoes_iniciais = []
     for talento in lista_de_talentos:
-        # informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
-        informacao_inicial = get_object_or_404(Informações_Iniciais, user=talento)
-        print(f'inf ======== {informacao_inicial}')
-        if informacao_inicial == None:
-            print('retorna none')
-        else:
-            print('nao retorna none')
-        informacoes_iniciais.append(informacao_inicial)
+        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        if len(informacao_inicial) != 0:
+            informacoes_iniciais.append(*informacao_inicial)
 
     formacaoes_academicas = []
     for talento in lista_de_talentos:
         formacao_academica = Formacao_Academica.objects.filter(user=talento)
-        formacaoes_academicas.append(*formacao_academica)
+        if len(formacao_academica) != 0:
+            formacaoes_academicas.append(*formacao_academica)
 
 
 
     dados = {
         'lista_de_talentos' : lista_de_talentos,
-
-        # 'contratacoes' : contratacoes,
-        # 'trabalhos' : trabalhos,
-        # 'perfis' : perfis,
         'dados':dados_pessoais,
         'info':informacoes_iniciais,
         'form':formacaoes_academicas,

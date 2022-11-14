@@ -13,8 +13,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('conta/', include("login_cadastro.urls")),
     path('vaga/', include("vaga.urls")),
-    path('', include("vaga.urls")),
     path('usuarios/', include("usuarios.urls")),
+    path('', include("vaga.urls")),
     path('ninna/', include("admin.urls")),
     url(r'^', TemplateResponse, {'template': '404.html'}),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
