@@ -326,7 +326,7 @@ def dashboard(request):
     return render(request, 'dashboard.html', dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
-    print(pk_vaga)
+    # print(pk_vaga)
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
     print(f'talentos candidatados {talentos_candidatados}')
 
@@ -345,17 +345,28 @@ def listar_talentos_candidatados(request, pk_vaga):
 
 
 
-    dados_pessoais = Dados_Pessoais.objects.order_by('data_dados')
 
+
+    dados_pessoais = []
+    for talento in lista_de_talentos:
+        dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
+        dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+    # print(f"dados =========== {dados_pessoais}")
     informacoes_iniciais = []
     for talento in lista_de_talentos:
-        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
-        print(informacao_inicial)
-        informacoes_iniciais.append(*informacao_inicial)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+        # informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        informacao_inicial = get_object_or_404(Informações_Iniciais, user=talento)
+        print(f'inf ======== {informacao_inicial}')
+        if informacao_inicial == None:
+            print('retorna none')
+        else:
+            print('nao retorna none')
+        informacoes_iniciais.append(informacao_inicial)
 
-
-    formacao_academica = Formacao_Academica.objects.all()
-
+    formacaoes_academicas = []
+    for talento in lista_de_talentos:
+        formacao_academica = Formacao_Academica.objects.filter(user=talento)
+        formacaoes_academicas.append(*formacao_academica)
 
 
 
@@ -367,7 +378,7 @@ def listar_talentos_candidatados(request, pk_vaga):
         # 'perfis' : perfis,
         'dados':dados_pessoais,
         'info':informacoes_iniciais,
-        'form':formacao_academica,
+        'form':formacaoes_academicas,
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)
