@@ -76,7 +76,7 @@ def Informacoes_iniciais(request):
     estado = sorted(estado)
     id = request.user.id
     dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=id)
-    if len(Dados_Pessoais.objects.all()) > 0:
+    if len(Dados_Pessoais.objects.filter(user=id)) > 0:
         dados_can = get_object_or_404(Dados_Pessoais, user=id)
     else:
         dados_can = False
