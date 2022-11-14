@@ -35,7 +35,7 @@ def cadastro_candidato_2(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
     id = request.user.id
     interesses = Interesses.objects.all()
-    if len(Informações_Iniciais.objects.all()) > 0:
+    if len(Informações_Iniciais.objects.filter(user=id)) > 0:
         informacoes = get_object_or_404(Informações_Iniciais, user=id)
         informacoes.salario_pretendido = int(informacoes.salario_pretendido)
     else:
