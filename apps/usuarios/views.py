@@ -484,6 +484,5 @@ def contato(request):
         messages.success(request, 'Email enviado')
     return redirect('index')
 
-
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
