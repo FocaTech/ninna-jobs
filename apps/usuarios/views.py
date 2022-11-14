@@ -338,32 +338,36 @@ def listar_talentos_candidatados(request, pk_vaga):
         lista_de_talentos.append(obj_talento)
 
 
-    contratacoes = TipoContratacao.objects.all()
-    trabalhos = TipoTrabalho.objects.all()
-    perfis = PerfilProfissional.objects.all()
-    d = Dados_Pessoais.objects.order_by('data_dados')
-    i = Informações_Iniciais.objects.all()
-    f = Formacao_Academica.objects.all()
-    # dado = {
-    #     'contratacoes' : contratacoes,
-    #     'trabalhos' : trabalhos,
-    #     'perfis' : perfis,
-    #     'dados':d,
-    #     'info':i,
-    #     'form':f
-    # }
+    # contratacoes = TipoContratacao.objects.all()
+    # trabalhos = TipoTrabalho.objects.all()
+    # perfis = PerfilProfissional.objects.all()
+
+
+
+
+    dados_pessoais = Dados_Pessoais.objects.order_by('data_dados')
+
+    informacoes_iniciais = []
+    for talento in lista_de_talentos:
+        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        print(informacao_inicial)
+        informacoes_iniciais.append(*informacao_inicial)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+
+
+    formacao_academica = Formacao_Academica.objects.all()
+
 
 
 
     dados = {
         'lista_de_talentos' : lista_de_talentos,
 
-        'contratacoes' : contratacoes,
-        'trabalhos' : trabalhos,
-        'perfis' : perfis,
-        'dados':d,
-        'info':i,
-        'form':f,
+        # 'contratacoes' : contratacoes,
+        # 'trabalhos' : trabalhos,
+        # 'perfis' : perfis,
+        'dados':dados_pessoais,
+        'info':informacoes_iniciais,
+        'form':formacao_academica,
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)
