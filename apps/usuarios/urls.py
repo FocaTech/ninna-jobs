@@ -27,4 +27,5 @@ urlpatterns = [
     path('talentos', views.talentos, name='talentos'),#empresa ver candidatos
     path('perfil/candidato/<int:id_candidato>', views.perfil_candidato, name='perfil_candidato'),#empresa ver o perfil do candidato
     path('busca_talentos', views.busca_talentos, name='busca_talentos'),#busca candidatos
+    path('contato', views.contato, name='contato'),#busca candidatos
 ]
