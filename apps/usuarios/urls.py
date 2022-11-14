@@ -22,5 +22,8 @@ urlpatterns = [
     path('Salvando/Perfil/', views.salvando_perfil, name='salvando_perfil'),#salva perfil
     path('empresa/', views.empresa, name='empresa'),#dashboard de empresa
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('perfil', views.perfil, name='perfil'),
     path('listar_candidatos/<int:pk_vaga>', views.listar_talentos_candidatados, name='listar_talentos_candidatados'),#dashboard de empresa
+    path('talentos', views.talentos, name='talentos'),#empresa ver candidatos
+    path('perfil/candidato/<int:id_candidato>', views.perfil_candidato, name='perfil_candidato'),#empresa ver o perfil do candidato
 ]

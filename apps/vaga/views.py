@@ -160,43 +160,8 @@ def index(request):
         }
     return render(request, 'index.html', dados)
 
-def perfil(request):
-    id = request.user.id
-    CC = Certificados_Conquistas.objects.order_by().filter(user=id)
-    DP = Dados_Pessoais.objects.order_by().filter(user=id)
-    EP = Experiência_Profissional.objects.order_by().filter(user=id)
-    FA = Formacao_Academica.objects.order_by().filter(user=id)
-    II = Informações_Iniciais.objects.order_by().filter(user=id)
-    I = Idiomas.objects.order_by().filter(user=id)
-    dados = {
-        'Certificados':CC,
-        'Dados':DP,
-        'Experiencia':EP,
-        'Formacao':FA,
-        'Informacoes':II,
-        'Idiomas':I
-    }
-    return render(request, 'perfil.html',dados)
-
 def perfilempresa(request):
     return render(request, 'perfilEmpresa.html')
-
-def talentos(request):
-    contratacoes = TipoContratacao.objects.all()
-    trabalhos = TipoTrabalho.objects.all()
-    perfis = PerfilProfissional.objects.all()
-    d = Dados_Pessoais.objects.order_by('data_dados')
-    i = Informações_Iniciais.objects.all()
-    f = Formacao_Academica.objects.all()
-    dado = {
-        'contratacoes' : contratacoes,
-        'trabalhos' : trabalhos,
-        'perfis' : perfis,
-        'dados':d,
-        'info':i,
-        'form':f
-    }
-    return render(request, 'bancodetalentos.html', dado)
 
 def vagas(request):
     vagas = Vagas.objects.order_by('-data_vaga').filter()

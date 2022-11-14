@@ -34,8 +34,11 @@ def registro(request):
 def cadastro_candidato_2(request):
     id = request.user.id
     interesses = Interesses.objects.all()
-    informacoes = get_object_or_404(Informações_Iniciais, user=id)
-    informacoes.salario_pretendido = int(informacoes.salario_pretendido)
+    if len(Informações_Iniciais.objects.all()) > 0:
+        informacoes = get_object_or_404(Informações_Iniciais, user=id)
+        informacoes.salario_pretendido = int(informacoes.salario_pretendido)
+    else:
+        informacoes = False
     DP = Dados_Pessoais.objects.order_by().filter(user=id)
     dados = {
             'Dados':DP,
@@ -71,7 +74,10 @@ def Informacoes_iniciais(request):
     estado = sorted(estado)
     id = request.user.id
     dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=id)
-    dados_can = get_object_or_404(Dados_Pessoais, user=id)
+    if len(Dados_Pessoais.objects.all()) > 0:
+        dados_can = get_object_or_404(Dados_Pessoais, user=id)
+    else:
+        dados_can = False
     dados = {
         'estados':estado,
         'cidades':cidades,
@@ -325,6 +331,24 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', dados)
 
+def perfil(request):
+    id = request.user.id
+    CC = Certificados_Conquistas.objects.order_by().filter(user=id)
+    DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    EP = Experiência_Profissional.objects.order_by().filter(user=id)
+    FA = Formacao_Academica.objects.order_by().filter(user=id)
+    II = Informações_Iniciais.objects.order_by().filter(user=id)
+    I = Idiomas.objects.order_by().filter(user=id)
+    dados = {
+        'Certificados':CC,
+        'Dados':DP,
+        'Experiencia':EP,
+        'Formacao':FA,
+        'Informacoes':II,
+        'Idiomas':I
+    }
+    return render(request, 'perfil.html',dados)
+
 def listar_talentos_candidatados(request, pk_vaga):
     print(pk_vaga)
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
@@ -343,3 +367,39 @@ def listar_talentos_candidatados(request, pk_vaga):
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)
+
+def talentos(request):
+    '''empresa poder ver os candidatos'''
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+    d = Dados_Pessoais.objects.order_by('-data_dados')
+    i = Informações_Iniciais.objects.all()
+    f = Formacao_Academica.objects.all()
+    dado = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'dados':d,
+        'info':i,
+        'form':f
+    }
+    return render(request, 'bancodetalentos.html', dado)
+
+def perfil_candidato(request, id_candidato):
+    '''empresa poder ver os perfil candidato'''
+    CC = Certificados_Conquistas.objects.order_by().filter(user=id_candidato)
+    DP = Dados_Pessoais.objects.order_by().filter(user=id_candidato)
+    EP = Experiência_Profissional.objects.order_by().filter(user=id_candidato)
+    FA = Formacao_Academica.objects.order_by().filter(user=id_candidato)
+    II = Informações_Iniciais.objects.order_by().filter(user=id_candidato)
+    I = Idiomas.objects.order_by().filter(user=id_candidato)
+    dados = {
+        'Certificados':CC,
+        'Dados':DP,
+        'Experiencia':EP,
+        'Formacao':FA,
+        'Informacoes':II,
+        'Idiomas':I
+    }
+    return render(request, 'perfil.html',dados)

@@ -23,8 +23,8 @@
           {% if not user.funcao == "CAN" %}
           {% for d in dados %}
           <li class="w3-bar">
-            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i></span>
-              <a href="#" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i></a>
+              <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i></span>
+              <a href="{% url 'perfil_candidato' d.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i></a>
               <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
               <img src="{{ d.imagem_perfil.url }}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
               <div class="w3-bar-item">
@@ -40,7 +40,7 @@
                   {% if f.user == d.user %}
                   <p>
                   <span>Formação academica:{{f.formacao}}|</span>
-                  <span>curso:{{f.curso}}|</span>
+                  <span>curso:{{f.curso}}</span>
                   </p>
                   {% endif %}
                   {% endfor %}
