@@ -338,8 +338,32 @@ def listar_talentos_candidatados(request, pk_vaga):
         lista_de_talentos.append(obj_talento)
 
 
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+    d = Dados_Pessoais.objects.order_by('data_dados')
+    i = Informações_Iniciais.objects.all()
+    f = Formacao_Academica.objects.all()
+    # dado = {
+    #     'contratacoes' : contratacoes,
+    #     'trabalhos' : trabalhos,
+    #     'perfis' : perfis,
+    #     'dados':d,
+    #     'info':i,
+    #     'form':f
+    # }
+
+
+
     dados = {
-        'lista_de_talentos' : lista_de_talentos
+        'lista_de_talentos' : lista_de_talentos,
+
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'dados':d,
+        'info':i,
+        'form':f,
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)

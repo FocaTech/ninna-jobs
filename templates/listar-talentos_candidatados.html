@@ -9,18 +9,41 @@
 {% include 'partials/_alertas.html' %}
 
 
-<ul>
-  <li>espaço</li>
-  <li>espaço</li>
-  <li>espaço</li>
-  <li>espaço</li>
-  <li>espaço</li>
-  <li>espaço</li>
-  <li>espaço</li>
-  <li>espaço</li>
-  <li>espaço</li>
-</ul>
-
-
+<main class="container">
+  <div class="right-column">
+    <div class="content">
+      <ul class="w3-ul w3-card-4">
+        {% if not user.funcao == "CAN" %}
+        {% for d in dados %}
+        <li class="w3-bar">
+          <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i></span>
+            <a href="#" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i></a>
+            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+            <img src="{{ d.imagem_perfil.url }}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            <div class="w3-bar-item">
+                <span class="w3-large">{{d.nome_do_candidato}}</span><br>
+                {% for i in info %}
+                {% if i.user == d.user %}
+                <p>
+                <span>Area de atuação:{{i.areas_interesse}}</span>
+                </p>
+                {% endif %}
+                {% endfor %}
+                {% for f in form %}
+                {% if f.user == d.user %}
+                <p>
+                <span>Formação academica:{{f.formacao}}|</span>
+                <span>curso:{{f.curso}}|</span>
+                </p>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </li>
+        {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</main>
 
 {% endblock %}
