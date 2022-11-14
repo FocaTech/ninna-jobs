@@ -32,7 +32,7 @@ def registro(request):
         return render(request, 'formempresa.html')
 
 def cadastro_candidato_2(request):
-    '''começa todo o forms e traz os objetos ´para editar se existir'''
+    '''começa todo o forms e traz os objetos para editar se existir'''
     id = request.user.id
     interesses = Interesses.objects.all()
     if len(Informações_Iniciais.objects.all()) > 0:
@@ -49,7 +49,7 @@ def cadastro_candidato_2(request):
     return render(request, 'formcandidato.html', dados)
 
 def Informacoes_iniciais(request):
-    '''pega o form candidato salva e ja lista o sessaoDois com alguns campos'''
+    '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         curriculos = request.FILES['curriculo']
@@ -108,7 +108,7 @@ def editando_informacoes_iniciais(request):
     return redirect('Informacoes_iniciais')
 
 def Dados_pessoais(request):
-    '''Pega os dados do informacoes salva e dar alguns campos dos Formacoes'''
+    '''Pega os dados pessoais salva e renderiza as formacoes'''
     if request.method == 'POST':
         usuario = get_object_or_404(Users, pk=request.user.id)
         imagem_perfil = request.FILES['imagem_perfil']
