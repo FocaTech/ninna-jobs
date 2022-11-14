@@ -123,6 +123,9 @@
                 <div class="col-md-4 our-skills">
                 </div> <!-- /.col-md-3 -->
             </div>
+        {% if user.is_authenticated %}
+        <form action="{% url 'contato' %}" method="post">
+            {% csrf_token %}
             <a href="#"name="contato"></a>
             <div id="contato" class="section-cotent">
                 <div class="container">
@@ -131,46 +134,48 @@
                         <span></span>
                     </div> <!-- /.title-section -->
                     <div class="row">
-                        <div class="col-md-7 col-sm-6">
-                            <h4 class="widget-title">Envie sua mensagem:</h4>
-                            <div class="contato-form">
-                                <p class="full-row">
-                                    <label for="name-id">Nome:</label>
-                                    <input class="form-control" type="text" id="name-id" name="name-id" placeholder="Nome">
-                                </p>
-                                <p class="full-row">
-                                    <label for="email-id">E-mail:</label>
-                                    <input type="text" class="form-control" id="email-id" name="email-id" placeholder="E-mail">
-                                </p>
-                                <p class="full-row">
-                                    <label for="subject-id">Assunto:</label>
-                                    <input type="text" class="form-control" id="subject-id" name="subject-id" placeholder="Assunto">
-                                </p>
-                                <p class="full-row">
-                                    <label for="message">Mensagem:</label>
-                                    <textarea name="message" class="form-control" id="message" rows="6"></textarea>
-                                </p>
-                                <input class="mainBtn" type="submit" name="" value="Send Message">
-                            </div>
-                        </div> <!-- /.col-md-3 -->
-                        <div class="col-md-5 col-sm-6">
-                            <h4 class="widget-title">Nossa Localização</h4>
-                            <div class="map-holder">
-                                <div class="google-map-canvas" id="map-canvas" style="height: 250px;">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15925.412729477739!2d-38.5227377!3d-3.7329735!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xfe9c6b7989ba92a3!2sNINNA%20Hub!5e0!3m2!1spt-BR!2sbr!4v1661442698000!5m2!1spt-BR!2sbr" width="445" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <div class="col-md-7 col-sm-6">
+                                <h4 class="widget-title">Envie sua mensagem:</h4>
+                                <div class="contato-form">
+                                    <p class="full-row">
+                                        <label for="name-id">Nome:</label>
+                                        <input class="form-control" type="text" id="name-id" name="name" placeholder="Nome">
+                                    </p>
+                                    <p class="full-row">
+                                        <label for="email-id">E-mail:</label>
+                                        <input type="text" class="form-control" id="email-id" name="email" placeholder="E-mail">
+                                    </p>
+                                    <p class="full-row">
+                                        <label for="subject-id">Assunto:</label>
+                                        <input type="text" class="form-control" id="subject-id" name="subject" placeholder="Assunto">
+                                    </p>
+                                    <p class="full-row">
+                                        <label for="message">Mensagem:</label>
+                                        <textarea  style="resize: none" class="form-control" id="message" name="message" rows="6"></textarea>
+                                    </p>
+                                    <input class="mainBtn" type="submit" name="" value="Send Message">
                                 </div>
-                            </div>
-                            <div class="contato-info">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, modi, non ducimus nesciunt in commodi similique aliquam omnis ea at!</p>
-                                <span><i class="fa fa-home"></i>Av. Dom Manuel, 1020 - Centro, Fortaleza - CE, 60060-090</span>
-                                <span><i class="fa fa-phone"></i>(85) 3211-4201</span>
-                                <span><i class="fa fa-envelope"></i>contato@ninnahub.com.br</span>
-                            </div>
-                        </div> <!-- /.col-md-3 -->
-                    </div>
-                </div> <!-- /.row -->
-            </div> <!-- /.container -->
-        </div> <!-- /#contato --> <!-- /.row -->
+                            </div> <!-- /.col-md-3 -->
+                            <div class="col-md-5 col-sm-6">
+                                <h4 class="widget-title">Nossa Localização</h4>
+                                <div class="map-holder">
+                                    <div class="google-map-canvas" id="map-canvas" style="height: 250px;">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15925.412729477739!2d-38.5227377!3d-3.7329735!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xfe9c6b7989ba92a3!2sNINNA%20Hub!5e0!3m2!1spt-BR!2sbr!4v1661442698000!5m2!1spt-BR!2sbr" width="445" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    </div>
+                                </div>
+                                <div class="contato-info">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, modi, non ducimus nesciunt in commodi similique aliquam omnis ea at!</p>
+                                    <span><i class="fa fa-home"></i>Av. Dom Manuel, 1020 - Centro, Fortaleza - CE, 60060-090</span>
+                                    <span><i class="fa fa-phone"></i>(85) 3211-4201</span>
+                                    <span><i class="fa fa-envelope"></i>contato@ninnahub.com.br</span>
+                                </div>
+                            </div> <!-- /.col-md-3 -->
+                        </div>
+                    </div> <!-- /.row -->
+                </div> <!-- /.container -->
+            </div> <!-- /#contato --> <!-- /.row -->
+        </form>
+        {% endif %}
     </div>
 </main>
 {% endblock %}

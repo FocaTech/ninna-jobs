@@ -6,6 +6,7 @@ from rolepermissions.decorators import has_role_decorator
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
 from django.contrib import auth, messages
+from django.core.mail import send_mail
 
 
 def formempresa(request):
@@ -479,6 +480,12 @@ def busca_talentos(request):
         'dados' : lista_talentos,
     }
     return render(request, 'bancodetalentos.html', dados)
+
+def contato(request):
+    if request.method == 'POST':
+        send_mail(f"{request.POST['subject']}", f" id:{request.user.id} \n nome:{request.POST['name']} \n email:{request.POST['email']} \n mensagem:{request.POST['message']}", f"{request.POST['email']}", ['ninnajobs72@gmail.com'])
+        messages.success(request, 'Email enviado')
+    return redirect('index')
 
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
