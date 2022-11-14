@@ -26,6 +26,7 @@ urlpatterns = [
     path('listar_candidatos/<int:pk_vaga>', views.listar_talentos_candidatados, name='listar_talentos_candidatados'),#dashboard de empresa
     path('talentos', views.talentos, name='talentos'),#empresa ver candidatos
     path('perfil/candidato/<int:id_candidato>', views.perfil_candidato, name='perfil_candidato'),#empresa ver o perfil do candidato
-    path('busca_talentos', views.busca_talentos, name='busca_talentos'),#busca candidatos
+    path('busca_talentos', views.busca_talentos, name='busca_talentos'),#busca candidatos,
+    path('empresasfavoritadas', views.empresas_favoritadas, name='empresas_favoritadas'),
     path('contato', views.contato, name='contato'),#busca candidatos
 ]
