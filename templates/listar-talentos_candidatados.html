@@ -13,6 +13,8 @@
   <div class="right-column">
     <div class="content">
       <ul class="w3-ul w3-card-4">
+        <h3>total de talentos candidatados == {{ numero_de_candidatos }}</h3>
+        <hr>
         {% if not user.funcao == "CAN" %}
         {% for d in dados %}
         <li class="w3-bar">
@@ -35,9 +37,13 @@
                 </p>
                 {% endif %}
                 {% endfor %}
-            </div>
-        </li>
-        <a href="{% url 'exibir_perfil_do_talento_candidatado' %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
+              </div>
+            </li>
+            {% for talento in lista_de_talentos %}
+            {% if talento == d.user %}
+            <a href="{% url 'exibir_perfil_do_talento_candidatado' talento.id %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
+            {% endif %}
+            {% endfor %}
         <p></p>
         <hr>
         {% endfor %}

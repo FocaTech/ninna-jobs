@@ -364,14 +364,22 @@ def perfil(request):
     }
     return render(request, 'perfil.html',dados)
 
-def exibir_perfil_do_talento_candidatado(request):
-    id = request.user.id
-    CC = Certificados_Conquistas.objects.order_by().filter(user=id)
-    DP = Dados_Pessoais.objects.order_by().filter(user=id)
-    EP = Experiência_Profissional.objects.order_by().filter(user=id)
-    FA = Formacao_Academica.objects.order_by().filter(user=id)
-    II = Informações_Iniciais.objects.order_by().filter(user=id)
-    I = Idiomas.objects.order_by().filter(user=id)
+def exibir_perfil_do_talento_candidatado(request, pk_user):
+    print(f'pk do userr == {pk_user}')
+
+    # id = request.user.id
+    CC = Certificados_Conquistas.objects.order_by().filter(user=pk_user)
+    DP = Dados_Pessoais.objects.order_by().filter(user=pk_user)
+    EP = Experiência_Profissional.objects.order_by().filter(user=pk_user)
+    FA = Formacao_Academica.objects.order_by().filter(user=pk_user)
+    II = Informações_Iniciais.objects.order_by().filter(user=pk_user)
+    I = Idiomas.objects.order_by().filter(user=pk_user)
+    # CC = Certificados_Conquistas.objects.order_by().filter(user=id)
+    # DP = Dados_Pessoais.objects.order_by().filter(user=id)
+    # EP = Experiência_Profissional.objects.order_by().filter(user=id)
+    # FA = Formacao_Academica.objects.order_by().filter(user=id)
+    # II = Informações_Iniciais.objects.order_by().filter(user=id)
+    # I = Idiomas.objects.order_by().filter(user=id)
     dados = {
         'Certificados':CC,
         'Dados':DP,
@@ -380,7 +388,8 @@ def exibir_perfil_do_talento_candidatado(request):
         'Informacoes':II,
         'Idiomas':I
     }
-    return render(request, 'perfil.html',dados)
+    return render(request, 'perfil.html', dados)
+    # return render(request, 'perfil.html')
 
 def listar_talentos_candidatados(request, pk_vaga):
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
@@ -409,13 +418,12 @@ def listar_talentos_candidatados(request, pk_vaga):
         if len(formacao_academica) != 0:
             formacaoes_academicas.append(*formacao_academica)
 
-
-
     dados = {
         'lista_de_talentos' : lista_de_talentos,
-        'dados':dados_pessoais,
-        'info':informacoes_iniciais,
-        'form':formacaoes_academicas,
+        'numero_de_candidatos' : len(lista_de_talentos),
+        'dados' : dados_pessoais,
+        'info' : informacoes_iniciais,
+        'form' : formacaoes_academicas,
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)
