@@ -1,4 +1,3 @@
-from operator import index
 import re
 from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
 from django.contrib import auth, messages
@@ -118,7 +117,7 @@ def logar_empresa(request):
                 print(f" resultado do user: {user} \nresultado do nome: {nome}")
         else:
             print("Email ou senha incorretos")
-    return redirect (index)
+    return redirect ('index')
 
 email_do_user_atual = ''
 def recuperar_senha(request):

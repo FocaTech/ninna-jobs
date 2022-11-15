@@ -51,7 +51,7 @@ def formcandidato(request):
 
 def Informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
-    if request.method == 'POST':
+    if request.method == 'POST' and len(Informações_Iniciais.objects.filter(user=id)) < 1:
         usuario = get_object_or_404(Users, pk=request.user.id)
         curriculos = request.FILES['curriculo']
         estagio = request.POST.get('estagio', None)
@@ -92,7 +92,7 @@ def Informacoes_iniciais(request):
 
 def editando_informacoes_iniciais(request):
     '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
-    if request.method == 'POST':
+    if request.method == 'POST' and len(Informações_Iniciais.objects.filter(user=id)) == 1:
         id = request.user.id
         i = Informações_Iniciais.objects.get(user=id)
         if 'curriculo' in request.FILES:
@@ -110,7 +110,8 @@ def editando_informacoes_iniciais(request):
 
 def Dados_pessoais(request):
     '''Pega os dados pessoais salva e renderiza as formacoes'''
-    if request.method == 'POST':
+    id = request.user.id
+    if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=id)) < 1:
         usuario = get_object_or_404(Users, pk=request.user.id)
         imagem_perfil = request.FILES['imagem_perfil']
         nome_do_candidato = request.POST['nome_do_candidato']
@@ -129,7 +130,6 @@ def Dados_pessoais(request):
         cep = int(cep)
         informacoes2 = Dados_Pessoais.objects.create(user=usuario,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone, whatsapp=whatsapp, sobre_candidato=sobre_candidato)
         informacoes2.save()
-    id = request.user.id
     formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=id)
     DP = Dados_Pessoais.objects.order_by().filter(user=id)
     dados = {
@@ -140,7 +140,7 @@ def Dados_pessoais(request):
 
 def editando_dados_pessoais(request):
     '''caso ele ja tenha preenchido ele vai ser direcionado aqui para editar'''
-    if request.method == 'POST':
+    if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=id)) == 1:
         d = Dados_Pessoais.objects.get(user=request.user.id)
         if 'imagem_perfil' in request.FILES:
             d.imagem_perfil = request.FILES['imagem_perfil']
