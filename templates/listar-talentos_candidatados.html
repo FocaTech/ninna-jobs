@@ -13,6 +13,8 @@
   <div class="right-column">
     <div class="content">
       <ul class="w3-ul w3-card-4">
+        <h3>total de talentos candidatados == {{ numero_de_candidatos }}</h3>
+        <hr>
         {% if not user.funcao == "CAN" %}
         {% for d in dados %}
         <li class="w3-bar">
