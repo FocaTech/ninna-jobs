@@ -30,11 +30,7 @@
                 <a title="Whatsapp" class="linkwapp" href="https://api.whatsapp.com/send?phone={{dados.telefone}}"><i class="bi bi-whatsapp m-2"></i></a>
                 {% endif %}
                 {% endfor %}
-
-
-                <a title="Email" href="mailto:{{user.email}}?Subject=Aqui%20vai%20o%20assunto&Body=E%20aqui%20o%20corpo"><i class="bi bi-envelope"></i></a>
-
-
+                <a method='post' title="Email" href="{{user.email}}"><i class="bi bi-envelope"></i></a>
             </div>
             <div class="div-enviar-mensagem">
                 <button type="button" class="btn bt-enviar btn-outline-primary"> <i class="bi bi-send aviao"></i> <p class="msg-btn-enviar">Quero conversar</p></button>

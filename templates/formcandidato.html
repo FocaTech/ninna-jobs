@@ -81,7 +81,13 @@
                 <div class="row py-2">
                     <div class="col-md-6">
                         <label  for="linkedin" class="form-label">linkedin</label>
-                        <input  type="text" class="form-control" placeholder="https://www.linkedin.com/in/alice-costa-89a11148/" name="linkedin">
+                        <input  type="text" class="form-control" pattern="http(s)?:\/\/([\w]+\.)?linkedin\.com\/in\/[A-z0-9_-]+\/?" placeholder="https://www.linkedin.com/in/exemplo-exes-123456/" name="linkedin">
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                        <div class="invalid-feedback">
+                            Link do Linkedin
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label  for="midia" class="form-label">Outra midia social</label>
