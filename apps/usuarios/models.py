@@ -51,6 +51,7 @@ class Dados_Pessoais(models.Model):
     data_nascimento = models.DateField()
     genero = models.CharField(max_length=9)
     telefone = models.BigIntegerField()
+    whatsapp = models.CharField(max_length=3, blank=True, null=True)
     cep = models.BigIntegerField()
     estado = models.CharField(max_length=60)
     cidade = models.CharField(max_length=60)

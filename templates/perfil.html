@@ -19,7 +19,24 @@
             <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
             <h2 class="profile-name">{{ user.username }}</h2>
             {% endif %}
-            <div class="redesocial"><a class="linklinkedin" href="#"><i class="bi bi-linkedin m-2 azul"></a></i><a class="linkwapp" href="https://wa.me/5588999353797" target="_blank"><i class="bi bi-whatsapp m-2"></i></a><a href="mailto:someone@microsoft.com?subject=Parabéns%20Você%20Foi%20Pré%20Selecionado"><i class="bi bi-envelope"></i></a></div>
+            <div class="redesocial">
+                {% for i in Informacoes %}
+                {% if i.linkedin %}
+                <a class="linklinkedin" href="{{ i.linkedin }}"><i class="bi bi-linkedin m-2 azul"></i></a>
+                {% endif %}
+                {% endfor %}
+
+                {% for dados in Dados %}
+                {% if dados and dados.whatsapp == "Sim" %}
+                <a class="linkwapp" href="https://wa.me/{{dados.telefone}}"><i class="bi bi-whatsapp m-2"></i></a>
+                {% endif %}
+                {% endfor %}
+
+
+                <a href="mailto:{{user.email}}?subject=Parabéns%20Você%20Foi%20Pré%20Selecionado"><i class="bi bi-envelope"></i></a>
+
+
+            </div>
             <div class="div-enviar-mensagem">
                 <button type="button" class="btn bt-enviar btn-outline-primary"> <i class="bi bi-send aviao"></i> <p class="msg-btn-enviar">Enviar mensagem</p></button>
                 {% if Informacoes %}
@@ -38,18 +55,18 @@
                 </button>
             </div>
             </div>
-            {% if Dados %}
+            {% for dado in Dados %}
+            {% if dado.sobre_candidato %}
             <div>
                 <div class="div-sobre">
                     <div class="secaoperfil py-4">
                     <h3 class="tituloperfil">Sobre</h3>
                     <span class="spanperfil mb-4"></span>
-                    {% for dado in Dados %}
                     <p>{{dado.sobre_candidato}}</p>
-                    {% endfor %}
                 </div>
             </div>
             {% endif %}
+            {% endfor %}
             <div class="div-informacoes">
                 {% if Informacoes %}
                 <div class="secaoperfil py-4">

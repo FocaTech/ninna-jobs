@@ -116,6 +116,8 @@
                         <label for="telefone" class="form-label">Telefone</label>
                         <input type="number" class="form-control" id="telefone" name="telefone" placeholder="(XX)XXXX-XXXXX" min="10000000000" max="99999999999"  required>
                         <div class="invalid-feedback">Informe um telefone valido.</div>
+                        <input name='whatsapp' id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox" value="Sim">
+                        <label class="form-check-label">Possui Whatsapp?</label>
                     </div>
                 </div>
                 <div class="form-floating">
@@ -223,6 +225,13 @@
                         <label for="telefone" class="form-label">Telefone</label>
                         <input type="number" class="form-control" id="telefone" name="telefone" value='{{dados.telefone}}' placeholder="(XX)XXXX-XXXXX" min="10000000000" max="99999999999"  required>
                         <div class="invalid-feedback">Informe um telefone valido.</div>
+                        {% if dados.whatsapp == "Sim" %}
+                        <input name='whatsapp' id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox" value="Sim" checked>
+                        <label class="form-check-label">Possui Whatsapp?</label>
+                        {% else %}
+                        <input name='whatsapp' id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox" value="Sim">
+                        <label class="form-check-label">Possui Whatsapp?</label>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="form-floating">
@@ -235,7 +244,7 @@
                 </div>
             </section>
             <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
-            <a href="{% url 'cadastro_candidato_2' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+            <a href="{% url 'formcandidato' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
     </div>
 </main>

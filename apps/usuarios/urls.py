@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('formulario/empresa/', views.registro, name='registro'),
-    path('Informacoes/Iniciais/', views.cadastro_candidato_2, name='cadastro_candidato_2'),#form 1
+    path('Informacoes/Iniciais/', views.formcandidato, name='formcandidato'),#form 1
     path('Dados/Pessoais/', views.Informacoes_iniciais, name='Informacoes_iniciais'),#form 2
     path('Dados/Pessoais/2', views.editando_informacoes_iniciais, name='editando_informacoes_iniciais'),#caso o usuario volte
     path('Formacao/Academica/', views.Dados_pessoais, name='Dados_Pessoais'),#form 3

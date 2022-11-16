@@ -32,7 +32,7 @@ def registro(request):
     else:
         return render(request, 'formempresa.html')
 
-def cadastro_candidato_2(request):
+def formcandidato(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
     id = request.user.id
     interesses = Interesses.objects.all()
@@ -121,10 +121,13 @@ def Dados_pessoais(request):
         estado = request.POST['estado']
         cidade = request.POST['cidade']
         telefone = request.POST['telefone']
+        whatsapp = request.POST.get('whatsapp')
+        if whatsapp == None:
+            whatsapp = 'Não'
         sobre_candidato = request.POST['sobre_candidato']
         cpf = int(cpf)
         cep = int(cep)
-        informacoes2 = Dados_Pessoais.objects.create(user=usuario,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone,sobre_candidato=sobre_candidato)
+        informacoes2 = Dados_Pessoais.objects.create(user=usuario,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone, whatsapp=whatsapp, sobre_candidato=sobre_candidato)
         informacoes2.save()
     id = request.user.id
     formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=id)
@@ -141,11 +144,15 @@ def editando_dados_pessoais(request):
         d = Dados_Pessoais.objects.get(user=request.user.id)
         if 'imagem_perfil' in request.FILES:
             d.imagem_perfil = request.FILES['imagem_perfil']
-        d.nome_do_candidato = request.POST['nome_do_candidato']
         if request.POST['data_nascimento'] == "":
             d.data_nascimento = d.data_nascimento
         else:
             d.data_nascimento = request.POST['data_nascimento']
+        if request.POST.get('whatsapp') == None:
+            d.whatsapp = 'Não'
+        else:
+            d.whatsapp = request.POST['whatsapp']
+        d.nome_do_candidato = request.POST['nome_do_candidato']
         d.genero = request.POST['genero_candidato']
         d.estado = request.POST['estado']
         d.cidade = request.POST['cidade']
