@@ -51,6 +51,7 @@ def formcandidato(request):
 
 def Informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
+    id = request.user.id
     if request.method == 'POST' and len(Informações_Iniciais.objects.filter(user=id)) < 1:
         usuario = get_object_or_404(Users, pk=request.user.id)
         curriculos = request.FILES['curriculo']
@@ -92,6 +93,7 @@ def Informacoes_iniciais(request):
 
 def editando_informacoes_iniciais(request):
     '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
+    id = request.user.id
     if request.method == 'POST' and len(Informações_Iniciais.objects.filter(user=id)) == 1:
         id = request.user.id
         i = Informações_Iniciais.objects.get(user=id)
@@ -140,6 +142,7 @@ def Dados_pessoais(request):
 
 def editando_dados_pessoais(request):
     '''caso ele ja tenha preenchido ele vai ser direcionado aqui para editar'''
+    id = request.user.id
     if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=id)) == 1:
         d = Dados_Pessoais.objects.get(user=request.user.id)
         if 'imagem_perfil' in request.FILES:
