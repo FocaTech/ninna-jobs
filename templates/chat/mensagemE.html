@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mensagens{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+
+<main class="container">
+    <div class="right-column">
+        <section class="content">
+            <header class="page-header">
+                <h1>Mensagens</h1>
+          <form method='GET' action="{% url 'bash' %}" class="filtros">
+              <div class="form-group input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                  <input name="bash" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+                </div>
+            </form>
+        </header>
+        {% for m in mensagens %}
+        <section>
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <div class="card" style="width: 18rem;">
+                {% for d in dados %}
+                <img src="{{ d.imagem_perfil.url }}" class="card-img-top" alt="...">
+                {% endfor %}
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-person"><a href="{% url 'chatE' m.mandou.id %}"> {{m.mandou.username}}</a></i></h5>
+                    <h6>Ultima mensagem em {{m.data_mensagem}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {% endfor %}
+        {% comment %} {% include 'partials/lista-antiga--.html' %} {% endcomment %}
+      </section>
+    </div>
+    {% include 'partials/sidebar/empresa.html' %}
+  </main>
+{% endblock %}
