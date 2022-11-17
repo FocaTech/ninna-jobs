@@ -41,7 +41,7 @@
             </li>
             {% for talento in lista_de_talentos %}
             {% if talento == d.user %}
-            <a href="{% url 'exibir_perfil_do_talento_candidatado' talento.id %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
+            <a href="{% url 'perfil_candidato' talento.id %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
             {% endif %}
             {% endfor %}
         <p></p>

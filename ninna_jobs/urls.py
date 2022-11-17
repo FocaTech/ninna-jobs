@@ -16,5 +16,6 @@ urlpatterns = [
     path('usuarios/', include("usuarios.urls")),
     path('', include("vaga.urls")),
     path('ninna/', include("admin.urls")),
+    path('Chat/', include("chat.urls")),
     url(r'^', TemplateResponse, {'template': '404.html'}),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

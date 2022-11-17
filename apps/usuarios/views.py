@@ -373,23 +373,25 @@ def perfil(request):
         'Idiomas':I
     }
     return render(request, 'perfil.html',dados)
-
-def exibir_perfil_do_talento_candidatado(request, pk_user):
-    CC = Certificados_Conquistas.objects.order_by().filter(user=pk_user)
-    DP = Dados_Pessoais.objects.order_by().filter(user=pk_user)
-    EP = Experiência_Profissional.objects.order_by().filter(user=pk_user)
-    FA = Formacao_Academica.objects.order_by().filter(user=pk_user)
-    II = Informações_Iniciais.objects.order_by().filter(user=pk_user)
-    I = Idiomas.objects.order_by().filter(user=pk_user)
+    
+def perfil_candidato(request, id_candidato):
+    '''empresa poder ver os perfil candidato'''
+    CC = Certificados_Conquistas.objects.order_by().filter(user=id_candidato)
+    DP = Dados_Pessoais.objects.order_by().filter(user=id_candidato)
+    EP = Experiência_Profissional.objects.order_by().filter(user=id_candidato)
+    FA = Formacao_Academica.objects.order_by().filter(user=id_candidato)
+    II = Informações_Iniciais.objects.order_by().filter(user=id_candidato)
+    I = Idiomas.objects.order_by().filter(user=id_candidato)
     dados = {
         'Certificados':CC,
         'Dados':DP,
         'Experiencia':EP,
         'Formacao':FA,
         'Informacoes':II,
-        'Idiomas':I
-    }
-    return render(request, 'perfil.html', dados)
+        'Idiomas':I,
+        'id_candidato':id_candidato
+        }
+    return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
@@ -446,23 +448,6 @@ def talentos(request):
     }
     return render(request, 'bancodetalentos.html', dado)
 
-def perfil_candidato(request, id_candidato):
-    '''empresa poder ver os perfil candidato'''
-    CC = Certificados_Conquistas.objects.order_by().filter(user=id_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=id_candidato)
-    EP = Experiência_Profissional.objects.order_by().filter(user=id_candidato)
-    FA = Formacao_Academica.objects.order_by().filter(user=id_candidato)
-    II = Informações_Iniciais.objects.order_by().filter(user=id_candidato)
-    I = Idiomas.objects.order_by().filter(user=id_candidato)
-    dados = {
-        'Certificados':CC,
-        'Dados':DP,
-        'Experiencia':EP,
-        'Formacao':FA,
-        'Informacoes':II,
-        'Idiomas':I
-    }
-    return render(request, 'perfil.html',dados)
 
 def busca_talentos(request):
     if 'busca_talentos' in request.GET:
