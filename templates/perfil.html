@@ -27,10 +27,14 @@
                 {% endfor %}
                 {% for dados in Dados %}
                 {% if dados and dados.whatsapp == "Sim" %}
-                <a title="Whatsapp" class="linkwapp" href="https://api.whatsapp.com/send?phone={{dados.telefone}}"><i class="bi bi-whatsapp m-2"></i></a>
+                <a class="linkwapp" href="https://wa.me/{{dados.telefone}}"><i class="bi bi-whatsapp m-2"></i></a>
                 {% endif %}
                 {% endfor %}
-                <a method='post' title="Email" href="{{user.email}}"><i class="bi bi-envelope"></i></a>
+
+
+                <a href="mailto:{{user.email}}?subject=Parabéns%20Você%20Foi%20Pré%20Selecionado"><i class="bi bi-envelope"></i></a>
+
+
             </div>
             <div class="div-enviar-mensagem">
                 {% if not user.funcao == "CAN" %}
