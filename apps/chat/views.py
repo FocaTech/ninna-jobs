@@ -81,7 +81,9 @@ def chat_candidato(request, pk_chat):
         mensagem = request.POST['mensagem']
         chat = Chat.objects.create(mandou=empresa, mensagem=mensagem, nome_candidato=nome_candidato, nome_empresa=nome_empresa)
         chat.save()
+    DP = Dados_Pessoais.objects.order_by().filter(user=request.user.id)
     dados = {
+        'Dados':DP,
         'msg':msg,
         'id':dados_can.user.pk,
         'dados':dados_can
