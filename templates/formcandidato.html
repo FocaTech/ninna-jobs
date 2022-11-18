@@ -190,6 +190,9 @@
         {% endif %}
                 <div class="p-3">
                     <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
+                    {% if informacoes %}
+                    <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagar_informacoes_iniciais' %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+                    {% endif %}
                 </div>
             </div>
         </section>

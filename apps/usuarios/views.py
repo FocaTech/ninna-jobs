@@ -50,6 +50,12 @@ def formcandidato(request):
         }
     return render(request, 'formcandidato.html', dados)
 
+def apagar_informacoes_iniciais(request):
+    '''começa todo o forms e traz os objetos para editar se existir'''
+    informacoes = get_object_or_404(Informações_Iniciais, user=request.user)
+    informacoes.delete()
+    return redirect('formcandidato')
+
 def Informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
     id = request.user.id
@@ -140,6 +146,11 @@ def Dados_pessoais(request):
         'formacoes':formacoes
     }
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
+
+def apagar_dados_pessoais(request):
+    dados = get_object_or_404(Dados_Pessoais, user=request.user)
+    dados.delete()
+    return redirect('Informacoes_iniciais')
 
 def editando_dados_pessoais(request):
     '''caso ele ja tenha preenchido ele vai ser direcionado aqui para editar'''
@@ -479,7 +490,6 @@ def talentos(request):
     }
     return render(request, 'bancodetalentos.html', dado)
 
-
 def busca_talentos(request):
     if 'busca_talentos' in request.GET:
         lista_talentos = Dados_Pessoais.objects.order_by('-data_dados').filter()
@@ -510,3 +520,36 @@ def contato(request):
 
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
+
+def configuracoes(request):
+    return render(request, 'configuraçoes.html')
+
+def apagar_conta(request):
+    '''apaga o User'''
+    apagarIN = Informações_Iniciais.objects.filter(user=request.user)
+    apagarDA = Dados_Pessoais.objects.filter(user=request.user)
+    apagarFA = Formacao_Academica.objects.filter(user=request.user)
+    apagarCC = Certificados_Conquistas.objects.filter(user=request.user)
+    apagarEP = Experiência_Profissional.objects.filter(user=request.user)
+    apagarID = Idiomas.objects.filter(user=request.user)
+    if len(apagarIN) > 0:
+        for apaga in apagarIN:
+            apagarIN.delete()
+    if len(apagarDA) > 0:
+        for apaga in apagarDA:
+            apaga.delete()
+    if len(apagarFA) > 0:
+        for apaga in apagarFA:
+            apaga.delete()
+    if len(apagarCC) > 0:
+        for apaga in apagarCC:
+            apaga.delete()
+    if len(apagarEP) > 0:
+        for apaga in apagarEP:
+            apaga.delete()
+    if len(apagarID) > 0:
+        for apaga in apagarID:
+            apaga.delete()
+    user = get_object_or_404(Users, pk=request.user.id)
+    user.delete()
+    return redirect('index')

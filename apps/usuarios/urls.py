@@ -5,8 +5,10 @@ urlpatterns = [
     path('formulario/empresa/', views.registro, name='registro'),
     path('Informacoes/Iniciais/', views.formcandidato, name='formcandidato'),#form 1
     path('Dados/Pessoais/', views.Informacoes_iniciais, name='Informacoes_iniciais'),#form 2
+    path('ApagarInformacoes/Iniciais/', views.apagar_informacoes_iniciais, name='apagar_informacoes_iniciais'),#form 2
     path('Dados/Pessoais/2', views.editando_informacoes_iniciais, name='editando_informacoes_iniciais'),#caso o usuario volte
     path('Formacao/Academica/', views.Dados_pessoais, name='Dados_Pessoais'),#form 3
+    path('Apagar/Dados/Pessoais', views.apagar_dados_pessoais, name='apagar_dados_pessoais'),#form 3
     path('Formacao/Academica/2', views.editando_dados_pessoais, name='editando_Dados_Pessoais'),#form 3
     path('Certificados/Conquistas/', views.Formacao_academica, name='Formacao_academica'),#form 4
     path('apagarF/<int:id_formacao>', views.deleta_formacao, name='apagarF'),#apaga formacao
@@ -28,4 +30,6 @@ urlpatterns = [
     path('busca_talentos', views.busca_talentos, name='busca_talentos'),#busca candidatos,
     path('empresasfavoritadas', views.empresas_favoritadas, name='empresas_favoritadas'),
     path('contato', views.contato, name='contato'),#busca candidatos
+    path('configuracoes', views.configuracoes, name='configuracoes'),#configuraçoes
+    path('apagar_conta', views.apagar_conta, name='apagar_conta'),#configuraçoes
 ]
