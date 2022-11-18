@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'vaga',
     'rolepermissions',
     'usuarios',
-    'chat'
 ]
 
 MIDDLEWARE = [
