@@ -413,12 +413,16 @@ def listar_talentos_candidatados(request, pk_vaga):
         obj_talento = obj_vaga_candidatada.id_cadidato
         lista_de_talentos.append(obj_talento)
 
+    talentos_cadastro_incompleto = []
+
     dados_pessoais = []
     for talento in lista_de_talentos:
         # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
         dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+        else:
+            talentos_cadastro_incompleto.append(talento)
         #     print(dado_pessoal)
         # else:
         #     print('entrou')
@@ -431,6 +435,8 @@ def listar_talentos_candidatados(request, pk_vaga):
         informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
         if len(informacao_inicial) != 0:
             informacoes_iniciais.append(*informacao_inicial)
+        else:
+            talentos_cadastro_incompleto.append(talento)
         # else:
         #     print('entrou')
         #     print(talento.username)
@@ -442,20 +448,22 @@ def listar_talentos_candidatados(request, pk_vaga):
         formacao_academica = Formacao_Academica.objects.filter(user=talento)
         if len(formacao_academica) != 0:
             formacaoes_academicas.append(*formacao_academica)
-
-    talentos_cadastro_incompleto = []
-    for talento in lista_de_talentos:
-        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
-        if len(informacao_inicial) == 0:
+        else:
             talentos_cadastro_incompleto.append(talento)
 
-        dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
-        if len(dado_pessoal) == 0:
-            talentos_cadastro_incompleto.append(talento)
+    # talentos_cadastro_incompleto = []
+    # for talento in lista_de_talentos:
+    #     informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+    #     if len(informacao_inicial) == 0:
+    #         talentos_cadastro_incompleto.append(talento)
 
-        formacao_academica = Formacao_Academica.objects.filter(user=talento)
-        if len(formacao_academica) == 0:
-            talentos_cadastro_incompleto.append(talento)
+    #     dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+    #     if len(dado_pessoal) == 0:
+    #         talentos_cadastro_incompleto.append(talento)
+
+    #     formacao_academica = Formacao_Academica.objects.filter(user=talento)
+    #     if len(formacao_academica) == 0:
+    #         talentos_cadastro_incompleto.append(talento)
 
     list_talen_cadastro_incompleto = list(OrderedDict.fromkeys(talentos_cadastro_incompleto))# tirar os repetidos
 

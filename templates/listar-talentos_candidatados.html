@@ -45,12 +45,14 @@
             {% endif %}
             {% endfor %}
           <p></p>
-            {% for talento in talentos_cadas_incompleto %}
-            <span class="w3-large">{{talento.username}}</span><br>
-            {% endfor %}
-        <hr>
-        {% endfor %}
-        {% endif %}
+          <hr>
+          {% endfor %}
+          {% endif %}
+          {% for talento in talentos_cadas_incompleto %}
+          <span class="w3-large">{{talento.username}}</span><br>
+          <a href="{% url 'perfil_candidato' talento.id %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
+          <hr>
+          {% endfor %}
       </ul>
     </div>
   </div>
