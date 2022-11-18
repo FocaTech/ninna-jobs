@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="form-floating">
-                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300"  style="height: 100px"></textarea>
+                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300" style="height:100px"></textarea>
                     <label for="floatingTextarea">Fale um pouco sobre você.</label>
                 </div>
         {% elif dados %}
@@ -235,12 +235,15 @@
                     </div>
                 </div>
                 <div class="form-floating">
-                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300"  style="height: 100px">{{dados.sobre_candidato}}</textarea>
+                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300"  style="height:100px">{{dados.sobre_candidato}}</textarea>
                     <label for="floatingTextarea">Fale um pouco sobre você.</label>
                 </div>
         {% endif %}
                 <div class="form-floating">
                     <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
+                {% if dados %}
+                    <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagar_dados_pessoais' %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+                {% endif %}
                 </div>
             </section>
             <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
