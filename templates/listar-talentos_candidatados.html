@@ -25,15 +25,15 @@
                 {% for i in info %}
                 {% if i.user == d.user %}
                 <p>
-                <span>Area de atuação:{{i.areas_interesse}}</span>
+                  <span>Area de atuação:{{i.areas_interesse}}</span>
                 </p>
                 {% endif %}
                 {% endfor %}
                 {% for f in form %}
                 {% if f.user == d.user %}
                 <p>
-                <span>Formação academica:{{f.formacao}}|</span>
-                <span>curso:{{f.curso}}|</span>
+                  <span>Formação academica:{{f.formacao}}|</span>
+                  <span>curso:{{f.curso}}|</span>
                 </p>
                 {% endif %}
                 {% endfor %}
@@ -44,7 +44,10 @@
             <a href="{% url 'perfil_candidato' talento.id %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
             {% endif %}
             {% endfor %}
-        <p></p>
+          <p></p>
+            {% for talento in talentos_cadas_incompleto %}
+            <span class="w3-large">{{talento.username}}</span><br>
+            {% endfor %}
         <hr>
         {% endfor %}
         {% endif %}

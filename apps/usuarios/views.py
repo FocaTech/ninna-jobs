@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
+from collections import OrderedDict
 # from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
@@ -373,7 +374,7 @@ def perfil(request):
         'Idiomas':I
     }
     return render(request, 'perfil.html',dados)
-    
+
 def perfil_candidato(request, id_candidato):
     '''empresa poder ver os perfil candidato'''
     CC = Certificados_Conquistas.objects.order_by().filter(user=id_candidato)
@@ -407,12 +408,23 @@ def listar_talentos_candidatados(request, pk_vaga):
         dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+        #     print(dado_pessoal)
+        # else:
+        #     print('entrou')
+        #     print(talento.username)
+        #     dados_pessoais.append(talento)
+        #     # dados_pessoais.append('O candidato nao forneceu os dados')
 
     informacoes_iniciais = []
     for talento in lista_de_talentos:
         informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
         if len(informacao_inicial) != 0:
             informacoes_iniciais.append(*informacao_inicial)
+        # else:
+        #     print('entrou')
+        #     print(talento.username)
+        #     informacoes_iniciais.append(talento)
+        #     # informacoes_iniciais.append('O candidato nao forneceu os dados')
 
     formacaoes_academicas = []
     for talento in lista_de_talentos:
@@ -420,8 +432,27 @@ def listar_talentos_candidatados(request, pk_vaga):
         if len(formacao_academica) != 0:
             formacaoes_academicas.append(*formacao_academica)
 
+    talentos_cadastro_incompleto = []
+    for talento in lista_de_talentos:
+        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        if len(informacao_inicial) == 0:
+            talentos_cadastro_incompleto.append(talento)
+
+        dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+        if len(dado_pessoal) == 0:
+            talentos_cadastro_incompleto.append(talento)
+
+        formacao_academica = Formacao_Academica.objects.filter(user=talento)
+        if len(formacao_academica) == 0:
+            talentos_cadastro_incompleto.append(talento)
+
+    list_talen_cadastro_incompleto = list(OrderedDict.fromkeys(talentos_cadastro_incompleto))# tirar os repetidos
+
+    print(f"talen cadas incom =={list_talen_cadastro_incompleto}")
+
     dados = {
         'lista_de_talentos' : lista_de_talentos,
+        'talentos_cadas_incompleto' : list_talen_cadastro_incompleto,
         'numero_de_candidatos' : len(lista_de_talentos),
         'dados' : dados_pessoais,
         'info' : informacoes_iniciais,
