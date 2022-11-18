@@ -51,13 +51,11 @@
             <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
             {% elif user.funcao == "EMP" %}
             <li><a class="dropdown-item" href="{% url 'empresa' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
-            <li><a class="dropdown-item" href="{% url 'mensagensE' %}"><i class="bi bi-chat-dots"></i> Minhas Mensagens</li>
             <li><a class="dropdown-item" href="{% url 'perfilempresa' %}"><i class="bi bi-pencil-square"></i> Editar Perfil</li>
             <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuração da Conta</li>
             <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
             {% elif user.funcao == "CAN" %}
             <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
-            <li><a class="dropdown-item" href="{% url 'mensagensC' %}"><i class="bi bi-chat-dots"></i> Minhas Mensagens</li>
             <li><a class="dropdown-item" href="{% url 'formcandidato' %}"><i class="bi bi-pencil-square"></i> Editar Curriculo</li>
             <li><a class="dropdown-item" href="{% url 'dashboard' %}?favoritadas"><i class="bi bi-briefcase"></i> Vagas Favoritadas</li>
             <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuração da Conta</li>
