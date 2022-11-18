@@ -55,21 +55,22 @@
                     <th>Selecionar</th>
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
                     <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
-                    <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultima Vaga Lançada</th>
+                    <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultimo acesso</th>
                     <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Status: activate ">Status</th>
                     <th class="d-none d-md-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Ações">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for candidato in  candidatos%}
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td>
-                    <td class="sorting_1">Alice Costa</td>
-                    <td class="d-none d-xl-table-cell">01/01/2021</td>
-                    <td class="d-none d-xl-table-cell">31/06/2021</td>
+                    <td class="sorting_1">{{candidato.username}}</td>
+                    <td class="d-none d-xl-table-cell">{{candidato.date_joined}}</td>
+                    <td class="d-none d-xl-table-cell">{{candidato.last_login}}</td>
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
                       <div class="dropdown">
@@ -83,50 +84,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr class="empresas">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
-                      </div>
-                    </td>
-                    <td class="sorting_1">Erick Costa</td>
-                    <td class="d-none d-xl-table-cell">01/01/2021</td>
-                    <td class="d-none d-xl-table-cell">31/06/2021</td>
-                    <td><span class="badge bg-danger">+6 meses Inativo</span></td>
-                    <td class="d-none d-md-table-cell">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Ações
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="empresas">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
-                      </div>
-                    </td>
-                    <td class="sorting_1">Gustavo Santos</td>
-                    <td class="d-none d-xl-table-cell">01/01/2021</td>
-                    <td class="d-none d-xl-table-cell">31/06/2021</td>
-                    <td><span class="badge bg-warning">6 meses inativo</span></td>
-                    <td class="d-none d-md-table-cell">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Ações
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><button type="button" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
+                  {% endfor%}
                 </tbody>
               </table>
             </div>

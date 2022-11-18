@@ -154,6 +154,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, '../apps'))
 # Config auth
 AUTH_USER_MODEL = 'login_cadastro.Users'
 
+SESSION_COOKIE_AGE = 1800 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -180,3 +181,4 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST = config('EMAIL_HOST')
 
+DATE_FORMAT = 'd/m/Y'
