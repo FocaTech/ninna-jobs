@@ -452,6 +452,7 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     dados = {
         'lista_de_talentos' : lista_de_talentos,
+        'talentos_cadas_incompleto' : list_talen_cadastro_incompleto,
         'numero_de_candidatos' : len(lista_de_talentos),
         'dados' : dados_pessoais,
         'info' : informacoes_iniciais,
