@@ -30,16 +30,14 @@
                 <a class="linkwapp" href="https://wa.me/{{dados.telefone}}"><i class="bi bi-whatsapp m-2"></i></a>
                 {% endif %}
                 {% endfor %}
-
-
                 <a href="mailto:{{user.email}}?subject=Parabéns%20Você%20Foi%20Pré%20Selecionado"><i class="bi bi-envelope"></i></a>
-
-
             </div>
             <div class="div-enviar-mensagem">
+
                 {% if not user.funcao == "CAN" %}
                 <a href="#" type="button" class="btn bt-enviar btn-outline-primary"><i class="bi bi-send aviao"></i><p class="msg-btn-enviar">Quero conversar</p></a>
                 {% endif %}
+
                 <div class='right-column'>
                 {% if Informacoes %}
                 {% for I in Informacoes %}
