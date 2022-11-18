@@ -510,3 +510,11 @@ def contato(request):
 
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
+
+def configuracoes(request):
+    return render(request, 'configuraçoes.html')
+
+def apagar_conta(request):
+    user = get_object_or_404(Users, pk=request.user.id)
+    user.delete()
+    return redirect('index')
