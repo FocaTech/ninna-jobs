@@ -79,8 +79,6 @@ def Informacoes_iniciais(request):
     for local in locais:
         if not local.state in estado:
             estado.append(local.state)
-        if not local.name in cidades:
-            cidades.append(local.name)
     cidades = sorted(cidades)
     estado = sorted(estado)
     id = request.user.id
@@ -97,6 +95,19 @@ def Informacoes_iniciais(request):
     }
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
+
+def carrega_funcoes(request):
+    '''pega o estado e devolve suas cidades'''
+    estado_id = request.GET.get('uf')
+    cidades = City.objects.filter(state=estado_id)
+    nome_cidade = []
+    for local in cidades:
+        if not local.name in nome_cidade:
+            nome_cidade.append(local.name)
+    dados = {
+        'cidades':nome_cidade
+    }
+    return render(request, 'partials/Usuarios/funcao_ajax.html', dados)
 
 def editando_informacoes_iniciais(request):
     '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
@@ -119,6 +130,7 @@ def editando_informacoes_iniciais(request):
 
 def Dados_pessoais(request):
     '''Pega os dados pessoais salva e renderiza as formacoes'''
+    print('chegou')
     id = request.user.id
     if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=id)) < 1:
         usuario = get_object_or_404(Users, pk=request.user.id)
