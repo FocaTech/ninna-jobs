@@ -3,11 +3,12 @@ from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idio
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
-# from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
 from django.contrib import auth, messages
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
+
 
 
 def formempresa(request):
@@ -130,7 +131,6 @@ def editando_informacoes_iniciais(request):
 
 def Dados_pessoais(request):
     '''Pega os dados pessoais salva e renderiza as formacoes'''
-    print('chegou')
     id = request.user.id
     if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=id)) < 1:
         usuario = get_object_or_404(Users, pk=request.user.id)
@@ -500,6 +500,10 @@ def talentos(request):
     d = Dados_Pessoais.objects.order_by('-data_dados')
     i = Informações_Iniciais.objects.all()
     f = Formacao_Academica.objects.all()
+    if len(d) > 0:
+        dados_paginados = Paginator(d, 1)
+        page_num = request.GET.get('page')
+        d = dados_paginados.get_page(page_num)
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
