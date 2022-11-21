@@ -33,4 +33,5 @@ urlpatterns = [
     path('contato', views.contato, name='contato'),#busca candidatos
     path('favoritar_talento/<int:pk_talento>', views.favoritar_talento, name='favoritar_talento'),#favoritar talentos
     path('configuracoes', views.configuracoes, name='configuracoes'),
+    path('apagar_conta', views.apagar_conta, name='apagar_conta'),
 ]

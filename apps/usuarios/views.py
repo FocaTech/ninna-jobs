@@ -544,3 +544,26 @@ def favoritar_talento(request, pk_talento, *args, **kwargs):
 
 def configuracoes(request):
     return render(request, 'configuraçoes.html')
+
+def apagar_conta(request):
+    users = get_object_or_404(Users, pk=request.user.id)
+    if len(Dados_Pessoais.objects.all().filter(user=users)) >= 0:
+        for dados in Dados_Pessoais.objects.all().filter(user=users):
+            dados.delete()
+    if len(Informações_Iniciais.objects.all().filter(user=users)) >= 0:
+        for dados in Informações_Iniciais.objects.all().filter(user=users):
+            dados.delete()
+    if len(Certificados_Conquistas.objects.all().filter(user=users)) >= 0:
+        for dados in Certificados_Conquistas.objects.all().filter(user=users):
+            dados.delete()
+    if len(Formacao_Academica.objects.all().filter(user=users)) >= 0:
+        for dados in Formacao_Academica.objects.all().filter(user=users):
+            dados.delete()
+    if len(Idiomas.objects.all().filter(user=users)) >= 0:
+        for dados in Idiomas.objects.all().filter(user=users):
+            dados.delete()
+    if len(Experiência_Profissional.objects.all().filter(user=users)) >= 0:
+        for dados in Experiência_Profissional.objects.all().filter(user=users):
+            dados.delete()
+    users.delete()
+    return redirect('index')
