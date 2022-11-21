@@ -435,12 +435,6 @@ def listar_talentos_candidatados(request, pk_vaga):
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
         else:
             talentos_cadastro_incompleto.append(talento)
-        #     print(dado_pessoal)
-        # else:
-        #     print('entrou')
-        #     print(talento.username)
-        #     dados_pessoais.append(talento)
-        #     # dados_pessoais.append('O candidato nao forneceu os dados')
 
     informacoes_iniciais = []
     for talento in lista_de_talentos:
@@ -449,11 +443,6 @@ def listar_talentos_candidatados(request, pk_vaga):
             informacoes_iniciais.append(*informacao_inicial)
         else:
             talentos_cadastro_incompleto.append(talento)
-        # else:
-        #     print('entrou')
-        #     print(talento.username)
-        #     informacoes_iniciais.append(talento)
-        #     # informacoes_iniciais.append('O candidato nao forneceu os dados')
 
     formacaoes_academicas = []
     for talento in lista_de_talentos:
@@ -462,20 +451,6 @@ def listar_talentos_candidatados(request, pk_vaga):
             formacaoes_academicas.append(*formacao_academica)
         else:
             talentos_cadastro_incompleto.append(talento)
-
-    # talentos_cadastro_incompleto = []
-    # for talento in lista_de_talentos:
-    #     informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
-    #     if len(informacao_inicial) == 0:
-    #         talentos_cadastro_incompleto.append(talento)
-
-    #     dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
-    #     if len(dado_pessoal) == 0:
-    #         talentos_cadastro_incompleto.append(talento)
-
-    #     formacao_academica = Formacao_Academica.objects.filter(user=talento)
-    #     if len(formacao_academica) == 0:
-    #         talentos_cadastro_incompleto.append(talento)
 
     list_talen_cadastro_incompleto = list(OrderedDict.fromkeys(talentos_cadastro_incompleto))# tirar os repetidos
 
@@ -544,3 +519,25 @@ def contato(request):
 
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
+
+@has_role_decorator('empresa')
+def favoritar_talento(request, pk_talento, *args, **kwargs):
+    print(pk_talento)
+
+    # if request.user.is_authenticated:
+    #     id_cadidato = get_object_or_404(Users, pk=request.user.id)
+
+    #     id_vaga = Vagas.objects.filter(id=pk_vaga).values_list('nome_vaga', flat=True).get()
+
+    #     id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
+
+    #     if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
+    #         vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
+    #         vaga_salva_desfavoritar.delete()
+    #         messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
+    #         return redirect("dashboard")
+
+    #     vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
+    #     vaga_salva.save()
+    #     messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
+    return redirect("dashboard")
