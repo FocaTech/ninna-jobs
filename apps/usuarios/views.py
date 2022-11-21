@@ -541,3 +541,6 @@ def favoritar_talento(request, pk_talento, *args, **kwargs):
     #     vaga_salva.save()
     #     messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
     return redirect("dashboard")
+
+def configuracoes(request):
+    return render(request, 'configuraçoes.html')
