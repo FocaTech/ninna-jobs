@@ -24,7 +24,7 @@
           {% for d in dados %}
           <li class="w3-bar">
               <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i></span>
-              <a href="{% url 'perfil_candidato' d.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i></a>
+              <a href="{% url 'perfil_candidato' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i></a>
               <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
               <img src="{{ d.imagem_perfil.url }}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
               <div class="w3-bar-item">
@@ -48,7 +48,45 @@
             </li>
           {% endfor %}
           {% endif %}
-      </ul>
+          <!-- ##### Pagination ##### -->
+          <section class="top-catagory-area section-padding-20-0">
+            <div class="container">
+                {% if dados.has_other_pages %}
+                <ul class="pagination">
+                    {% if dados.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{ dados.previous_page_number }}" class="page-link">&laquo;</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">&laquo;</a>
+                    </li>
+                    {% endif %}
+                    {% for pagina in dados.paginator.page_range %}
+                    {% if dados.number == pagina %}
+                    <li class="page-item active">
+                        <a class="page-link">{{ pagina }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if dados.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{ dados.next_page_number }}" class="page-link">&raquo;</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">&raquo;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+            </section>
+        </ul>
       </div>
     </div>
     {% include 'partials/sidebar/empresa.html' %}

@@ -197,25 +197,3 @@ def plataforma(request):
 def arquivadas(request):
     return render(request, 'arquivadas.html')
 
-def cadastro_candidato_2(request):
-    areas = AreaDeInteresse.objects.all()
-    generos = Genero.objects.all()
-    estados = Estado.objects.all()
-    formacoes = FormacaoAcademica.objects.all()
-    meses = Mes.objects.all()
-    anos = Ano.objects.all()
-    conquistas = Conquista.objects.all()
-    niveis = NivelIdioma.objects.all()
-
-    dados = {
-        'areas' : areas,
-        'generos' : generos,
-        'estados' : estados,
-        'formacoes' : formacoes,
-        'meses' : meses,
-        'anos' : anos,
-        'conquistas' : conquistas,
-        'niveis' : niveis
-    }
-    return render(request, 'formcandidato.html', dados)
-

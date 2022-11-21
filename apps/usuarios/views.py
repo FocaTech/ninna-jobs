@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
-# from vaga.models import TipoContratacao, TipoTrabalho, PerfilProfissional
+from collections import OrderedDict
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
 from django.contrib import auth, messages
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
+
 
 
 def formempresa(request):
@@ -49,6 +51,12 @@ def formcandidato(request):
         }
     return render(request, 'formcandidato.html', dados)
 
+def apagar_informacoes_iniciais(request):
+    '''começa todo o forms e traz os objetos para editar se existir'''
+    informacoes = get_object_or_404(Informações_Iniciais, user=request.user)
+    informacoes.delete()
+    return redirect('formcandidato')
+
 def Informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
     id = request.user.id
@@ -72,8 +80,6 @@ def Informacoes_iniciais(request):
     for local in locais:
         if not local.state in estado:
             estado.append(local.state)
-        if not local.name in cidades:
-            cidades.append(local.name)
     cidades = sorted(cidades)
     estado = sorted(estado)
     id = request.user.id
@@ -90,6 +96,19 @@ def Informacoes_iniciais(request):
     }
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
+
+def carrega_funcoes(request):
+    '''pega o estado e devolve suas cidades'''
+    estado_id = request.GET.get('uf')
+    cidades = City.objects.filter(state=estado_id)
+    nome_cidade = []
+    for local in cidades:
+        if not local.name in nome_cidade:
+            nome_cidade.append(local.name)
+    dados = {
+        'cidades':nome_cidade
+    }
+    return render(request, 'partials/Usuarios/funcao_ajax.html', dados)
 
 def editando_informacoes_iniciais(request):
     '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
@@ -139,6 +158,11 @@ def Dados_pessoais(request):
         'formacoes':formacoes
     }
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
+
+def apagar_dados_pessoais(request):
+    dados = get_object_or_404(Dados_Pessoais, user=request.user)
+    dados.delete()
+    return redirect('Informacoes_iniciais')
 
 def editando_dados_pessoais(request):
     '''caso ele ja tenha preenchido ele vai ser direcionado aqui para editar'''
@@ -374,22 +398,24 @@ def perfil(request):
     }
     return render(request, 'perfil.html',dados)
 
-def exibir_perfil_do_talento_candidatado(request, pk_user):
-    CC = Certificados_Conquistas.objects.order_by().filter(user=pk_user)
-    DP = Dados_Pessoais.objects.order_by().filter(user=pk_user)
-    EP = Experiência_Profissional.objects.order_by().filter(user=pk_user)
-    FA = Formacao_Academica.objects.order_by().filter(user=pk_user)
-    II = Informações_Iniciais.objects.order_by().filter(user=pk_user)
-    I = Idiomas.objects.order_by().filter(user=pk_user)
+def perfil_candidato(request, id_candidato):
+    '''empresa poder ver os perfil candidato'''
+    CC = Certificados_Conquistas.objects.order_by().filter(user=id_candidato)
+    DP = Dados_Pessoais.objects.order_by().filter(user=id_candidato)
+    EP = Experiência_Profissional.objects.order_by().filter(user=id_candidato)
+    FA = Formacao_Academica.objects.order_by().filter(user=id_candidato)
+    II = Informações_Iniciais.objects.order_by().filter(user=id_candidato)
+    I = Idiomas.objects.order_by().filter(user=id_candidato)
     dados = {
         'Certificados':CC,
         'Dados':DP,
         'Experiencia':EP,
         'Formacao':FA,
         'Informacoes':II,
-        'Idiomas':I
-    }
-    return render(request, 'perfil.html', dados)
+        'Idiomas':I,
+        'id_candidato':id_candidato
+        }
+    return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
@@ -399,27 +425,65 @@ def listar_talentos_candidatados(request, pk_vaga):
         obj_talento = obj_vaga_candidatada.id_cadidato
         lista_de_talentos.append(obj_talento)
 
+    talentos_cadastro_incompleto = []
+
     dados_pessoais = []
     for talento in lista_de_talentos:
         # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
         dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+        else:
+            talentos_cadastro_incompleto.append(talento)
+        #     print(dado_pessoal)
+        # else:
+        #     print('entrou')
+        #     print(talento.username)
+        #     dados_pessoais.append(talento)
+        #     # dados_pessoais.append('O candidato nao forneceu os dados')
 
     informacoes_iniciais = []
     for talento in lista_de_talentos:
         informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
         if len(informacao_inicial) != 0:
             informacoes_iniciais.append(*informacao_inicial)
+        else:
+            talentos_cadastro_incompleto.append(talento)
+        # else:
+        #     print('entrou')
+        #     print(talento.username)
+        #     informacoes_iniciais.append(talento)
+        #     # informacoes_iniciais.append('O candidato nao forneceu os dados')
 
     formacaoes_academicas = []
     for talento in lista_de_talentos:
         formacao_academica = Formacao_Academica.objects.filter(user=talento)
         if len(formacao_academica) != 0:
             formacaoes_academicas.append(*formacao_academica)
+        else:
+            talentos_cadastro_incompleto.append(talento)
+
+    # talentos_cadastro_incompleto = []
+    # for talento in lista_de_talentos:
+    #     informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+    #     if len(informacao_inicial) == 0:
+    #         talentos_cadastro_incompleto.append(talento)
+
+    #     dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+    #     if len(dado_pessoal) == 0:
+    #         talentos_cadastro_incompleto.append(talento)
+
+    #     formacao_academica = Formacao_Academica.objects.filter(user=talento)
+    #     if len(formacao_academica) == 0:
+    #         talentos_cadastro_incompleto.append(talento)
+
+    list_talen_cadastro_incompleto = list(OrderedDict.fromkeys(talentos_cadastro_incompleto))# tirar os repetidos
+
+    print(f"talen cadas incom =={list_talen_cadastro_incompleto}")
 
     dados = {
         'lista_de_talentos' : lista_de_talentos,
+        'talentos_cadas_incompleto' : list_talen_cadastro_incompleto,
         'numero_de_candidatos' : len(lista_de_talentos),
         'dados' : dados_pessoais,
         'info' : informacoes_iniciais,
@@ -436,6 +500,10 @@ def talentos(request):
     d = Dados_Pessoais.objects.order_by('-data_dados')
     i = Informações_Iniciais.objects.all()
     f = Formacao_Academica.objects.all()
+    if len(d) > 0:
+        dados_paginados = Paginator(d, 1)
+        page_num = request.GET.get('page')
+        d = dados_paginados.get_page(page_num)
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
@@ -445,24 +513,6 @@ def talentos(request):
         'form':f
     }
     return render(request, 'bancodetalentos.html', dado)
-
-def perfil_candidato(request, id_candidato):
-    '''empresa poder ver os perfil candidato'''
-    CC = Certificados_Conquistas.objects.order_by().filter(user=id_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=id_candidato)
-    EP = Experiência_Profissional.objects.order_by().filter(user=id_candidato)
-    FA = Formacao_Academica.objects.order_by().filter(user=id_candidato)
-    II = Informações_Iniciais.objects.order_by().filter(user=id_candidato)
-    I = Idiomas.objects.order_by().filter(user=id_candidato)
-    dados = {
-        'Certificados':CC,
-        'Dados':DP,
-        'Experiencia':EP,
-        'Formacao':FA,
-        'Informacoes':II,
-        'Idiomas':I
-    }
-    return render(request, 'perfil.html',dados)
 
 def busca_talentos(request):
     if 'busca_talentos' in request.GET:
@@ -494,6 +544,3 @@ def contato(request):
 
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
-
-def candidatos_fav(request):
-    return render(request, 'candidatosFavoritados.html')

@@ -42,12 +42,24 @@ def acoes_empresa(request):
     return render(request, 'acoesEmpresa.html')
 
 def acoes_talento(request):
-    return render(request, 'acoesTalento.html')
+    candidatos = Users.objects.filter(funcao = 'CAN')
+
+    # for candidato in candidatos:
+    #     print(f"{candidato.username} == {candidato.date_joined.__format__('%Y-%m-%d %H:%m')}")
+    #     print(f"{candidato.username} =={candidato.last_login}")
+    #     print('')
+
+    contexto = {
+        'candidatos' : candidatos
+    }
+
+    return render(request, 'acoesTalento.html', contexto)
 
 def graficos(request):
     return render(request, 'Graficos.html')
 
 def relatorio(request):
+
     return render(request, 'relatorio.html')
 
 def detalhes_vagas(request):
