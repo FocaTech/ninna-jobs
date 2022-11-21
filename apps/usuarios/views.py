@@ -494,3 +494,6 @@ def contato(request):
 
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
+
+def candidatos_fav(request):
+    return render(request, 'candidatosFavoritados.html')

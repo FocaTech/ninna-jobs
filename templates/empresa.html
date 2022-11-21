@@ -74,11 +74,13 @@
                               </ul>
                             </li>
                           </ul>
-                          <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
-                            Detalhes
-                          </button>
-                          <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
-                          <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Arquivar Vaga</a>
+                          <div class="d-flex justify-content-center gap-1">
+                            <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
+                              Detalhes
+                            </button>
+                            <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
+                            <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Arquivar Vaga</a>
+                            </div>
                           </div>
                           {% include 'partials/modal-vaga.html' %}
                       </div>
@@ -97,7 +99,8 @@
                     <div class="col">
                       <div class="card h-100 vaga">
                         <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
-                        <div class="card-body d-flex flex-column">
+                        te
+                        <div class="card-body d-flex flex-column flex-wrap">
                           <h5 class="card-title">{{ vaga.nome_vaga }}</h5>
                           <ul class="hide-bullets">
                             <li>
