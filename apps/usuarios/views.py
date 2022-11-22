@@ -520,16 +520,15 @@ def contato(request):
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
 
-@has_role_decorator('empresa')
-def favoritar_talento(request, pk_talento, *args, **kwargs):
+def favoritar_talento(request, pk_talento):
     print(pk_talento)
 
-    # if request.user.is_authenticated:
-    #     id_cadidato = get_object_or_404(Users, pk=request.user.id)
+    if request.user.is_authenticated:
+        id_empresa = get_object_or_404(Users, pk=request.user.id)
+        print(f"obj emp == {id_empresa}")
 
-    #     id_vaga = Vagas.objects.filter(id=pk_vaga).values_list('nome_vaga', flat=True).get()
-
-    #     id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
+        id_candidato = get_object_or_404(Users, pk=pk_talento)
+        print(f"obj emp == {id_candidato}")
 
     #     if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
     #         vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
@@ -540,7 +539,8 @@ def favoritar_talento(request, pk_talento, *args, **kwargs):
     #     vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
     #     vaga_salva.save()
     #     messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-    return redirect("dashboard")
+    # return redirect("dashboard")
+    return redirect('index')
 
 def configuracoes(request):
     return render(request, 'configuraçoes.html')
