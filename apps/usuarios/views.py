@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica
+from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
@@ -530,17 +530,20 @@ def favoritar_talento(request, pk_talento):
         id_candidato = get_object_or_404(Users, pk=pk_talento)
         print(f"obj emp == {id_candidato}")
 
-    #     if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
-    #         vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
-    #         vaga_salva_desfavoritar.delete()
-    #         messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-    #         return redirect("dashboard")
+        if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
+            talento_para_desfavoritar = get_object_or_404(TalentosFavoritados, id_talento=id_candidato, id_empresa=id_empresa)
+            talento_para_desfavoritar.delete()
+            # messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
+            if not TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
+                print('desfavoritouuu')
+            return redirect('talentos')
 
-    #     vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
-    #     vaga_salva.save()
-    #     messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-    # return redirect("dashboard")
-    return redirect('index')
+        talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
+        talento_favoritado.save()
+        if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
+            print('salvouuuuu')
+        # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
+        return redirect('talentos')
 
 def configuracoes(request):
     return render(request, 'configuraçoes.html')

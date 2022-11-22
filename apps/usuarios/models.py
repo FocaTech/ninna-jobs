@@ -106,7 +106,6 @@ class City(models.Model):#cidades e estados
 	def __unicode__(self):
 		return self.name
 
-
-# class TalentosFavoritados(models.Model):
-#     id_empresa = models.ForeignKey(Users, on_delete=models.CASCADE)
-#     id_cadidato = models.ForeignKey(Users, on_delete=models.CASCADE)
+class TalentosFavoritados(models.Model):
+    id_talento = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='talento')
+    id_empresa = models.ForeignKey(Users, on_delete=models.CASCADE)
