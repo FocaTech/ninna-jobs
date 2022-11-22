@@ -105,3 +105,7 @@ class City(models.Model):#cidades e estados
     # python manage.py loaddata city
 	def __unicode__(self):
 		return self.name
+
+class TalentosFavoritados(models.Model):
+    id_talento = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='talento')
+    id_empresa = models.ForeignKey(Users, on_delete=models.CASCADE)

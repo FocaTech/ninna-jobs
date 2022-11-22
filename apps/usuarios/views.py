@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica
+from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
@@ -520,27 +520,53 @@ def contato(request):
 def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
 
-@has_role_decorator('empresa')
-def favoritar_talento(request, pk_talento, *args, **kwargs):
+def favoritar_talento(request, pk_talento):
     print(pk_talento)
 
-    # if request.user.is_authenticated:
-    #     id_cadidato = get_object_or_404(Users, pk=request.user.id)
+    if request.user.is_authenticated:
+        id_empresa = get_object_or_404(Users, pk=request.user.id)
+        print(f"obj emp == {id_empresa}")
 
-    #     id_vaga = Vagas.objects.filter(id=pk_vaga).values_list('nome_vaga', flat=True).get()
+        id_candidato = get_object_or_404(Users, pk=pk_talento)
+        print(f"obj emp == {id_candidato}")
 
-    #     id_vaga = get_object_or_404(Vagas, pk=pk_vaga)
+        if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
+            talento_para_desfavoritar = get_object_or_404(TalentosFavoritados, id_talento=id_candidato, id_empresa=id_empresa)
+            talento_para_desfavoritar.delete()
+            # messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
+            if not TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
+                print('desfavoritouuu')
+            return redirect('talentos')
 
-    #     if VagasSalvas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
-    #         vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
-    #         vaga_salva_desfavoritar.delete()
-    #         messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-    #         return redirect("dashboard")
-
-    #     vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
-    #     vaga_salva.save()
-    #     messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-    return redirect("dashboard")
+        talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
+        talento_favoritado.save()
+        if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
+            print('salvouuuuu')
+        # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
+        return redirect('talentos')
 
 def configuracoes(request):
     return render(request, 'configuraçoes.html')
+
+def apagar_conta(request):
+    users = get_object_or_404(Users, pk=request.user.id)
+    if len(Dados_Pessoais.objects.all().filter(user=users)) >= 0:
+        for dados in Dados_Pessoais.objects.all().filter(user=users):
+            dados.delete()
+    if len(Informações_Iniciais.objects.all().filter(user=users)) >= 0:
+        for dados in Informações_Iniciais.objects.all().filter(user=users):
+            dados.delete()
+    if len(Certificados_Conquistas.objects.all().filter(user=users)) >= 0:
+        for dados in Certificados_Conquistas.objects.all().filter(user=users):
+            dados.delete()
+    if len(Formacao_Academica.objects.all().filter(user=users)) >= 0:
+        for dados in Formacao_Academica.objects.all().filter(user=users):
+            dados.delete()
+    if len(Idiomas.objects.all().filter(user=users)) >= 0:
+        for dados in Idiomas.objects.all().filter(user=users):
+            dados.delete()
+    if len(Experiência_Profissional.objects.all().filter(user=users)) >= 0:
+        for dados in Experiência_Profissional.objects.all().filter(user=users):
+            dados.delete()
+    users.delete()
+    return redirect('index')

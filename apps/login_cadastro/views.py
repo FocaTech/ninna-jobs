@@ -33,10 +33,10 @@ def cadastro_candidato(request):
             return redirect ('cadastro_candidato')
         if Users.objects.filter(email=candidato_email).exists():
             messages.error(request, 'Usuario ja cadastrado')
-            return redirect('longar_candidato')
+            return redirect('cadastro_candidato')
         if Users.objects.filter(username=candidato_nome).exists():
             messages.error(request, 'Usuario ja cadastrado')
-            return redirect('longar_candidato')
+            return redirect('cadastro_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
         messages.success(request, 'Cadastro realizado com Sucesso')
@@ -59,7 +59,7 @@ def cadastro_empresa(request):
         empresa_senha = request.POST['empresa_senha']
         empresa_senha_conf = request.POST['empresa_senha_conf']
         if empresa_senha != empresa_senha_conf:
-            print('senhas não são iguais')
+            messages.error(request, 'Senhas diferentes')
             return redirect ('cadastro_empresa')
         if Users.objects.filter(email=empresa_email).exists():
             messages.error(request, 'Usuario ja cadastrado')
@@ -80,14 +80,13 @@ def cadastro_empresa(request):
     else:
         return render(request, 'loginEmpresa.html')
 
-def logar_candidato(request):
+def login(request):
     if request.method == 'POST':
-        candidato_email = request.POST.get('candidato_email', None)
-        candidato_senha = request.POST.get('candidato_senha', None)
-        print(candidato_email, candidato_senha)
-        if Users.objects.filter(email=candidato_email).exists():
-            nome = Users.objects.filter(email=candidato_email).values_list('username', flat=True).get()
-            user = auth.authenticate(request, username=nome, password=candidato_senha, funcao = "CAN")
+        email = request.POST.get('email', None)
+        senha = request.POST.get('senha', None)
+        if Users.objects.filter(email=email).exists():
+            nome = Users.objects.filter(email=email).values_list('username', flat=True).get()
+            user = auth.authenticate(request, username=nome, password=senha)
             print(nome)
             print(user)
             if user:
@@ -95,7 +94,7 @@ def logar_candidato(request):
                 print("autenticado")
                 messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {nome}')
                 return redirect('index')
-        messages.error(request, "candidato não cadastrado")
+        messages.error(request, "Usuario não cadastrado")
     return render(request, 'index.html')
 
 email_do_user_atual = ''
@@ -152,16 +151,15 @@ def alterar_senha(request):
                 messages.success(request,'Senha alterada com sucesso!')
                 email_do_user_atual = ''
                 print("deu certo salvou")
-                return redirect('longar_candidato')
+                return redirect('login')
     else:
-        return redirect('longar_candidato')
+        return redirect('login')
 
     return render(request, 'alterarsenha.html')
 
 def sair(request):
     '''Desloga uma pessoa'''
     auth.logout(request)
-    messages.error(request, 'Deslogado')
     return redirect('index')
 
 def nao_pode_estar_vazio(empresa_email, empresa_senha, candidato_email, candidato_senha):

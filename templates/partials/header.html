@@ -52,7 +52,7 @@
             {% elif user.funcao == "EMP" %}
             <li><a class="dropdown-item" href="{% url 'empresa' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
             <li><a class="dropdown-item" href="{% url 'perfilempresa' %}"><i class="bi bi-pencil-square"></i> Editar Perfil</li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuração da Conta</li>
+            <li><a class="dropdown-item" href="{% url 'configuracoes' %}"><i class="bi bi-gear"></i> Configuração da Conta</li>
             <li><a class="dropdown-item" href="{% url 'sair' %}"><i class="bi bi-box-arrow-right"></i> Sair</li>
             {% elif user.funcao == "CAN" %}
             <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-layout-text-window-reverse"></i> Minha Área</li>
@@ -91,12 +91,12 @@
             Entrar
           </button>
           <div class="dropdown-menu">
-            <form class="px-4 py-3" method="POST" action="{%url 'longar_candidato'%}"> {% csrf_token %}
+            <form class="px-4 py-3" method="POST" action="{%url 'login'%}"> {% csrf_token %}
               <div class="mb-3">
-                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Email" name="candidato_email">
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Email" name="email">
               </div>
               <div class="mb-3">
-                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Senha" name="candidato_senha">
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Senha" name="senha">
               </div>
               <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
