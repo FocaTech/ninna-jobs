@@ -69,8 +69,8 @@
                       </div>
                     </td>
                     <td class="sorting_1">{{candidato.username}}</td>
-                    <td class="d-none d-xl-table-cell">{{candidato.date_joined.date}}</td>
-                    <td class="d-none d-xl-table-cell">{{candidato.last_login.date}}</td>
+                    <td class="d-none d-xl-table-cell">{{candidato.date_joined|date:"d/m/Y"}}</td>
+                    <td class="d-none d-xl-table-cell">{{candidato.last_login|date:"d/m/Y"}}</td>
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
                       <div class="dropdown">

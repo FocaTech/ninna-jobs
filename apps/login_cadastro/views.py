@@ -98,27 +98,6 @@ def logar_candidato(request):
         messages.error(request, "candidato não cadastrado")
     return render(request, 'index.html')
 
-def logar_empresa(request):
-    empresa_email = None
-    empresa_email = None
-    if request.method == 'POST':
-        empresa_email = request.POST.get('empresa_email', None)
-        empresa_senha = request.POST.get('empresa_senha', None)
-        print(empresa_email, empresa_senha)
-        if Users.objects.filter(email=empresa_email).exists():
-            nome = Users.objects.filter(email=empresa_email).values_list('username', flat=True).get()
-            user = auth.authenticate(request, username=nome, password=empresa_senha, funcao="EMP")
-            if user:
-                auth.login(request, user)
-                print("autenticado")
-                return redirect('index')
-            else:
-                print("Email ou senha incorretos")
-                print(f" resultado do user: {user} \nresultado do nome: {nome}")
-        else:
-            print("Email ou senha incorretos")
-    return redirect ('index')
-
 email_do_user_atual = ''
 def recuperar_senha(request):
     if request.method == 'POST':
