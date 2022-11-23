@@ -527,6 +527,10 @@ def empresas_favoritadas(request):
 
 def favoritar_talento(request, pk_talento):
     print(pk_talento)
+    url_atual = "http://127.0.0.1:8000" + request.path
+    url_sem_id = url_atual[:-1]
+    print(f"url == {url_atual}")
+    print(f"url == {url_sem_id}")
     if request.user.is_authenticated:
         id_empresa = get_object_or_404(Users, pk=request.user.id)
         print(f"obj emp == {id_empresa}")
@@ -547,6 +551,7 @@ def favoritar_talento(request, pk_talento):
         if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             print('salvouuuuu')
         # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
+        # return redirect(url_atual)
         return redirect('talentos')
 
 def configuracoes(request):
