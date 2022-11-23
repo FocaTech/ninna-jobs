@@ -579,3 +579,6 @@ def apagar_conta(request):
             dados.delete()
     users.delete()
     return redirect('index')
+
+def candidato_fav(request):
+    return render(request, 'candidatosFavoritados.html')

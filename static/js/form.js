@@ -1,5 +1,5 @@
  // JavaScript inicial para desativar envios de formulário, se houver campos inválidos.
- (function() {
+(function() {
     'use strict';
     window.addEventListener('load', function() {
     // Pega todos os formulários que nós queremos aplicar estilos de validação Bootstrap personalizados.
@@ -17,40 +17,6 @@
     });
 }, false);
 })();
-
-//Testa os digitos do CPF
-
-
-//Impede que o formulario seja enviado e apresenta msg de erro
-/*
-(function() {
-    'use strict';
-    window.addEventListener('load', function() {
-    // Pega todos os formulários que nós queremos aplicar estilos de validação Bootstrap personalizados.
-    var forms = document.getElementsByClassName('needs-validation');
-    // Faz um loop neles e evita o envio
-    var validation = Array.prototype.filter.call(forms, function(form) {
-    form.addEventListener('submit', function(event) {
-        event.stopPropagation();
-            let strCPF = document.getElementById('cpf').value
-            let msgDeErro = document.getElementById('cpfInvalido')
-            let tdok = document.getElementById('naoOk')
-
-            if(TestaCPF(strCPF)=== false){
-                console.log('orra')
-                msgDeErro.classList.remove('d-lg-none')
-                tdok.classList.add('d-lg-none')
-
-            }else{
-                console.log('cu')
-                msgDeErro.classList.add('d-lg-none')
-                tdok.classList.remove('d-lg-none')
-            }
-    }, false);
-    });
-}, false);
-})();
-*/
 
 //valida CPF
 function validaCPF(strCPF) {
@@ -104,44 +70,7 @@ function fMasc(objeto,mascara) {
     }
 
 
-//emprego Atual
-/*
-    let checkboxEA = document.getElementById('empregoAtual').addEventListener("blur", esconderInputsSaida());
-    let saidaMes  = document.getElementById('saidaMes');
-    let saidaAno = document.getElementById('saidaAno');
 
-    function esconderInputsSaida(){
-        if(checkboxEA.checked) {
-            saidaMes.classList.add('d-lg-none')
-            saidaAno.classList.add('d-lg-none')
-        } else {
-            console.log("O cliente marcou o checkbox");
-            saidaMes.classList.remove('d-lg-none')
-            saidaAno.classList.remove('d-lg-none')
-        }
-
-    }
-
-const selecionado = document.querySelector("#empregoAtual");
-let saidaMes  = document.getElementById('saidaMes');
-let saidaAno = document.getElementById('saidaAno');
-
-
-selecionado.addEventListener("change", (el) => {
-    if (selecionado.checked) {
-        saidaMes.classList.add('d-lg-none')
-        saidaAno.classList.add('d-lg-none')
-        document.getElementById("Seu-Campo").disabled = true
-
-    }else{
-        saidaMes.classList.remove('d-lg-none')
-        saidaAno.classList.remove('d-lg-none')
-    }
-    });
-
-selecionado.dispatchEvent(new Event("change"));
-
-*/
 
 function desabilitar() {
     const selecionado = document.querySelector("#empregoAtual");

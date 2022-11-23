@@ -162,17 +162,35 @@ body::after {
 
 
 /* Perfil da empresa*/
-.botaoContatoperfil{
-    border-radius: 3em 0.5em 0.5em 3em;
-}
-#abaredes{
-    width: 8em;
-    background: hsla(285, 100%, 53%, 0.101);
-    font-weight: bold;
-    font-size: large;
-    text-align: left;
-    border-radius: 0.5em 4em 4em 0.5em ;
-}
+.menuContato {
+    width: 60px;
+    position: fixed;
+    z-index: 1;
+    top: 20px;
+    left: 10px;
+    background: #eee;
+    overflow-x: hidden;
+    padding: 8px 0;
+  }
+
+  .menuContato a, .menuContato button {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    display: block;
+  }
+  .menuContato button{
+    border: none;
+    vertical-align: middle;
+    color: gold;
+  }
+
+  .menuContato a:hover, .menuContato button:hover {
+    height: 70px;
+    box-shadow:2px 4px 3px #999;
+    margin: 2px;
+    vertical-align: middle
+  }
 
 @-webkit-keyframes animate {
 	from {background-position:0 0;}

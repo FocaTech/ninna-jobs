@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Minhas vagas{% endblock %}
 {% block head %}
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
@@ -13,10 +13,30 @@
   <div class="right-column">
     <div class="content">
       <ul class="w3-ul w3-card-4">
-        <h3>total de talentos candidatados == {{ numero_de_candidatos }}</h3>
+        <h3>total de talentos candidatados = {{ numero_de_candidatos }}</h3>
         <hr>
         {% if not user.funcao == "CAN" %}
         {% for d in dados %}
+        <ul class="card d-flex shadow-lg p-2 mb-2 bg-body rounded">
+          <div class="position-absolute top-0 end-0 bg-light">
+              <button class="fs-5 bg-light border border-0"><i class="bi bi-star-fill"></i></button>
+              <a href="#" class="fs-5 bg-light"><i class="bi bi-file-earmark-person"></i><a>
+              <button onclick="this.parentElement.style.display='none'" class="fs-5 bg-light border border-0"><i class="bi bi-x"></i></button>
+          </div>
+          <li class="d-flex">
+              <img src="{% static 'img/candidato.jpg' %}" class="sidebar-avatar my-3 mx-1">
+              <div class="my-auto mx-1">
+                  <span class="fs-4">Maria Alice Teixeira da Costa</span><br>
+                  <div class="d-flex flex-wrap">
+                      <p class="mx-1 my-1">Area de atuação: Informatica</p>
+                      <p class="mx-1 my-1">Nivel Profissional: Junior</p>
+                      <p class="mx-1 my-1">Formação academica: superior</p>
+                      <p class="mx-1 my-1">curso: FrontEnd</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+        dowufniuwjfiufb
         <li class="w3-bar">
             <img src="{{ d.imagem_perfil.url }}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
             <div class="w3-bar-item">

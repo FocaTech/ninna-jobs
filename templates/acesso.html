@@ -1,37 +1,23 @@
+{% extends 'base.html' %}
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <!--meta tags-->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Ninna-Jobs - Cadastrar{% endblock %}
+{% block head %}
     <!--css e bootstrap-->
     <link rel="stylesheet" href="{% static 'css/acesso.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
-
-    <title>acesso rápido</title>
-</head>
-<body>
+    {% endblock %}
+    {% block body_class %}page-profile{% endblock %}
+    {% block content %}
     <div class="caixa">
-
         <div class="imagem">
         </div>
-
         <div class="caixa1">
-
             <div class="texto">
             <h5>Antes de prosseguir, precisamos saber:<br> Como você se identifica?</h5>
             </div>
-
-             <div class="botoes">
-
-            <a href="{% url 'cadastro_empresa' %}" type="submit" class="btn btn-primary"> Sou Empresa</a>
-            <a href="{% url 'cadastro_candidato' %}" type="submit" class="btn btn-primary">Sou Candidato</a>
-
+            <div class="botoes">
+            <a href="{% url 'cadastro_empresa' %}" class="btn btn-primary"> Sou Empresa</a>
+            <a href="{% url 'cadastro_candidato' %}" class="btn btn-primary">Sou Candidato</a>
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
