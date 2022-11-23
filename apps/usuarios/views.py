@@ -555,7 +555,7 @@ def favoritar_talento(request, pk_talento):
         return redirect('talentos')
 
 def configuracoes(request):
-    return render(request, 'configuraçoes.html')
+    return render(request, 'configuracoes.html')
 
 def apagar_conta(request):
     users = get_object_or_404(Users, pk=request.user.id)
