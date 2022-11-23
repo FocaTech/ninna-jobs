@@ -1,36 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from login_cadastro.models import Users
-from vaga.models import Vagas
+from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from django.http import JsonResponse
 from django.core import serializers
+from django.contrib import messages
+
+todos_os_can = Users.objects.filter(funcao='CAN').count()
+todas_as_emp = Users.objects.filter(funcao='EMP').count()
+vagas_ativas = Vagas.objects.filter(status=True).count()
 # Create your views here.
 def interface(request):
-    todos_os_can = Users.objects.filter(funcao='CAN').count()
-    todas_as_emp = Users.objects.filter(funcao='EMP').count()
-    vagas_ativas = Vagas.objects.filter(status=True)
-    print(f"numero total de candidatos == {todos_os_can}")
-    print(f"numero total de empresas == {todas_as_emp}")
-    print(f"numero total de candidatos == {todos_os_can}")
-    print(f"numero total de empresas == {todas_as_emp}")
+    empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
+    candidato = Users.objects.filter(funcao='CAN').order_by('-date_joined')[0:5]
 
+    print(empresa)
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
         'numero_de_vagas_ativas' : vagas_ativas,
+        'empresa' : empresa,
+        'candidato' :candidato,
     }
 
     dados["data"] = [dados["numero_de_can"], dados["numero_de_emp"]]
     return render(request, 'admin.html', dados)
 
 def interface_charts(request):
-    todos_os_can = Users.objects.filter(funcao='CAN').count()
-    todas_as_emp = Users.objects.filter(funcao='EMP').count()
-    vagas_ativas = Vagas.objects.filter(status=True)
-
     return JsonResponse(data={
     "numero_de_can": todos_os_can,
     "numero_de_emp": todas_as_emp,
-    "numero_de_vagas_ativas": list(vagas_ativas),
     "data": [todos_os_can, todas_as_emp]
 })
 
@@ -55,15 +53,52 @@ def acoes_talento(request):
 
     return render(request, 'acoesTalento.html', contexto)
 
-def graficos(request):
-    return render(request, 'Graficos.html')
-
 def relatorio(request):
-
-    return render(request, 'relatorio.html')
+    contexto = {
+        'numero_de_can':todos_os_can
+    }
+    return render(request, 'relatorio.html',contexto)
 
 def detalhes_vagas(request):
     return render(request, 'detalhesVagasEmpresa.html')
 
 def acoes_vaga(request):
-    return render(request, 'acoesVagas.html')
+    '''cria e salva vagas'''
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+
+    vagas = Vagas.objects.all()
+
+    dados = {
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'vagas' : vagas
+    }
+
+    if request.method == 'POST':
+        nome_vaga = request.POST['nome_vaga']
+        tipo_contratacao = request.POST['tipo_contratacao']
+        local = request.POST['local']
+        perfil = request.POST['perfil']
+        salario = request.POST['salario']
+        descricao_empresa = request.POST['descricao_empresa']
+        descricao_vaga = request.POST['descricao_vaga']
+        area_atuacao = request.POST['area_atuacao']
+        principais_atividades = request.POST['principais_atividades']
+        requisitos = request.POST['requisitos']
+        diferencial = request.POST['diferencial']
+        beneficios = request.POST['beneficios']
+        tipo_trabalho = request.POST['tipo_trabalho']
+        logo_empresa = request.FILES['logo_empresa']
+        user = get_object_or_404(Users, pk=request.user.id)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, nome_empresa=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
+        vaga.save()
+        if vaga:
+            messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
+        # return redirect('minhas-vagas')
+        return redirect('empresa')
+
+    else:
+        return render(request, 'acoesVagas.html', dados)

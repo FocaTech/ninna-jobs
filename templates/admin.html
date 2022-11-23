@@ -29,7 +29,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col mt-0">
-                  <h6 class="card-title">Total de usuarios cadastratos</h6>
+                  <h6 class="card-title">Total de Candidatos cadastratos</h6>
                 </div>
                 <div class="col-auto">
                   <div class="avatar">
@@ -128,18 +128,21 @@
           </div>
         </div>
         <!--Empresas cadastradas-->
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <div class="card" style="width: 18rem;">
+        <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
+
+          {% for i in empresa %}
+          <div class="col">
+            <div class="card h-100 vaga">
+
               <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title"><i class="bi bi-building"></i> Nome da Empresa</h5>
+                <h5 class="card-title"><i class="bi bi-building"></i> {{i.username}}</h5>
                 <div class="dropdown-center">
                   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Informações
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="{% url 'perfilempresa' %}">Perfil</a></li>
                     <li><a class="dropdown-item" href="#">Vagas ativas: 00</a></li>
                     <li><a class="dropdown-item" href="#">Matches: 00</a></li>
                   </ul>
@@ -147,6 +150,7 @@
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
         <div class="row">
           <div class="col-md-12 mb-3">
@@ -157,6 +161,7 @@
                     <h4>Ultimos talentos registrados</h4>
                   </div>
                   <table id="example"class="table table-striped data-table"style="width: 100%">
+
                     <thead>
                       <tr>
                         <th>Nome</th>
@@ -166,8 +171,9 @@
                       </tr>
                     </thead>
                     <tbody>
+                      {% for i in candidato%}
                       <tr>
-                        <td>Maria Alice Teixeira Da Costa</td>
+                        <td>{{i.full_name}}</td>
                         <td>Superior Incompleto</td>
                         <td>Senior</td>
                         <td>16/06/2000</td>
@@ -184,6 +190,7 @@
                           </div>
                         </td>
                       </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
@@ -208,7 +215,7 @@ const chartsUsuarios = document.querySelectorAll(".totalusuarios");
 const chartsTalentos = document.querySelectorAll(".niveltalento");
 
 fetch(
-  'http://127.0.0.1:8000/ninna/api-charts',
+  '/ninna/api-charts',
   {
     method: "GET",
     headers: {"Content-type": "application/json; charset=UTF-8"}

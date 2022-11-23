@@ -37,7 +37,7 @@
                         {% include 'partials/_alertas.html' %}
                        <div class="tabber__content">
                         <div id="login" class="active mb-4">
-                            <form action="{% url 'longar_candidato' %}" method="POST">
+                            <form action="{% url 'cadastro_candidato' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-lg7">
