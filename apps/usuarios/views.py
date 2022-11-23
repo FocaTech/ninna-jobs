@@ -338,6 +338,7 @@ def empresa(request, *args, **kwargs):
         'vagas' : vagas,
         'vagas_arquivadas' : vagas_arquivadas,
     }
+    print("encontrei")
     return render(request, 'empresa.html', dado)
 
 @has_role_decorator('candidato')
@@ -466,6 +467,7 @@ def listar_talentos_candidatados(request, pk_vaga):
 
 def talentos(request):
     '''empresa poder ver os candidatos'''
+    id_empresa = get_object_or_404(Users, pk=request.user.id)
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
@@ -476,14 +478,20 @@ def talentos(request):
         dados_paginados = Paginator(d, 1)
         page_num = request.GET.get('page')
         d = dados_paginados.get_page(page_num)
+
+    lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
+
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
         'dados':d,
         'info':i,
-        'form':f
+        'form':f,
+        'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
     }
+    print('to na tela de talentossssssss')
     return render(request, 'bancodetalentos.html', dado)
 
 def busca_talentos(request):
@@ -519,7 +527,6 @@ def empresas_favoritadas(request):
 
 def favoritar_talento(request, pk_talento):
     print(pk_talento)
-
     if request.user.is_authenticated:
         id_empresa = get_object_or_404(Users, pk=request.user.id)
         print(f"obj emp == {id_empresa}")
