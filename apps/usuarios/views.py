@@ -481,11 +481,6 @@ def talentos(request):
 
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
-    # print(lista_de_talentos_favoritados)
-    # print(ids_dos_talentos_favoritados)
-
-    # if 20 in ids_dos_talentos_favoritados:
-    #     print('sim')
 
     dado = {
         'contratacoes' : contratacoes,
