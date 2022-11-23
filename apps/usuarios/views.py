@@ -412,6 +412,7 @@ def perfil_candidato(request, id_candidato):
         'Formacao':FA,
         'Informacoes':II,
         'Idiomas':I,
+        'userC':user_candidato
         }
     return render(request, 'perfil.html',dados)
 
@@ -475,7 +476,7 @@ def talentos(request):
     i = Informações_Iniciais.objects.all()
     f = Formacao_Academica.objects.all()
     if len(d) > 0:
-        dados_paginados = Paginator(d, 1)
+        dados_paginados = Paginator(d, 6)
         page_num = request.GET.get('page')
         d = dados_paginados.get_page(page_num)
 
