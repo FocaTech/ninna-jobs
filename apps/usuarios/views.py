@@ -321,15 +321,18 @@ def adicionar_idioma(request):
 @has_role_decorator('empresa')
 def empresa(request, *args, **kwargs):
     '''dash de empresa'''
+    id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
-    empresa_atual = get_object_or_404(Users, pk=request.user.id)
-    print(empresa_atual)
-
-    vagas = Vagas.objects.filter(nome_empresa=empresa_atual,status=True)
+    vagas = Vagas.objects.filter(nome_empresa=id_empresa,status=True)
     vagas_arquivadas = Vagas.objects.filter(status=False)
+
+    lista_de_talentos_favoritados2 = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    # ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
+    lista_de_talentos_favoritados = [talento for talento in lista_de_talentos_favoritados2]
+    print(lista_de_talentos_favoritados)
 
     dado = {
         'contratacoes' : contratacoes,
@@ -337,6 +340,7 @@ def empresa(request, *args, **kwargs):
         'perfis' : perfis,
         'vagas' : vagas,
         'vagas_arquivadas' : vagas_arquivadas,
+        'lista_de_talentos_favoritados' : lista_de_talentos_favoritados,
     }
     print("encontrei")
     return render(request, 'empresa.html', dado)
@@ -466,7 +470,7 @@ def listar_talentos_candidatados(request, pk_vaga):
 
 def talentos(request):
     '''empresa poder ver os candidatos'''
-    id_empresa = get_object_or_404(Users, pk=request.user.id)
+    id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
@@ -529,7 +533,7 @@ def favoritar_talento(request, pk_talento):
     print(f"url == {url_atual}")
     print(f"url == {url_sem_id}")
     if request.user.is_authenticated:
-        id_empresa = get_object_or_404(Users, pk=request.user.id)
+        id_empresa = request.user
         id_candidato = get_object_or_404(Users, pk=pk_talento)
 
         if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
