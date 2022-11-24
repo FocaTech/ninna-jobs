@@ -453,8 +453,6 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     list_talen_cadastro_incompleto = list(OrderedDict.fromkeys(talentos_cadastro_incompleto))# tirar os repetidos
 
-    print(f"talen cadas incom =={list_talen_cadastro_incompleto}")
-
     dados = {
         'lista_de_talentos' : lista_de_talentos,
         'talentos_cadas_incompleto' : list_talen_cadastro_incompleto,
@@ -492,7 +490,6 @@ def talentos(request):
         'form':f,
         'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
     }
-    print('to na tela de talentossssssss')
     return render(request, 'bancodetalentos.html', dado)
 
 def busca_talentos(request):
@@ -527,30 +524,22 @@ def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
 
 def favoritar_talento(request, pk_talento):
-    print(pk_talento)
     url_atual = "http://127.0.0.1:8000" + request.path
     url_sem_id = url_atual[:-1]
     print(f"url == {url_atual}")
     print(f"url == {url_sem_id}")
     if request.user.is_authenticated:
         id_empresa = get_object_or_404(Users, pk=request.user.id)
-        print(f"obj emp == {id_empresa}")
-
         id_candidato = get_object_or_404(Users, pk=pk_talento)
-        print(f"obj emp == {id_candidato}")
 
         if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             talento_para_desfavoritar = get_object_or_404(TalentosFavoritados, id_talento=id_candidato, id_empresa=id_empresa)
             talento_para_desfavoritar.delete()
             # messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-            if not TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
-                print('desfavoritouuu')
             return redirect('talentos')
 
         talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
         talento_favoritado.save()
-        if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
-            print('salvouuuuu')
         # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
         # return redirect(url_atual)
         return redirect('talentos')
