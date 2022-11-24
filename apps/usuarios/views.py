@@ -421,6 +421,7 @@ def perfil_candidato(request, id_candidato):
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
+    print('opaaa')
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
 
     lista_de_talentos = []

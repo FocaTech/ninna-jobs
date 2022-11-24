@@ -24,46 +24,30 @@
               <button onclick="this.parentElement.style.display='none'" class="fs-5 bg-light border border-0"><i class="bi bi-x"></i></button>
           </div>
           <li class="d-flex">
-              <img src="{% static 'img/candidato.jpg' %}" class="sidebar-avatar my-3 mx-1">
+              <img src="{{ d.imagem_perfil.url }}" class="sidebar-avatar my-3 mx-1">
               <div class="my-auto mx-1">
-                  <span class="fs-4">Maria Alice Teixeira da Costa</span><br>
+                  <span class="fs-4">{{d.nome_do_candidato}}</span><br>
                   <div class="d-flex flex-wrap">
-                      <p class="mx-1 my-1">Area de atuação: Informatica</p>
-                      <p class="mx-1 my-1">Nivel Profissional: Junior</p>
-                      <p class="mx-1 my-1">Formação academica: superior</p>
-                      <p class="mx-1 my-1">curso: FrontEnd</p>
+                      {% for i in info %}
+                      {% if i.user == d.user %}
+                      <p class="mx-1 my-1">Area de atuação: {{i.areas_interesse}}</p>
+                      {% endif %}
+                      {% endfor %}
+                      {% for f in form %}
+                      {% if f.user == d.user %}
+                      <p class="mx-1 my-1">Formação academica: {{f.formacao}}</p>
+                      <p class="mx-1 my-1">curso: {{f.curso}}</p>
+                      {% endif %}
+                      {% endfor %}
                   </div>
               </div>
           </li>
-        </ul>
-        dowufniuwjfiufb
-        <li class="w3-bar">
-            <img src="{{ d.imagem_perfil.url }}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">{{d.nome_do_candidato}}</span><br>
-
-                {% for i in info %}
-                {% if i.user == d.user %}
-                <p>
-                  <span>Area de atuação:{{i.areas_interesse}}</span>
-                </p>
-                {% endif %}
-                {% endfor %}
-                {% for f in form %}
-                {% if f.user == d.user %}
-                <p>
-                  <span>Formação academica:{{f.formacao}}|</span>
-                  <span>curso:{{f.curso}}|</span>
-                </p>
-                {% endif %}
-                {% endfor %}
-              </div>
-            </li>
-            {% for talento in lista_de_talentos %}
+          {% for talento in lista_de_talentos %}
             {% if talento == d.user %}
             <a href="{% url 'perfil_candidato' talento.id %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
             {% endif %}
             {% endfor %}
+        </ul>
           <p></p>
           <hr>
           {% endfor %}
@@ -72,10 +56,10 @@
           <span class="w3-large">{{talento.username}}</span><br>
           <a href="{% url 'perfil_candidato' talento.id %}" type="button" class="btn btn-primary">Ver perfil completo do talento</a>
           <hr>
+          <p></p>
           {% endfor %}
       </ul>
     </div>
   </div>
 </main>
-
 {% endblock %}
