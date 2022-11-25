@@ -59,7 +59,68 @@
                                     Detalhes
                                 </button>
                             </div>
-                        {% include 'partials/modal-vaga.html' %}
+                            <div class="modal fade" data-modal-id="{{ vaga.nome_vaga }} @ {{ vaga.nome_empresa }}" tabindex="-1" {#aria-labelledby="exampleModalLabel" #}aria-hidden="true">
+                                <div class="modal-dialog{# modal-lg#}">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title h5 titulovaga" id="modalVaga">{{ vaga.nome_vaga }} ({{ vaga.tipo_trabalho }})</h4>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <ul class="hide-bullets">
+                                        <li>
+                                          <ul class="inline-list">
+                                            <li class="info" id="nomeEmpresa"><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                            <li class="info" id="localEmpresa"><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
+                                          </ul>
+                                        </li>
+                                        <li>
+                                          <ul class="inline-list">
+                                            <li class="info" id="tipoDeContrato"><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
+                                            <li class="info" id="perfilProfissional"><i class="bi bi-person-workspace" title="Perfil profissional"></i> {{ vaga.perfil_profissional }}</li>
+                                            <li class="info" id="salario">R$ {{ vaga.salario }}</li>
+                                          </ul>
+                                        </li>
+                                      </ul>
+                                      <h5 class="subtituloVaga">Principais atividades</h5>
+                                      <p>{{ vaga.principais_atividades }}</p>
+                                      <h5 class="subtituloVaga">Requísitos</h5>
+                                      <p>{{ vaga.requisitos }}</p>
+                                      <h5 class="subtituloVaga">Diferencial</h5>
+                                      <p>{{ vaga.diferencial }}</p>
+                                      <h5 class="subtituloVaga">Descrição da vaga</h5>
+                                      <p>{{ vaga.descricao_vaga }}</p>
+                                      <h5 class="subtituloVaga">Descrição da empressa</h5>
+                                      <p>{{ vaga.descricao_empresa }}</p>
+                                      <h5 class="subtituloVaga">Area atuacao</h5>
+                                      <p>{{ vaga.area_atuacao }}</p>
+                                      <h5 class="subtituloVaga">Beneficios</h5>
+                                      <p>{{ vaga.beneficios }}</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                      <div>
+                                        {% if vaga.id in ids_de_vagas_salvas %}
+                                        <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star-fill"></i></a>
+                                        {% else %}
+                                        <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
+                                        {% endif %}
+                                      </div>
+                                      {% if user.is_superuser %}
+                                      <div class="col-12 col-sm-6 col-lg-4">
+                                        <div class="single-best-receipe-area mb-30">
+                                          <div class="receipe-content">
+                                            <a href="{% url 'editar' vaga.id %}">
+                                                <a href="{% url 'editar' vaga.id %}" type="button" class="btn btn-success">Editar</a>
+                                                <a href="{% url 'deletar' vaga.id %}" type="button" class="btn btn-danger">Deletar</a>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      {% endif %}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                     </div>
                 </div>
                 {% endfor %}

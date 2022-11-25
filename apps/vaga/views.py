@@ -131,7 +131,6 @@ def deleta_vaga(request, pk_vaga):
 
 def index(request):
     if request.user.is_authenticated:
-        # globals()[request] = request
         vagas = Vagas.objects.get_queryset().order_by('id').filter(status=True)
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
         id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
@@ -153,7 +152,7 @@ def index(request):
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
     else:
-        vagas = Vagas.objects.order_by('-data_vaga').filter()
+        vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
         vagas = paginar(vagas, request)
         dados = {
             'vagas' : vagas,
@@ -167,7 +166,10 @@ def vagas(request):
     vagas = Vagas.objects.order_by('-data_vaga').filter()
     vagas = paginar(vagas, request)
     user_candidato = request.user
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    if request.user.is_authenticated:
+        DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    else:
+        DP = None
     dados = {
         'Dados':DP,
         'vagas' : vagas

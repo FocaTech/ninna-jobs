@@ -1,0 +1,5 @@
+{% if d.user in ids_dos_talentos_favoritados %}
+<a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star-fill"></i></span>
+{% else %}
+<a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i></span>
+{% endif %}

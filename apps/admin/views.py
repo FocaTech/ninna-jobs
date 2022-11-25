@@ -68,7 +68,7 @@ def acoes_vaga(request):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
-    vagas = Vagas.objects.all()
+    vagas = Vagas.objects.filter(nome_empresa=request.user)
 
     dados = {
         'contratacoes' : contratacoes,
