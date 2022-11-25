@@ -325,22 +325,101 @@ def empresa(request, *args, **kwargs):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
+    d = Dados_Pessoais.objects.order_by('-data_dados')
+    i = Informações_Iniciais.objects.all()
+    f = Formacao_Academica.objects.all()
 
     vagas = Vagas.objects.filter(nome_empresa=id_empresa,status=True)
     vagas_arquivadas = Vagas.objects.filter(status=False)
 
-    lista_de_talentos_favoritados2 = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
+
+
+
+
+    # contratacoes = TipoContratacao.objects.all()
+    # trabalhos = TipoTrabalho.objects.all()
+    # perfis = PerfilProfissional.objects.all()
+
+
+    # d = Dados_Pessoais.objects.order_by('-data_dados')
+    # i = Informações_Iniciais.objects.all()
+    # f = Formacao_Academica.objects.all()
+
+    # if len(d) > 0:
+    #     dados_paginados = Paginator(d, 6)
+    #     page_num = request.GET.get('page')
+    #     d = dados_paginados.get_page(page_num)
+
+    # lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     # ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
-    lista_de_talentos_favoritados = [talento for talento in lista_de_talentos_favoritados2]
-    print(lista_de_talentos_favoritados)
+
+    # dado = {
+    #     'contratacoes' : contratacoes,
+    #     'trabalhos' : trabalhos,
+    #     'perfis' : perfis,
+    #     'dados':d,
+    #     'info':i,
+    #     'form':f,
+    #     'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
+    # }
+
+
+    # lista_de_talentos = []
+    # for obj_vaga_candidatada in talentos_candidatados:
+    #     obj_talento = obj_vaga_candidatada.id_cadidato
+    #     lista_de_talentos.append(obj_talento)
+
+    talentos_cadastro_incompleto = []
+
+    dados_pessoais = []
+    for talento in ids_dos_talentos_favoritados:
+        # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
+        dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+        if len(dado_pessoal) != 0:
+            dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+        else:
+            talentos_cadastro_incompleto.append(talento)
+
+
+    informacoes_iniciais = []
+    for talento in ids_dos_talentos_favoritados:
+        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        if len(informacao_inicial) != 0:
+            informacoes_iniciais.append(*informacao_inicial)
+        else:
+            talentos_cadastro_incompleto.append(talento)
+
+    formacaoes_academicas = []
+    for talento in ids_dos_talentos_favoritados:
+        formacao_academica = Formacao_Academica.objects.filter(user=talento)
+        if len(formacao_academica) != 0:
+            formacaoes_academicas.append(*formacao_academica)
+        else:
+            talentos_cadastro_incompleto.append(talento)
+
+
+
+
+
+
+
+
 
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
+
+        'dados':dados_pessoais,
+        'info':informacoes_iniciais,
+        'form':formacaoes_academicas,
+        'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
+
         'vagas' : vagas,
         'vagas_arquivadas' : vagas_arquivadas,
-        'lista_de_talentos_favoritados' : lista_de_talentos_favoritados,
+        'ids_dos_talentos_favoritados' : ids_dos_talentos_favoritados,
     }
     print("encontrei")
     return render(request, 'empresa.html', dado)
