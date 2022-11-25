@@ -9,7 +9,7 @@ from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 
-
+url_atual = ""
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -321,6 +321,8 @@ def adicionar_idioma(request):
 @has_role_decorator('empresa')
 def empresa(request, *args, **kwargs):
     '''dash de empresa'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
@@ -371,7 +373,6 @@ def empresa(request, *args, **kwargs):
         'vagas_arquivadas' : vagas_arquivadas,
         'ids_dos_talentos_favoritados' : ids_dos_talentos_favoritados,
     }
-    print("encontrei")
     return render(request, 'empresa.html', dado)
 
 @has_role_decorator('candidato')
@@ -450,6 +451,9 @@ def perfil_candidato(request, id_candidato):
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
+
     id_empresa = request.user
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
 
@@ -562,10 +566,7 @@ def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
 
 def favoritar_talento(request, pk_talento):
-    url_atual = "http://127.0.0.1:8000" + request.path
-    url_sem_id = url_atual[:-1]
-    print(f"url == {url_atual}")
-    print(f"url == {url_sem_id}")
+    global url_atual
     if request.user.is_authenticated:
         id_empresa = request.user
         id_candidato = get_object_or_404(Users, pk=pk_talento)
@@ -574,13 +575,13 @@ def favoritar_talento(request, pk_talento):
             talento_para_desfavoritar = get_object_or_404(TalentosFavoritados, id_talento=id_candidato, id_empresa=id_empresa)
             talento_para_desfavoritar.delete()
             # messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-            return redirect('talentos')
+            return redirect(url_atual)
 
         talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
         talento_favoritado.save()
         # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-        # return redirect(url_atual)
-        return redirect('talentos')
+
+        return redirect(url_atual)
 
 def configuracoes(request):
     return render(request, 'configuracoes.html')
