@@ -126,8 +126,10 @@
                           <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
                             Detalhes
                           </button>
+                          {% if user.funcao == "EMP" %}
                           <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
                           <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Desarquivar Vaga</a>
+                          {% endif %}
                           </div>
                           {% include 'partials/modal-vaga.html' %}
                       </div>

@@ -167,7 +167,10 @@ def vagas(request):
     vagas = Vagas.objects.order_by('-data_vaga').filter()
     vagas = paginar(vagas, request)
     user_candidato = request.user
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    if request.user.is_authenticated:
+        DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    else:
+        DP = None
     dados = {
         'Dados':DP,
         'vagas' : vagas
