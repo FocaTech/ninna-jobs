@@ -9,15 +9,15 @@
 {% endblock %}
 {% block body_class %}page-profile{% endblock %}
 {% block content %}
-  <main class="p-2 position-relative m-5">
-    <div class="menuContato">
-      <a href="#"><i class="bi bi-whatsapp"></i></a>
-      <a href="#"><i class="bi bi-linkedin"></i></a>
-      <a href="#"><i class="bi bi-envelope"></i></a>
+  <main class="perfil-empresa">
+    <div class="menuContato my-5">
+      <a href="#"><i class="bi bi-whatsapp linkwapp"></i></a>
+      <a href="#"><i class="bi bi-linkedin linkedin"></i></a>
+      <a href="#"><i class="bi bi-envelope email"></i></a>
       <button class="botaofavEmpresa"><i class="bi bi-star"></i></button>
     </div>
-    <div class="bg-light w-75 position-relative m-auto p-5">
-      <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar avatar-empresa rounded-circle position-absolute top-0 start-50 translate-middle">
+    <div class="bg-light w-75 m-auto p-5 perfil-empresa">
+      <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar avatar-empresa">
       <h2 class="text-center p-5 mt-3">Nome Da Empresa</h2>
       <div class="tabber p-4">
         <div class="tabber__tabs p-3">

@@ -1,14 +1,109 @@
+@import "dashboard.css";
+@import "styles.css";
+:root {
+    --cor-bg-favoritar: gold;
+    --cor-bg-favoritar-hover: orange;
+    --cor-ninna:#0e0062;
+    --border-color: #c9cbcb;
+    --main\footer-spacing: 2.5rem;
+}
+
+body{
+	margin:0;
+	padding:0;
+	font-family:"arial",heletica,sans-serif;
+	font-size:12px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.356), rgb(255, 254, 254)), url("../img/background-purple.png");
+    background-repeat: repeat-x;
+    background-size: 500px;
+    overflow-x: hidden;
+
+	-webkit-animation: 10s linear 0s normal none infinite animate;
+	-moz-animation: 10s linear 0s normal none infinite animate;
+	-ms-animation: 10s linear 0s normal none infinite animate;
+	-o-animation: 10s linear 0s normal none infinite animate;
+	animation: 10s linear 0s normal none infinite animate;
+}
+body::after {
+    content: '';
+    display: block;
+    background: linear-gradient(to bottom, transparent 0%, transparent 35%, #fff 100%);
+    width: 100%;
+    height: 500px;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@-webkit-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+
+@-moz-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+
+@-ms-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+
+@-o-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+
+@keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+
+.container .content {
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
 .profile-box .sidebar-avatar {
     width: 125px;
 }
 
-.avatar-empresa {
-    width: 200px;
+.btn {
+    border-radius: 55px;
+    border: none;
+}
+
+.favoritar{
+    background-color: var(--cor-bg-favoritar);
+}
+
+.favoritar:hover {
+    background: var(--cor-bg-favoritar-hover);
+}
+
+.profile-name {
+    font-size: 24px;
+    padding: 10px;
+    padding-top: 20px;
+}
+
+.div-sobre {
+    width: 100%;
+    background: #e6ecee;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 p {
     font-size: 14px;
 }
+
+
+/*--------------------------------------------------
+Perfil Candidato
+--------------------------------------------------*/
 
 .profile-box {
     background-color: #e6ecee;
@@ -22,19 +117,9 @@ p {
     height: 380px;
     width: 300px;
 }
-
-.btn {
-    background: gold;
-    border-radius: 55px;
-    border: none;
-}
 .baixar {
-   background-color: #0e76a8;
-   margin-right: 5px;
-}
-
-.btn:hover {
-    background: orange;
+    background-color: #0e76a8;
+    margin-right: 5px;
 }
 
 .div-enviar-mensagem {
@@ -54,26 +139,13 @@ p {
     align-items: center;
 }
 
-.aviao {
+.enviar-email button {
     margin-top: 5px;
 }
 
 .msg-btn-enviar{
     font-size: 12px;
     margin-top: 17px;
-}
-
-.profile-name {
-    font-size: 24px;
-    padding: 10px;
-    padding-top: 20px;
-}
-
-.div-sobre {
-    width: 100%;
-    background: #e6ecee;
-    border-radius: 10px;
-    padding: 10px;
 }
 
 .div-saiba-mais {
@@ -99,12 +171,7 @@ p {
     padding: 10px;
 }
 
-.container .content {
-    margin-top: 50px;
-    margin-bottom: 10px;
-}
-
-.bi{
+.redesocial > a > i{
     font-size: 1.8rem;
 }
 .redesocial{
@@ -113,8 +180,11 @@ p {
 .bi-whatsapp, .linkwapp {
     color: #25D366;
 }
-.azul{
+.linkedin{
     color:#0e76a8;
+}
+.email{
+    color: palevioletred;
 }
 
 .tituloperfil{
@@ -131,88 +201,44 @@ p {
     margin: 0 auto;
 }
 
-body{
-	margin:0;
-	padding:0;
-	font-family:"arial",heletica,sans-serif;
-	font-size:12px;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.356), rgb(255, 254, 254)), url("../img/background-purple.png");
-    background-repeat: repeat-x;
-    background-size: 500px;
-    overflow-x: hidden;
-
-	-webkit-animation: 10s linear 0s normal none infinite animate;
-	-moz-animation: 10s linear 0s normal none infinite animate;
-	-ms-animation: 10s linear 0s normal none infinite animate;
-	-o-animation: 10s linear 0s normal none infinite animate;
-	animation: 10s linear 0s normal none infinite animate;
-
+/*-------------------------------------------
+Perfil da empresa
+--------------------------------------------*/
+.perfil-empresa{
+    top: 70%;
 }
-body::after {
-    content: '';
-    display: block;
-    background: linear-gradient(to bottom, transparent 0%, transparent 35%, #fff 100%);
-    width: 100%;
-    height: 500px;
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
+.avatar-empresa {
+    width: 200px;
 }
-
-
-/* Perfil da empresa*/
 .menuContato {
-    width: 60px;
+    background-color:#e6ecee ;
     position: fixed;
-    z-index: 1;
-    top: 20px;
-    left: 10px;
-    background: #eee;
-    overflow-x: hidden;
-    padding: 8px 0;
-  }
+    top: 30%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
 
-  .menuContato a, .menuContato button {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
+.menuContato a, .menuContato button {
     display: block;
-  }
-  .menuContato button{
+    text-align: center;
+    padding: 16px;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 23px;
+}
+.menuContato button{
     border: none;
     vertical-align: middle;
-    color: gold;
-  }
+    color: var(--cor-bg-favoritar);
+}
 
-  .menuContato a:hover, .menuContato button:hover {
-    height: 70px;
-    box-shadow:2px 4px 3px #999;
+.menuContato a:hover, .menuContato button:hover {
     margin: 2px;
-    vertical-align: middle
-  }
-
-@-webkit-keyframes animate {
-	from {background-position:0 0;}
-	to {background-position: 500px 0;}
+    vertical-align: middle;
+    background-color: var(--cor-ninna);
+    color: white;
 }
-
-@-moz-keyframes animate {
-	from {background-position:0 0;}
-	to {background-position: 500px 0;}
-}
-
-@-ms-keyframes animate {
-	from {background-position:0 0;}
-	to {background-position: 500px 0;}
-}
-
-@-o-keyframes animate {
-	from {background-position:0 0;}
-	to {background-position: 500px 0;}
-}
-
-@keyframes animate {
-	from {background-position:0 0;}
-	to {background-position: 500px 0;}
+.menuContato a i:hover{
+    color: white;
 }

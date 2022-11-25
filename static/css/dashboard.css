@@ -1,0 +1,48 @@
+@import "styles.css";
+
+body > main {
+	margin-bottom: var(--main\footer-spacing);
+}
+main.container {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 12px;
+}
+main {
+    margin-top: 2em;
+}
+.container :is(.sidebar, .content) {
+    background: #eff4f5;
+    padding: 1em 1.5em;
+    direction: ltr;
+}
+.container .right-column {
+    width: 100%;
+}
+.container .content {
+    position: relative;
+    width: 100%;
+}
+.left-column {
+    width: 27%;
+}
+
+.sidebar-menu {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    margin: 0;
+}
+.sidebar-avatar {
+    display: block;
+    width: 100px;
+    aspect-ratio: 1;
+    border: 2px solid #d0dade;
+    margin: 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+}

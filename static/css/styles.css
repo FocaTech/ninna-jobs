@@ -3,40 +3,16 @@
     --border-color: #c9cbcb;
     --main\footer-spacing: 2.5rem;
 }
-body {
-    background-color: #fcfdfd;
+
+.btn-primary {
+    --bs-btn-bg: #2049b5;
+    --bs-btn-border-color: var(--bs-btn-bg);
+    --bs-btn-hover-bg: #7eb627;
+    --bs-btn-hover-border-color: var(--bs-btn-hover-bg);
 }
 
 body > main {
 	margin-bottom: var(--main\footer-spacing);
-}
-
-.navbar {
-    background-color: var(--cor-ninna);
-}
-.navbar-logo {
-    position: relative;
-    margin-left: 70px;
-}
-.navbar-logo img {
-    position: absolute;
-    right: 0;
-    height: 70px;
-    top: -28px;
-}
-.navbar-nav i {
-    padding: 5px
-}
-.botaoLogin {
-    border: 1px solid #fff;
-    padding: 5px 10px;
-    height: unset;
-    border-radius: 20px;
-    background: transparent;
-    color: #fff;
-}
-header.fixed-top + * {
-    margin-top: 100px;
 }
 
 main.container {
@@ -59,9 +35,7 @@ main {
     position: relative;
     width: 100%;
 }
-.left-column {
-    width: 27%;
-}
+
 .page-header {
     background: #dae0e38a;
     padding: 7px 0;
@@ -98,55 +72,7 @@ form.filtros select {
     border: 0;
     border-bottom: 1px solid var(--border-color);
 }
-
-.sidebar-menu {
-    padding: 0;
-    list-style: none;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    margin: 0;
-}
-.sidebar-avatar {
-    display: block;
-    width: 100px;
-    aspect-ratio: 1;
-    border: 2px solid #d0dade;
-    margin: 0 auto;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.lista-de-vagas li {
-    list-style: none;
-}
-.vagas {
-    display: flex;
-    gap: 10px;
-}
-.lista-de-vagas {
-    width: 100%;
-    height: 100%;
-}
-.lista-de-vagas ul {
-    padding: 0;
-}
-.lista-de-vagas ul li {
-    min-height: 40px;
-    padding: .7em;
-}
-.lista-de-vagas li:hover {
-    background: #e4e9eb;
-    cursor: pointer;
-}
-.lista-de-vagas li.active {
-    border: 2px solid #4774c7 !important;
-}
-.lista-de-vagas ul li:not(:last-child) {
-    border-bottom: 1px solid var(--border-color);
-}
+/*
 .informacoes-da-vaga {
     border-left: 1px solid var(--border-color);
     padding-left: 10px;
@@ -160,33 +86,9 @@ form.filtros select {
     font-size: 1.55rem;
     margin-top: .7em;
 }
-.lista-de-vagas h2 {
-    font-size: 20px;
-    font-weight: 600;
-}
-.lista-de-vagas p, .vaga .card-text:not(:last-of-type) {
-    margin-bottom: .3em;
-}
-.lista-de-vagas p:last-child {
-    margin-bottom: 0;
-}
-.vaga-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-}
-.vaga-wrapper img {
-    height: 70px;
-}
+*/
 .sidebar .btn {
     width: 100%;
-}
-.informacao-de-inscricao {
-    display: inline-block;
-    background: gray;
-    color: white;
-    padding: .05em .3em;
-    text-transform: lowercase;
 }
 ul.hide-bullets {
     padding: 0;
@@ -222,36 +124,9 @@ ul.inline-list li:not(:last-child)::after {
     margin-right: 7px;
     vertical-align: -.125em;
 }
-.informacoes-logo {
-    float: right;
-    width: 150px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-}
+
 .card-title{
     width: 100%;
-}
-
-
-.btn-primary {
-    --bs-btn-bg: #2049b5;
-    --bs-btn-border-color: var(--bs-btn-bg);
-    --bs-btn-hover-bg: #7eb627;
-    --bs-btn-hover-border-color: var(--bs-btn-hover-bg);
-}
-
-.top-detail {
-    width: 100%;
-    height: 22px;
-}
-.top-detail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transform: scaleX(-1);
-    position: relative;
-    z-index: -1;
 }
 
 .modal :is(.form-control, .form-select) {

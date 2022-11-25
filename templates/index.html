@@ -12,10 +12,8 @@
 <link rel="stylesheet" href="{% static 'css/styleinicio.css' %}">
 <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-icons.css' %}" >
 <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/jquery-flexslider.css' %}">
 <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-<link rel="stylesheet" href="{% static 'css/reset.css' %}">
 
 <!--Estilos scripts Inicio-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -29,6 +27,7 @@
 {% block content %}
 {% include 'partials/_alertas.html' %}
 <main>
+    <!--Carroseel-->
     <div class="position-relative" style="margin-top: -20px">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -55,8 +54,8 @@
             <div class="card-body p-4 card-cadastrar-body m-auto">
                 <h1 class="titulo-cardInicio">Banco de Talentos - Ninna Jobs</h1>
                 {% if not user.is_authenticated %}
-                <p class="card-text p-1 mt-3 h5">Candidato: Cadastre-se e aproveite oportunidades</p>
-                <p class="card-text p-1 h5">Empresa: Cadastre-se e anuncie sua vaga </p>
+                <p class="card-text p-1 mt-3 h5 text-light">Candidato: Cadastre-se e aproveite oportunidades</p>
+                <p class="card-text p-1 h5 text-light">Empresa: Cadastre-se e anuncie sua vaga </p>
                 <div class="m-3 mb-0">
                     <a href="{% url 'cadastro_empresa' %}" class="btn btn-primary mx-5">Sou Empresa</a>
                     <a href="{% url 'cadastro_candidato' %}" class="btn btn-primary mx-5">Sou Candidato</a>
@@ -65,64 +64,66 @@
             </div>
         </div>
     </div>
-    <a href="#"name="vagas"></a>
-    <div class="title-section text-center pt-5 mt-5">
-        <h2 class="mt-5 titulohome">Vagas</h2>
-        <span></span>
-    </div>
-    <div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
-        {% if vagas %}
-        {% for vaga in vagas %}
-            <div class="col">
-                <div class="card h-100 vaga">
-                    <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ vaga.nome_vaga }}</h5>
-                        <ul class="hide-bullets">
-                            <li>
-                                <ul class="inline-list">
-                                    <li><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
-                                    <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="inline-list">
-                                    <li><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
-                                    <li><i class="bi bi-person-workspace" title="Tipo de trabalho"></i> {{ vaga.tipo_trabalho }} </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
-                            Detalhes
-                        </button>
-                    </div>
-                {% include 'partials/modal-vaga.html' %}
-            </div>
+    <!--Vagas-->
+    <div class="my-5">
+        <a href="#"name="vagas"></a>
+        <div class="title-section text-center pt-5 mt-5">
+            <h2 class="mt-5 h2 fw-bold">Vagas</h2>
+            <span></span>
         </div>
-        {% endfor %}
-        {% endif %}
-    </div>
-    </div>
-    <div class="container mb-4 text-center">
-        <a class="btn btn-primary" href="{% url 'vagas' %}">Ver todas as vagas</a>
-    </div>
-    <a href="#"name="sobrenos"></a>
-    <div id="sobre-nos" class="section-cotent">
         <div class="container">
-            <div class="sobre-nos">
-                <img src="{% static 'img/sobre-nos.jpg' %}" alt="">
-                <div class="texto">
-                    <div class="title-section">
-                        <h2>Sobre Nós</h2>
-                        <span></span>
-                    </div>
-                    <p>Quem visita a página Sobre Nós do seu site pode ter chegado até si através de um motor de pesquisa, ter gostado do conteúdo ou do produto apresentado e estar à procura de saber mais sobre o projeto. Os visitantes podem também ser já utilizadores do serviço que presta ou consumidores do seu produto e vir em busca de mais informação. Pense nos seus públicos e no que lhes poderá interessar, reflita sobre o conhecimento que já adquiriu no contacto com os seus clientes e escreva como se estivesse a conversar frente a frente com o visitante do site.</p>
+        <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
+            {% if vagas %}
+            {% for vaga in vagas %}
+                <div class="col">
+                    <div class="card h-100 vaga">
+                        <img src="{{ vaga.logo_empresa.url }}" class="card-img-top outline ar-2/1 mt-3" alt="">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ vaga.nome_vaga }}</h5>
+                            <ul class="hide-bullets">
+                                <li>
+                                    <ul class="inline-list">
+                                        <li><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                        <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <ul class="inline-list">
+                                        <li><i class="bi bi-file-earmark-text" title="Tipo de contrato"></i> {{ vaga.tipo_contratacao }}</li>
+                                        <li><i class="bi bi-person-workspace" title="Tipo de trabalho"></i> {{ vaga.tipo_trabalho }} </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
+                                Detalhes
+                            </button>
+                        </div>
+                    {% include 'partials/modal-vaga.html' %}
                 </div>
             </div>
-                <div class="col-md-4 our-skills">
-                </div> <!-- /.col-md-3 -->
+            {% endfor %}
+            {% endif %}
+        </div>
+        </div>
+        <div class="container my-4 text-center">
+            <a class="btn btn-primary" href="{% url 'vagas' %}">Ver todas as vagas</a>
+        </div>
+    </div>
+    <!--Sobrenos-->
+    <div class="container">
+        <div class="sobre-nos">
+            <img src="{% static 'img/sobre-nos.jpg' %}" alt="">
+            <div class="texto">
+                <div class="title-section">
+                    <h2 class="h2 fw-bold">Sobre Nós</h2>
+                    <span></span>
+                </div>
+                <p>Quem visita a página Sobre Nós do seu site pode ter chegado até si através de um motor de pesquisa, ter gostado do conteúdo ou do produto apresentado e estar à procura de saber mais sobre o projeto. Os visitantes podem também ser já utilizadores do serviço que presta ou consumidores do seu produto e vir em busca de mais informação. Pense nos seus públicos e no que lhes poderá interessar, reflita sobre o conhecimento que já adquiriu no contacto com os seus clientes e escreva como se estivesse a conversar frente a frente com o visitante do site.</p>
             </div>
+        </div>
+    </div>
+    <!--Contato-->
+    <div class="my-5">
         {% if user.is_authenticated %}
         <form action="{% url 'contato' %}" method="post">
             {% csrf_token %}
@@ -130,7 +131,7 @@
             <div id="contato" class="section-cotent">
                 <div class="container">
                     <div class="title-section text-center">
-                        <h2>Contato</h2>
+                        <h2 class="h2 fw-bold">Contato</h2>
                         <span></span>
                     </div> <!-- /.title-section -->
                     <div class="row">
@@ -138,19 +139,19 @@
                                 <h4 class="widget-title">Envie sua mensagem:</h4>
                                 <div class="contato-form">
                                     <p class="full-row">
-                                        <label for="name-id">Nome:</label>
+                                        <label class="form-label" for="name-id">Nome</label>
                                         <input class="form-control" type="text" id="name-id" name="name" placeholder="Nome">
                                     </p>
                                     <p class="full-row">
-                                        <label for="email-id">E-mail:</label>
+                                        <label class="form-label" for="email-id">E-mail</label>
                                         <input type="text" class="form-control" id="email-id" name="email" placeholder="E-mail">
                                     </p>
                                     <p class="full-row">
-                                        <label for="subject-id">Assunto:</label>
+                                        <label class="form-label" for="subject-id">Assunto</label>
                                         <input type="text" class="form-control" id="subject-id" name="subject" placeholder="Assunto">
                                     </p>
                                     <p class="full-row">
-                                        <label for="message">Mensagem:</label>
+                                        <label class="form-label" for="message">Mensagem</label>
                                         <textarea  style="resize: none" class="form-control" id="message" name="message" rows="6"></textarea>
                                     </p>
                                     <button class="btn btn-primary px-5 py-3" type="submit">Enviar</button>
