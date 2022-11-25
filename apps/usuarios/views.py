@@ -515,6 +515,8 @@ def listar_talentos_candidatados(request, pk_vaga):
 
 def talentos(request):
     '''empresa poder ver os candidatos'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()

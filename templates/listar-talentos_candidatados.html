@@ -19,11 +19,7 @@
         {% for d in dados %}
         <ul class="card d-flex shadow-lg p-2 mb-2 bg-body rounded">
           <div class="position-absolute top-0 end-0 bg-light">
-            {% if d.user in ids_dos_talentos_favoritados %}
-            <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star-fill"></i></span>
-            {% else %}
-            <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i></span>
-            {% endif %}
+            {% include 'partials/botao-fav.html' %}
           </div>
           <li class="d-flex">
               <img src="{{ d.imagem_perfil.url }}" class="sidebar-avatar my-3 mx-1">
