@@ -9,7 +9,7 @@ from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 
-
+url_atual = ""
 
 def formempresa(request):
     return render(request, 'formempresa.html')
@@ -321,24 +321,58 @@ def adicionar_idioma(request):
 @has_role_decorator('empresa')
 def empresa(request, *args, **kwargs):
     '''dash de empresa'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
+    id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
-    empresa_atual = get_object_or_404(Users, pk=request.user.id)
-    print(empresa_atual)
-
-    vagas = Vagas.objects.filter(nome_empresa=empresa_atual,status=True)
+    vagas = Vagas.objects.filter(nome_empresa=id_empresa,status=True)
     vagas_arquivadas = Vagas.objects.filter(status=False)
+
+    lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
+
+    talentos_cadastro_incompleto = []
+
+    dados_pessoais = []
+    for talento in ids_dos_talentos_favoritados:
+        # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
+        dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+        if len(dado_pessoal) != 0:
+            dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
+        else:
+            talentos_cadastro_incompleto.append(talento)
+
+    informacoes_iniciais = []
+    for talento in ids_dos_talentos_favoritados:
+        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        if len(informacao_inicial) != 0:
+            informacoes_iniciais.append(*informacao_inicial)
+        else:
+            talentos_cadastro_incompleto.append(talento)
+
+    formacaoes_academicas = []
+    for talento in ids_dos_talentos_favoritados:
+        formacao_academica = Formacao_Academica.objects.filter(user=talento)
+        if len(formacao_academica) != 0:
+            formacaoes_academicas.append(*formacao_academica)
+        else:
+            talentos_cadastro_incompleto.append(talento)
 
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
+        'dados':dados_pessoais,
+        'info':informacoes_iniciais,
+        'form':formacaoes_academicas,
+        'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
         'vagas' : vagas,
         'vagas_arquivadas' : vagas_arquivadas,
+        'ids_dos_talentos_favoritados' : ids_dos_talentos_favoritados,
     }
-    print("encontrei")
     return render(request, 'empresa.html', dado)
 
 @has_role_decorator('candidato')
@@ -398,6 +432,9 @@ def perfil(request):
 
 def perfil_candidato(request, id_candidato):
     '''empresa poder ver os perfil candidato'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
+    id_empresa = request.user
     user_candidato = get_object_or_404(Users, pk=id_candidato)
     CC = Certificados_Conquistas.objects.order_by().filter(user=user_candidato)
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
@@ -405,6 +442,10 @@ def perfil_candidato(request, id_candidato):
     FA = Formacao_Academica.objects.order_by().filter(user=user_candidato)
     II = Informações_Iniciais.objects.order_by().filter(user=user_candidato)
     I = Idiomas.objects.order_by().filter(user=user_candidato)
+
+    lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
+
     dados = {
         'Certificados':CC,
         'Dados':DP,
@@ -412,11 +453,15 @@ def perfil_candidato(request, id_candidato):
         'Formacao':FA,
         'Informacoes':II,
         'Idiomas':I,
-        'userC':user_candidato
+        'userC':user_candidato,
+        'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
         }
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
+    id_empresa = request.user
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
 
     lista_de_talentos = []
@@ -453,7 +498,8 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     list_talen_cadastro_incompleto = list(OrderedDict.fromkeys(talentos_cadastro_incompleto))# tirar os repetidos
 
-    print(f"talen cadas incom =={list_talen_cadastro_incompleto}")
+    lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
 
     dados = {
         'lista_de_talentos' : lista_de_talentos,
@@ -462,13 +508,14 @@ def listar_talentos_candidatados(request, pk_vaga):
         'dados' : dados_pessoais,
         'info' : informacoes_iniciais,
         'form' : formacaoes_academicas,
+        'ids_dos_talentos_favoritados' : ids_dos_talentos_favoritados,
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)
 
 def talentos(request):
     '''empresa poder ver os candidatos'''
-    id_empresa = get_object_or_404(Users, pk=request.user.id)
+    id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
@@ -492,7 +539,6 @@ def talentos(request):
         'form':f,
         'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
     }
-    print('to na tela de talentossssssss')
     return render(request, 'bancodetalentos.html', dado)
 
 def busca_talentos(request):
@@ -527,33 +573,22 @@ def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html')
 
 def favoritar_talento(request, pk_talento):
-    print(pk_talento)
-    url_atual = "http://127.0.0.1:8000" + request.path
-    url_sem_id = url_atual[:-1]
-    print(f"url == {url_atual}")
-    print(f"url == {url_sem_id}")
+    global url_atual
     if request.user.is_authenticated:
-        id_empresa = get_object_or_404(Users, pk=request.user.id)
-        print(f"obj emp == {id_empresa}")
-
+        id_empresa = request.user
         id_candidato = get_object_or_404(Users, pk=pk_talento)
-        print(f"obj emp == {id_candidato}")
 
         if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             talento_para_desfavoritar = get_object_or_404(TalentosFavoritados, id_talento=id_candidato, id_empresa=id_empresa)
             talento_para_desfavoritar.delete()
             # messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-            if not TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
-                print('desfavoritouuu')
-            return redirect('talentos')
+            return redirect(url_atual)
 
         talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
         talento_favoritado.save()
-        if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
-            print('salvouuuuu')
         # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-        # return redirect(url_atual)
-        return redirect('talentos')
+
+        return redirect(url_atual)
 
 def configuracoes(request):
     return render(request, 'configuracoes.html')
