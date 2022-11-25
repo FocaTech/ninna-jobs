@@ -325,51 +325,12 @@ def empresa(request, *args, **kwargs):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
-    d = Dados_Pessoais.objects.order_by('-data_dados')
-    i = Informações_Iniciais.objects.all()
-    f = Formacao_Academica.objects.all()
 
     vagas = Vagas.objects.filter(nome_empresa=id_empresa,status=True)
     vagas_arquivadas = Vagas.objects.filter(status=False)
 
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
-
-
-
-
-    # contratacoes = TipoContratacao.objects.all()
-    # trabalhos = TipoTrabalho.objects.all()
-    # perfis = PerfilProfissional.objects.all()
-
-
-    # d = Dados_Pessoais.objects.order_by('-data_dados')
-    # i = Informações_Iniciais.objects.all()
-    # f = Formacao_Academica.objects.all()
-
-    # if len(d) > 0:
-    #     dados_paginados = Paginator(d, 6)
-    #     page_num = request.GET.get('page')
-    #     d = dados_paginados.get_page(page_num)
-
-    # lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
-    # ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
-
-    # dado = {
-    #     'contratacoes' : contratacoes,
-    #     'trabalhos' : trabalhos,
-    #     'perfis' : perfis,
-    #     'dados':d,
-    #     'info':i,
-    #     'form':f,
-    #     'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
-    # }
-
-
-    # lista_de_talentos = []
-    # for obj_vaga_candidatada in talentos_candidatados:
-    #     obj_talento = obj_vaga_candidatada.id_cadidato
-    #     lista_de_talentos.append(obj_talento)
 
     talentos_cadastro_incompleto = []
 
@@ -381,7 +342,6 @@ def empresa(request, *args, **kwargs):
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
         else:
             talentos_cadastro_incompleto.append(talento)
-
 
     informacoes_iniciais = []
     for talento in ids_dos_talentos_favoritados:
@@ -399,24 +359,14 @@ def empresa(request, *args, **kwargs):
         else:
             talentos_cadastro_incompleto.append(talento)
 
-
-
-
-
-
-
-
-
     dado = {
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
-
         'dados':dados_pessoais,
         'info':informacoes_iniciais,
         'form':formacaoes_academicas,
         'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
-
         'vagas' : vagas,
         'vagas_arquivadas' : vagas_arquivadas,
         'ids_dos_talentos_favoritados' : ids_dos_talentos_favoritados,
@@ -500,7 +450,7 @@ def perfil_candidato(request, id_candidato):
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
-    print('opaaa')
+    id_empresa = request.user
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
 
     lista_de_talentos = []
@@ -537,6 +487,9 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     list_talen_cadastro_incompleto = list(OrderedDict.fromkeys(talentos_cadastro_incompleto))# tirar os repetidos
 
+    lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
+
     dados = {
         'lista_de_talentos' : lista_de_talentos,
         'talentos_cadas_incompleto' : list_talen_cadastro_incompleto,
@@ -544,6 +497,7 @@ def listar_talentos_candidatados(request, pk_vaga):
         'dados' : dados_pessoais,
         'info' : informacoes_iniciais,
         'form' : formacaoes_academicas,
+        'ids_dos_talentos_favoritados' : ids_dos_talentos_favoritados,
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)
