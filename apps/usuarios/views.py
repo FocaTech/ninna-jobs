@@ -432,6 +432,9 @@ def perfil(request):
 
 def perfil_candidato(request, id_candidato):
     '''empresa poder ver os perfil candidato'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
+    id_empresa = request.user
     user_candidato = get_object_or_404(Users, pk=id_candidato)
     CC = Certificados_Conquistas.objects.order_by().filter(user=user_candidato)
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
@@ -439,6 +442,10 @@ def perfil_candidato(request, id_candidato):
     FA = Formacao_Academica.objects.order_by().filter(user=user_candidato)
     II = Informações_Iniciais.objects.order_by().filter(user=user_candidato)
     I = Idiomas.objects.order_by().filter(user=user_candidato)
+
+    lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
+    ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
+
     dados = {
         'Certificados':CC,
         'Dados':DP,
@@ -446,14 +453,14 @@ def perfil_candidato(request, id_candidato):
         'Formacao':FA,
         'Informacoes':II,
         'Idiomas':I,
-        'userC':user_candidato
+        'userC':user_candidato,
+        'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
         }
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
-
     id_empresa = request.user
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
 
