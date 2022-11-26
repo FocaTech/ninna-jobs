@@ -5,7 +5,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.core.paginator import Paginator
-from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas
+from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas, Empresa
 
 def select(request):
     '''cria e salva vagas'''
@@ -90,7 +90,9 @@ def editar_vagas(request, pk_vagas):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
     vagas.salario = int(vagas.salario)
+    empresa = Empresa.objects.filter(user=request.user)
     vaga_a_editar = {
+        'empresa':empresa,
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
@@ -145,9 +147,11 @@ def index(request):
         vagas = paginar(vagas, request)
         ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
         user_candidato = request.user
+        empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
         dados = {
             'Dados':DP,
+            'empresa':empresa,
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         }
@@ -159,9 +163,6 @@ def index(request):
         }
     return render(request, 'index.html', dados)
 
-def perfilempresa(request):
-    return render(request, 'perfilEmpresa.html')
-
 def vagas(request):
     vagas = Vagas.objects.order_by('-data_vaga').filter()
     vagas = paginar(vagas, request)
@@ -170,8 +171,13 @@ def vagas(request):
         DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     else:
         DP = None
+    if request.user.is_authenticated:
+        empresa = Empresa.objects.filter(user=request.user)
+    else:
+        empresa = ''
     dados = {
         'Dados':DP,
+        'empresa':empresa,
         'vagas' : vagas
     }
     return render(request, 'vagas.html', dados)
@@ -233,7 +239,9 @@ def minhas_vagas(request):
         trabalhos = TipoTrabalho.objects.all()
         perfis = PerfilProfissional.objects.all()
         vagas = paginar(vagas, request)
+        empresa = Empresa.objects.filter(user=request.user)
         dados = {
+            'empresa':empresa,
             'contratacoes' : contratacoes,
             'trabalhos' : trabalhos,
             'perfis' : perfis,
@@ -251,7 +259,11 @@ def busca_vaga(request):
         nome_a_buscar = request.GET['buscar']
         messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+        empresa = Empresa.objects.filter(user=request.user)
+        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
         dados = {
+            'Dados':DP,
+            'empresa':empresa,
             'vagas' : lista_vagas
         }
         return render(request, 'vagas.html', dados)
@@ -261,7 +273,11 @@ def busca_vaga(request):
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
         busca_candidatadas = paginar(busca_candidatadas, request)
+        empresa = Empresa.objects.filter(user=request.user)
+        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
         dados = {
+            'Dados':DP,
+            'empresa':empresa,
             'vagas_candidatadas' : busca_candidatadas,
             'vagas_salvas':busca_salvas
         }
@@ -271,7 +287,11 @@ def busca_vaga(request):
         messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
+        empresa = Empresa.objects.filter(user=request.user)
+        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
         dados = {
+            'Dados':DP,
+            'empresa':empresa,
             # 'vagas_candidatadas' : busca_candidatadas,
             'vagas':busca_vagas
         }
@@ -282,7 +302,11 @@ def busca_vaga(request):
         nome_a_buscar = request.GET['bagas']
         messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+        empresa = Empresa.objects.filter(user=request.user)
+        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
         dados = {
+            'Dados':DP,
+            'empresa':empresa,
             'vagas' : lista_vagas
         }
         return render(request, 'minhas-vagas.html', dados)

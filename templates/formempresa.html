@@ -19,13 +19,14 @@
     <div class="content pt-5">
         <h1 class="display-6 text-center pt-5 mt-5 titulo">Cadastro - <strong>Empresa</strong></h1>
         <div class="containerFormEmpresa p-5">
-            <form action="{% url 'registro' %}" class="" method="post" enctype="multipart/form-data" novalidate>
+            {% if not empresas %}
+            <form id="formEmp" action="{% url 'registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}" class="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input name="img_perfil_empresa" type="file" class="sidebar-avatar avatar" id="logoStartup" accept="image/*" required>
                 <div class="row">
                     <div class="col-md-8">
                         <label for="razaosocial" class="form-label">Razão Social</label>
-                        <input name="razao_social" type="text" class="form-control" id="razaosocial" required>
+                        <input name="razao_social" type="text" class="form-control" id="razaosocial" maxlength='100' required>
                         <div class="valid-feedback">
                             Tudo ok!
                         </div>
@@ -40,7 +41,7 @@
                 </div>
                 <div class="col-md-12 pt-3">
                     <label for="nomeFantasia" class="form-label">Nome Fantasia</label>
-                    <input name="nome_fantasia" type="text" class="form-control" id="nomefantasia" required>
+                    <input name="nome_fantasia" type="text" class="form-control" id="nomefantasia" maxlength='100' required>
                     <div class="valid-feedback">
                         Tudo ok!
                     </div>
@@ -55,7 +56,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="celular" class="form-label">Celular</label>
-                        <input name="celular" type="tel" class="form-control" id="celular" required>
+                        <input name="celular" type="tel" class="form-control" id="celular" placeholder="(XX)XXXX-XXXXX" required>
                         <div class="valid-feedback">
                             Tudo ok!
                         </div>
@@ -83,7 +84,7 @@
                         <div class="row py-1">
                             <div class="col-md-6">
                                 <label for="cep" class="form-label">Cep</label>
-                                <input type="text" name="cep" class="form-control" id="cep" required>
+                                <input type="text" name="cep" class="form-control" id="cep" maxlength='15' required>
                                 <div class="invalid-feedback">
                                     Por favor, informe um cep valido.
                                 </div>
@@ -99,11 +100,102 @@
                             </div>
                         </div>
                         <div class="form-floating pt-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px" name="descricao_empresa"></textarea>
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px" name="descricao_empresa" maxlength='1000' required></textarea>
                             <label for="floatingTextarea">Uma breve historia sobre a empresa</label>
                         </div>
                     </div>
                 </div>
+            {% else %}
+            <form id="formEmp" action="{% url 'editar_registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}" class="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="file"><b>Foto utilizada</b></label>
+                <img src="{{ empresa.img_perfil_empresa.url }}">
+                <input name="img_perfil_empresa" type="file" class="sidebar-avatar avatar" id="logoStartup" accept="image/*">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="razaosocial" class="form-label">Razão Social</label>
+                        <input name="razao_social" type="text" class="form-control" id="razaosocial" maxlength='100' value='{{empresas.razao_social}}' required>
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input name="cnpj" type="text" class="form-control" id="cnpj" maxlength='15' value='{{empresas.cnpj}}' required>
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 pt-3">
+                    <label for="nomeFantasia" class="form-label">Nome Fantasia</label>
+                    <input name="nome_fantasia" type="text" class="form-control" id="nomefantasia" maxlength='100' value='{{empresas.nome_fantasia}}' required>
+                    <div class="valid-feedback">
+                        Tudo ok!
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-md-8">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="number" name="telefone" class="form-control" id="telefone" name="telefone" value='{{empresas.telefone}}' placeholder="(XX)XXXX-XXXXX" min="10000000000" max="99999999999" required>
+                        <div class="invalid-feedback">
+                            Informe um telefone valido.
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="celular" class="form-label">Celular</label>
+                        <input name="celular" type="tel" class="form-control" id="celular" value='{{empresas.celular}}' placeholder="(XX)XXXX-XXXXX" required>
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="estado" class="form-label">Estado</label>
+                        <select name="estado" class="form-select" id="uf"required>
+                            <option value='{{empresas.estado}}' selected>{{empresas.estado}}</option>
+                            {% for estado in estados %}
+                            <option value="{{estado}}">{{estado}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">Por favor, escolha um estado valido</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <select name="cidade" class="form-select" id="cidade"required>
+                            <option value='{{empresas.cidade}}' selected>{{empresas.cidade}}</option>
+                            {% for cidade in cidades %}
+                            <option value="{{cidade}}">{{cidade}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">Por favor, escolha um estado valido</div>
+                    </div>
+                    <div>
+                        <div class="row py-1">
+                            <div class="col-md-6">
+                                <label for="cep" class="form-label">Cep</label>
+                                <input type="text" name="cep" class="form-control" id="cep" maxlength='15' value='{{empresas.cep}}' required>
+                                <div class="invalid-feedback">
+                                    Por favor, informe um cep valido.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="form-label">Ramo de atividade</label>
+                                <select class="form-select" name="ramo_de_atividade" required aria-label="selecione uma opção">
+                                    <option value='{{empresas.ramo_de_atividade}}' selected>{{empresas.ramo_de_atividade}}</option>
+                                    <option value="Informatica">Informática</option>
+                                    <option value="Economia">Economia</option>
+                                    <option value="Saúde">Saúde</option>
+                                </select>
+                                <div class="invalid-feedback">Example invalid select feedback</div>
+                            </div>
+                        </div>
+                        <div class="form-floating pt-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px" name="descricao_empresa" maxlength='1000' required>{{empresas.descricao_empresa}}</textarea>
+                            <label for="floatingTextarea">Uma breve historia sobre a empresa</label>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
                 <div class="d-flex justify-content-between p-5">
                     <div>
                         <button class="btn botaoenviarformempresa" type="submit" name="enviarFormEmpresa" id="enviar">Enviar</button>
