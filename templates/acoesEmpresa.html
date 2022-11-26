@@ -54,35 +54,30 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for i in contexto%}
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td>
-                    <td class="nome-table">Xbox</td>
-                    <td class="">01/01/2021</td>
-                    <td class="">31/06/2021</td>
-                  <tr class="empresas">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input marcar" type="checkbox" value="">
+                    <td class="sorting_1">{{ i.username }}</td>
+                    <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
+                    <td class="d-none d-xl-table-cell">{{i.data_vaga|date:"d/m/Y"}}</td>
+                    <td><span class="badge bg-success">Ativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
                       </div>
                     </td>
-                    <td class="nome-table">Nitendo</td>
-                    <td class="">01/01/2021</td>
-                    <td class="">31/06/2021</td>
                   </tr>
-                  <tr class="empresas">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input marcar" type="checkbox" value="">
-                      </div>
-                    </td>
-                    <td class="nome-table">PlayStation</td>
-                    <td class="">01/01/2021</td>
-                    <td class="">31/06/2021</td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>

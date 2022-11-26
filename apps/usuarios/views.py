@@ -13,7 +13,11 @@ url_atual = ""
 
 def formempresa(request):
     '''formulario da empresa'''
-    empresa = get_object_or_404(Empresa, user=request.user)
+    print(len(Empresa.objects.filter(user=request.user)))
+    if len(Empresa.objects.filter(user=request.user)) > 0:
+        empresa = get_object_or_404(Empresa, user=request.user)
+    else:
+        empresa = None
     locais = City.objects.all()
     estado = []
     cidades = []
@@ -22,16 +26,18 @@ def formempresa(request):
             estado.append(local.state)
     estado = sorted(estado)
     cidades = sorted(cidades)
+    empresa = Empresa.objects.filter(user=request.user)
     dados = {
+        'empresa':empresa,
         'estados':estado,
         'cidades':cidades,
-        'empresa':empresa
+        'empresas':empresa
     }
     return render(request, 'FormEmpresa.html', dados)
 
 def editar_registro(request):
     '''formulario da empresa'''
-    if request.method == 'POST':
+    if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) == 1:
         e = Empresa.objects.get(user=request.user)
         if 'img_perfil_empresa' in request.FILES:
             e.img_perfil_empresa = request.FILES['img_perfil_empresa']
@@ -49,7 +55,7 @@ def editar_registro(request):
     return redirect('perfilempresa')
 
 def registro(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) < 0:
         img_perfil_empresa = request.FILES['img_perfil_empresa']
         razao_social = request.POST['razao_social']
         cnpj = request.POST['cnpj']
@@ -395,7 +401,9 @@ def empresa(request, *args, **kwargs):
         else:
             talentos_cadastro_incompleto.append(talento)
 
+    empresa = Empresa.objects.filter(user=request.user)
     dado = {
+        'empresa':empresa,
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
@@ -506,8 +514,8 @@ def dashboard(request):
 
 def perfilempresa(request):
     '''perfil da empresa'''
-    empresa = Empresa.objects.filter(user=request.user)
     vagas = Vagas.objects.filter(nome_empresa=request.user)
+    empresa = Empresa.objects.filter(user=request.user)
     dados = {
         'empresa':empresa,
         'vagas':vagas
@@ -604,7 +612,9 @@ def listar_talentos_candidatados(request, pk_vaga):
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
 
+    empresa = Empresa.objects.filter(user=request.user)
     dados = {
+        'empresa':empresa,
         'lista_de_talentos' : lista_de_talentos,
         'talentos_cadas_incompleto' : list_talen_cadastro_incompleto,
         'numero_de_candidatos' : len(lista_de_talentos),
@@ -635,7 +645,9 @@ def talentos(request):
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
 
+    empresa = Empresa.objects.filter(user=request.user)
     dado = {
+        'empresa':empresa,
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
@@ -657,7 +669,9 @@ def busca_talentos(request):
     d = Dados_Pessoais.objects.order_by('-data_dados')
     i = Informações_Iniciais.objects.all()
     f = Formacao_Academica.objects.all()
+    empresa = Empresa.objects.filter(user=request.user)
     dados = {
+        'empresa':empresa,
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
