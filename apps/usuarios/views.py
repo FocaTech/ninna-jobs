@@ -426,9 +426,9 @@ def dashboard(request):
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
     id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
-    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
-    for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
-        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+
+    lista_de_vagas_salvas_do_user = []
+    lista_de_vagas_salvas_do_user = [ Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga, status=True) for vagas_salvas in id_das_vagas_salvas_do_user]
 
     ids_de_vagas_salvas = []
     for vaga_salva in lista_de_vagas_salvas_do_user:
@@ -436,18 +436,21 @@ def dashboard(request):
             ids_de_vagas_salvas.append(vaga_salvaa.id)
 
     id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
-    lista_de_vagas_candidatadas_do_user = []
-    lista_de_vagas_candidatadas_do_user_para_arquivadas = []
+    lista_de_vagas_candidatadas = []
+    lista_de_vagas_candidatadas_arquivadas = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
-        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
-        lista_de_vagas_candidatadas_do_user_para_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
+        lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+        lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
 
     lista_de_vagas_arquivas_do_user = []
-    for querySet_vagas_candidatadass in lista_de_vagas_candidatadas_do_user_para_arquivadas:
+    for querySet_vagas_candidatadass in lista_de_vagas_candidatadas_arquivadas:
         for vagas_candidatadass in querySet_vagas_candidatadass:
             # dois for para desenpacotar os querysets
             if vagas_candidatadass.status == False:
                 lista_de_vagas_arquivas_do_user.append(vagas_candidatadass)
+
+    # print(f"vagas_cand == {lista_de_vagas_candidatadas_do_user_para_arquivadas}")
+    # print(f"vagas_arqui == {lista_de_vagas_arquivas_do_user}")
 
     print(ids_de_vagas_salvas)
     user_candidato = request.user
@@ -455,7 +458,7 @@ def dashboard(request):
     dados = {
         'Dados':DP,
         'vagas' : vagas,
-        'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
+        'vagas_candidatadas' : lista_de_vagas_candidatadas,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
         'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         'vagas_arquivadas' : lista_de_vagas_arquivas_do_user,

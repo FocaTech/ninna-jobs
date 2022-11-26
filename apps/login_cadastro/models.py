@@ -9,6 +9,7 @@ class Users(AbstractUser):
     )
 
     funcao = models.CharField(max_length=3, choices=funcao_escolha)
+    nome_completo = models.CharField(max_length= 150)
 
 #Tabela para adicionar as opções da area de interesse
 class AreaDeInteresse(models.Model):

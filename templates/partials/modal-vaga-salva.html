@@ -43,6 +43,13 @@
           </div>
           <div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <h1>{{vaga_salva}}</h1>
+            <h1>{{vagas_candidatadas}}</h1>
+            {% if vaga_salva.id in vagas_candidatadas %}
+            <h1>estasim</h1>
+            {% else %}
+            <h1>estanao</h1>
+            {% endif %}
             <a href="{% url 'candidatar_a_vaga' vaga_salva.id %}"><button type="button" class="btn btn-primary">Candidatar-se</button></a>
           </div>
         </div>
