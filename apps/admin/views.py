@@ -5,9 +5,9 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.contrib import messages
 
-todos_os_can = Users.objects.filter(funcao='CAN').count()
-todas_as_emp = Users.objects.filter(funcao='EMP').count()
-vagas_ativas = Vagas.objects.filter(status=True).count()
+# todos_os_can = Users.objects.filter(funcao='CAN').count()
+# todas_as_emp = Users.objects.filter(funcao='EMP').count()
+# vagas_ativas = Vagas.objects.filter(status=True).count()
 # Create your views here.
 def interface(request):
     empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
