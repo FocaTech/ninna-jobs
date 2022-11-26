@@ -26,6 +26,12 @@
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
 {% include 'partials/_alertas.html' %}
+
+<section>
+
+    {% include 'modalMensagens.html' %} </section>
+
+
 <main>
     <!--Carroseel-->
     <div class="position-relative" style="margin-top: -20px">
@@ -179,4 +185,13 @@
         {% endif %}
     </div>
 </main>
+{% if user.is_authenticated %}
+    <script type="text/javascript">
+        $(window).on('load',function(){
+        $('#modalExemplo').modal('show'); });
+        setTimeout(function() {
+            $('.modal').modal('hide');
+        },"2000")
+    </script>
+{% endif %}
 {% endblock %}
