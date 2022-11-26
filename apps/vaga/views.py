@@ -147,8 +147,8 @@ def index(request):
         vagas = paginar(vagas, request)
         ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
         user_candidato = request.user
-        empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+        empresa = Empresa.objects.filter(user=request.user)
         dados = {
             'Dados':DP,
             'empresa':empresa,
@@ -174,7 +174,7 @@ def vagas(request):
     if request.user.is_authenticated:
         empresa = Empresa.objects.filter(user=request.user)
     else:
-        empresa = ''
+        empresa = None
     dados = {
         'Dados':DP,
         'empresa':empresa,
