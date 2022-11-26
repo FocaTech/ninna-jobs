@@ -34,15 +34,14 @@
                     </a>
                     {% endif %}
                     {% endfor %}
-                    <a class="email"href="mailto:{{user.email}}?subject=Parabéns%20Você%20Foi%20Pré%20Selecionado"><i class="bi bi-envelope"></i></a>
                 </div>
                 <div class="div-enviar-mensagem">
                 {% if not user.funcao == "CAN" %}
-                    <div class="dropdown enviar-email">
                         <button class="btn bt-enviar btn-outline-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-send aviao"></i><p class="msg-btn-enviar">Quero conversar</p></button>
                         <ul class="dropdown-menu">
                             <li>
                                 <form class="mx-3" style="width: 200px" action="http://formmail.kinghost.net/formmail.cgi" method="POST">
+                                    {% csrf_token %}
                                     <input type="hidden" name="recipient" value="{{userC.email}}"> <!-- Pode ser qualquer endereço de email -->
                                     <input type="hidden" name="redirect" value="localhost:8000"> <!-- Após o envio, o usuário será redirecionado para a página configurada aqui -->
                                     <input type="hidden" name="subject" value="Empresa quer Conversar">  <!-- Assunto da mensagem -->
@@ -52,7 +51,7 @@
                                     <label for="none-enviar-email" class="form-label">Email</label>
                                     <input class="form-control" type="text" size="30" name="replyto" value='{{user.email}}'>
                                     <label for="mensagem-enviar-email" class="form-label">Mensagem</label>
-                                    <textarea id="mensagem-enviar-email" class="form-control" type="text" size="35" name="Comentarios"></textarea>
+                                    <textarea id="mensagem-enviar-email" class="form-control" type="text" size="35" name="Comentarios" style="resize: none"></textarea>
                                     <div class="row">
                                         <input class="btn btn-primary col m-3" type="submit" name="BTEnvia" value="Enviar">
                                         <input class="btn btn-primary col m-3" type="reset" name="BTApaga" value="Apagar"> </p>
@@ -60,7 +59,6 @@
                                 </form>
                             </li>
                         </ul>
-                    </div>
                 {% endif %}
                 <div class='right-column'>
                     {% if Informacoes %}

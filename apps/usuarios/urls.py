@@ -1,8 +1,11 @@
 from django.urls import path
 from . import views
 
+
+
 urlpatterns = [
     path('formulario/empresa/', views.registro, name='registro'),
+    path('editar/perfil/', views.formempresa, name='formempresa'),
     path('Informacoes/Iniciais/', views.formcandidato, name='formcandidato'),#form 1
     path('Dados/Pessoais/', views.Informacoes_iniciais, name='Informacoes_iniciais'),#form 2
     path('Ajax/load-funcoes', views.carrega_funcoes, name='ajax_load_funcoes'),#select estado e cidade

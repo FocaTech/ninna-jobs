@@ -12,7 +12,19 @@ from django.core.paginator import Paginator
 url_atual = ""
 
 def formempresa(request):
-    return render(request, 'formempresa.html')
+    locais = City.objects.all()
+    estado = []
+    cidades = []
+    for local in locais:
+        if not local.state in estado:
+            estado.append(local.state)
+    estado = sorted(estado)
+    cidades = sorted(cidades)
+    dados = {
+        'estados':estado,
+        'cidades':cidades,
+    }
+    return render(request, 'FormEmpresa.html', dados)
 
 def registro(request):
     if request.method == 'POST':
@@ -27,9 +39,8 @@ def registro(request):
         cep = request.POST['cep']
         ramo_de_atividade = request.POST['ramo_de_atividade']
         descricao_empresa = request.POST['descricao_empresa']
-
-        vaga = Empresa.objects.create(img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
-        vaga.save()
+        perfil = Empresa.objects.create(user=request.user,img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
+        perfil.save()
         return redirect('index')
     else:
         return render(request, 'formempresa.html')
@@ -104,6 +115,7 @@ def carrega_funcoes(request):
     for local in cidades:
         if not local.name in nome_cidade:
             nome_cidade.append(local.name)
+    nome_cidade = sorted(nome_cidade)
     dados = {
         'cidades':nome_cidade
     }
