@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('formulario/empresa/', views.registro, name='registro'),
+    path('formulario/empresa/2', views.editar_registro, name='editar_registro'),
     path('editar/perfil/', views.formempresa, name='formempresa'),
     path('Informacoes/Iniciais/', views.formcandidato, name='formcandidato'),#form 1
     path('Dados/Pessoais/', views.Informacoes_iniciais, name='Informacoes_iniciais'),#form 2
@@ -28,6 +29,7 @@ urlpatterns = [
     path('empresa/', views.empresa, name='empresa'),#dashboard de empresa
     path('dashboard/', views.dashboard, name='dashboard'),
     path('perfil', views.perfil, name='perfil'),#candidato ver o perfil
+    path('perfil/empresa', views.perfilempresa, name='perfilempresa'),#empresa ver o perfil
     path('perfil/candidato/<int:id_candidato>', views.perfil_candidato, name='perfil_candidato'),#empresa ver o perfil do candidato
     path('listar_candidatos/<int:pk_vaga>', views.listar_talentos_candidatados, name='listar_talentos_candidatados'),#dashboard de empresa
     path('talentos', views.talentos, name='talentos'),#empresa ver candidatos
@@ -35,7 +37,7 @@ urlpatterns = [
     path('empresasfavoritadas', views.empresas_favoritadas, name='empresas_favoritadas'),
     path('contato', views.contato, name='contato'),#busca candidatos
     path('favoritar_talento/<int:pk_talento>', views.favoritar_talento, name='favoritar_talento'),#favoritar talentos
-    path('configuracoes', views.configuracoes, name='configuracoes'),
+    path('configuracoes', views.configuracoes, name='configuracoes'),#apagar conta
     path('apagar_conta', views.apagar_conta, name='apagar_conta'),
     path('candidato_fav', views.candidato_fav, name='candidato_fav'),
 ]

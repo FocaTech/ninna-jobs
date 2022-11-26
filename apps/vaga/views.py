@@ -169,9 +169,6 @@ def index(request):
         }
     return render(request, 'index.html', dados)
 
-def perfilempresa(request):
-    return render(request, 'perfilEmpresa.html')
-
 def vagas(request):
     vagas = Vagas.objects.order_by('-data_vaga').filter()
     vagas = paginar(vagas, request)

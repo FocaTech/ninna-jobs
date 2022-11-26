@@ -12,6 +12,8 @@ from django.core.paginator import Paginator
 url_atual = ""
 
 def formempresa(request):
+    '''formulario da empresa'''
+    empresa = get_object_or_404(Empresa, user=request.user)
     locais = City.objects.all()
     estado = []
     cidades = []
@@ -23,8 +25,28 @@ def formempresa(request):
     dados = {
         'estados':estado,
         'cidades':cidades,
+        'empresa':empresa
     }
     return render(request, 'FormEmpresa.html', dados)
+
+def editar_registro(request):
+    '''formulario da empresa'''
+    if request.method == 'POST':
+        e = Empresa.objects.get(user=request.user)
+        if 'img_perfil_empresa' in request.FILES:
+            e.img_perfil_empresa = request.FILES['img_perfil_empresa']
+        e.razao_social = request.POST['razao_social']
+        e.cnpj = request.POST['cnpj']
+        e.nome_fantasia = request.POST['nome_fantasia']
+        e.telefone = request.POST['telefone']
+        e.celular = request.POST['celular']
+        e.cidade = request.POST['cidade']
+        e.estado = request.POST['estado']
+        e.cep = request.POST['cep']
+        e.ramo_de_atividade = request.POST['ramo_de_atividade']
+        e.descricao_empresa = request.POST['descricao_empresa']
+        e.save()
+    return redirect('perfilempresa')
 
 def registro(request):
     if request.method == 'POST':
@@ -41,7 +63,7 @@ def registro(request):
         descricao_empresa = request.POST['descricao_empresa']
         perfil = Empresa.objects.create(user=request.user,img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
         perfil.save()
-        return redirect('index')
+        return redirect('perfilempresa')
     else:
         return render(request, 'formempresa.html')
 
@@ -431,6 +453,16 @@ def dashboard(request):
         'vagas_arquivadas' : lista_de_vagas_arquivas_do_user,
     }
     return render(request, 'dashboard.html', dados)
+
+def perfilempresa(request):
+    '''perfil da empresa'''
+    empresa = Empresa.objects.filter(user=request.user)
+    vagas = Vagas.objects.filter(nome_empresa=request.user)
+    dados = {
+        'empresa':empresa,
+        'vagas':vagas
+    }
+    return render(request, 'perfilEmpresa.html', dados)
 
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''

@@ -17,25 +17,28 @@
       <button class="botaofavEmpresa"><i class="bi bi-star"></i></button>
     </div>
     <div class="bg-light w-75 m-auto p-5 perfil-empresa">
+      {% if not empresa %}
       <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar avatar-empresa">
-      <h2 class="text-center p-5 mt-3">Nome Da Empresa</h2>
+      <h2 class="text-center p-5 mt-3">{{user.username}}</h2>
+      {% else %}
+      {% for e in empresa %}
+      <img src="{{e.img_perfil_empresa.url}}" alt="" class="sidebar-avatar avatar-empresa">
+      <h2 class="text-center p-5 mt-3">{{e.nome_fantasia}}</h2>
+      {% endfor %}
+      {% endif %}
       <div class="tabber p-4">
         <div class="tabber__tabs p-3">
           <button type="button" class="tabber__tab active h4">Sobre</button>
           <button type="button" class="tabber__tab h4">Vagas</button>
         </div>
         <div class="tabber__content p-5">
+          {% for e in empresa %}
           <section id="sobre" class="active px-5">
-            <p class="h6 lh-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus magnam minima? Quo recusandae autem ea nobis accusamus! Ipsa dolore impedit alias! Dolores laudantium a sit at quia ea consequatur.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus cum molestias perspiciatis inventore sapiente earum debitis aliquid tempore totam, quis quo! Optio ut obcaecati numquam ratione voluptas laborum nemo ad!
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae officiis facilis quis alias delectus iste quaerat rerum corporis. Veniam earum blanditiis tempora culpa commodi maiores nostrum? Cumque qui minus dicta.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet praesentium, velit quasi fuga quaerat quos perspiciatis numquam impedit doloribus enim maxime nisi porro natus facilis explicabo fugit. Labore, sed iure?
-
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ab id velit tempore cum quo necessitatibus aperiam ducimus, illo amet excepturi ad perspiciatis aliquam, nostrum quas eveniet vel maiores nemo?
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam praesentium hic maxime delectus sequi repellat eius laboriosam, non excepturi dolores, blanditiis rerum ut, mollitia aspernatur! Illo consequatur quae soluta ab!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo ut quia corrupti nam? Ipsum, perferendis sunt facilis fugiat laboriosam recusandae nulla, qui laborum a beatae perspiciatis assumenda odit amet exercitationem.
+            <p class="h6 lh-lg">
+              {{e.descricao_empresa}}
             </p>
           </section>
+          {% endfor %}
           <section id="vagas" class="p-5">
             <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
               {% if vagas %}
