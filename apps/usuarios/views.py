@@ -427,12 +427,57 @@ def dashboard(request):
         for vaga_salvaa in vaga_salva:
             ids_de_vagas_salvas.append(vaga_salvaa.id)
 
+
+
+
+
+
+
+
+
+
+
     id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
     lista_de_vagas_candidatadas = []
     lista_de_vagas_candidatadas_arquivadas = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
         lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
+
+    id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]# dois for para desenpacotar o queryset
+    # print(f"id das candidatas == {id_de_vagas_candidatadas}")
+
+    # for talento in lista_de_talentos:
+    #     # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
+    #     dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+    #     if len(dado_pessoal) != 0:
+    #         dados_pessoais.append(*dado_pessoal)
+
+    # id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+    # lista_de_vagas_candidatadas = []
+    # lista_de_vagas_candidatadas_arquivadas = []
+    # for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+    #     # lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+    #     # vagas_candidatadas = Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True)
+    #     vagas_candidatadas = get_object_or_404(Vagas, nome_vaga=vagas_candidatadas.id_vaga, status=True)
+    #     # user_candidato = get_object_or_404(Users, pk=id_candidato)
+    #     lista_de_vagas_candidatadas.append(vagas_candidatadas.id)
+    #     lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     lista_de_vagas_arquivas_do_user = []
     for querySet_vagas_candidatadass in lista_de_vagas_candidatadas_arquivadas:
@@ -444,13 +489,15 @@ def dashboard(request):
     # print(f"vagas_cand == {lista_de_vagas_candidatadas_do_user_para_arquivadas}")
     # print(f"vagas_arqui == {lista_de_vagas_arquivas_do_user}")
 
-    print(ids_de_vagas_salvas)
+    # print(ids_de_vagas_salvas)
     user_candidato = request.user
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    # print(f"id das candidatas == {id_de_vagas_candidatadas}")
     dados = {
         'Dados':DP,
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas,
+        'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
         'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         'vagas_arquivadas' : lista_de_vagas_arquivas_do_user,
