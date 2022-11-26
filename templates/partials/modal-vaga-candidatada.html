@@ -39,15 +39,11 @@
     {% if user.is_authenticated %}
       <div class="modal-footer justify-content-between">
         <div>
-          {% if vaga_candidatada.id in ids_de_vagas_salvas %}
-          <a href="{% url 'salvar_vaga' vaga_candidatada.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star-fill"></i></a>
-          {% else %}
           <a href="{% url 'salvar_vaga' vaga_candidatada.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
-          {% endif %}
         </div>
         <div>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <a href="{% url 'candidatar_a_vaga' vaga_candidatada.id %}"><button type="button" class="btn btn-primary">Retirar candidatura</button></a>
+          <a href="{% url 'candidatar_a_vaga' vaga_candidatada.id %}"><button type="button" class="btn btn-primary">Candidatar-se</button></a>
         </div>
       </div>
     {% else %}

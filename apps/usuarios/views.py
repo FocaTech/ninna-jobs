@@ -4,7 +4,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
-# from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
+from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
 from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
@@ -143,7 +143,6 @@ def carrega_funcoes(request):
     for local in cidades:
         if not local.name in nome_cidade:
             nome_cidade.append(local.name)
-    nome_cidade = sorted(nome_cidade)
     dados = {
         'cidades':nome_cidade
     }
@@ -420,8 +419,6 @@ def empresa(request, *args, **kwargs):
 @has_role_decorator('candidato')
 def dashboard(request):
     '''dash de candidato'''
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
     vagas = Vagas.objects.all()
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -435,12 +432,57 @@ def dashboard(request):
         for vaga_salvaa in vaga_salva:
             ids_de_vagas_salvas.append(vaga_salvaa.id)
 
+
+
+
+
+
+
+
+
+
+
     id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
     lista_de_vagas_candidatadas = []
     lista_de_vagas_candidatadas_arquivadas = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
         lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
         lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
+
+    id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]# dois for para desenpacotar o queryset
+    # print(f"id das candidatas == {id_de_vagas_candidatadas}")
+
+    # for talento in lista_de_talentos:
+    #     # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
+    #     dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+    #     if len(dado_pessoal) != 0:
+    #         dados_pessoais.append(*dado_pessoal)
+
+    # id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+    # lista_de_vagas_candidatadas = []
+    # lista_de_vagas_candidatadas_arquivadas = []
+    # for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+    #     # lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+    #     # vagas_candidatadas = Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True)
+    #     vagas_candidatadas = get_object_or_404(Vagas, nome_vaga=vagas_candidatadas.id_vaga, status=True)
+    #     # user_candidato = get_object_or_404(Users, pk=id_candidato)
+    #     lista_de_vagas_candidatadas.append(vagas_candidatadas.id)
+    #     lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     lista_de_vagas_arquivas_do_user = []
     for querySet_vagas_candidatadass in lista_de_vagas_candidatadas_arquivadas:
@@ -452,15 +494,16 @@ def dashboard(request):
     # print(f"vagas_cand == {lista_de_vagas_candidatadas_do_user_para_arquivadas}")
     # print(f"vagas_arqui == {lista_de_vagas_arquivas_do_user}")
 
-    print(ids_de_vagas_salvas)
+    # print(ids_de_vagas_salvas)
     user_candidato = request.user
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    # print(f"id das candidatas == {id_de_vagas_candidatadas}")
     dados = {
         'Dados':DP,
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas,
+        'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
-        'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         'vagas_arquivadas' : lista_de_vagas_arquivas_do_user,
     }
     return render(request, 'dashboard.html', dados)
@@ -638,6 +681,7 @@ def busca_talentos(request):
 def contato(request):
     if request.method == 'POST':
         send_mail(f"{request.POST['subject']}", f" id:{request.user.id} \n nome:{request.POST['name']} \n email:{request.POST['email']} \n mensagem:{request.POST['message']}", f"{request.POST['email']}", ['ninnajobs72@gmail.com'])
+        messages.success(request, 'Email enviado')
     return redirect('index')
 
 def empresas_favoritadas(request):
