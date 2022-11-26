@@ -577,7 +577,6 @@ def busca_talentos(request):
 def contato(request):
     if request.method == 'POST':
         send_mail(f"{request.POST['subject']}", f" id:{request.user.id} \n nome:{request.POST['name']} \n email:{request.POST['email']} \n mensagem:{request.POST['message']}", f"{request.POST['email']}", ['ninnajobs72@gmail.com'])
-        messages.success(request, 'Email enviado')
     return redirect('index')
 
 def empresas_favoritadas(request):

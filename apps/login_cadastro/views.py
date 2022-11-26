@@ -3,7 +3,6 @@ from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, M
 from django.contrib import auth, messages
 from django.shortcuts import get_object_or_404, render, redirect
 from rolepermissions.decorators import has_role_decorator
-from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -39,7 +38,6 @@ def cadastro_candidato(request):
             return redirect('cadastro_candidato')
         candidato_user = Users.objects.create_user(username=candidato_nome, email=candidato_email, password=candidato_senha, funcao = "CAN")
         candidato_user.save()
-        messages.success(request, 'Cadastro realizado com Sucesso')
         # loga direto
         user = auth.authenticate(request, username=candidato_nome, password=candidato_senha, funcao = "CAM")
         print(user)
@@ -69,7 +67,6 @@ def cadastro_empresa(request):
             return redirect('cadastro_empresa')
         empresa_user = Users.objects.create_user(username=empresa_nome, email=empresa_email, password=empresa_senha, funcao = "EMP")
         empresa_user.save()
-        messages.success(request, 'Cadastro realizado com sucesso')
         # loga direto
         user = auth.authenticate(request, username=empresa_nome, password=empresa_senha, funcao = "EMP")
         if user:
@@ -92,9 +89,7 @@ def login(request):
             if user:
                 auth.login(request, user)
                 print("autenticado")
-                messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {nome}')
                 return redirect('index')
-        messages.error(request, "Usuario não cadastrado")
     return render(request, 'index.html')
 
 email_do_user_atual = ''
