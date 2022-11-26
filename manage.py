@@ -21,7 +21,7 @@ def main():
 if __name__ == '__main__':
     main()
 
-    
+
 # AJUDA FRONT
 # python manage.py runserver
 # python manage.py loaddata city

@@ -13,7 +13,6 @@ url_atual = ""
 
 def formempresa(request):
     '''formulario da empresa'''
-    print(len(Empresa.objects.filter(user=request.user)))
     if len(Empresa.objects.filter(user=request.user)) > 0:
         empresa = get_object_or_404(Empresa, user=request.user)
     else:
