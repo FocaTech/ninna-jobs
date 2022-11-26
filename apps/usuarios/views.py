@@ -12,7 +12,41 @@ from django.core.paginator import Paginator
 url_atual = ""
 
 def formempresa(request):
-    return render(request, 'formempresa.html')
+    '''formulario da empresa'''
+    empresa = get_object_or_404(Empresa, user=request.user)
+    locais = City.objects.all()
+    estado = []
+    cidades = []
+    for local in locais:
+        if not local.state in estado:
+            estado.append(local.state)
+    estado = sorted(estado)
+    cidades = sorted(cidades)
+    dados = {
+        'estados':estado,
+        'cidades':cidades,
+        'empresa':empresa
+    }
+    return render(request, 'FormEmpresa.html', dados)
+
+def editar_registro(request):
+    '''formulario da empresa'''
+    if request.method == 'POST':
+        e = Empresa.objects.get(user=request.user)
+        if 'img_perfil_empresa' in request.FILES:
+            e.img_perfil_empresa = request.FILES['img_perfil_empresa']
+        e.razao_social = request.POST['razao_social']
+        e.cnpj = request.POST['cnpj']
+        e.nome_fantasia = request.POST['nome_fantasia']
+        e.telefone = request.POST['telefone']
+        e.celular = request.POST['celular']
+        e.cidade = request.POST['cidade']
+        e.estado = request.POST['estado']
+        e.cep = request.POST['cep']
+        e.ramo_de_atividade = request.POST['ramo_de_atividade']
+        e.descricao_empresa = request.POST['descricao_empresa']
+        e.save()
+    return redirect('perfilempresa')
 
 def registro(request):
     if request.method == 'POST':
@@ -27,10 +61,9 @@ def registro(request):
         cep = request.POST['cep']
         ramo_de_atividade = request.POST['ramo_de_atividade']
         descricao_empresa = request.POST['descricao_empresa']
-
-        vaga = Empresa.objects.create(img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
-        vaga.save()
-        return redirect('index')
+        perfil = Empresa.objects.create(user=request.user,img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
+        perfil.save()
+        return redirect('perfilempresa')
     else:
         return render(request, 'formempresa.html')
 
@@ -104,6 +137,7 @@ def carrega_funcoes(request):
     for local in cidades:
         if not local.name in nome_cidade:
             nome_cidade.append(local.name)
+    nome_cidade = sorted(nome_cidade)
     dados = {
         'cidades':nome_cidade
     }
@@ -423,6 +457,16 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', dados)
 
+def perfilempresa(request):
+    '''perfil da empresa'''
+    empresa = Empresa.objects.filter(user=request.user)
+    vagas = Vagas.objects.filter(nome_empresa=request.user)
+    dados = {
+        'empresa':empresa,
+        'vagas':vagas
+    }
+    return render(request, 'perfilEmpresa.html', dados)
+
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''
     user_candidato = request.user
@@ -580,7 +624,6 @@ def busca_talentos(request):
 def contato(request):
     if request.method == 'POST':
         send_mail(f"{request.POST['subject']}", f" id:{request.user.id} \n nome:{request.POST['name']} \n email:{request.POST['email']} \n mensagem:{request.POST['message']}", f"{request.POST['email']}", ['ninnajobs72@gmail.com'])
-        messages.success(request, 'Email enviado')
     return redirect('index')
 
 def empresas_favoritadas(request):
