@@ -33,31 +33,20 @@
                   <div class="row">
                     <div class="col">
                       <tr>
-                        <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
-                          <th tabindex="0" rowspan="1" colspan="1" aria-label="Inativo">
-                            <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" role="switch" id="ativo">
-                              <label class="form-check-label" for="ativo" name="ativofiltro">Ativo</label>
-                            </div>
-                          </th>
-                          <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">
-                            <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro">
-                              <label class="form-check-label" for="inativo">Inativo</label>
-                            </div>
-                          </th>
-                          <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th>
+                        <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros
+                        </th>
+                          <th>
+                            <input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th>
                         </th>
                       </tr>
                     </div>
                   </div>
                   <tr>
                     <th>Selecionar</th>
-                    <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
-                    <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
-                    <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultimo acesso</th>
-                    <th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Status: activate ">Status</th>
-                    <th class="d-none d-md-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Ações">Ações</th>
+                    <th class="" tabindex="0"rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
+                    <th class="" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição
+                    </th>
+                    <th class="" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultimo acesso</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,24 +54,12 @@
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
-                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
+                        <input class="form-check-input marcar" type="checkbox" value=""name="marcarexcluirempresa">
                       </div>
                     </td>
-                    <td class="sorting_1">{{candidato.username}}</td>
-                    <td class="d-none d-xl-table-cell">{{candidato.date_joined|date:"d/m/Y"}}</td>
-                    <td class="d-none d-xl-table-cell">{{candidato.last_login|date:"d/m/Y"}}</td>
-                    <td><span class="badge bg-success">Ativo</span></td>
-                    <td class="d-none d-md-table-cell">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Ações
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                        </ul>
-                      </div>
-                    </td>
+                    <td class="nome-table">{{candidato.username}}</td>
+                    <td class="">{{candidato.date_joined|date:"d/m/Y"}}</td>
+                    <td class="">{{candidato.last_login|date:"d/m/Y"}}</td>
                   </tr>
                   {% endfor%}
                 </tbody>
@@ -90,59 +67,13 @@
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-end fixed-top">
-          <button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="bi bi-plus-square"></i> Adicionar</button>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary"><i class="bi bi-trash"></i>
+            Excluir
+          </button>
         </div>
       </div>
     </main>
-    <!--Modal de adicionar nova empresa-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script>
-      $('#exampleModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget)
-      var recipient = button.data('whatever')
-      var modal = $(this)
-      modal.find('.modal-title').text('New message to ' + recipient)
-      modal.find('.modal-body input').val(recipient)
-      })
-    </script>
-    <script>
-      var checkTodos = $("#checkTodos");
-      checkTodos.click(function () {
-        if ( $(this).is(':checked') ){
-          $('.marcar').prop("checked", true);
-        }else{
-          $('marcar').prop("checked", false);
-      }
-      });
-    </script>
     <script src="../node_modules/chart.js/dist/chart.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/script.js"></script>

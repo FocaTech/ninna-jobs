@@ -8,82 +8,76 @@
     {% block content %}
     <main class="container">
         <div class="right-column">
-        <div class="content">
-            <div class="profile-box">
-            {% if Dados %}
-            {% for dado in Dados %}
-            <img src="{{ dado.imagem_perfil.url }}" alt="" class="sidebar-avatar">
-            <h2 class="profile-name">{{ dado.nome_do_candidato }}</h2>
-            {% endfor %}
-            {% else %}
-            <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
-            <h2 class="profile-name">{{ user.username }}</h2>
-            {% endif %}
-            <div class="redesocial">
-                {% for i in Informacoes %}
-                {% if i.linkedin %}
-                <a title="Linkedin" class="linklinkedin" href="{{i.linkedin}}"><i class="bi bi-linkedin m-2 azul"></i></a>
-                {% endif %}
-                {% endfor %}
-                {% for dados in Dados %}
-                {% if dados and dados.whatsapp == "Sim" %}
-                <a class="linkwapp" href="https://wa.me/{{dados.telefone}}"><i class="bi bi-whatsapp m-2"></i></a>
-                {% endif %}
-                {% endfor %}
-                <a href="mailto:{{user.email}}?subject=Parabéns%20Você%20Foi%20Pré%20Selecionado"><i class="bi bi-envelope"></i></a>
-            </div>
-            <div class="div-enviar-mensagem">
-            {% if not user.funcao == "CAN" %}
-                <div class="dropdown">
-                    <button class="btn bt-enviar btn-outline-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-send aviao"></i><p class="msg-btn-enviar">Quero conversar</p></button>
-                    <ul class="dropdown-menu"><li>
-                        <form action="http://formmail.kinghost.net/formmail.cgi" method="POST">
-                            <input type="hidden" name="recipient" value="{{userC.email}}"> <!-- Pode ser qualquer endereço de email -->
-                            <input type="hidden" name="redirect" value="localhost:8000"> <!-- Após o envio, o usuário será redirecionado para a página configurada aqui -->
-                            <input type="hidden" name="subject" value="Empresa quer Conversar">  <!-- Assunto da mensagem -->
-                            <input type="hidden" name="email" value="{{user.email}}">   <!-- Deve ser uma conta de email ativa em seu domínio -->
-                            <p>
-                            Nome:<br/>
-                            <input type="text" size="30" name="nome" value='{{user.username}}'>
-                            </p>
-                            <p>
-                            E-mail:<br />
-                            <input type="text" size="30" name="replyto" value='{{user.email}}'>
-                            </p>
-                            <p>
-                            Comentários:<br />
-                            <input type="text" size="35" name="Comentarios">
-                            </p>
-                            <p>
-                            <input type="submit" name="BTEnvia" value="Enviar">
-                            <input type="reset" name="BTApaga" value="Apagar"> </p>
-                        </form>
-                    </li></ul>
-                </div>
-            {% endif %}
-                <div class='right-column'>
-                {% if Informacoes %}
-                {% for I in Informacoes %}
-                <a href="{{I.curriculo.url}}" type="button" class="btn btn-primary baixar" title="Baixar curriculo" download>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1h-2z"/>
-                        <path fill-rule="evenodd" d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
-                </a>
-                {% endfor %}
-                {% endif %}
-                {% if request.user.funcao == 'EMP' %}
+            <div class="content">
+                <div class="profile-box">
                 {% if Dados %}
-                {% for d in Dados %}
-                <button title="Favoritar" type="button" class="btn btn-primary" title="Favoritar">
-                    {% include 'partials/botao-fav.html' %}
-                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16" > -->
-                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"></path>
-                    </svg>
-                </button>
+                {% for dado in Dados %}
+                <img src="{{ dado.imagem_perfil.url }}" alt="" class="sidebar-avatar">
+                <h2 class="profile-name">{{ dado.nome_do_candidato }}</h2>
                 {% endfor %}
+                {% else %}
+                <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
+                <h2 class="profile-name">{{ user.username }}</h2>
                 {% endif %}
-                {% endif %}
+                <div class="redesocial">
+                    {% for i in Informacoes %}
+                    {% if i.linkedin %}
+                    <a title="Linkedin" class="linklinkedin" href="{{i.linkedin}}">
+                        <i class="bi bi-linkedin m-2 linkedin"></i>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                    {% for dados in Dados %}
+                    {% if dados and dados.whatsapp == "Sim" %}
+                    <a class="linkwapp" href="https://wa.me/{{dados.telefone}}">
+                        <i class="bi bi-whatsapp m-2"></i>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
                 </div>
+                <div class="div-enviar-mensagem">
+                {% if not user.funcao == "CAN" %}
+                        <button class="btn bt-enviar btn-outline-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-send aviao"></i><p class="msg-btn-enviar">Quero conversar</p></button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form class="mx-3" style="width: 200px" action="http://formmail.kinghost.net/formmail.cgi" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="recipient" value="{{userC.email}}"> <!-- Pode ser qualquer endereço de email -->
+                                    <input type="hidden" name="redirect" value="localhost:8000"> <!-- Após o envio, o usuário será redirecionado para a página configurada aqui -->
+                                    <input type="hidden" name="subject" value="Empresa quer Conversar">  <!-- Assunto da mensagem -->
+                                    <input type="hidden" name="email" value="{{user.email}}">   <!-- Deve ser uma conta de email ativa em seu domínio -->
+                                    <label for="none-enviar-nome" class="form-label">Nome</label>
+                                    <input id="nome-enviar-nome"class="form-control" type="text" size="30" name="nome" value='{{user.username}}'>
+                                    <label for="none-enviar-email" class="form-label">Email</label>
+                                    <input class="form-control" type="text" size="30" name="replyto" value='{{user.email}}'>
+                                    <label for="mensagem-enviar-email" class="form-label">Mensagem</label>
+                                    <textarea id="mensagem-enviar-email" class="form-control" type="text" size="35" name="Comentarios" style="resize: none"></textarea>
+                                    <div class="row">
+                                        <input class="btn btn-primary col m-3" type="submit" name="BTEnvia" value="Enviar">
+                                        <input class="btn btn-primary col m-3" type="reset" name="BTApaga" value="Apagar"> </p>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                {% endif %}
+                {% if user.funcao == "EMP" %}
+                <div class='right-column'>
+                    {% if Informacoes %}
+                    {% for I in Informacoes %}
+                    <a href="{{I.curriculo.url}}" type="button" class="btn btn-primary baixar" title="Baixar curriculo" download>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1h-2z"/><path fill-rule="evenodd" d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                    {% for d in Dados %}
+                    {% if d.user in ids_dos_talentos_favoritados %}
+                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right" ><i  class="bi bi-star-fill"></i>
+                    {% else %}
+                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
             </div>
             {% for dado in Dados %}

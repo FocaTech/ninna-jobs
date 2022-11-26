@@ -40,15 +40,20 @@
       <div class="modal-footer justify-content-between">
         {% if user.funcao == "CAN" %}
         <div>
+          {% if not vaga.status == False %}
           {% if vaga.id in ids_de_vagas_salvas %}
           <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star-fill"></i></a>
           {% else %}
           <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
           {% endif %}
+          {% endif %}
         </div>
+        <div>
           <div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            {% if not vaga.status == False %}
             <a href="{% url 'candidatar_a_vaga' vaga.id %}"><button type="button" class="btn btn-primary">Candidatar-se</button></a>
+            {% endif %}
           </div>
         </div>
         {% endif %}

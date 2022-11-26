@@ -49,3 +49,7 @@ button {
 #botaoExluir{
   display: none!important;
 }
+
+.nome-table{
+  width: 400px;
+}

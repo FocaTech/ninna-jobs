@@ -1,0 +1,46 @@
+@import "styles.css";
+
+
+header.fixed-top + * {
+    margin-top: 100px;
+}
+
+.top-detail {
+    width: 100%;
+    height: 22px;
+}
+.top-detail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scaleX(-1);
+    position: relative;
+    z-index: -1;
+}
+
+.navbar {
+    background-color: var(--cor-ninna);
+}
+.navbar-logo {
+    position: relative;
+    margin-left: 70px;
+}
+.navbar-logo img {
+    position: absolute;
+    right: 0;
+    height: 70px;
+    top: -28px;
+}
+.navbar-nav i {
+    padding: 5px
+}
+.botaoLogin {
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    height: unset;
+    border-radius: 20px;
+    background: transparent;
+    color: #fff;
+}
+

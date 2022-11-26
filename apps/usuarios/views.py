@@ -4,7 +4,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
-from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
+# from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
 from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
@@ -12,7 +12,41 @@ from django.core.paginator import Paginator
 url_atual = ""
 
 def formempresa(request):
-    return render(request, 'formempresa.html')
+    '''formulario da empresa'''
+    empresa = get_object_or_404(Empresa, user=request.user)
+    locais = City.objects.all()
+    estado = []
+    cidades = []
+    for local in locais:
+        if not local.state in estado:
+            estado.append(local.state)
+    estado = sorted(estado)
+    cidades = sorted(cidades)
+    dados = {
+        'estados':estado,
+        'cidades':cidades,
+        'empresa':empresa
+    }
+    return render(request, 'FormEmpresa.html', dados)
+
+def editar_registro(request):
+    '''formulario da empresa'''
+    if request.method == 'POST':
+        e = Empresa.objects.get(user=request.user)
+        if 'img_perfil_empresa' in request.FILES:
+            e.img_perfil_empresa = request.FILES['img_perfil_empresa']
+        e.razao_social = request.POST['razao_social']
+        e.cnpj = request.POST['cnpj']
+        e.nome_fantasia = request.POST['nome_fantasia']
+        e.telefone = request.POST['telefone']
+        e.celular = request.POST['celular']
+        e.cidade = request.POST['cidade']
+        e.estado = request.POST['estado']
+        e.cep = request.POST['cep']
+        e.ramo_de_atividade = request.POST['ramo_de_atividade']
+        e.descricao_empresa = request.POST['descricao_empresa']
+        e.save()
+    return redirect('perfilempresa')
 
 def registro(request):
     if request.method == 'POST':
@@ -27,10 +61,9 @@ def registro(request):
         cep = request.POST['cep']
         ramo_de_atividade = request.POST['ramo_de_atividade']
         descricao_empresa = request.POST['descricao_empresa']
-
-        vaga = Empresa.objects.create(img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
-        vaga.save()
-        return redirect('index')
+        perfil = Empresa.objects.create(user=request.user,img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
+        perfil.save()
+        return redirect('perfilempresa')
     else:
         return render(request, 'formempresa.html')
 
@@ -104,6 +137,7 @@ def carrega_funcoes(request):
     for local in cidades:
         if not local.name in nome_cidade:
             nome_cidade.append(local.name)
+    nome_cidade = sorted(nome_cidade)
     dados = {
         'cidades':nome_cidade
     }
@@ -378,38 +412,60 @@ def empresa(request, *args, **kwargs):
 @has_role_decorator('candidato')
 def dashboard(request):
     '''dash de candidato'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     vagas = Vagas.objects.all()
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
     id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
-    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
-    for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
-        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+
+    lista_de_vagas_salvas_do_user = []
+    lista_de_vagas_salvas_do_user = [ Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga, status=True) for vagas_salvas in id_das_vagas_salvas_do_user]
+
+    ids_de_vagas_salvas = []
+    for vaga_salva in lista_de_vagas_salvas_do_user:
+        for vaga_salvaa in vaga_salva:
+            ids_de_vagas_salvas.append(vaga_salvaa.id)
 
     id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
-    lista_de_vagas_candidatadas_do_user = []
-    lista_de_vagas_candidatadas_do_user_para_arquivadas = []
+    lista_de_vagas_candidatadas = []
+    lista_de_vagas_candidatadas_arquivadas = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
-        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
-        lista_de_vagas_candidatadas_do_user_para_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
+        lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+        lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
 
     lista_de_vagas_arquivas_do_user = []
-    for querySet_vagas_candidatadass in lista_de_vagas_candidatadas_do_user_para_arquivadas:
+    for querySet_vagas_candidatadass in lista_de_vagas_candidatadas_arquivadas:
         for vagas_candidatadass in querySet_vagas_candidatadass:
             # dois for para desenpacotar os querysets
             if vagas_candidatadass.status == False:
                 lista_de_vagas_arquivas_do_user.append(vagas_candidatadass)
 
+    # print(f"vagas_cand == {lista_de_vagas_candidatadas_do_user_para_arquivadas}")
+    # print(f"vagas_arqui == {lista_de_vagas_arquivas_do_user}")
+
+    print(ids_de_vagas_salvas)
     user_candidato = request.user
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     dados = {
         'Dados':DP,
         'vagas' : vagas,
-        'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
+        'vagas_candidatadas' : lista_de_vagas_candidatadas,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
+        'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         'vagas_arquivadas' : lista_de_vagas_arquivas_do_user,
     }
     return render(request, 'dashboard.html', dados)
+
+def perfilempresa(request):
+    '''perfil da empresa'''
+    empresa = Empresa.objects.filter(user=request.user)
+    vagas = Vagas.objects.filter(nome_empresa=request.user)
+    dados = {
+        'empresa':empresa,
+        'vagas':vagas
+    }
+    return render(request, 'perfilEmpresa.html', dados)
 
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''
@@ -568,7 +624,6 @@ def busca_talentos(request):
 def contato(request):
     if request.method == 'POST':
         send_mail(f"{request.POST['subject']}", f" id:{request.user.id} \n nome:{request.POST['name']} \n email:{request.POST['email']} \n mensagem:{request.POST['message']}", f"{request.POST['email']}", ['ninnajobs72@gmail.com'])
-        messages.success(request, 'Email enviado')
     return redirect('index')
 
 def empresas_favoritadas(request):
