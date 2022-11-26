@@ -4,7 +4,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
-from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
+# from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivadas
 from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
@@ -378,6 +378,8 @@ def empresa(request, *args, **kwargs):
 @has_role_decorator('candidato')
 def dashboard(request):
     '''dash de candidato'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     vagas = Vagas.objects.all()
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -385,6 +387,11 @@ def dashboard(request):
     lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
     for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
         lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+
+    ids_de_vagas_salvas = []
+    for vaga_salva in lista_de_vagas_salvas_do_user:
+        for vaga_salvaa in vaga_salva:
+            ids_de_vagas_salvas.append(vaga_salvaa.id)
 
     id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
     lista_de_vagas_candidatadas_do_user = []
@@ -400,6 +407,7 @@ def dashboard(request):
             if vagas_candidatadass.status == False:
                 lista_de_vagas_arquivas_do_user.append(vagas_candidatadass)
 
+    print(ids_de_vagas_salvas)
     user_candidato = request.user
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     dados = {
@@ -407,6 +415,7 @@ def dashboard(request):
         'vagas' : vagas,
         'vagas_candidatadas' : lista_de_vagas_candidatadas_do_user,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
+        'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         'vagas_arquivadas' : lista_de_vagas_arquivas_do_user,
     }
     return render(request, 'dashboard.html', dados)
