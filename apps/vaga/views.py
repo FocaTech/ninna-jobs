@@ -195,6 +195,7 @@ def tela_de_vagas_salvas(request):
 
 @has_role_decorator('candidato')
 def salvar_vaga(request, pk_vaga):
+    global url_atual
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -206,17 +207,16 @@ def salvar_vaga(request, pk_vaga):
             vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
             vaga_salva_desfavoritar.delete()
             messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-            return redirect("dashboard")
+            return redirect(url_atual)
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
         messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-        return redirect("dashboard")
+        return redirect(url_atual)
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
     global url_atual
-    print(f"url candidatar == {url_atual}")
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
         # id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
