@@ -52,14 +52,16 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for i in usuario_admin %}
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td>
-                    <td class="sorting_1">Gabriel Anjo</td>
-                    <td class="d-none d-xl-table-cell">01/01/2021</td>
+
+                    <td class="sorting_1">{{i.username}}</td>
+                    <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
                       <div class="dropdown">
@@ -72,49 +74,9 @@
                         </ul>
                       </div>
                     </td>
+
                   </tr>
-                  <tr class="empresas">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
-                      </div>
-                    </td>
-                    <td class="sorting_1">Miguel Arcanjo</td>
-                    <td class="d-none d-xl-table-cell">01/01/2021</td>
-                    <td><span class="badge bg-danger">+6 meses Inativo</span></td>
-                    <td class="d-none d-md-table-cell">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Ações
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="empresas">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault">
-                      </div>
-                    </td>
-                    <td class="sorting_1">Rafael Anjo</td>
-                    <td class="d-none d-xl-table-cell">01/01/2021</td>
-                    <td><span class="badge bg-warning">6 meses inativo</span></td>
-                    <td class="d-none d-md-table-cell">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Ações
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><button type="button" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
+                {% endfor %}
                 </tbody>
               </table>
             </div>
@@ -137,24 +99,25 @@
             </div>
             <div class="modal-body">
               <!--Form para cadastrar um novo admin-->
-              <form class="row g-3 needs-validation" novalidate>
-                <div class="col-mb-6">
+              <form action="{% url 'acoes_admin'%}" method="POST" >
+                {% csrf_token %}
+                <!-- <div class="col-mb-6">
                   <label for="perfilfoto">Selecione uma foto de perfil</label>
                   <input id="perfilfoto" type="file" class="form-control" aria-label="file example" required>
                   <div class="invalid-feedback">Example invalid form file feedback</div>
-                </div>
-                <div class="col-md-8">
+                </div> -->
+                <!-- <div class="col-md-8">
                   <label for="validationCustom01" class="form-label">Nome Completo</label>
-                  <input type="text" class="form-control" id="validationCustom01" required>
+                  <input type="text" name="" class="form-control" id="validationCustom01" required>
                   <div class="valid-feedback">
                     Looks good!
                   </div>
-                </div>
+                </div> -->
                 <div class="col-md-4">
                   <label for="validationCustomUsername" class="form-label">Nome de Usuario</label>
                   <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
-                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="text" name="username" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                       Please choose a username.
                     </div>
@@ -162,31 +125,32 @@
                 </div>
                 <div class="col-12">
                   <label for="validationCustom01" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="validationCustom01" required>
+                  <input type="text" name="email" class="form-control" id="validationCustom01" required>
                   <div class="valid-feedback">
                     Looks good!
                   </div>
                 </div>
                 <div class="col-12">
                   <label for="validationCustom01" class="form-label">Senha</label>
-                  <input type="password" class="form-control" id="validationCustom01" required>
+                  <input type="password" name="password" class="form-control" id="validationCustom01" required>
                   <div class="valid-feedback">
                     Looks good!
                   </div>
                 </div>
                 <div class="col-12">
                   <label for="validationCustom01" class="form-label">Repita a senha</label>
-                  <input type="password" class="form-control" id="validationCustom01" required>
+                  <input type="password" name="password2" class="form-control" id="validationCustom01" required>
                   <div class="valid-feedback">
                     Looks good!
                   </div>
                 </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
+
           </div>
         </div>
       </div>

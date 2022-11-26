@@ -34,10 +34,35 @@ def interface_charts(request):
 
 
 def acoes_admin(request):
-    return render(request, 'acoesadmin.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        admin = Users.objects.create_user(username = username, email = email, password = password,  is_staff=True, is_superuser=True)
+        messages.success(request, 'Cadastro realizado com Sucesso')
+        admin.save()
+        print(username, email)
+        print(admin)
+        return redirect('acoes_admin')
+
+    usuario_admin = Users.objects.filter(is_staff = True)
+    contexto = {
+        'usuario_admin' : usuario_admin
+    }
+
+    return render(request, 'acoesadmin.html', contexto)
 
 def acoes_empresa(request):
-    return render(request, 'acoesEmpresa.html')
+
+    empresa = Users.objects.filter(funcao = 'EMP')
+    vagas = Vagas.objects.filter(nome_empresa=empresa,status=True)
+
+    contexto ={
+        'empresa': empresa,
+        'vagas' : vagas
+    }
+    return render(request, 'acoesEmpresa.html', contexto)
 
 def acoes_talento(request):
     candidatos = Users.objects.filter(funcao = 'CAN')
@@ -55,7 +80,8 @@ def acoes_talento(request):
 
 def relatorio(request):
     contexto = {
-        'numero_de_can':todos_os_can
+        'numero_de_can':todos_os_can,
+        "numero_de_emp": todas_as_emp,
     }
     return render(request, 'relatorio.html',contexto)
 
@@ -69,6 +95,7 @@ def acoes_vaga(request):
     perfis = PerfilProfissional.objects.all()
 
     vagas = Vagas.objects.all()
+    user = Users.objects.filter(funcao = 'EMP')
 
     dados = {
         'contratacoes' : contratacoes,
