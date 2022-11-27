@@ -2,15 +2,22 @@
 <div class="left-column">
   <div class="sidebar">
     <div class="sidebar-user mb-3">
+      {% if not empresa %}
       <img class="sidebar-avatar mb-1" src="{% static 'img/placeholder.svg' %}" alt="">
       <h2 class="sidebar-name h5 text-center">{{ user.username }}</h2>
+      {% else %}
+      {% for e in empresa %}
+      <img class="sidebar-avatar mb-1" src="{{e.img_perfil_empresa.url}}" alt="">
+      <h2 class="sidebar-name h5 text-center">{{ e.nome_fantasia }}</h2>
+      {% endfor %}
+      {% endif %}
     </div>
     <div class="sidebar-content">
       <ul class="sidebar-menu">
         <li><a class="btn btn-primary" href="{% url 'perfilempresa' %}" role="button">Perfil</a></li>
         <li><a class="btn btn-primary" href="{% url 'select' %}" role="button">Vagas</a></li>
         <li><a class="btn btn-primary" href="{% url 'minhas-vagas' %}" role="button">Minhas Vagas</a></li>
-        {% if empresas %}
+        {% if empresa %}
         <li><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro-de-vaga">Cadastrar vaga</button></li>
         {% endif %}
         <li><a class="btn btn-primary" href="{% url 'talentos' %}"role="button">Banco de Talentos</a></li>
