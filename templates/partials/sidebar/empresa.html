@@ -17,7 +17,6 @@
         <li><a class="btn btn-primary" href="{% url 'perfilempresa' %}" role="button">Perfil</a></li>
         <li><a class="btn btn-primary" href="{% url 'select' %}" role="button">Vagas</a></li>
         {% if empresa %}
-        <li><a class="btn btn-primary" href="{% url 'minhas-vagas' %}" role="button">Minhas Vagas</a></li>
         <li><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro-de-vaga">Cadastrar vaga</button></li>
         <li><a class="btn btn-primary" href="{% url 'talentos' %}"role="button">Banco de Talentos</a></li>
         {% endif %}

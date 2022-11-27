@@ -89,7 +89,7 @@ def atualizar_vagas(request):
             v.logo_empresa = request.FILES['logo_empresa']
         v.save()
         messages.success(request, f"Vaga '{v.nome_vaga}' editada")
-    return redirect('minhas-vagas')
+    return redirect('empresa')
 
 def deleta_vaga(request, pk_vaga):
     '''Apaga vaga'''
@@ -221,27 +221,6 @@ def arquivar_vaga(request, pk_vaga):
     vaga_para_ser_arquivada.save()
     print(vaga_para_ser_arquivada.status)
     return redirect('empresa')
-
-def minhas_vagas(request):
-    '''vagas cadastradas especificas da empresa'''
-    if request.user.is_authenticated:
-        user_empresa = request.user
-        vagas = Vagas.objects.order_by('-data_vaga').filter(user=user_empresa)
-        contratacoes = TipoContratacao.objects.all()
-        trabalhos = TipoTrabalho.objects.all()
-        perfis = PerfilProfissional.objects.all()
-        vagas = paginar(vagas, request)
-        empresa = Empresa.objects.filter(user=request.user)
-        dados = {
-            'empresa':empresa,
-            'contratacoes' : contratacoes,
-            'trabalhos' : trabalhos,
-            'perfis' : perfis,
-            'vagas' : vagas
-        }
-        return render(request, 'minhas-vagas.html', dados)
-    else:
-        return redirect('index')
 
 def busca_vaga(request):
     '''barras de busca da dash, empresa e vagas'''
