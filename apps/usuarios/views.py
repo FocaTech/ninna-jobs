@@ -14,9 +14,9 @@ url_atual = ""
 def formempresa(request):
     '''formulario da empresa'''
     if len(Empresa.objects.filter(user=request.user)) > 0:
-        empresa = get_object_or_404(Empresa, user=request.user)
+        empresas = get_object_or_404(Empresa, user=request.user)
     else:
-        empresa = None
+        empresas = None
     locais = City.objects.all()
     estado = []
     cidades = []
@@ -27,10 +27,10 @@ def formempresa(request):
     cidades = sorted(cidades)
     empresa = Empresa.objects.filter(user=request.user)
     dados = {
-        'empresa':empresa,
+        'empresas':empresas,
         'estados':estado,
         'cidades':cidades,
-        'empresas':empresa
+        'empresa':empresa
     }
     return render(request, 'FormEmpresa.html', dados)
 
