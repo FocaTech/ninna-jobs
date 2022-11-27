@@ -41,7 +41,7 @@
                             <ul class="hide-bullets">
                               <li>
                                 <ul class="inline-list">
-                                  <li><i class="bi bi-building" title="Empresa"></i> {{ vaga_candidatada.nome_empresa }}</li>
+                                  <li><i class="bi bi-building" title="Empresa"></i><a href="{% url 'ver_perfil_empresa' vaga_candidatada.user.id %}">{{ vaga_candidatada.nome_empresa }}</a></li>
                                   <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga_candidatada.local_empresa }}</li>
                                 </ul>
                               </li>
@@ -77,7 +77,7 @@
                             <ul class="hide-bullets">
                               <li>
                                 <ul class="inline-list">
-                                  <li><i class="bi bi-building" title="Empresa"></i> {{ vaga_salva.nome_empresa }}</li>
+                                  <li><i class="bi bi-building" title="Empresa"></i><a href="{% url 'ver_perfil_empresa' vaga_salva.user.id %}">{{ vaga_salva.nome_empresa }}</a></li>
                                   <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga_salva.local_empresa }}</li>
                                 </ul>
                               </li>
@@ -112,7 +112,7 @@
                           <ul class="hide-bullets">
                             <li>
                               <ul class="inline-list">
-                                <li><i class="bi bi-building" title="Empresa"></i> {{ vaga.nome_empresa }}</li>
+                                <li><i class="bi bi-building" title="Empresa"></i><a href="{% url 'ver_perfil_empresa' vaga.user.id %}">{{ vaga.nome_empresa }}</a></li>
                                 <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
                               </ul>
                             </li>
