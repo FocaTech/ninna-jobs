@@ -273,6 +273,19 @@
             <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
             <a href="{% url 'formcandidato' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
+        <script type='text/javascript'>
+            $('#uf').change(function(){
+                const url = $('#formCand').attr('data-funcoes-url');
+                estadoID = $(this).val();
+                $.ajax({
+                    url:url,
+                    data:{ 'uf':estadoID},
+                    success: function(data){
+                        $("#cidade").html(data);
+                    }
+                });
+            });
+        </script>
     </div>
 </main>
 <script>
