@@ -52,7 +52,12 @@
           <div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             {% if not vaga.status == False %}
+            {% if vaga.id in id_de_vagas_candidatadas %}
+            <a href="{% url 'candidatar_a_vaga' vaga.id %}"><button type="button" class="btn btn-primary">Retirar candidatura</button></a>
+            {% else %}
             <a href="{% url 'candidatar_a_vaga' vaga.id %}"><button type="button" class="btn btn-primary">Candidatar-se</button></a>
+            {% endif %}
+
             {% endif %}
           </div>
         </div>

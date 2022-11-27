@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas, Empresa
 
+url_atual = 'http://127.0.0.1:8000/usuarios/dashboard/'
+
 def select(request):
     '''cria e salva vagas'''
     contratacoes = TipoContratacao.objects.all()
@@ -97,6 +99,8 @@ def deleta_vaga(request, pk_vaga):
     return redirect('minhas-vagas')
 
 def index(request):
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     if request.user.is_authenticated:
         vagas = Vagas.objects.get_queryset().order_by('id').filter(status=True)
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
@@ -109,6 +113,13 @@ def index(request):
             for vaga_salvaa in vaga_salva:
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
 
+        id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+        lista_de_vagas_candidatadas = []
+
+        for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+            lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+        id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]# dois for para desenpacotar o queryset
+
         vagas = paginar(vagas, request)
         ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
         user_candidato = request.user
@@ -119,6 +130,7 @@ def index(request):
             'empresa':empresa,
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
+            'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
         }
     else:
         vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
@@ -170,19 +182,34 @@ def salvar_vaga(request, pk_vaga):
         messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
         return redirect("dashboard")
 
+# @has_role_decorator('candidato')
+# def candidatar_a_vaga(request, pk_vagas):
+#     print('entrou')
+#     if request.user.is_authenticated:
+#         id_cadidato = get_object_or_404(Users, pk=request.user.id)
+#         id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
+#         id_vaga = get_object_or_404(Vagas, pk=pk_vagas)
+#         if VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
+#             return redirect('index')
+#         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
+#         vaga_salva.save()
+#         messages.success(request, f"Candidatado em '{id_vaga.nome_vaga}'")
+#         return redirect('index')
+
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
-    print('entrou')
+    global url_atual
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-        id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
+        # id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
         id_vaga = get_object_or_404(Vagas, pk=pk_vagas)
         if VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
-            return redirect('index')
+            descandidatar = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga)
+            descandidatar.delete()
+            return redirect(url_atual)
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
-        messages.success(request, f"Candidatado em '{id_vaga.nome_vaga}'")
-        return redirect('index')
+        return redirect(url_atual)
 
 def arquivar_vaga(request, pk_vaga):
     print(pk_vaga)
