@@ -50,6 +50,9 @@ def editar_registro(request):
         e.cep = request.POST['cep']
         e.ramo_de_atividade = request.POST['ramo_de_atividade']
         e.descricao_empresa = request.POST['descricao_empresa']
+        celular = request.POST['celular']
+        celular = celular[0:18]
+        e.celular = celular
         e.save()
     return redirect('perfilempresa')
 
