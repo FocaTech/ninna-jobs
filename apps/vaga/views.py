@@ -113,6 +113,13 @@ def index(request):
             for vaga_salvaa in vaga_salva:
                 ids_de_vagas_salvas.append(vaga_salvaa.id)
 
+        id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+        lista_de_vagas_candidatadas = []
+
+        for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+            lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+        id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]# dois for para desenpacotar o queryset
+
         vagas = paginar(vagas, request)
         ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
         user_candidato = request.user
@@ -123,6 +130,7 @@ def index(request):
             'empresa':empresa,
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_de_vagas_salvas,
+            'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
         }
     else:
         vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
