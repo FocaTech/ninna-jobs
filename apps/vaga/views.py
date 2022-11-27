@@ -74,10 +74,8 @@ def atualizar_vagas(request):
         v = Vagas.objects.get(pk=pk_vaga)
         v.nome_vaga = request.POST['nome_vaga']
         v.tipo_contratacao = request.POST['tipo_contratacao']
-        v.local_empresa = request.POST.get('local', False)
         v.perfil_profissional = request.POST['perfil']
         v.salario = request.POST['salario']
-        v.descricao_empresa = request.POST['descricao_empresa']
         v.descricao_vaga = request.POST['descricao_vaga']
         v.area_atuacao = request.POST['area_atuacao']
         v.principais_atividades = request.POST['principais_atividades']
