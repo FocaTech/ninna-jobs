@@ -64,13 +64,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="areadeatuacao" class="form-label">Area de interesse</label>
-                        <select class="form-control form-itens" id="areadeatuacao" name="area_interesse" required>
-                            <option selected disabled value="">Escolha...</option>
-                            <option>cu</option>
-                            {% for interesse in interesses %}
-                                <option value="{{interesse}}">{{interesse}}</option>
-                            {% endfor %}
-                        </select>
+                        <input  type="text" class="form-control" name="area_interesse" required>
                         <div class="valid-feedback">
                             Tudo ok!
                         </div>
@@ -165,12 +159,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="areadeatuacao" class="form-label">Area de interesse</label>
-                        <select class="form-control form-itens" id="areadeatuacao" name="area_interesse" required>
-                            <option value="{{informacoes.areas_interesse}}" selected>{{informacoes.areas_interesse}}</option>
-                            {% for interesse in interesses %}
-                                <option value="{{interesse}}">{{interesse}}</option>
-                            {% endfor %}
-                        </select>
+                        <input  type="text" class="form-control" value='{{informacoes.areas_interesse}}' name="area_interesse" required>
                         <div class="valid-feedback">
                             Tudo ok!
                         </div>
