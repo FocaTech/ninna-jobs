@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Interesses, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados
+from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
@@ -75,7 +75,6 @@ def registro(request):
 def formcandidato(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
     user_candidato = request.user
-    interesses = Interesses.objects.all()
     if len(Informações_Iniciais.objects.filter(user=user_candidato)) > 0:
         informacoes = get_object_or_404(Informações_Iniciais, user=user_candidato)
         informacoes.salario_pretendido = int(informacoes.salario_pretendido)
@@ -84,7 +83,6 @@ def formcandidato(request):
     DP = Dados_Pessoais.objects.order_by('data_dados').filter(user=user_candidato)
     dados = {
             'Dados':DP,
-            'interesses':interesses,
             'informacoes':informacoes
         }
     return render(request, 'formcandidato.html', dados)

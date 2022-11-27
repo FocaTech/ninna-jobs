@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import City, Empresa, Interesses, Informações_Iniciais, TalentosFavoritados
+from .models import City, Empresa, Informações_Iniciais, TalentosFavoritados
 class Listando(admin.ModelAdmin):
     list_display = ('id', 'nome_fantasia', )
     list_display_links = ('id', 'nome_fantasia')
@@ -15,14 +15,6 @@ class Locais(admin.ModelAdmin):
     list_per_page = 100
 
 admin.site.register(City, Locais)
-
-class interesse(admin.ModelAdmin):
-    list_display = ('id', 'areas_interesse')
-    list_display_links = ('id', 'areas_interesse')
-    search_fields = ('areas_interesse',)
-    list_per_page = 10
-
-admin.site.register(Interesses, interesse)
 
 class TalentoFavoritado(admin.ModelAdmin):
     list_display = ('id', 'id_talento', 'id_empresa')
