@@ -54,7 +54,7 @@ def editar_registro(request):
     return redirect('perfilempresa')
 
 def registro(request):
-    if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) < 0:
+    if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) < 1:
         img_perfil_empresa = request.FILES['img_perfil_empresa']
         razao_social = request.POST['razao_social']
         cnpj = request.POST['cnpj']
