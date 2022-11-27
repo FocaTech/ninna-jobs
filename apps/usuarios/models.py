@@ -20,12 +20,6 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nome_fantasia
 
-class Interesses(models.Model):
-    areas_interesse = models.CharField(max_length=30)
-    def __str__(self):
-        return self.areas_interesse
-
-
 #Criando os models do curriculo do candidato
 class Informações_Iniciais(models.Model):
     #Informações Iniciais
