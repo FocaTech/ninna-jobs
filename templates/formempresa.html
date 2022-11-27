@@ -112,7 +112,7 @@
             <form id="formEmp" action="{% url 'editar_registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}" class="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="file"><b>Foto utilizada</b></label>
-                <img src="{{ empresa.img_perfil_empresa.url }}">
+                <img src="{{ empresas.img_perfil_empresa.url }}">
                 <input name="img_perfil_empresa" type="file" class="sidebar-avatar avatar" id="logoStartup" accept="image/*">
                 <div class="row">
                     <div class="col-md-8">
