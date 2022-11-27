@@ -349,7 +349,7 @@ def adicionar_idioma(request):
         messages.error(request, 'No Maximo 5 Idiomas')
     else:
         if request.method == 'POST':
-            usuario = get_object_or_404(Users, pk=request.user)
+            usuario = get_object_or_404(Users, pk=request.user.id)
             idioma = request.POST['idioma']
             nivel = request.POST['nivel']
             informacoes6 = Idiomas.objects.create(user=usuario, idioma=idioma,nivel_idioma=nivel)

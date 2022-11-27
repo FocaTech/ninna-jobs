@@ -154,7 +154,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, '../apps'))
 # Config auth
 AUTH_USER_MODEL = 'login_cadastro.Users'
 
-SESSION_COOKIE_AGE = 1800
+#SESSION_COOKIE_AGE = 1800
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
