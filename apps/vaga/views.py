@@ -26,10 +26,8 @@ def select(request):
     if request.method == 'POST':
         nome_vaga = request.POST['nome_vaga']
         tipo_contratacao = request.POST['tipo_contratacao']
-        local = request.POST['local']
         perfil = request.POST['perfil']
         salario = request.POST['salario']
-        descricao_empresa = request.POST['descricao_empresa']
         descricao_vaga = request.POST['descricao_vaga']
         area_atuacao = request.POST['area_atuacao']
         principais_atividades = request.POST['principais_atividades']
@@ -40,6 +38,8 @@ def select(request):
         logo_empresa = request.FILES['logo_empresa']
         user = get_object_or_404(Users, pk=request.user.id)
         empresa = get_object_or_404(Empresa, user=user)
+        local = empresa.estado + '/' + empresa.cidade
+        descricao_empresa = empresa.descricao_empresa
         vaga = Vagas.objects.create(nome_empresa=empresa.nome_fantasia, nome_vaga=nome_vaga, user=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
         if vaga:

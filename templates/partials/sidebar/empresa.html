@@ -38,7 +38,7 @@
         <form action="{% url 'select' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="mb-2">
-            <label class="form-label">Logo da Empresa</label>
+            <label class="form-label">Logo da Vaga</label>
             <input class="p-1" type="file" name="logo_empresa" required>
           </div>
           <div class="row g-3 align-items-center mb-2">
@@ -48,10 +48,6 @@
             </div>
           </div>
           <div class="row g-3 align-items-center mb-2">
-            <div class="col">
-              <label class="form-label">Local da Empresa</label>
-              <input class="form-control" type="text" name="local" maxlength="200" required>
-            </div>
             <div class="col">
               <label class="form-label" for="contratacao">Tipo de Contratacao</label>
               <select class="form-select" name="tipo_contratacao">
@@ -78,10 +74,6 @@
           <div class="mb-2">
             <label class="form-label">Descrição da Vaga</label>
             <textarea class="form-control" name="descricao_vaga" maxlength="499" style="resize: none" required></textarea>
-          </div>
-          <div class="mb-2">
-            <label class="form-label">Descrição da Empresa</label>
-            <textarea class="form-control" name="descricao_empresa" maxlength="499" style="resize: none" required></textarea>
           </div>
           <div class="row g-3 align-items-center mb-2">
             <div class="col">
