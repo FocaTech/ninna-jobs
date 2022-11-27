@@ -46,7 +46,7 @@
         <div class="tabber">
           <div class="tabber__tabs">
             <button type="button" class="tabber__tab active">Abertas</button>
-            <button type="button" class="tabber__tab">Favoritadas</button>
+            <button type="button" class="tabber__tab">Talentos-Favoritados</button>
             <button type="button" class="tabber__tab">Arquivadas</button>
           </div>
           {% include 'partials/_alertas.html' %}
@@ -158,7 +158,7 @@
               </div>
             </section>
 
-            <section id="favoritadas">
+            <section id="talentos-favoritados">
               {% if ids_dos_talentos_favoritados %}
               {% if not user.funcao == "CAN" %}
               {% for d in dados %}
