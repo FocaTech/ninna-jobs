@@ -43,6 +43,8 @@
           {% if not vaga.status == False %}
           {% if vaga.id in ids_de_vagas_salvas %}
           <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star-fill"></i></a>
+          {% elif not Dados and user.funcao == "CAN" %}
+          <a href="{% url 'formcandidato' %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
           {% else %}
           <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
           {% endif %}
@@ -54,10 +56,11 @@
             {% if not vaga.status == False %}
             {% if vaga.id in id_de_vagas_candidatadas %}
             <a href="{% url 'candidatar_a_vaga' vaga.id %}"><button type="button" class="btn btn-primary">Retirar candidatura</button></a>
+            {% elif not Dados and user.funcao == "CAN" %}
+            <a href="{% url 'formcandidato' %}"><button type="button" class="btn btn-primary">Candidatar-se</button></a>
             {% else %}
             <a href="{% url 'candidatar_a_vaga' vaga.id %}"><button type="button" class="btn btn-primary">Candidatar-se</button></a>
             {% endif %}
-
             {% endif %}
           </div>
         </div>
