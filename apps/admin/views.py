@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from login_cadastro.models import Users
 from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional
+from usuarios.models import Empresa
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib import messages
@@ -60,7 +61,7 @@ def acoes_empresa(request):
     empresas_query = Users.objects.filter(funcao = 'EMP')
     for empresa in empresas_query:
         try:
-            vaga_query = get_object_or_404(Vagas, nome_empresa=empresa, status=True)
+            vaga_query = get_object_or_404(Vagas, user=empresa, status=True)
         except:
             print('continua')
         vagas.append(vaga_query)
@@ -131,7 +132,7 @@ def acoes_vaga(request):
         tipo_trabalho = request.POST['tipo_trabalho']
         logo_empresa = request.FILES['logo_empresa']
         user = get_object_or_404(Users, pk=request.user.id)
-        vaga = Vagas.objects.create(nome_vaga=nome_vaga, nome_empresa=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, user=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")

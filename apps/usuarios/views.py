@@ -364,7 +364,7 @@ def empresa(request, *args, **kwargs):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
-    vagas = Vagas.objects.filter(nome_empresa=id_empresa,status=True)
+    vagas = Vagas.objects.filter(user=id_empresa,status=True)
     vagas_arquivadas = Vagas.objects.filter(status=False)
 
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
@@ -507,7 +507,7 @@ def dashboard(request):
 
 def perfilempresa(request):
     '''perfil da empresa'''
-    vagas = Vagas.objects.filter(nome_empresa=request.user)
+    vagas = Vagas.objects.filter(user=request.user)
     empresa = Empresa.objects.filter(user=request.user)
     dados = {
         'empresa':empresa,
@@ -546,11 +546,13 @@ def perfil_candidato(request, id_candidato):
     FA = Formacao_Academica.objects.order_by().filter(user=user_candidato)
     II = Informações_Iniciais.objects.order_by().filter(user=user_candidato)
     I = Idiomas.objects.order_by().filter(user=user_candidato)
+    empresa = Empresa.objects.filter(user=request.user)
 
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
 
     dados = {
+        'empresa':empresa,
         'Certificados':CC,
         'Dados':DP,
         'Experiencia':EP,

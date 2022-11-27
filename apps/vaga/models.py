@@ -4,7 +4,8 @@ from login_cadastro.models import Users
 
 class Vagas(models.Model):
     nome_vaga = models.CharField(max_length=100)
-    nome_empresa = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    nome_empresa = models.CharField(max_length=100)
     logo_empresa = models.ImageField(upload_to= 'logos/%Y/%m/%d', blank=False, null=False)
     tipo_contratacao = models.CharField(max_length=80)
     local_empresa = models.CharField(max_length=200)
