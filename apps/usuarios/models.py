@@ -4,7 +4,7 @@ from login_cadastro.models import Users
 from datetime import datetime
 
 class Empresa(models.Model):
-    user= models.OneToOneField(Users, on_delete=models.CASCADE)
+    user= models.ForeignKey(Users, on_delete=models.CASCADE)
     img_perfil_empresa = models.ImageField(upload_to= 'imgperfil/%d/%m/%Y', blank=True)
     razao_social = models.CharField(max_length=100)
     cnpj = models.CharField(max_length=15)
