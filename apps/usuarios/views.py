@@ -470,6 +470,17 @@ def perfilempresa(request):
     }
     return render(request, 'perfilEmpresa.html', dados)
 
+def ver_perfil_empresa(request, id_empresa):
+    '''candidato poder ver perfil da empresa'''
+    vagas = Vagas.objects.filter(user=id_empresa)
+    empresa = Empresa.objects.filter(user=id_empresa)
+    dados = {
+        'empresa':empresa,
+        'vagas':vagas
+    }
+    return render(request, 'perfilEmpresa.html', dados)
+    # return redirect("index")
+
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''
     user_candidato = request.user

@@ -28,6 +28,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),#dashboard de talento
     path('perfil', views.perfil, name='perfil'),#candidato ver o perfil
     path('perfil/empresa', views.perfilempresa, name='perfilempresa'),#empresa ver o perfil
+    path('perfil/empresa/<int:id_empresa>', views.ver_perfil_empresa, name='ver_perfil_empresa'),#andidato ver o perfil de empresa
     path('perfil/candidato/<int:id_candidato>', views.perfil_candidato, name='perfil_candidato'),#empresa ver o perfil do candidato
     path('listar_candidatos/<int:pk_vaga>', views.listar_talentos_candidatados, name='listar_talentos_candidatados'),
     path('talentos', views.talentos, name='talentos'),#empresa ver candidatos
