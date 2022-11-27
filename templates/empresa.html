@@ -74,15 +74,25 @@
                               </ul>
                             </li>
                           </ul>
-                          <div class="d-flex justify-content-center gap-1">
-                            <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
-                              Detalhes
-                            </button>
-                            <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
-                            <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Arquivar Vaga</a>
-                            </div>
+                          <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Dropdown link
+                            </a>
+
+                            <ul class="dropdown-menu">
+                              <li><button type="button" class="btn btn-primary align-self-start mt-auto dropdown-item" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
+                                Detalhes
+                              </button></li>
+                              <li>
+                                <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto dropdown-item">Ver Talentos</a>
+                              </li>
+                              <li>
+                                <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto dropdown-item">Arquivar Vaga</a>
+                              </li>
+                            </ul>
                           </div>
                           {% include 'partials/modal-vaga.html' %}
+                        </div>
                       </div>
                     </div>
                   {% endfor %}
@@ -152,13 +162,25 @@
                               </ul>
                             </li>
                           </ul>
-                          <button type="button" class="btn btn-primary align-self-start mt-auto" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
-                            Detalhes
-                          </button>
-                          <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Ver Talentos</a>
-                          <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto">Desarquivar Vaga</a>
+                          <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Dropdown link
+                            </a>
+
+                            <ul class="dropdown-menu">
+                              <li><button type="button" class="btn btn-primary align-self-start mt-auto dropdown-item" data-bs-toggle="modal" data-bs-target="[data-modal-id='{{ vaga.nome_vaga }} @ {{ vaga.principais_atividades }}']">
+                                Detalhes
+                              </button></li>
+                              <li>
+                                <a href="{% url 'listar_talentos_candidatados' vaga.id %}" class="btn btn-primary align-self-start mt-auto dropdown-item">Ver Talentos</a>
+                              </li>
+                              <li>
+                                <a href="{% url 'arquivar_vaga' vaga.id %}" class="btn btn-primary align-self-start mt-auto dropdown-item">Arquivar Vaga</a>
+                              </li>
+                            </ul>
                           </div>
                           {% include 'partials/modal-vaga.html' %}
+                        </div>
                       </div>
                     </div>
                   {% endfor %}

@@ -73,9 +73,9 @@
                     {% endif %}
                     {% for d in Dados %}
                     {% if d.user in ids_dos_talentos_favoritados %}
-                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right" ><i  class="bi bi-star-fill"></i>
+                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right" ><i  class="bi bi-star-fill fs-6"></i>
                     {% else %}
-                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i>
+                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star w3-xlarge"></i>
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -89,7 +89,7 @@
                     <div class="secaoperfil py-4">
                     <h3 class="tituloperfil">Sobre</h3>
                     <span class="spanperfil mb-4"></span>
-                    <p>{{dado.sobre_candidato}}</p>
+                    <p class="text-break fs-6">{{dado.sobre_candidato}}</p>
                 </div>
             </div>
             {% endif %}
@@ -113,16 +113,16 @@
                     <div class="row">
                     {% for info in Informacoes %}
                     {% if info.estagio %}
-                    <p class="col">{{info.estagio}}</p>
+                    <p class="col fs-6">{{info.estagio}}</p>
                     {% endif %}
                     {% if info.pj %}
-                    <p class="col">{{info.pj}}</p>
+                    <p class="col fs-6">{{info.pj}}</p>
                     {% endif %}
                     {% if info.clt %}
-                    <p class="col">{{info.clt}}</p>
+                    <p class="col fs-6">{{info.clt}}</p>
                     {% endif %}
                     {% if info.flex %}
-                    <p class="col">{{info.flex}}</p>
+                    <p class="col fs-6">{{info.flex}}</p>
                     {% endif %}
                     {% endfor %}
                     </div>
@@ -134,12 +134,12 @@
                     <span class="spanperfil mb-4"></span>
                     <div class="row">
                     {% for dado in Dados %}
-                        <p class="col">Data de Nascimento:{{dado.data_nascimento}}</p>
-                        <p class="col">Genero:{{dado.genero}}</p>
+                        <p class="col fs-6">Data de Nascimento:{{dado.data_nascimento}}</p>
+                        <p class="col fs-6">Genero:{{dado.genero}}</p>
                     </div>
                     <div class="row">
-                        <p class="col">Cidade: {{dado.cidade}}</p>
-                        <p class="col">Estado: {{dado.estado}}</p>
+                        <p class="col fs-6">Cidade: {{dado.cidade}}</p>
+                        <p class="col fs-6">Estado: {{dado.estado}}</p>
                     {% endfor %}
                     </div>
                 </div>
@@ -150,14 +150,14 @@
                     <span class="spanperfil mb-4"></span>
                     {% for exp in Experiencia %}
                     <div class="row">
-                        <p class="col">Empresa: {{exp.empresa_onde_trabalhou}}</p>
-                        <p class="col">Cargo: {{exp.cargo_exercido}}</p>
+                        <p class="col fs-6">Empresa: {{exp.empresa_onde_trabalhou}}</p>
+                        <p class="col fs-6">Cargo: {{exp.cargo_exercido}}</p>
+                        <p class="col fs-6">Descrição do cargo:{{exp.descricao_de_atividades}}</p>
                     </div>
-                    <p>{{exp.descricao_de_atividades}}</p>
                     <div class="row">
-                        <p class="col">Inicio: {{exp.inicio_emprego}}</p>
-                        <p class="col">Saida: {{exp.demissao}}</p>
-                        <p class="col">Estado do Emprego: {{exp.emprego_atual}}</p>
+                        <p class="col fs-6">Inicio: {{exp.inicio_emprego}}</p>
+                        <p class="col fs-6">Saida: {{exp.demissao}}</p>
+                        <p class="col fs-6">Estado do Emprego: {{exp.emprego_atual}}</p>
                     </div>
                     <div class="secaoperfil py-4"></div>
                     {% endfor %}
@@ -169,13 +169,13 @@
                     <span class="spanperfil mb-4"></span>
                     {% for form in Formacao %}
                     <div class="row">
-                        <p class="col">Instituição: {{form.instituicao_ensino}} </p>
-                        <p class="col">Formação: {{form.formacao}}</p>
-                        <p class="col">Curso: {{form.curso}}</p>
+                        <p class="col fs-6">Instituição: {{form.instituicao_ensino}} </p>
+                        <p class="col fs-6">Formação: {{form.formacao}}</p>
+                        <p class="col fs-6">Curso: {{form.curso}}</p>
                     </div>
                     <div class="row">
-                        <p class="col">Inicio: {{form.data_inicio}}</p>
-                        <p class="col">Conclusão/Previsão: {{form.data_termino}}</p>
+                        <p class="col fs-6">Inicio: {{form.data_inicio}}</p>
+                        <p class="col fs-6">Conclusão/Previsão: {{form.data_termino}}</p>
                     </div>
                     <div class="secaoperfil py-4"></div>
                     {% endfor %}
@@ -187,8 +187,8 @@
                     <span class="spanperfil mb-4"></span>
                     {% for idioma in Idiomas %}
                     <div class="row">
-                        <p class="col">Idioma: {{idioma.idioma}} </p>
-                        <p class="col">Nivel: {{idioma.nivel_idioma}}</p>
+                        <p class="col fs-6">Idioma: {{idioma.idioma}} </p>
+                        <p class="col fs-6">Nivel: {{idioma.nivel_idioma}}</p>
                     </div>
                     <div class="secaoperfil py-4"></div>
                     {% endfor %}
@@ -200,10 +200,10 @@
                     <span class="spanperfil mb-4"></span>
                     {% for certificados in Certificados %}
                     <div class="row">
-                        <p class="col">Titulo: {{certificados.titulo}}</p>
-                        <p class="col">Tipo: {{certificados.tipo_conquista}}</p>
+                        <p class="col fs-6">Titulo: {{certificados.titulo}}</p>
+                        <p class="col fs-6">Tipo: {{certificados.tipo_conquista}}</p>
                     </div>
-                    <p>{{certificados.descricao_conquista}}</p>
+                    <p class="fs-6">{{certificados.descricao_conquista}}</p>
                     <div class="secaoperfil py-4"></div>
                     {% endfor %}
                 </div>

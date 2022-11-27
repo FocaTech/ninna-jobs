@@ -4,10 +4,11 @@ from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib import messages
+from collections import OrderedDict
 
-# todos_os_can = Users.objects.filter(funcao='CAN').count()
-# todas_as_emp = Users.objects.filter(funcao='EMP').count()
-# vagas_ativas = Vagas.objects.filter(status=True).count()
+todos_os_can = Users.objects.filter(funcao='CAN').count()
+todas_as_emp = Users.objects.filter(funcao='EMP').count()
+vagas_ativas = Vagas.objects.filter(status=True).count()
 # Create your views here.
 def interface(request):
     empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
@@ -27,10 +28,10 @@ def interface(request):
 
 def interface_charts(request):
     return JsonResponse(data={
-    "numero_de_can": todos_os_can,
-    "numero_de_emp": todas_as_emp,
-    "data": [todos_os_can, todas_as_emp]
-})
+        "numero_de_can": todos_os_can,
+        "numero_de_emp": todas_as_emp,
+        "data": [todos_os_can, todas_as_emp]
+    })
 
 
 def acoes_admin(request):
@@ -54,12 +55,22 @@ def acoes_admin(request):
     return render(request, 'acoesadmin.html', contexto)
 
 def acoes_empresa(request):
+    empresas = []
+    vagas = []
+    empresas_query = Users.objects.filter(funcao = 'EMP')
+    for empresa in empresas_query:
+        try:
+            vaga_query = get_object_or_404(Vagas, nome_empresa=empresa, status=True)
+        except:
+            print('continua')
+        vagas.append(vaga_query)
+        vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
 
-    empresa = Users.objects.filter(funcao = 'EMP')
-    vagas = Vagas.objects.filter(nome_empresa=empresa,status=True)
+    for empresa in empresas_query:
+        empresas.append(empresa)
 
     contexto ={
-        'empresa': empresa,
+        'empresa': empresas,
         'vagas' : vagas
     }
     return render(request, 'acoesEmpresa.html', contexto)

@@ -78,26 +78,30 @@
             <a href="{% url 'Formacao_academica' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
             <a href="{% url 'Informacoes_iniciais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
-    {% if formacoes %}
-    {% for formacao in formacoes %}
-    <div class="row py-2">
-        <div class="col-md-4 py-2">
-            <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagarF' formacao.id %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+        <div class="d-flex py-2 flex-wrap">
+            {% if formacoes %}
+            {% for formacao in formacoes %}
+            <div class="m-3">
+                <div class="card" style="width: 18rem;">
+                    <div class="mx-2 py-1 d-flex justify-content-end">
+                        <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagarF' formacao.id %}" id="submit"><i class="bi bi-trash">
+                        </i></a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <h4>Instituição:</h4><li>{{ formacao.instituicao_ensino }}</li>
+                            <h4>Formação:</h4><li>{{ formacao.formacao }}</li>
+                            <h4>Curso:</h4><li>{{ formacao.curso }}</li>
+                            <h4>Data Inicio</h4><li>{{ formacao.data_inicio }}</li>
+                            <h4>Conclusão/Previsão</h4>
+                            <li>{{ formacao.data_termino }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>
-            <h4>Instituição</h4>
-            <li>{{ formacao.instituicao_ensino }}</li>
-            <h4>Formação</h4>
-            <li>{{ formacao.formacao }}</li>
-            <h4>Curso</h4>
-            <li>{{ formacao.curso }}</li>
-            <h4>Data Inicio</h4>
-            <li>{{ formacao.data_inicio }}</li>
-            <h4>Conclusão/Previsão</h4>
-            <li>{{ formacao.data_termino }}</li>
-        </div>
-    </div>
-    {% endfor %}
-    {% endif %}
     </div>
 </main>
 {% endblock %}

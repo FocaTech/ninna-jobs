@@ -58,21 +58,26 @@
             <a href="{% url 'perfil' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
             <a href="{% url 'Certificados_conquistas' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
         </form>
-        {% if idiomas %}
-        {% for idioma in idiomas %}
-        <div class="row py-2">
-            <div class="col-md-4 py-2">
-                <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagarI' idioma.id %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+        <div class="d-flex py-2 flex-wrap">
+            {% if idiomas %}
+            {% for idioma in idiomas %}
+            <div class="m-3">
+                <div class="card" style="width: 18rem;">
+                    <div class="mx-2 py-1 d-flex justify-content-end">
+                        <a type="button" class="btn btn-primary float-end corBotao"  href="{% url 'apagarI' idioma.id %}" id="submit"><i class="bi bi-trash">
+                        </i></a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <h4>Idioma</h4><li>{{ idioma.idioma }}</li>
+                            <h4>Nivel</h4><li>{{ idioma.nivel_idioma }}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h4>Idioma</h4>
-                <li>{{ idioma.idioma }}</li>
-                <h4>Nivel</h4>
-                <li>{{ idioma.nivel_idioma }}</li>
-            </div>
+            {% endfor %}
+            {% endif %}
         </div>
-        {% endfor %}
-        {% endif %}
     </div>
 </main>
 {% endblock %}
