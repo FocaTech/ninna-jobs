@@ -501,6 +501,7 @@ def dashboard(request):
         'vagas_candidatadas' : lista_de_vagas_candidatadas,
         'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
         'vagas_salvas' : lista_de_vagas_salvas_do_user,
+        'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         'vagas_arquivadas' : lista_de_vagas_arquivas_do_user,
     }
     return render(request, 'dashboard.html', dados)
