@@ -73,9 +73,9 @@
                     {% endif %}
                     {% for d in Dados %}
                     {% if d.user in ids_dos_talentos_favoritados %}
-                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right" ><i  class="bi bi-star-fill"></i>
+                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right" ><i  class="bi bi-star-fill fs-6"></i>
                     {% else %}
-                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star"></i>
+                    <a href="{% url 'favoritar_talento' d.user.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star w3-xlarge"></i>
                     {% endif %}
                     {% endfor %}
                 </div>
