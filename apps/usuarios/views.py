@@ -667,6 +667,9 @@ def apagar_conta(request):
     if len(Dados_Pessoais.objects.all().filter(user=users)) >= 0:
         for dados in Dados_Pessoais.objects.all().filter(user=users):
             dados.delete()
+    if len(Empresa.objects.all().filter(user=users)) >= 0:
+        for dados in Empresa.objects.all().filter(user=users):
+            dados.delete()
     if len(Informações_Iniciais.objects.all().filter(user=users)) >= 0:
         for dados in Informações_Iniciais.objects.all().filter(user=users):
             dados.delete()

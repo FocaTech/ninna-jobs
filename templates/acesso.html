@@ -2,12 +2,13 @@
 {% load static %}
 {% block title %}Cadastrar{% endblock %}
 {% block head %}
-    <!--css e bootstrap-->
-    <link rel="stylesheet" href="{% static 'css/acesso.css' %}">
-    {% endblock %}
-    {% block body_class %}page-profile{% endblock %}
-    {% block content %}
-    <div class="caixa">
+<!--css e bootstrap-->
+<link rel="stylesheet" href="{% static 'css/acesso.css' %}">
+{% endblock %}
+{% block body_class %}page-profile{% endblock %}
+{% block content %}
+{% include 'partials/_alertas.html' %}
+<div class="caixa">
         <div class="imagem">
         </div>
         <div class="caixa1">

@@ -87,15 +87,13 @@ def login(request):
         if Users.objects.filter(email=email).exists():
             nome = Users.objects.filter(email=email).values_list('username', flat=True).get()
             user = auth.authenticate(request, username=nome, password=senha)
-            print(nome)
-            print(user)
             if user:
                 auth.login(request, user)
                 print("autenticado")
                 messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {nome}')
                 return redirect('index')
         messages.error(request, "Usuario não cadastrado")
-    return render(request, 'index.html')
+    return redirect('acesso')
 
 email_do_user_atual = ''
 def recuperar_senha(request):
