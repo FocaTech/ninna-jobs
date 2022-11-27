@@ -27,10 +27,10 @@ def interface(request):
 
 def interface_charts(request):
     return JsonResponse(data={
-    "numero_de_can": todos_os_can,
-    "numero_de_emp": todas_as_emp,
-    "data": [todos_os_can, todas_as_emp]
-})
+        "numero_de_can": todos_os_can,
+        "numero_de_emp": todas_as_emp,
+        "data": [todos_os_can, todas_as_emp]
+    })
 
 
 def acoes_admin(request):
