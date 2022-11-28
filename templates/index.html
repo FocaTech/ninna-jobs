@@ -16,12 +16,18 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 <!--Estilos scripts Inicio-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> {% endcomment %}
 <script src="{% static 'bootstrap.bundle.min.js' %}" defer></script>
 
 <!-- JavaScripts Inicio -->
-<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+{% comment %} <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script> {% endcomment %}
 <script src="{% static 'js/modernizr.js'%}"></script>
+<script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/dist/jquery..js' %}"></script>
+<script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
+
+
+
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
@@ -93,7 +99,7 @@
                             <ul class="hide-bullets">
                                 <li>
                                     <ul class="inline-list">
-                                        <li><i class="bi bi-building" title="Empresa"></i> {{vaga.nome_empresa}}</li>
+                                        <li><i class="bi bi-building" title="Empresa"></i><a href="{% url 'ver_perfil_empresa' vaga.user.id %}">{{ vaga.nome_empresa }}</a></li>
                                         <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
                                     </ul>
                                 </li>
@@ -135,7 +141,7 @@
     <!--Contato-->
     <div class="my-5">
         {% if user.is_authenticated %}
-        <form action="{% url 'contato' %}" method="post">
+        <form action="{% url 'contato' %}" method="post" id="formContato">
             {% csrf_token %}
             <a href="#"name="contato"></a>
             <div id="contato" class="section-cotent">
@@ -158,11 +164,11 @@
                                     </p>
                                     <p class="full-row">
                                         <label class="form-label" for="subject-id">Assunto</label>
-                                        <input type="text" class="form-control" id="subject-id" name="subject" placeholder="Assunto">
+                                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Assunto">
                                     </p>
                                     <p class="full-row">
                                         <label class="form-label" for="message">Mensagem</label>
-                                        <textarea  style="resize: none" class="form-control" id="message" name="message" rows="6"></textarea>
+                                        <textarea style="resize: none" class="form-control" id="message" name="message" rows="6"></textarea>
                                     </p>
                                     <button class="btn btn-primary px-5 py-3" type="submit">Enviar</button>
                                 </div>
@@ -189,4 +195,37 @@
         {% endif %}
     </div>
 </main>
+<!-- Validação formulario de contato -->
+<script>
+    var v = $("#formContato").validate({
+        rules:{
+            name: {
+                required: true,
+                maxlength: 100,
+                minlength: 10,
+                minWords: 2
+            },
+            email: {
+                required: true,
+                email: true,
+                accept:"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}",
+            },
+            subject:{
+                required:true,
+                min: 1,
+            },
+            message: {
+                required: true,
+                min: 1,
+            },
+        },
+        messages:{
+            name:"Preencha seu nome",
+            email:"Insira um email válido",
+            subject:"O assunto não deve estar vazio",
+            message:"A mensagem não pode estar vazia"
+        }
+    })
+    $('#formContato :is(input, textarea)').blur(function() { v.element(this) })
+</script>
 {% endblock %}

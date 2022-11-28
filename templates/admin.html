@@ -173,10 +173,10 @@
                     <tbody>
                       {% for i in candidato%}
                       <tr>
-                        <td>{{i.full_name}}</td>
+                        <td>{{i.username}}</td>
                         <td>Superior Incompleto</td>
                         <td>Senior</td>
-                        <td>16/06/2000</td>
+                        <td>{{i.date_joined|date:"d/m/Y"}}</td>
                         <td>
                           <div class="dropdown-center">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

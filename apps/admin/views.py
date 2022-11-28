@@ -22,6 +22,7 @@ def interface(request):
         'numero_de_vagas_ativas' : vagas_ativas,
         'empresa' : empresa,
         'candidato' :candidato,
+        'vagas_ativas' : vagas_ativas
     }
 
     dados["data"] = [dados["numero_de_can"], dados["numero_de_emp"]]
@@ -69,7 +70,7 @@ def acoes_empresa(request):
 
     for empresa in empresas_query:
         empresas.append(empresa)
-
+    print(empresas, vagas)
     contexto ={
         'empresa': empresas,
         'vagas' : vagas

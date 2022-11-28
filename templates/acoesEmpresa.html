@@ -54,7 +54,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for i in contexto%}
+                  {% for i in empresa %}
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
@@ -63,7 +63,7 @@
                     </td>
                     <td class="sorting_1">{{ i.username }}</td>
                     <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
-                    <td class="d-none d-xl-table-cell">{{i.data_vaga|date:"d/m/Y"}}</td>
+                    <td class="d-none d-xl-table-cell">{{i.vagas.data_vaga|date:"d/m/Y"}}</td>
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
                       <div class="dropdown">
