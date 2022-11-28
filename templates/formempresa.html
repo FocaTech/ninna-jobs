@@ -18,6 +18,15 @@
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
+<style>
+    .foto-perfil{
+        border-radius: 50%;
+        width:200px;
+        height:200px;
+        background-image: url("/static/img/avatar.svg"), linear-gradient(#d3d3d3, #d3d3d3);
+        background-size: cover;
+    }
+</style>
     <div class="content pt-5">
         <h1 class="display-6 text-center pt-5 mt-5 titulo">Cadastro - <strong>Empresa</strong></h1>
         <div class="containerFormEmpresa p-5">
@@ -25,10 +34,10 @@
             <form id="formEmp" action="{% url 'registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}" class="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="col-md-12 py-2 d-flex align-items-center justify-content-around">
-                    <img class="foto-perfil" src="#">
+                    <img id="blah"class="foto-perfil" src="{% static 'img/placeholder.svg' %}">
                     <div>
-                        <label for="logoStartup" class="form-label">Foto do perfil <span class="picture__image"></span></label>
-                        <input name="img_perfil_empresa" type="file" class="sidebar-avatar avatar" id="picture__input" accept="image/*" required>
+                        <label for="imgperfil" class="form-label">Foto do perfil <span class="picture__image"></span></label>
+                        <input id="imgInp" name="img_perfil_empresa" type="file" class="form-control" accept="image/*" required>
                     </div>
                 </div>
                 <div class="row">
@@ -83,6 +92,7 @@
                         <label for="cidade" class="form-label">Cidade</label>
                         <select name="cidade" class="form-select" id="cidade"required>
                             <option selected disabled value="">Escolha</option>
+                            <option value="">aaa</option>
                             {% for cidade in cidades %}
                             <option value="{{cidade}}">{{cidade}}</option>
                             {% endfor %}
@@ -118,8 +128,13 @@
             <form id="formEmp" action="{% url 'editar_registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}" class="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="file"><b>Foto utilizada</b></label>
-                <img src="{{ empresas.img_perfil_empresa.url }}">
-                <input name="img_perfil_empresa" type="file" class="sidebar-avatar avatar" id="logoStartup" accept="image/*">
+                <div class="col-md-12 py-2 d-flex align-items-center justify-content-around">
+                    <img class="foto-perfil" src="{{ empresas.img_perfil_empresa.url }}">
+                    <div>
+                        <label for="file"><b>Mudar foto do perfil</b></label>
+                        <input class="form-control" name="img_perfil_empresa" type="file" class"" id="logoStartup" accept="image/*">
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-8">
                         <label for="razaosocial" class="form-label">Razão Social</label>
@@ -226,6 +241,15 @@
             </script>
         </div>
     </div>
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+                blah.style.maskImage = 'none'
+            }
+        }
+    </script>
 <div class="step" id="step_2">
 </div>
 {% endblock %}
