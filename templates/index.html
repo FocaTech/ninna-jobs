@@ -168,7 +168,7 @@
                                     </p>
                                     <p class="full-row">
                                         <label class="form-label" for="message">Mensagem</label>
-                                        <textarea  style="resize: none" class="form-control" id="message" name="message" rows="6"></textarea>
+                                        <textarea style="resize: none" class="form-control" id="message" name="message" rows="6"></textarea>
                                     </p>
                                     <button class="btn btn-primary px-5 py-3" type="submit">Enviar</button>
                                 </div>
@@ -196,9 +196,8 @@
     </div>
 </main>
 <!-- Validação formulario de contato -->
-<script type="text/javascript">
-    // just for the demos, avoids form submit
-    $("#formContato").validate({
+<script>
+    var v = $("#formContato").validate({
         rules:{
             name: {
                 required: true,
@@ -225,7 +224,8 @@
             email:"Insira um email válido",
             subject:"O assunto não deve estar vazio",
             message:"A mensagem não pode estar vazia"
-        },
+        }
     })
+    $('#formContato :is(input, textarea)').blur(function() { v.element(this) })
 </script>
 {% endblock %}
