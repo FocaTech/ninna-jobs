@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}NinnaJobs - Admin{% endblock %}
+{% block title %}Admin{% endblock %}
 {% block head %}
 
 <script src="{% static 'node_modules/chart.js/dist/chart.js' %}" defer></script>
@@ -26,9 +26,9 @@
             <button type="button" class="btn btn-primary" id="botaoExluir"><i class="bi bi-trash"></i> Excluir Vaga</button>
         </div>
         <div class="container">
-            <form method='GET' action="{% url 'bash' %}" class="filtros my-4">
+            <form method='GET' action="{% url 'badmin' %}" class="filtros my-4">
                 <div class="input-group">
-                    <input placeholder="Pesquisar" type="search" class="form-control">
+                    <input name='badmin' placeholder="Pesquisar" type="search" class="form-control">
                     <span class="input-group-text"><i class="bi bi-search"></i>
                     </span>
                 </div>

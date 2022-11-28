@@ -64,6 +64,18 @@
             {% endif %}
           </div>
         </div>
+        {% elif user == vaga.user %}
+        <div></div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="single-best-receipe-area mb-30">
+            <div class="receipe-content">
+              <a href="{% url 'editar' vaga.id %}">
+                  <a href="{% url 'editar' vaga.id %}" type="button" class="btn btn-success">Editar</a>
+                  <a href="{% url 'deletar' vaga.id %}" type="button" class="btn btn-danger">Deletar</a>
+              </a>
+            </div>
+          </div>
+        </div>
         {% endif %}
       </div>
     {% else %}

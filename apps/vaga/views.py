@@ -226,7 +226,6 @@ def busca_vaga(request):
     lista_vagas = Vagas.objects.order_by('-data_vaga').filter()
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
-        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
@@ -238,7 +237,6 @@ def busca_vaga(request):
         return render(request, 'vagas.html', dados)
     elif 'bash' in request.GET:
         nome_a_buscar = request.GET['bash']
-        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
         busca_candidatadas = paginar(busca_candidatadas, request)
@@ -251,9 +249,8 @@ def busca_vaga(request):
             'vagas_salvas':busca_salvas
         }
         return render(request, 'dashboard.html', dados)
-    elif 'bempresa' in request.GET:
-        nome_a_buscar = request.GET['bempresa']
-        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
+    elif 'badmin' in request.GET:
+        nome_a_buscar = request.GET['badmin']
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         empresa = Empresa.objects.filter(user=request.user)
@@ -264,12 +261,11 @@ def busca_vaga(request):
             # 'vagas_candidatadas' : busca_candidatadas,
             'vagas':busca_vagas
         }
-        return render(request, 'empresa.html', dados)
-    elif 'bagas' in request.GET:
+        return render(request, 'acoesVagas.html', dados)
+    elif 'bempresa' in request.GET:
         user = request.user
         lista_vagas = lista_vagas.filter(user=user)
-        nome_a_buscar = request.GET['bagas']
-        messages.success(request, f"Resultados de '{nome_a_buscar}' ")
+        nome_a_buscar = request.GET['bempresa']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
@@ -278,7 +274,7 @@ def busca_vaga(request):
             'empresa':empresa,
             'vagas' : lista_vagas
         }
-        return render(request, 'minhas-vagas.html', dados)
+        return render(request, 'empresa.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas
