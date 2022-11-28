@@ -103,3 +103,7 @@ class City(models.Model):#cidades e estados
 class TalentosFavoritados(models.Model):
     id_talento = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='talento')
     id_empresa = models.ForeignKey(Users, on_delete=models.CASCADE)
+
+class EmpresasFavoritadas(models.Model):
+    id_talento = models.ForeignKey(Users, on_delete=models.CASCADE, )
+    id_empresa = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='empresa2')

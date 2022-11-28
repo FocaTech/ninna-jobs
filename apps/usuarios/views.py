@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados
+from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados, EmpresasFavoritadas
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
@@ -472,11 +472,22 @@ def perfilempresa(request):
 
 def ver_perfil_empresa(request, id_empresa):
     '''candidato poder ver perfil da empresa'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
+    id_candidato = request.user
+
     vagas = Vagas.objects.filter(user=id_empresa)
     empresa = Empresa.objects.filter(user=id_empresa)
+
+    empresas_favoritadas = []
+    empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
+    empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
+
+
     dados = {
-        'empresa':empresa,
-        'vagas':vagas
+        'empresa' : empresa,
+        'vagas' : vagas,
+        'empresas_favoritadas' : empresas_favoritadas,
     }
     return render(request, 'perfilEmpresa.html', dados)
     # return redirect("index")
@@ -667,6 +678,22 @@ def favoritar_talento(request, pk_talento):
         talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
         talento_favoritado.save()
         # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
+
+        return redirect(url_atual)
+
+def favoritar_empresa(request, pk_empresa):
+    global url_atual
+    if request.user.is_authenticated:
+        id_candidato = request.user
+        id_empresa = get_object_or_404(Users, pk=pk_empresa)
+
+        if EmpresasFavoritadas.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
+            empresa_para_desfavoritar = get_object_or_404(EmpresasFavoritadas, id_talento=id_candidato, id_empresa=id_empresa)
+            empresa_para_desfavoritar.delete()
+            return redirect(url_atual)
+
+        empresa_favoritada = EmpresasFavoritadas.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
+        empresa_favoritada.save()
 
         return redirect(url_atual)
 
