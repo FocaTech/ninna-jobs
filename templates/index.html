@@ -16,12 +16,13 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 <!--Estilos scripts Inicio-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> {% endcomment %}
 <script src="{% static 'bootstrap.bundle.min.js' %}" defer></script>
 
 <!-- JavaScripts Inicio -->
-<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+{% comment %} <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script> {% endcomment %}
 <script src="{% static 'js/modernizr.js'%}"></script>
+<script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
