@@ -1,4 +1,12 @@
 {% load static %}
+<script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/dist/jquery..js' %}"></script>
+<script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
+<style>
+  .val .error{
+    color: red;
+}
+</style>
 <div class="left-column">
   <div class="sidebar">
     <div class="sidebar-user mb-3">
@@ -32,20 +40,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
-        <form action="{% url 'select' %}" method="post" enctype="multipart/form-data">
+        <form id="cadastrar-vaga" action="{% url 'select' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          <div class="mb-2">
+          <div class="mb-2 val">
             <label class="form-label">Logo da Vaga</label>
             <input class="p-1" type="file" name="logo_empresa" required>
           </div>
-          <div class="row g-3 align-items-center mb-2">
+          <div class="row g-3 align-items-center mb-2 val">
             <div class="col">
               <label class="form-label">Nome da Vaga</label>
-              <input class="form-control" type="text" name="nome_vaga" maxlength="99" required>
+              <input class="form-control" type="text" name="nome_vaga" required>
             </div>
           </div>
-          <div class="row g-3 align-items-center mb-2">
-            <div class="col">
+          <div class="row g-3 align-items-center mb-2 ">
+            <div class="col val">
               <label class="form-label" for="contratacao">Tipo de Contratacao</label>
               <select class="form-select" name="tipo_contratacao">
                 {% for contratacao in contratacoes%}
@@ -55,7 +63,7 @@
             </div>
           </div>
           <div class="row g-3 align-items-center mb-2">
-            <div class="col">
+            <div class="col val">
               <label class="form-label" for="perfil">Perfil do Profissional</label>
               <select class="form-select" name="perfil">
                 {% for perfil in perfis%}
@@ -63,21 +71,21 @@
                 {% endfor %}
               </select>
             </div>
-            <div class="col">
+            <div class="col val">
               <label class="form-label">Salário</label>
               <input class="form-control" type="number" name="salario" min="100" max="10000000" required>
             </div>
           </div>
-          <div class="mb-2">
+          <div class="mb-2 val">
             <label class="form-label">Descrição da Vaga</label>
             <textarea class="form-control" name="descricao_vaga" maxlength="499" style="resize: none" required></textarea>
           </div>
           <div class="row g-3 align-items-center mb-2">
-            <div class="col">
+            <div class="col val">
               <label class="form-label">Área de Atuação</label>
-              <input class="form-control" type="text" name="area_atuacao" maxlength='79' required>
+              <input class="form-control" type="text" name="area_atuacao">
             </div>
-            <div class="col">
+            <div class="col val">
               <label class="form-label" for="tipotrabalho">Tipo de trabalho</label>
               <select class="form-select" name="tipo_trabalho">
                 {% for trabalho in trabalhos%}
@@ -86,19 +94,19 @@
               </select>
             </div>
           </div>
-          <div class="mb-2">
+          <div class="mb-2 val">
             <label class="form-label">Principais Atividades</label>
             <input class="form-control" type="text" name="principais_atividades" maxlength='299' required>
           </div>
-          <div class="mb-2">
+          <div class="mb-2 val">
             <label class="form-label">Requisitos</label>
             <textarea class="form-control" type="text" name="requisitos" maxlength="399" style="resize: none" required></textarea>
           </div>
-          <div class="mb-2">
+          <div class="mb-2 val">
             <label class="form-label">Diferencial</label>
             <input class="form-control" type="text" name="diferencial" maxlength='299' required>
           </div>
-          <div class="mb-2">
+          <div class="mb-2 val">
             <label class="form-label">Beneficios</label>
             <textarea class="form-control" name="beneficios" maxlength="499" style="resize: none" required></textarea>
           </div>
@@ -111,3 +119,77 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+      $("#cadastrar-vaga").validate({
+          rules:{
+              logo_empresa: {
+                required: true,
+              },
+              nome_vaga:{
+                required: true,
+              },
+              salario:{
+                required: true,
+                digits: true,
+                minlength: 3,
+              },
+              descricao_vaga: {
+                required: true,
+                minWords: 2
+              },
+              area_atuacao:{
+                required: true
+              },
+              principais_atividades:{
+                required: true
+              },
+              requisitos:{
+                required:true,
+                maxlength: 300,
+              },
+              diferencial:{
+                required:true
+              },
+              beneficios:{
+                required: true,
+                maxlength: 300,
+              }
+          },
+          messages:{
+            logo_empresa: {
+              required: "Insira o logo de sua empresa",
+            },
+            nome_vaga:{
+              required:"Insira o nome da vaga",
+            },
+            salario:{
+              required: "Insira o salario",
+              digits: "apenas números",
+              minlength: "minimo 3 digitos",
+            },
+            descricao_vaga: {
+              required: "Descrição da vaga não deve estar vazio",
+              minWords: "Minimo duas palavras"
+            },
+            area_atuacao:{
+              required: "área de atuação não deve estar vazio"
+            },
+            principais_atividades:{
+              required: "Principais atividades não deve estar vazio"
+            },
+            requisitos:{
+              required:"Insira requisitos",
+              maxlength: "Insira até 300 caracteres",
+            },
+            diferencial:{
+              required:"Diferencial não deve estar vazio"
+            },
+            beneficios:{
+              required: "Beneficios não deve estar vazio",
+              maxlength: "No maximo 300 caracteres",
+            }
+          },
+      })
+  })
+</script>
