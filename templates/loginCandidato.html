@@ -1,77 +1,45 @@
 {% load static %}
-
 <!doctype html>
 <html lang="pt-br">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <script src="{% static 'js/tabber.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'css/tabber.css' %}">
 
-    <title>Ninna-Login</title>
-  </head>
+    <script src="{% static 'js/jquery-3.6.1.min.js' %}"></script>
+    <script src="{% static 'js/tabber.js' %}" defer></script>
+    <script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/dist/jquery..js' %}"></script>
+    <script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
 
-    <body class="body-form">
+    <title>Ninna-Login</title>
+</head>
+
+<body class="body-form">
     <section class="form my-4 mx-5">
         <div class="container a">
             <div class="row no-gutters container-login">
                 <div class="col-lg-5 p-0 img-login"></div>
                 <div class="col-lg-7 px-5 pt-5 login-wrapper">
                     <h1 class="font-weight-bold py-3">Ninna Jobs</h1>
-<!--
-                    <div class="tabber">
-                        <div class="tabber__tabs">
-                            <div class="tabber__tab active">
-                                Login
-                            </div>
-
-                            <div class="tabber__tab">
-                                Inscreva-se
-                            </div>
-
-                        </div>
+                    <div id="inscreva-se">
+                        <h2>Cadastre-se</h2>
                         {% include 'partials/_alertas.html' %}
-                       <div class="tabber__content">
-                        <div id="login" class="active mb-4">
-                            <form action="{% url 'cadastro_candidato' %}" method="POST">
-                                {% csrf_token %}
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <input type="text" name="candidato_email" id="candidato_email" class="form-control my-3 p-3" placeholder="Email" required>
+                        <form id="cadastro_candidato" action="{% url 'cadastro_candidato' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-row" id="cadastro">
+                                <div class="col-lg7">
+                                    <input type="text" name="candidato_nome" class="form-control my-3 p-3" placeholder="Nome" required>
+                                </div>
+                                <div class="col-lg7">
+                                    <input type="text" name="candidato_email" class="form-control my-3 p-3" placeholder="Email" required>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <input type="password"name="candidato_senha" id="candidato_senha" placeholder="Senha" class="form-control my-3 p-3" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button> --><!--
-                                        <button type="submit" class="btn1 mt-3 mb-4">Login</button>
-                                    </div>
-                                </div>
-                                <a href="{% url 'recuperar_senha' %}">Esqueceu sua senha?</a>
-                            </form>
-                        </div>
-                    -->
-                        <div id="inscreva-se">
-                            <h2>Cadastre-se</h2>
-                            {% include 'partials/_alertas.html' %}
-                            <form action="{% url 'cadastro_candidato' %}" method="POST"> {% csrf_token %}
-                                <div class="form-row">
-                                    <div class="col-lg7">
-                                        <input type="text" name="candidato_nome" class="form-control my-3 p-3" placeholder="Nome Completo" required>
-                                    </div>
-                                    <div class="col-lg7">
-                                        <input type="text" name="candidato_email" class="form-control my-3 p-3" placeholder="Email" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
+                                <div class="form-row senha">
                                     <div class="col-lg7">
                                         <input type="password" name="candidato_senha" id="candidato-senha" placeholder="Senha" class="form-control my-3 p-3" required>
                                     </div>
@@ -79,22 +47,99 @@
                                         <input type="password" name="candidato_senha_conf" id="candidato-senha" placeholder="Repita sua senha" class="form-control my-3 p-3" required>
                                     </div>
                                 </div>
+                                <div class="form-check">
+                                    <input name="termos" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Li e concordo com os <a href="#">Termos de Uso</a>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="politica" class="form-check-input" type="checkbox" value="" id="">
+                                    <label class="form-check-label" for="">
+                                        Li e concordo a <a href="#">Política de Privacidade</a>
+                                    </label>
+                                </div>
                                 <div class="form-row">
                                     <div class="col-lg7">
                                         <!-- <button type="button" class="btn1 mt-3 mb-5">Login</button>-->
                                         <button type="submit" class="btn1 mt-3 mb-4">Enviar</button>
                                     </div>
                                 </div>
-                                <input type="hidden" id="c" name="c" value="c">
-
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  </body>
+        <script>
+            $.validator.addMethod( "pattern", function( value, element, param ) {
+                if ( this.optional( element ) ) {
+                    return true;
+                }
+                if ( typeof param === "string" ) {
+                    param = new RegExp( "^(?:" + param + ")$" );
+                }
+                return param.test( value );
+            }, "Invalid format." );
+
+            $(document).ready(function(){
+                $("#cadastro_candidato").validate({
+                    rules:{
+                        candidato_nome: {
+                            required: true,
+                            maxlength: 60,
+                        },
+                        candidato_email: {
+                            required: true,
+                            email: true
+                        },
+                        candidato_senha: {
+                            required: true,
+                            maxlength: 60,
+                            minlength: 8,
+                            pattern: "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W]).{6,64})"
+                        },
+                        candidato_senha_conf: {
+                            required:true,
+                            equalTo: "#candidato-senha"
+                        },
+                        politica:{
+                            required:true
+                        },
+                        termos:{
+                            required: true
+                        }
+                    },
+                    messages:{
+                        candidato_nome: {
+                            required: "Nome é obrigatorio",
+                            maxlength:"Seu nome não pode ultrapassar 60 caracteres"
+                        },
+                        candidato_email: {
+                            required: "Email é obrigatório",
+                            email: "Coloque um email válido"
+                        },
+                        candidato_senha: {
+                            required: "Senha é obrigatório",
+                            minlength: "Sua senha deve ter no minimo 8 caracteres",
+                            maxlength:"Sua senha não pode ultrapassar 60 caracteres",
+                            pattern: "Deve conter uma letra maiuscula, minuscula e um caracter especial"
+                        },
+                        candidato_senha_conf: {
+                            required:"Confirme sua senha",
+                            equalTo: "As senhas são diferentes"
+                        },
+                        politica:{
+                            required:"Marque para continuar"
+                        },
+                        termos:{
+                            required:"Marque para continuar"
+                        }
+                    },
+                })
+            })
+        </script>
+</body>
 </html>
