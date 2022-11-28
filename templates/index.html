@@ -23,6 +23,11 @@
 {% comment %} <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script> {% endcomment %}
 <script src="{% static 'js/modernizr.js'%}"></script>
 <script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/dist/jquery..js' %}"></script>
+<script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
+
+
+
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
@@ -136,7 +141,7 @@
     <!--Contato-->
     <div class="my-5">
         {% if user.is_authenticated %}
-        <form action="{% url 'contato' %}" method="post">
+        <form action="{% url 'contato' %}" method="post" id="formContato">
             {% csrf_token %}
             <a href="#"name="contato"></a>
             <div id="contato" class="section-cotent">
@@ -159,7 +164,7 @@
                                     </p>
                                     <p class="full-row">
                                         <label class="form-label" for="subject-id">Assunto</label>
-                                        <input type="text" class="form-control" id="subject-id" name="subject" placeholder="Assunto">
+                                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Assunto">
                                     </p>
                                     <p class="full-row">
                                         <label class="form-label" for="message">Mensagem</label>
@@ -190,4 +195,37 @@
         {% endif %}
     </div>
 </main>
+<!-- Validação formulario de contato -->
+<script type="text/javascript">
+    // just for the demos, avoids form submit
+    $("#formContato").validate({
+        rules:{
+            name: {
+                required: true,
+                maxlength: 100,
+                minlength: 10,
+                minWords: 2
+            },
+            email: {
+                required: true,
+                email: true,
+                accept:"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}",
+            },
+            subject:{
+                required:true,
+                min: 1,
+            },
+            message: {
+                required: true,
+                min: 1,
+            },
+        },
+        messages:{
+            name:"Preencha seu nome",
+            email:"Insira um email válido",
+            subject:"O assunto não deve estar vazio",
+            message:"A mensagem não pode estar vazia"
+        },
+    })
+</script>
 {% endblock %}
