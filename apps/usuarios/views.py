@@ -661,16 +661,26 @@ def contato(request):
     return redirect('index')
 
 def empresas_favoritadas(request):
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     id_candidato = request.user
 
     empresas_favoritadas = []
     empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
     empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
 
-    print(empresas_favoritadas)
+    print(f"empr_fav == {empresas_favoritadas}")
+
+    dados_empresas_favoritadas = []
+    for emp_fav in empresas_favoritadas:
+        dados_empresas_favoritadas_query = Empresa.objects.filter(user=emp_fav.id)
+        dados_empresas_favoritadas.append(*dados_empresas_favoritadas_query)
+
+    print(f"dados_empr_fav == {dados_empresas_favoritadas}")
 
     dados = {
         'empresas_favoritadas' : empresas_favoritadas,
+        'dados_empresas_favoritadas' : dados_empresas_favoritadas,
     }
 
     return render(request, 'empresasfavoritadas.html', dados)

@@ -39,3 +39,7 @@
 @media (max-width: 600px){
 
 }
+
+#cadastro .error, .form-check .error, .senha .error{
+    color: red
+}

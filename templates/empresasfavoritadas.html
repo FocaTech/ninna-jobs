@@ -21,19 +21,21 @@
           </form>
         </header>
         <section>
+          {% if empresas_favoritadas and dados_empresas_favoritadas %}
+          {% for empresa_fav in empresas_favoritadas %}
           <div class="row">
             <div class="col-md-3 mb-3">
               <div class="card" style="width: 18rem;">
                 <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"><i class="bi bi-building"></i> Nome da Empresa</h5>
+                  <h5 class="card-title"><i class="bi bi-building"></i>{{ empresa_fav.username }}</h5>
                   <div class="d-flex justify-content-between">
                     <div class="dropdown-center">
                       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Informações
                       </button>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' empresa_fav.id %}">{{">Perfil</a></li>
                         <li><a class="dropdown-item" href="#">Vagas ativas: 00</a></li>
                         <li><a class="dropdown-item" href="#">Matches: 00</a></li>
                       </ul>
@@ -44,6 +46,8 @@
               </div>
             </div>
           </div>
+          {% endfor %}
+          {% endif %}
         </section>
         {% comment %} {% include 'partials/lista-antiga--.html' %} {% endcomment %}
       </section>

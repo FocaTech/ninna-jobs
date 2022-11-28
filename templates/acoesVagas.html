@@ -5,10 +5,14 @@
 
 <script src="{% static 'node_modules/chart.js/dist/chart.js' %}" defer></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
-<script src="{% static 'js/jquery-3.5.1.js' %}" defer></script>
+<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
 <script src="{% static 'js/jquery.dataTables.min.js' %}" defer></script>
 <script src="{% static 'js/dataTables.bootstrap5.min.js' %}" defer></script>
 <script src="{% static 'js/charts.js' %}" defer></script>
+
+<script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/dist/jquery..js' %}"></script>
+<script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
 
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
 <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css' %}" />
@@ -17,6 +21,12 @@
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
+<style>
+    .val .error{
+      color: red;
+  }
+  </style>
+
 <main class="row">
    {% include 'partials/sidebar/admin.html' %}
     <div class="col-8">
@@ -137,38 +147,37 @@
             <h5 class="modal-title" id="cadastro-de-vaga-label">Cadastrar vaga</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body p-4">
-
-        <form action="{% url 'select' %}" method="post" enctype="multipart/form-data">
+        <div class="modal-body p-4 val">
+        <form id="cadastrar-vagas" action="{% url 'select' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-2">
                 <label class="form-label">Logo da Empresa</label>
-                <input class="p-1" type="file" accept="image/*" name="logo_empresa">
+                <input class="p-1" type="file" accept="image/*" name="logo_empresa" required>
             </div>
             <div class="col">
                 <label class="form-label" for="empresa">Empresa</label>
                 <select class="form-select" name="empresa">
                     <option value="Pague menos">pague menos</option>
-                </select>
+                </select required>
             </div>
             <div class="row g-3 align-items-center mb-2">
                 <div class="col">
                     <label class="form-label">Nome da Vaga</label>
-                    <input class="form-control" type="text" name="nome_vaga">
+                    <input class="form-control" type="text" name="nome_vaga" required>
                 </div>
             </div>
             <div class="row g-3 align-items-center mb-2">
                 <div class="col">
                     <label class="form-label">Local da Empresa</label>
-                    <input class="form-control" type="text" name="local">
+                    <input class="form-control" type="text" name="local" required>
                 </div>
-                <div class="col">
+                <div class="col val">
                     <label class="form-label" for="contratacao">Tipo de Contratacao</label>
                     <select class="form-select" name="tipo_contratacao">
                         {% for contratacao in contratacoes%}
                         <option value="{{contratacao.contratacao}}">{{contratacao.contratacao}}</option>
                         {% endfor %}
-                    </select>
+                    </select required>
                 </div>
             </div>
             <div class="row g-3 align-items-center mb-2">
@@ -178,25 +187,25 @@
                         {% for perfil in perfis%}
                         <option value="{{perfil.contratacao}}">{{perfil.contratacao}}</option>
                         {% endfor %}
-                    </select>
+                    </select required>
                 </div>
                 <div class="col">
                     <label class="form-label">Salário</label>
-                    <input class="form-control" type="number" name="salario">
+                    <input class="form-control" type="number" name="salario" required>
                 </div>
             </div>
             <div class="mb-2">
                 <label class="form-label">Descrição da Vaga</label>
-                <textarea class="form-control" name="descricao_vaga"></textarea>
+                <textarea class="form-control" name="descricao_vaga" required></textarea>
             </div>
             <div class="mb-2">
                 <label class="form-label">Descrição da Empresa</label>
-                <textarea class="form-control" name="descricao_empresa"></textarea>
+                <textarea class="form-control" name="descricao_empresa" required></textarea>
             </div>
             <div class="row g-3 align-items-center mb-2">
                 <div class="col">
                     <label class="form-label">Área de Atuação</label>
-                    <input class="form-control" type="text" name="area_atuacao">
+                    <input class="form-control" type="text" name="area_atuacao" required>
                 </div>
                 <div class="col">
                     <label class="form-label" for="tipotrabalho">Tipo de trabalho</label>
@@ -204,7 +213,7 @@
                         {% for trabalho in trabalhos%}
                         <option value="{{trabalho.trabalho}}">{{trabalho.trabalho}}</option>
                         {% endfor %}
-                    </select>
+                    </select required>
                 </div>
             </div>
             <div class="mb-2">
@@ -213,25 +222,109 @@
             </div>
             <div class="mb-2">
                 <label class="form-label">Requisitos</label>
-                <textarea class="form-control" type="text" name="requisitos"></textarea>
+                <textarea class="form-control" type="text" name="requisitos" required></textarea>
             </div>
             <div class="mb-2">
                 <label class="form-label">Diferencial</label>
-                <input class="form-control" type="text" name="diferencial">
+                <input class="form-control" type="text" name="diferencial" required>
             </div>
             <div class="mb-2">
                 <label class="form-label">Beneficios</label>
-                <textarea class="form-control" name="beneficios"></textarea>
+                <textarea class="form-control" name="beneficios"></textarea required>
             </div>
 
             <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
         </form>
 
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Descartar</button>
-        </div>
-        </div>
+    </div>
 </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#cadastrar-vagas").validate({
+            rules:{
+                logo_empresa: {
+                    required: true,
+                },
+                descricao_empresa:{
+                    required: true
+                },
+                nome_vaga:{
+                    required: true,
+                },
+                local:{
+                    required:true
+                },
+                salario:{
+                    required: true,
+                    digits: true,
+                    minlength: 3,
+                },
+                descricao_vaga: {
+                    required: true,
+                minWords: 2
+                },
+                area_atuacao:{
+                    required: true
+                },
+                principais_atividades:{
+                    required: true
+                },
+                requisitos:{
+                    required:true,
+                    maxlength: 300,
+                },
+                diferencial:{
+                    required:true
+                },
+                beneficios:{
+                    required: true,
+                    maxlength: 300,
+                }
+                },
+                messages:{
+                logo_empresa: {
+                    required: "Insira o logo de sua empresa",
+                },
+                nome_vaga:{
+                    required:"Insira o nome da vaga",
+                },
+                descricao_empresa:{
+                    required: "Insira a descrição da empresa"
+                },
+                local:{
+                    required:"Insira o local"
+                },
+                salario:{
+                    required: "Insira o salario",
+                    digits: "apenas números",
+                    minlength: "minimo 3 digitos",
+                },
+                descricao_vaga: {
+                    required: "Descrição da vaga não deve estar vazio",
+                    minWords: "Minimo duas palavras"
+                },
+                area_atuacao:{
+                    required: "área de atuação não deve estar vazio"
+                },
+                principais_atividades:{
+                    required: "Principais atividades não deve estar vazio"
+                },
+                requisitos:{
+                    required:"Insira requisitos",
+                    maxlength: "Insira até 300 caracteres",
+                },
+                diferencial:{
+                    required:"Diferencial não deve estar vazio"
+                },
+                beneficios:{
+                    required: "Beneficios não deve estar vazio",
+                    maxlength: "No maximo 300 caracteres",
+                }
+            },
+        })
+    })
+</script>
 {% endblock %}
