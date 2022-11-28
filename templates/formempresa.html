@@ -24,7 +24,13 @@
             {% if not empresas %}
             <form id="formEmp" action="{% url 'registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}" class="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input name="img_perfil_empresa" type="file" class="sidebar-avatar avatar" id="logoStartup" accept="image/*" required>
+                <div class="col-md-12 py-2 d-flex align-items-center justify-content-around">
+                    <img class="foto-perfil" src="#">
+                    <div>
+                        <label for="logoStartup" class="form-label">Foto do perfil <span class="picture__image"></span></label>
+                        <input name="img_perfil_empresa" type="file" class="sidebar-avatar avatar" id="picture__input" accept="image/*" required>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-8">
                         <label for="razaosocial" class="form-label">Razão Social</label>

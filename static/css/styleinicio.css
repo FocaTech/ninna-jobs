@@ -85,3 +85,6 @@
     font-size: 16px;
     margin-right: 12px;
 }
+#contato .error {
+    color: red
+}
