@@ -61,10 +61,23 @@
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td>
+                    {% if empresas %}
+                    {% for empre in empresas %}
+                    {% if i == empre.user %}
+                    <td class="sorting_1">{{ empre.nome_fantasia }}</td>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
                     <td class="sorting_1">{{ i.username }}</td>
+                    {% endif %}
+
                     <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
-                    {% if vagas.user == i %}
-                    <td class="d-none d-xl-table-cell">{{vagas.data_vaga|date:"d/m/Y | H:i:s"}}</td>
+                    {% if vagas %}
+                    {% for v in vagas %}
+                    {% if v.user == i and v %}
+                    <td class="d-none d-xl-table-cell">{{v.data_vaga|date:"d/m/Y | H:i:s"}}</td>
+                    {% endif %}
+                    {% endfor %}
                     {% else %}
                     <td class="d-none d-xl-table-cell">Sem Vagas</td>
                     {% endif %}
