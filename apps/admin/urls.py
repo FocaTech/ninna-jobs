@@ -10,4 +10,5 @@ urlpatterns = [
     path('detalhes-vagas', views.detalhes_vagas, name='detalhes_vagas'),
     path('acoes-vagas', views.acoes_vaga, name='acoes_vagas'),
     path('api-charts', views.interface_charts, name='api-charts'),
+    path('admin/ban/<int:id_empresa>', views.admin_ban, name='admin_ban'),#admin apagar empresa
 ]
