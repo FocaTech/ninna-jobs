@@ -54,16 +54,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for i in empresa %}
+                  {% for k,v in vagas.items %}
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td>
-                    <td class="sorting_1">{{ i.username }}</td>
-                    <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
-                    <td class="d-none d-xl-table-cell">{{i.vagas.data_vaga|date:"d/m/Y"}}</td>
+                    <td class="sorting_1">{{ k }}</td>
+                    <td class="d-none d-xl-table-cell">{{v.1.date_joined|date:"d/m/Y"}}</td>
+                      <td class="d-none d-xl-table-cell">{{v.0|date:"d/m/Y"}}</td>
+
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
                       <div class="dropdown">
