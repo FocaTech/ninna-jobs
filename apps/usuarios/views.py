@@ -673,18 +673,14 @@ def empresas_favoritadas(request):
 
     empresas_favoritadas = []
     empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
-    print(f"empr_fav_query == {empresas_favoritadas_query}")
-
     empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
 
-    print(f"empr_fav == {empresas_favoritadas}")
 
     dados_empresas_favoritadas = []
     for emp_fav in empresas_favoritadas:
         dados_empresas_favoritadas_query = Empresa.objects.filter(user=emp_fav.id)
         dados_empresas_favoritadas.append(*dados_empresas_favoritadas_query)
 
-    print(f"dados_empr_fav == {dados_empresas_favoritadas}")
 
     dados = {
         'empresas_favoritadas' : empresas_favoritadas,
