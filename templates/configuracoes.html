@@ -1,5 +1,46 @@
-<p>
-  <a href="{% url 'apagar_conta' %}">
-    <h1>apagar conta</h1>
-  </a>
-</p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--css e bootstrap-->
+     <link rel="stylesheet" href="{% static 'css/configurações.css' %}">
+     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+    <title>Configurações de conta</title>
+</head>
+<body>
+    <main>
+        <div class="caixa">
+        <section class="settings">
+        <img src="{% static 'img/tools.png' %}" alt="imagem de configurações" class="img-settings">
+        <h3>Configurações da Conta</h3>
+        </section>
+
+    <section class="opcoes">
+        <div class="key">
+        <img src="{% static 'img/chave.png' %}" alt="alteraar senha" class="icone0">
+        <a href="{% url 'recuperar_senha' %}">
+          <div class="botao-alterar">
+              <input type="button" class="botao btn btn-secondary" value="alterar senha">
+          </div>
+        </a>
+    </div>
+
+        <div class="delete">
+            <img src="{% static 'img/excluir.png' %}" alt="excluir conta" class="icone1" width="3px">
+            <a href="{% url 'apagar_conta' %}">
+              <div class="botao-alterar">
+                <input type="button" class="botao btn btn-secondary" value="excluir conta">
+              </div>
+            </a>
+        </div>
+    </section>
+</div>
+</main>
+
+</body>
+</html>

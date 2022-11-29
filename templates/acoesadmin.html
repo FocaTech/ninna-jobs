@@ -5,10 +5,21 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" />
     <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css'%}" />
     <link rel="stylesheet" href="{% static 'css/admin.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/dashboard.css'%}" />
+
+
+  <script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
+  <script src="{% static 'js/dist/jquery..js' %}"></script>
+  <script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
 {% block body_class %}
 {% endblock %}
 {% block content %}
 {% endblock %}
+<style>
+  .val .error{
+    color: red;
+}
+</style>
     {% include 'partials/header.html' %}
     <!-- navbar -->
     <!-- conteudo principal-->
@@ -62,17 +73,8 @@
                     <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Ações
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
-                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
-                        </ul>
-                      </div>
+                      <button type="submit" class="btn btn-primary"><i class="bi bi-trash"></i> Excluir</button>
                     </td>
-
                   </tr>
                 {% endfor %}
                 </tbody>
@@ -97,7 +99,7 @@
             </div>
             <div class="modal-body">
               <!--Form para cadastrar um novo admin-->
-              <form action="{% url 'acoes_admin'%}" method="POST" >
+              <form action="{% url 'acoes_admin'%}" method="POST" id="adicionar-admin" >
                 {% csrf_token %}
                 <div class="col-mb-6">
                   <label for="perfilfoto">Selecione uma foto de perfil</label>
@@ -113,37 +115,24 @@
                 </div> -->
                 <div class="col-md-4">
                   <label for="validationCustomUsername" class="form-label">Nome de Usuario</label>
-                  <div class="input-group has-validation">
+                  <div class="input-group has-validation val">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
                     <input type="text" name="username" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                    <div class="invalid-feedback">
-                      Please choose a username.
-                    </div>
                   </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 val">
                   <label for="validationCustom01" class="form-label">Email</label>
                   <input type="text" name="email" class="form-control" id="validationCustom01" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
                 </div>
-                <div class="col-12">
-                  <label for="validationCustom01" class="form-label">Senha</label>
-                  <input type="password" name="password" class="form-control" id="validationCustom01" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+                <div class="col-12 val">
+                  <label for="senha" class="form-label">Senha</label>
+                  <input type="password" name="password" class="form-control" id="senha" required>
                 </div>
-                <div class="col-12">
+                <div class="col-12 val">
                   <label for="validationCustom01" class="form-label">Repita a senha</label>
                   <input type="password" name="password2" class="form-control" id="validationCustom01" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
                   <button type="submit" class="btn btn-primary">Enviar</button>
                 </div>
               </form>
@@ -170,6 +159,62 @@
           $('marcar').prop("checked", false);
       }
       });
+    </script>
+    <script>
+      $.validator.addMethod( "pattern", function( value, element, param ) {
+        if ( this.optional( element ) ) {
+            return true;
+        }
+        if ( typeof param === "string" ) {
+            param = new RegExp( "^(?:" + param + ")$" );
+        }
+        return param.test( value );
+      }, "Invalid format." );
+
+      $(document).ready(function(){
+      $("#adicionar-admin").validate({
+          rules:{
+            username: {
+                required: true,
+                maxlength: 10,
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                maxlength: 60,
+                minlength: 8,
+                pattern: "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W]).{6,64})"
+            },
+            password2: {
+                required:true,
+                equalTo: "#candidato-senha"
+            },
+          },
+          messages:{
+            username: {
+              required: "Insira seu usuário",
+              maxlength: "Maximo 10 caracteres",
+          },
+          email: {
+              required: "Email obrigatório",
+              email: "Coloque um email válido"
+          },
+          password: {
+              required: "senha obrigatória",
+              maxlength: "Máximo 60 caracteres",
+              minlength: "Sua senha deve ter no minimo 8 caracteres",
+              pattern: "Deve conter uma letra maiuscula, minuscula e um caracter especial"
+          },
+          password2: {
+              required:"Repita a senha",
+              equalTo: "Senhas diferentes"
+          },
+        },
+      })
+    })
     </script>
     <script src="/node_modules/chart.js/dist/chart.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>

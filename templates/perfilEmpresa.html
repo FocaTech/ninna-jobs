@@ -11,16 +11,12 @@
 {% block content %}
   <main class="perfil-empresa">
     <div class="menuContato my-5">
-      <a href="#"><i class="bi bi-whatsapp linkwapp"></i></a>
-      <a href="#"><i class="bi bi-linkedin linkedin"></i></a>
-      <a href="#"><i class="bi bi-envelope email"></i></a>
       {% if user.funcao == "CAN" %}
-      {% for empr in empresa %}
-      {% if empr.user in empresas_favoritadas %}
+      {% for empr in empresaid %}
+      {% if empr in empresas_favoritadas %}
       <a href="{% url 'favoritar_empresa' empr.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star-fill fs-6" ></i>
       {% else %}
       <a href="{% url 'favoritar_empresa' empr.id %}" class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-star fs-6" ></i>
-      </button>
       {% endif %}
       {% endfor %}
       {% endif %}

@@ -69,7 +69,11 @@
             <tbody class="table-group-divider">
                 <tr>
                     <td colspan="2">Talentos cadastrados</td>
+                    {% if numero_de_can < 10 %}
+                    <td colspan="2">0{{numero_de_can}}</td>
+                    {% else %}
                     <td colspan="2">{{numero_de_can}}</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td colspan="2">Talentos ativos</td>

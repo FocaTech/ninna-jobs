@@ -116,20 +116,20 @@ def Informacoes_iniciais(request):
     locais = City.objects.all()
     estado = []
     cidades = []
+    dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     for local in locais:
         if not local.state in estado:
             estado.append(local.state)
     cidades = sorted(cidades)
     estado = sorted(estado)
-    dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     if len(Dados_Pessoais.objects.filter(user=user_candidato)) > 0:
         dados_can = get_object_or_404(Dados_Pessoais, user=user_candidato)
     else:
         dados_can = False
     dados = {
+        'Dados':dados_pessoais,
         'estados':estado,
         'cidades':cidades,
-        'Dados':dados_pessoais,
         'dados':dados_can
     }
 
@@ -478,19 +478,25 @@ def ver_perfil_empresa(request, id_empresa):
 
     vagas = Vagas.objects.filter(user=id_empresa)
     empresa = Empresa.objects.filter(user=id_empresa)
+    empresaid_query = Users.objects.filter(id=id_empresa)
+
+    empresaid = []
+    for emp in empresaid_query:
+        empresaid.append(emp)
 
     empresas_favoritadas = []
     empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
     empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
 
-
+    dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
     dados = {
-        'empresa' : empresa,
+        'Dados':dados_pessoais,
         'vagas' : vagas,
+        'empresa' : empresa,
+        'empresaid' : empresaid,
         'empresas_favoritadas' : empresas_favoritadas,
     }
     return render(request, 'perfilEmpresa.html', dados)
-    # return redirect("index")
 
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''
@@ -669,16 +675,16 @@ def empresas_favoritadas(request):
     empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
     empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
 
-    print(f"empr_fav == {empresas_favoritadas}")
 
     dados_empresas_favoritadas = []
     for emp_fav in empresas_favoritadas:
         dados_empresas_favoritadas_query = Empresa.objects.filter(user=emp_fav.id)
         dados_empresas_favoritadas.append(*dados_empresas_favoritadas_query)
 
-    print(f"dados_empr_fav == {dados_empresas_favoritadas}")
 
+    dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
     dados = {
+        'Dados':dados_pessoais,
         'empresas_favoritadas' : empresas_favoritadas,
         'dados_empresas_favoritadas' : dados_empresas_favoritadas,
     }
@@ -705,10 +711,13 @@ def favoritar_talento(request, pk_talento):
 
 def favoritar_empresa(request, pk_empresa):
     global url_atual
+    print(url_atual)
+    print(f"pk empr == {pk_empresa}")
     if request.user.is_authenticated:
         id_candidato = request.user
+        print(f"pk empr == {pk_empresa}")
         id_empresa = get_object_or_404(Users, pk=pk_empresa)
-
+        print(f"id empr == {id_empresa}")
         if EmpresasFavoritadas.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             empresa_para_desfavoritar = get_object_or_404(EmpresasFavoritadas, id_talento=id_candidato, id_empresa=id_empresa)
             empresa_para_desfavoritar.delete()
