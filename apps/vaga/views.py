@@ -94,7 +94,7 @@ def deleta_vaga(request, pk_vaga):
     vaga = get_object_or_404(Vagas, pk=pk_vaga)
     messages.error(request, f"Vaga '{vaga.nome_vaga}' deletada")
     vaga.delete()
-    return redirect('minhas-vagas')
+    return redirect(url_atual)
 
 def index(request):
     global url_atual
