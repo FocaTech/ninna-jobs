@@ -7,6 +7,12 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas, Empresa
 
+# pro email
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+
 url_atual = 'http://127.0.0.1:8000/usuarios/dashboard/'
 
 def select(request):
@@ -180,20 +186,6 @@ def salvar_vaga(request, pk_vaga):
         messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
         return redirect("dashboard")
 
-# @has_role_decorator('candidato')
-# def candidatar_a_vaga(request, pk_vagas):
-#     print('entrou')
-#     if request.user.is_authenticated:
-#         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-#         id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
-#         id_vaga = get_object_or_404(Vagas, pk=pk_vagas)
-#         if VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
-#             return redirect('index')
-#         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
-#         vaga_salva.save()
-#         messages.success(request, f"Candidatado em '{id_vaga.nome_vaga}'")
-#         return redirect('index')
-
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
     global url_atual
@@ -207,6 +199,15 @@ def candidatar_a_vaga(request, pk_vagas):
             return redirect(url_atual)
         vaga_salva = VagasCandidatadas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
+
+        html_content = render_to_string('emails/candidatar_se.html', {
+            'nome_candidato' : id_cadidato.username,
+            'nome_vaga': id_vaga.nome_vaga
+            })
+        text_content = strip_tags(html_content)
+        email = EmailMultiAlternatives('Candidatura confirmada', text_content, settings.EMAIL_HOST_USER, [id_cadidato.email])
+        email.attach_alternative(html_content, 'text/html')
+        email.send()
         return redirect(url_atual)
 
 def arquivar_vaga(request, pk_vaga):
