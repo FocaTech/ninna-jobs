@@ -58,23 +58,23 @@ def acoes_admin(request):
 
 def acoes_empresa(request):
     empresas = []
-    vagas = []
-    vaga_query = ''
     empresas_query = Users.objects.filter(funcao = 'EMP')
-    for empresa in empresas_query:
-        try:
-            vaga_query = get_object_or_404(Vagas, user=empresa, status=True)
-        except:
-            continue
-        vagas.append(vaga_query)
-        vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
-
+    # vagas = []
+    # vaga_query = ''
+    # for empresa in empresas_query:
+    #     try:
+    #         vaga_query = get_object_or_404(Vagas, user=empresa, status=True)
+    #     except:
+    #         continue
+    #     vagas.append(vaga_query)
+    #     vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
+    vagas = Vagas.objects.order_by('-data_vaga')
     for empresa in empresas_query:
         empresas.append(empresa)
-    print(empresas, vagas)
+    print(empresas, vagas[0])
     contexto ={
         'empresa': empresas,
-        'vagas' : vagas
+        'vagas' : vagas[0]
     }
     return render(request, 'acoesEmpresa.html', contexto)
 
