@@ -59,12 +59,13 @@ def acoes_admin(request):
 def acoes_empresa(request):
     empresas = []
     vagas = []
+    vaga_query = ''
     empresas_query = Users.objects.filter(funcao = 'EMP')
     for empresa in empresas_query:
         try:
             vaga_query = get_object_or_404(Vagas, user=empresa, status=True)
         except:
-            print('continua')
+            continue
         vagas.append(vaga_query)
         vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
 
