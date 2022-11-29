@@ -36,18 +36,18 @@
           {% if Dados and user.funcao == 'CAN' %}
           {% for dado in Dados %}
           <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img width="40" height="40" src="{{dado.imagem_perfil.url}}" alt="share">
+            <img width="40" height="40" src="{{dado.imagem_perfil.url}}" alt="menu">
           </button>
           {% endfor %}
           {% elif empresa and user.funcao == "EMP" %}
           {% for emp in empresa %}
           <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img width="40" height="40" src="{{emp.img_perfil_empresa.url}}" alt="share">
+            <img width="40" height="40" src="{{emp.img_perfil_empresa.url}}" alt="menu">
           </button>
           {% endfor %}
           {% else %}
           <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img width="40" height="40" src="{% static 'img/avatar.svg' %}" alt="share">
+            <img width="40" height="40" src="{% static 'img/avatar.svg' %}" alt="menu">
           </button>
           {% endif %}
           <ul class="dropdown-menu">
