@@ -99,7 +99,11 @@
                             <ul class="hide-bullets">
                                 <li>
                                     <ul class="inline-list">
+                                        {% if user.is_authenticated %}
                                         <li><i class="bi bi-building" title="Empresa"></i><a href="{% url 'ver_perfil_empresa' vaga.user.id %}">{{ vaga.nome_empresa }}</a></li>
+                                        {% else %}
+                                        <li><i class="bi bi-building" title="Empresa"></i>{{ vaga.nome_empresa }}</li>
+                                        {% endif %}
                                         <li><i class="bi bi-geo-alt" title="Local"></i> {{ vaga.local_empresa }}</li>
                                     </ul>
                                 </li>

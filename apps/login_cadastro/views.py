@@ -89,10 +89,13 @@ def login(request):
             user = auth.authenticate(request, username=nome, password=senha)
             if user:
                 auth.login(request, user)
-                print("autenticado")
                 messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {nome}')
                 return redirect('index')
-        messages.error(request, "Usuario não cadastrado")
+            else:
+                messages.error(request, "Senha invalida")
+                return redirect('index')
+        else:
+            messages.error(request, "Usuario não cadastrado")
     return redirect('acesso')
 
 email_do_user_atual = ''
@@ -149,7 +152,7 @@ def alterar_senha(request):
                 messages.success(request,'Senha alterada com sucesso!')
                 email_do_user_atual = ''
                 print("deu certo salvou")
-                return redirect('login')
+                return redirect('index')
     else:
         return redirect('login')
 
