@@ -68,12 +68,12 @@
                 </div>
                 {% elif user.funcao == "CAN" and not Dados and not user.is_superuser %}
                 <p class="card-text p-1 mt-3 h5 text-light">Candidato: Faça um Perfil, e Candidata-se!!!</p>
-                <div class="m-3 mb-0">
-                    <a href="{% url 'formcandidato' %}" class="btn btn-primary mx-5">Editar Perfil</a>
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'formcandidato' %}" class="btn btn-primary">Editar Perfil</a>
                 </div>
                 {% elif user.funcao == "EMP" and not empresa and not user.is_superuser %}
                 <p class="card-text p-1 mt-3 h5 text-light">Empresa: Faça um Perfil, e Lance Vagas!!!</p>
-                <div class="m-3 mb-0">
+                <div class="d-flex justify-content-center">
                     <a href="{% url 'formempresa' %}" class="btn btn-primary mx-5">Editar Perfil</a>
                 </div>
                 {% endif %}

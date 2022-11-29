@@ -1,4 +1,3 @@
- // JavaScript inicial para desativar envios de formulário, se houver campos inválidos.
 (function() {
     'use strict';
     window.addEventListener('load', function() {
@@ -10,7 +9,6 @@
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
-            alert("Por favor preencha todos os campos corretamente para prosseguir")
         }
         form.classList.add('was-validated');
     }, false);
