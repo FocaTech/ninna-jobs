@@ -682,7 +682,9 @@ def empresas_favoritadas(request):
         dados_empresas_favoritadas.append(*dados_empresas_favoritadas_query)
 
 
+    dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
     dados = {
+        'Dados':dados_pessoais,
         'empresas_favoritadas' : empresas_favoritadas,
         'dados_empresas_favoritadas' : dados_empresas_favoritadas,
     }
