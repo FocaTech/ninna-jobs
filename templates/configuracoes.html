@@ -23,9 +23,11 @@
     <section class="opcoes">
         <div class="key">
         <img src="{% static 'img/chave.png' %}" alt="alteraar senha" class="icone0">
-        <div class="botao-alterar">
-            <input type="button" class="botao btn btn-secondary" value="alterar senha">
-        </div>
+        <a href="{% url 'recuperar_senha' %}">
+          <div class="botao-alterar">
+              <input type="button" class="botao btn btn-secondary" value="alterar senha">
+          </div>
+        </a>
     </div>
 
         <div class="delete">

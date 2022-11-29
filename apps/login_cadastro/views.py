@@ -152,7 +152,7 @@ def alterar_senha(request):
                 messages.success(request,'Senha alterada com sucesso!')
                 email_do_user_atual = ''
                 print("deu certo salvou")
-                return redirect('login')
+                return redirect('index')
     else:
         return redirect('login')
 
