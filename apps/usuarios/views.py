@@ -116,20 +116,20 @@ def Informacoes_iniciais(request):
     locais = City.objects.all()
     estado = []
     cidades = []
+    dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     for local in locais:
         if not local.state in estado:
             estado.append(local.state)
     cidades = sorted(cidades)
     estado = sorted(estado)
-    dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     if len(Dados_Pessoais.objects.filter(user=user_candidato)) > 0:
         dados_can = get_object_or_404(Dados_Pessoais, user=user_candidato)
     else:
         dados_can = False
     dados = {
+        'Dados':dados_pessoais,
         'estados':estado,
         'cidades':cidades,
-        'Dados':dados_pessoais,
         'dados':dados_can
     }
 
@@ -488,7 +488,9 @@ def ver_perfil_empresa(request, id_empresa):
     empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
     empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
 
+    dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
     dados = {
+        'Dados':dados_pessoais,
         'vagas' : vagas,
         'empresa' : empresa,
         'empresaid' : empresaid,
@@ -680,7 +682,9 @@ def empresas_favoritadas(request):
         dados_empresas_favoritadas.append(*dados_empresas_favoritadas_query)
 
 
+    dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
     dados = {
+        'Dados':dados_pessoais,
         'empresas_favoritadas' : empresas_favoritadas,
         'dados_empresas_favoritadas' : dados_empresas_favoritadas,
     }

@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %}Admin{% endblock %}
 {% block head %}
-
 <script src="{% static 'node_modules/chart.js/dist/chart.js' %}" defer></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
 <script src="{% static 'js/jquery-3.5.1.js' %}"></script>
@@ -18,15 +17,14 @@
 <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 <link rel="stylesheet" href="{% static 'css/admin.css' %}"/>
+<style>
+    .val .error{
+        color: red;
+    }
+</style>
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
-<style>
-    .val .error{
-      color: red;
-  }
-  </style>
-
 <main class="row">
    {% include 'partials/sidebar/admin.html' %}
     <div class="col-8">

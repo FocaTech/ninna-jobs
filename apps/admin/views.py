@@ -73,8 +73,8 @@ def acoes_empresa(request):
         empresas.append(empresa)
 
     contexto ={
-        'empresas': empresas,
-        'vagas' : vagas,
+        'empresa': empresas,
+        'vagas' : vagas
     }
     return render(request, 'acoesEmpresa.html', contexto)
 

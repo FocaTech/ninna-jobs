@@ -11,9 +11,6 @@
 {% block content %}
   <main class="perfil-empresa">
     <div class="menuContato my-5">
-      <a href="#"><i class="bi bi-whatsapp linkwapp"></i></a>
-      <a href="#"><i class="bi bi-linkedin linkedin"></i></a>
-      <a href="#"><i class="bi bi-envelope email"></i></a>
       {% if user.funcao == "CAN" %}
       {% for empr in empresaid %}
       {% if empr in empresas_favoritadas %}
