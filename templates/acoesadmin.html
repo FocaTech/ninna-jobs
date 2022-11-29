@@ -101,11 +101,11 @@
               <!--Form para cadastrar um novo admin-->
               <form action="{% url 'acoes_admin'%}" method="POST" id="adicionar-admin" >
                 {% csrf_token %}
-                <!-- <div class="col-mb-6">
+                <div class="col-mb-6">
                   <label for="perfilfoto">Selecione uma foto de perfil</label>
                   <input id="perfilfoto" type="file" class="form-control" aria-label="file example" required>
                   <div class="invalid-feedback">Example invalid form file feedback</div>
-                </div> -->
+                </div>
                 <!-- <div class="col-md-8">
                   <label for="validationCustom01" class="form-label">Nome Completo</label>
                   <input type="text" name="" class="form-control" id="validationCustom01" required>

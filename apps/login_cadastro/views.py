@@ -41,8 +41,7 @@ def cadastro_candidato(request):
         candidato_user.save()
         messages.success(request, 'Cadastro realizado com Sucesso')
         # loga direto
-        user = auth.authenticate(request, username=candidato_nome, password=candidato_senha, funcao = "CAM")
-        print(user)
+        user = auth.authenticate(request, username=candidato_nome, password=candidato_senha, funcao = "CAN")
         if user:
             auth.login(request, user)
             print("autenticado")
