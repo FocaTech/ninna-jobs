@@ -63,6 +63,13 @@
                     </td>
                     <td class="sorting_1">{{ i.username }}</td>
                     <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
+                    {% for v in vagas %}
+                    {% if v.user == i %}
+                    <td class="d-none d-xl-table-cell">{{v.data_vaga|date:"d/m/Y"}}</td>
+                    {% else %}
+                    <td class="d-none d-xl-table-cell">Sem Vagas</td>
+                    {% endif %}
+                    {% endfor %}
                     <td class="d-none d-xl-table-cell">{{i.vagas.data_vaga|date:"d/m/Y"}}</td>
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
