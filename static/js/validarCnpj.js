@@ -22,6 +22,115 @@ function calcularCNPJ(numeros) {
   return resultado
 }
 
+//metodo validar cnpj
+
 $.validator.addMethod('validar_cnpj', value => {
   validarCNPJ(value)
+})
+
+//metodo regex
+
+$.validator.addMethod( "pattern", function( value, element, param ) {
+  if ( this.optional( element ) ) {
+      return true;
+  }
+  if ( typeof param === "string" ) {
+      param = new RegExp( "^(?:" + param + ")$" );
+  }
+  return param.test( value );
+}, "Invalid format." );
+
+
+//regras e mensagens de erro
+
+$(document).ready(function(){
+  $("#formEmp").validate({
+    rules:{
+      img_perfil_empresa: {
+        required: true,
+      },
+      nome_fantasia:{
+        required:true,
+        maxlength: 60
+      },
+      razao_social: {
+        required: true,
+        maxlength: 100
+      },
+      cnpj: {
+        required: true,
+        validarCNPJ: true
+      },
+      telefone: {
+        required:true,
+        pattern:"(\([1-9]\d\)\s9?\d{4}-\d{4})"
+      },
+      celular:{
+        required: true,
+        pattern:"(\([1-9]\d\)\s9?\d{4}-\d{4})"
+      },
+      estado:{
+        required:true,
+      },
+      cidade: {
+        required: true
+      },
+      cep:{
+        required:true,
+        pattern:"(\([\d]{5})-([\d]{3}))"
+      },
+      ramo_de_atividade:{
+        required:true
+      },
+      descricao_empresa:{
+        required: true,
+        maxlength:1000
+      }
+    },
+    messages:{
+      img_perfil_empresa: {
+        required: "Insira o logo da empresa",
+      },
+      nome_fantasia:{
+        required:"Insira o nome fantasia da empresa",
+        maxlength:"Deve ter no maximo 60 caracteres"
+
+      },
+      razao_social: {
+        required: "Insira a razão social da empresa",
+        minlength: "A razão social deve conter até 100 caracteres"
+      },
+      cnpj: {
+        required: "Insira O CNPJ",
+        minlength: "Deve conter até 14 números",
+        validar_cnpj:"CNPJ inválido"
+      },
+      telefone: {
+        required:"Insira o telefone",
+        pattern:"Inserir no formato (xx) xxxx-xxxx"
+      },
+      celular:{
+        required: "Insira o celular",
+        pattern:"Inserir no formato (xx) xxxxx-xxxx"
+      },
+      estado:{
+        required:"Insira o estado",
+      },
+      cidade: {
+        required: "Insira a cidade"
+      },
+      cep:{
+        required:"Insira o CEP",
+        pattern:"Inserir no formato xxxxx-xxx"
+      },
+      ramo_de_atividade:{
+        required:"Insira o ramo de atividade",
+        maxlength:"Deve ter no maximo 60 caracteres"
+      },
+      descricao_empresa:{
+        required: "Escreva um pouco da historia da empresa",
+        maxlength:"Deve ter no maximo 1000 caracteres"
+      }
+    },
+  })
 })
