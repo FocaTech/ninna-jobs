@@ -1,0 +1,70 @@
+/* reset */
+*{
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "Poppins";
+}
+
+main{
+    height: 530px;
+    margin-top:50px ;
+}
+
+.caixa{
+    height: 100%;
+}
+
+.settings{
+    background-color: rgb(77, 77, 233);
+    opacity: 0.7;
+    height: 290px;
+    width: 60vw;
+    text-align: center;
+    margin-left: 20vw;
+    border-radius: 20px 20px 0px 0px;
+    
+}
+
+.img-settings{
+    justify-content: center;
+    height: 19vw; 
+    margin-top: 5vw; 
+}
+
+.opcoes{
+    border-radius: 0px 0px 20px 20px;
+    align-items: center;
+    margin-left: 20vw;
+    width: 60vw;
+    height: 40%;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.icone0{ 
+    width: 15%;
+    height: 4vw;
+    margin-left: 230px;
+}
+
+.key{
+    margin-top: 5vw;
+}
+
+.icone1{ 
+    width: 13%;
+    height: 3vw;
+    margin-bottom: 1vw;
+    margin-left: 230px;
+}
+
+.delete{
+    margin-top: 5vw;
+}
+
+.botao-alterar{
+    margin-left: 200px;
+}
+
+/* responsividade */
