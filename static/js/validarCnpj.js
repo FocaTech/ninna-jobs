@@ -59,15 +59,12 @@ $(document).ready(function(){
       },
       cnpj: {
         required: true,
-        validarCNPJ: true
       },
       telefone: {
         required:true,
-        pattern:"(\([1-9]\d\)\s9?\d{4}-\d{4})"
       },
       celular:{
         required: true,
-        pattern:"(\([1-9]\d\)\s9?\d{4}-\d{4})"
       },
       estado:{
         required:true,
@@ -77,7 +74,6 @@ $(document).ready(function(){
       },
       cep:{
         required:true,
-        pattern:"(\([\d]{5})-([\d]{3}))"
       },
       ramo_de_atividade:{
         required:true
@@ -103,15 +99,12 @@ $(document).ready(function(){
       cnpj: {
         required: "Insira O CNPJ",
         minlength: "Deve conter até 14 números",
-        validar_cnpj:"CNPJ inválido"
       },
       telefone: {
         required:"Insira o telefone",
-        pattern:"Inserir no formato (xx) xxxx-xxxx"
       },
       celular:{
         required: "Insira o celular",
-        pattern:"Inserir no formato (xx) xxxxx-xxxx"
       },
       estado:{
         required:"Insira o estado",
@@ -121,7 +114,6 @@ $(document).ready(function(){
       },
       cep:{
         required:"Insira o CEP",
-        pattern:"Inserir no formato xxxxx-xxx"
       },
       ramo_de_atividade:{
         required:"Insira o ramo de atividade",
