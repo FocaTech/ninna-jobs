@@ -363,7 +363,6 @@ def empresa(request, *args, **kwargs):
 
     dados_pessoais = []
     for talento in ids_dos_talentos_favoritados:
-        # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
         dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
@@ -563,7 +562,6 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     dados_pessoais = []
     for talento in lista_de_talentos:
-        # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
         dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
@@ -701,12 +699,10 @@ def favoritar_talento(request, pk_talento):
         if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             talento_para_desfavoritar = get_object_or_404(TalentosFavoritados, id_talento=id_candidato, id_empresa=id_empresa)
             talento_para_desfavoritar.delete()
-            # messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
             return redirect(url_atual)
 
         talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
         talento_favoritado.save()
-        # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
 
         return redirect(url_atual)
 

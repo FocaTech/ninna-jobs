@@ -50,7 +50,6 @@ def select(request):
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
-        # return redirect('minhas-vagas')
         return redirect('empresa')
 
     else:
@@ -208,14 +207,12 @@ def candidatar_a_vaga(request, pk_vagas):
         return redirect(url_atual)
 
 def arquivar_vaga(request, pk_vaga):
-    print(pk_vaga)
     vaga_para_ser_arquivada = get_object_or_404(Vagas, pk=pk_vaga)
     if vaga_para_ser_arquivada.status == True:
         vaga_para_ser_arquivada.status = False
     else:
         vaga_para_ser_arquivada.status = True
     vaga_para_ser_arquivada.save()
-    print(vaga_para_ser_arquivada.status)
     return redirect('empresa')
 
 def buscas(request):
@@ -256,7 +253,6 @@ def buscas(request):
         dados = {
             'Dados':DP,
             'empresa':empresa,
-            # 'vagas_candidatadas' : busca_candidatadas,
             'vagas':busca_vagas
         }
         return render(request, 'acoesVagas.html', dados)
