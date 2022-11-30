@@ -107,9 +107,10 @@ def acoes_vaga(request):
     perfis = PerfilProfissional.objects.all()
 
     vagas = Vagas.objects.all()
-    user = Users.objects.filter(funcao = 'EMP')
+    empresa = Empresa.objects.all()
 
     dados = {
+        'empresa':sorted(empresa),
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
@@ -117,12 +118,14 @@ def acoes_vaga(request):
     }
 
     if request.method == 'POST':
+        empresa = request.POST['empresa']
+        empresa = get_object_or_404(Empresa, nome_fantasia=empresa)
         nome_vaga = request.POST['nome_vaga']
         tipo_contratacao = request.POST['tipo_contratacao']
-        local = request.POST['local']
+        local = empresa.estado + '/' + empresa.cidade
         perfil = request.POST['perfil']
         salario = request.POST['salario']
-        descricao_empresa = request.POST['descricao_empresa']
+        descricao_empresa = empresa.descricao_empresa
         descricao_vaga = request.POST['descricao_vaga']
         area_atuacao = request.POST['area_atuacao']
         principais_atividades = request.POST['principais_atividades']
@@ -131,13 +134,12 @@ def acoes_vaga(request):
         beneficios = request.POST['beneficios']
         tipo_trabalho = request.POST['tipo_trabalho']
         logo_empresa = request.FILES['logo_empresa']
-        user = get_object_or_404(Users, pk=request.user.id)
-        vaga = Vagas.objects.create(nome_vaga=nome_vaga, user=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, user=empresa.user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
         # return redirect('minhas-vagas')
-        return redirect('empresa')
+        return redirect('acoes_vagas')
 
     else:
         return render(request, 'acoesVagas.html', dados)
