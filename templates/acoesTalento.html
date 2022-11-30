@@ -44,8 +44,7 @@
                   <tr>
                     <th>Selecionar</th>
                     <th class="" tabindex="0"rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
-                    <th class="" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição
-                    </th>
+                    <th class="" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
                     <th class="" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultimo acesso</th>
                   </tr>
                 </thead>
@@ -58,8 +57,19 @@
                       </div>
                     </td>
                     <td class="nome-table">{{candidato.username}}</td>
-                    <td class="">{{candidato.date_joined|date:"d/m/Y"}}</td>
-                    <td class="">{{candidato.last_login|date:"d/m/Y"}}</td>
+                    <td class="">{{candidato.date_joined|date:"d/m/Y | H:i:m"}}</td>
+                    <td class="">{{candidato.last_login|date:"d/m/Y | H:i:m"}}</td>
+                    <td class="d-none d-md-table-cell">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ações
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a href="{% url 'admin_ban' candidato.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
+                        <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li>
+                      </ul>
+                    </div>
+                    </td>
                   </tr>
                   {% endfor%}
                 </tbody>
