@@ -43,9 +43,9 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="form-floating py-2">
-                                    <textarea name='sobre_contrato' class="form-control" placeholder="Fale um pouco sobre" maxlength="100" id="floatingTextarea" style="height: 100px;"></textarea>
+                                <div class="py-2">
                                     <label for="floatingTextarea">Fale um pouco sobre.</label>
+                                    <textarea name='sobre_contrato' class="form-control" placeholder="Fale um pouco sobre" maxlength="300" id="floatingTextarea" style="height: 100px;"></textarea>
                                 </div>
                             </div>
                             <div class="row py-2">
@@ -70,8 +70,8 @@
                     </div>
                 </div>
             </section>
-            <a href="{% url 'Experiencia_profissional' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
-            <a href="{% url 'Formacao_academica' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+            <a href="{% url 'Experiencia_profissional' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0 text-light" id="submit">Proximo</a>
+            <a href="{% url 'Formacao_academica' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0 text-light" id="submit">Anterior</a> <!--Link-->
         </form>
         <div class="d-flex py-2 flex-wrap">
             {% if experiencias %}
