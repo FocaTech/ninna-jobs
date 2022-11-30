@@ -281,6 +281,22 @@ def buscas(request):
             'usuario_admin' : adms
         }
         return render(request, 'acoesadmin.html', dados)
+    elif 'bcand' in request.GET:
+        cand = Users.objects.all()
+        nome_a_buscar = request.GET['bcand']
+        cand = cand.filter(username__icontains=nome_a_buscar, funcao="CAN")
+        dados = {
+            'candidatos' : cand
+        }
+        return render(request, 'acoesTalento.html', dados)
+    elif 'BAempresa' in request.GET:
+        emp = Users.objects.all()
+        nome_a_buscar = request.GET['BAempresa']
+        emp = emp.filter(username__icontains=nome_a_buscar, funcao="EMP")
+        dados = {
+            'empresa' : emp
+        }
+        return render(request, 'acoesTalento.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas
