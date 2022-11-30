@@ -92,11 +92,7 @@
                           Ações
                         </button>
                         <ul class="dropdown-menu">
-                          {% comment %} {% for id in id_empresas %}
-                          {% if id == v.1  %}
-                          <li><a href="{% url 'admin_ban' id.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
-                          {% endif %}
-                          {% endfor %} {% endcomment %}
+                          <li><a href="{% url 'admin_ban' e.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
                           <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li>
                         </ul>
                       </div>
