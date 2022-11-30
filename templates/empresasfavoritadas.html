@@ -26,7 +26,11 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <div class="card" style="width: 18rem;">
-                <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
+                {% for e in empresa %}
+                {% if e.user == empresa_fav %}
+                <img src="{{ e.img_perfil_empresa.url }}" class="card-img-top" alt="...">
+                {% endif %}
+                {% endfor %}
                 <div class="card-body">
                   <h5 class="card-title"><i class="bi bi-building"></i>{{ empresa_fav.username }}</h5>
                   <div class="d-flex justify-content-between">
