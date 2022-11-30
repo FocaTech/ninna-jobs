@@ -17,7 +17,6 @@ def interface(request):
     empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
     candidato = Users.objects.filter(funcao='CAN').order_by('-date_joined')[0:5]
 
-    print(empresa)
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
@@ -48,8 +47,6 @@ def acoes_admin(request):
         admin = Users.objects.create_user(username = username, email = email, password = password,  is_staff=True, is_superuser=True)
         messages.success(request, 'Cadastro realizado com Sucesso')
         admin.save()
-        print(username, email)
-        print(admin)
         return redirect('acoes_admin')
 
     usuario_admin = Users.objects.filter(is_staff = True)
@@ -63,16 +60,6 @@ def acoes_admin(request):
 def acoes_empresa(request):
     vagas = {}
     empresas_query = Users.objects.filter(funcao = 'EMP')
-    # empresas = []
-    # for empresa in empresas_query:
-    #     try:
-    #         # vaga_query = get_object_or_404(Vagas, user=empresa, status=True)
-    #         vaga_query = Vagas.objects.filter(user=empresa, status=True).order_by('-data_vaga')
-    #     except:
-    #         print('continua')
-    #     if len(vaga_query) != 0:
-    #         vagas.append(vaga_query[0])
-    #     vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
 
     for empresa in empresas_query:
         if Vagas.objects.filter(user=empresa):
@@ -110,11 +97,6 @@ def acoes_empresa(request):
 @login_required(login_url='index')
 def acoes_talento(request):
     candidatos = Users.objects.filter(funcao = 'CAN')
-
-    # for candidato in candidatos:
-    #     print(f"{candidato.username} == {candidato.date_joined.__format__('%Y-%m-%d %H:%m')}")
-    #     print(f"{candidato.username} =={candidato.last_login}")
-    #     print('')
 
     contexto = {
         'candidatos' : candidatos
@@ -172,7 +154,6 @@ def acoes_vaga(request):
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
-        # return redirect('minhas-vagas')
         return redirect('acoes_vagas')
 
     else:
