@@ -14,6 +14,10 @@
     border-radius: 70px;
 }
 
+.botaoenviarformempresa:hover{
+    background-image: linear-gradient(rgb(126, 182, 39), rgb(89, 129, 26));
+}
+
 .form-control{
     outline: none!important;
     box-shadow: none!important;
