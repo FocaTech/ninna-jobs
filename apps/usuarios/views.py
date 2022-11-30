@@ -474,6 +474,27 @@ def ver_perfil_empresa(request, id_empresa):
     empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
     empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
 
+
+
+    id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_candidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
+    for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
+        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+    ids_de_vagas_salvas = []
+    for vaga_salva in lista_de_vagas_salvas_do_user:
+        for vaga_salvaa in vaga_salva:
+            ids_de_vagas_salvas.append(vaga_salvaa.id)
+
+    id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_candidato)
+    lista_de_vagas_candidatadas = []
+
+    for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+        lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+    id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]# dois for para desenpacotar o queryset
+
+
+
+
     dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
     dados = {
         'Dados':dados_pessoais,
@@ -481,6 +502,8 @@ def ver_perfil_empresa(request, id_empresa):
         'empresa' : empresa,
         'empresaid' : empresaid,
         'empresas_favoritadas' : empresas_favoritadas,
+        'ids_de_vagas_salvas' : ids_de_vagas_salvas,
+        'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
     }
     return render(request, 'perfilEmpresa.html', dados)
 
