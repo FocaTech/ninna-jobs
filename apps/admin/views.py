@@ -62,16 +62,19 @@ def acoes_empresa(request):
     empresas_query = Users.objects.filter(funcao = 'EMP')
 
     for empresa in empresas_query:
-        vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
+        if Vagas.objects.filter(user=empresa):
+            vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
         # vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
     for id in vagas:
         id_empresas.append(vagas[id][-1])
 
-    empresas = Empresa.objects.all()
+    empresas = Users.objects.filter(funcao="EMP")
+    perfil_empresa = Empresa.objects.all()
     contexto ={
         'vagas' : vagas,
         'id_empresas' : id_empresas,
         'empresa' : empresas,
+        'perfil' : perfil_empresa,
     }
     return render(request, 'acoesEmpresa.html', contexto)
 
