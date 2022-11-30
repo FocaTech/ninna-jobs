@@ -25,7 +25,7 @@
             <div class="col-sm-12 p-3">
               <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
                 <thead>
-                  <div class="row">
+                  {% comment %} <div class="row">
                     <div class="col">
                       <tr>
                         <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
@@ -45,7 +45,14 @@
                         </th>
                       </tr>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
+                  <form method='GET' action="{% url 'BAempresa' %}" class="filtros my-4">
+                    <div class="input-group">
+                        <input name='BAempresa' placeholder="Pesquisar" type="search" class="form-control">
+                        <span class="input-group-text"><i class="bi bi-search"></i>
+                        </span>
+                    </div>
+                  </form>
                   <tr>
                     <th>Selecionar</th>
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
