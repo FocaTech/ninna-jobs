@@ -108,21 +108,18 @@ def index(request):
     if request.user.is_authenticated:
         vagas = Vagas.objects.get_queryset().order_by('id').filter(status=True)
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-        id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+        
+        vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
         lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
-        for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
+        for vagas_salvas in vagas_salvas_query:# desempacotar esse queryset em objetos
             lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
-        ids_de_vagas_salvas = []
-        for vaga_salva in lista_de_vagas_salvas_do_user:
-            for vaga_salvaa in vaga_salva:
-                ids_de_vagas_salvas.append(vaga_salvaa.id)
+        ids_de_vagas_salvas = [vaga.id for vagaquery in lista_de_vagas_salvas_do_user for vaga in vagaquery]# dois for para desenpacotar o queryset
 
-        id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
+        vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
         lista_de_vagas_candidatadas = []
-
-        for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
+        for vagas_candidatadas in vagas_candidatadas_query:
             lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
-        id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]# dois for para desenpacotar o queryset
+        id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]
 
         vagas = paginar(vagas, request)
         ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
