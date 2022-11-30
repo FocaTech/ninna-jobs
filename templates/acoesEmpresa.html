@@ -76,8 +76,8 @@
                     {% endif %}
                     {% endfor %}
 
+                    <td class="d-none d-xl-table-cell">{{e.date_joined|date:"d/m/Y"}}</td>
                     {% for k,v in vagas.items %}
-                      <td class="d-none d-xl-table-cell">{{v.1.date_joined|date:"d/m/Y"}}</td>
                     {% if v.1 == e %}
                       <td class="d-none d-xl-table-cell">{{v.0|date:"d/m/Y | H:i:s"}}</td>
                     {% else %}
