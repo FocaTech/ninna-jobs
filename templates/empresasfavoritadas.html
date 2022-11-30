@@ -38,7 +38,9 @@
                         <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' empresa_fav.id %}">Perfil</a></li>
                       </ul>
                     </div>
+                    <a href="{% url 'favoritar_empresa' empresa_fav.id %}">
                     <button type="button" class="float-right bg-transparent border-0"><i class="bi bi-star-fill"></i></button>
+                    </a>
                   </div>
                 </div>
               </div>

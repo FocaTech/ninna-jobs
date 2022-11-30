@@ -57,9 +57,18 @@ def acoes_admin(request):
     return render(request, 'acoesadmin.html', contexto)
 
 def acoes_empresa(request):
-    vagas = {}
-    id_empresas = []
+    empresas = []
+    vagas = []
     empresas_query = Users.objects.filter(funcao = 'EMP')
+    for empresa in empresas_query:
+        try:
+            # vaga_query = get_object_or_404(Vagas, user=empresa, status=True)
+            vaga_query = Vagas.objects.filter(user=empresa, status=True).order_by('-data_vaga')
+        except:
+            print('continua')
+        if len(vaga_query) != 0:
+            vagas.append(vaga_query[0])
+        vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
 
     for empresa in empresas_query:
         if Vagas.objects.filter(user=empresa):
@@ -77,6 +86,25 @@ def acoes_empresa(request):
         'perfil' : perfil_empresa,
     }
     return render(request, 'acoesEmpresa.html', contexto)
+
+# def acoes_empresa(request):
+#     vagas = {}
+#     id_empresas = []
+#     empresas_query = Users.objects.filter(funcao = 'EMP')
+
+#     for empresa in empresas_query:
+#         vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
+#         # vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
+#     for id in vagas:
+#         id_empresas.append(vagas[id][-1])
+
+#     empresas = Empresa.objects.all()
+#     contexto ={
+#         'vagas' : vagas,
+#         'id_empresas' : id_empresas,
+#         'empresa' : empresas,
+#     }
+#     return render(request, 'acoesEmpresa.html', contexto)
 
 def acoes_talento(request):
     candidatos = Users.objects.filter(funcao = 'CAN')
