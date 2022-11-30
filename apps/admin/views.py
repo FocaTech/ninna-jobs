@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from login_cadastro.models import Users
 from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional
 from usuarios.models import Empresa
@@ -11,6 +12,7 @@ todos_os_can = Users.objects.filter(funcao='CAN').count()
 todas_as_emp = Users.objects.filter(funcao='EMP').count()
 vagas_ativas = Vagas.objects.filter(status=True).count()
 # Create your views here.
+@login_required(login_url='index')
 def interface(request):
     empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
     candidato = Users.objects.filter(funcao='CAN').order_by('-date_joined')[0:5]
@@ -36,6 +38,7 @@ def interface_charts(request):
     })
 
 
+@login_required(login_url='index')
 def acoes_admin(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -56,6 +59,7 @@ def acoes_admin(request):
 
     return render(request, 'acoesadmin.html', contexto)
 
+@login_required(login_url='index')
 def acoes_empresa(request):
     vagas = {}
     empresas_query = Users.objects.filter(funcao = 'EMP')
@@ -74,7 +78,7 @@ def acoes_empresa(request):
         if Vagas.objects.filter(user=empresa):
             vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
         # vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
-        
+
     empresas = Users.objects.filter(funcao="EMP")
     perfil_empresa = Empresa.objects.all()
     contexto ={
@@ -103,6 +107,7 @@ def acoes_empresa(request):
 #     }
 #     return render(request, 'acoesEmpresa.html', contexto)
 
+@login_required(login_url='index')
 def acoes_talento(request):
     candidatos = Users.objects.filter(funcao = 'CAN')
 
@@ -124,9 +129,11 @@ def relatorio(request):
     }
     return render(request, 'relatorio.html',contexto)
 
+@login_required(login_url='index')
 def detalhes_vagas(request):
     return render(request, 'detalhesVagasEmpresa.html')
 
+@login_required(login_url='index')
 def acoes_vaga(request):
     '''cria e salva vagas'''
     contratacoes = TipoContratacao.objects.all()
@@ -171,6 +178,7 @@ def acoes_vaga(request):
     else:
         return render(request, 'acoesVagas.html', dados)
 
+@login_required(login_url='index')
 def admin_ban(request, id_empresa):
     users = get_object_or_404(Users, pk=id_empresa)
     if len(Empresa.objects.all().filter(user=users)) >= 0:
