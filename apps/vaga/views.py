@@ -293,17 +293,10 @@ def buscas(request):
         emp = Users.objects.all()
         nome_a_buscar = request.GET['BAempresa']
         emp = emp.filter(username__icontains=nome_a_buscar, funcao="EMP")
-        vagas = {}
-        for empresa in emp:
-            if Vagas.objects.filter(user=empresa):
-                vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
-        perfil_empresa = Empresa.objects.all()
-        dados ={
-            'vagas' : vagas,
-            'empresa' : emp,
-            'perfil' : perfil_empresa,
+        dados = {
+            'empresa' : emp
         }
-        return render(request, 'acoesEmpresa.html', dados)
+        return render(request, 'acoesTalento.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas
