@@ -24,7 +24,6 @@ if __name__ == '__main__':
 
 # AJUDA FRONT
 # python manage.py runserver
-# python manage.py loaddata city
 # python manage.py loaddata TipoTrabalho
 # python manage.py loaddata PerfilProfissional
 # python manage.py loaddata TipoContratacao
