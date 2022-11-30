@@ -477,14 +477,14 @@ def ver_perfil_empresa(request, id_empresa):
     vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=id_candidato)# traz um queryset com todos os objetos da Tab. VagaSalva
     lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
     for vagas_salvas in vagas_salvas_query:# desempacotar esse queryset em objetos
-        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
-    ids_de_vagas_salvas = [vaga.id for vagaquery in lista_de_vagas_salvas_do_user for vaga in vagaquery]# dois for para desenpacotar o queryset
+        lista_de_vagas_salvas_do_user.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
+    ids_de_vagas_salvas = [vaga.id for vaga in lista_de_vagas_salvas_do_user]
 
     vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_candidato)
     lista_de_vagas_candidatadas = []
     for vagas_candidatadas in vagas_candidatadas_query:
-        lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
-    id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]
+        lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+    id_de_vagas_candidatadas = [vaga.id for vaga in lista_de_vagas_candidatadas]
 
 
     dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
