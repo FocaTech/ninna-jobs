@@ -38,5 +38,6 @@ urlpatterns = [
     path('favoritar_empresa/<int:pk_empresa>', views.favoritar_empresa, name='favoritar_empresa'),#favoritar empresa
     path('configuracoes', views.configuracoes, name='configuracoes'),#apagar conta
     path('apagar_conta', views.apagar_conta, name='apagar_conta'),
+    path('apagar_conta_verificao', views.apagar_conta_com_verificao, name='apagar_conta_com_verificao'),
     path('candidato_fav', views.candidato_fav, name='candidato_fav'),
 ]

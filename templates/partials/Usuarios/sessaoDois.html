@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input onBlur="javascript: validaCPF(this.value);" onkeydown="javascript: fMasc( this, mCPF );" name="cpf_do_candidato" type="text" class="form-control" id="cpf" inputmode="text" minlength="11" maxlength="11" pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})" required>
+                        <input onBlur="javascript: validaCPF(this.value);" onkeydown="javascript: fMasc( this, mCPF );" name="cpf_do_candidato" type="text" class="form-control" id="cpf" inputmode="text" minlength="11" maxlength="11" pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})" placeholder="Coloque o CPF sem pontos ou espaços" required>
                         <div class="valid-feedback" id="naoOk">
                             Tudo ok!
                         </div>
@@ -85,7 +85,7 @@
                             Campo obrigatorio
                         </div>
                         <div class="d-lg-none text-danger" id="dataInvalida">
-                            Data Invalida
+                            Você deve ter mais de 16 para se inscrever
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -112,14 +112,15 @@
                     </div>
                     <div class="col-md-8">
                         <label for="telefone" class="form-label">Telefone</label>
-                        <input type="number" class="form-control" id="telefone" name="telefone" placeholder="(XX)XXXX-XXXXX" min="10000000000" max="99999999999"  required>
+                        <input type="number" class="form-control" id="telefone" name="telefone" placeholder="(XX)XXXX-XXXXX"  required>
                         <div class="invalid-feedback">Informe um telefone valido.</div>
                         <input name='whatsapp' id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox" value="Sim">
                         <label class="form-check-label">Possui Whatsapp?</label>
                     </div>
-                <div class="form-floating">
-                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300" style="height:100px"></textarea>
+                </div>
+                <div class="">
                     <label for="floatingTextarea">Fale um pouco sobre você.</label>
+                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300" style="height:100px"></textarea>
                 </div>
         {% elif dados %}
         <form action="{% url 'editando_Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" name='formCand' enctype="multipart/form-data" novalidate>
@@ -154,14 +155,14 @@
                     <div class="col-md-4">
                         <label for="cpf" class="form-label">CPF</label>
                         <input onBlur="javascript: validaCPF(this.value);" onkeydown="javascript: fMasc( this, mCPF );" name="cpf_do_candidato" type="text" class="form-control" id="cpf" inputmode="text" minlength="11" maxlength="11" pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})" value='{{dados.cpf_do_candidato}}' required>
-                        <div class="valid-feedback" id="naoOk">
+                        <div class="valid-feedback" id="naoOk"placeholder="Coloque o CPF sem pontos ou espaços">
                             Tudo ok!
                         </div>
                         <div class="invalid-feedback">
                             Campo obrigatorio
                         </div>
                         <div class="cpfInvalido d-lg-none text-danger" id="cpfInvalido">
-                            CPF Invalido
+                            CPF invalido
                         </div>
                     </div>
                 </div>
@@ -176,7 +177,7 @@
                             Campo obrigatorio
                         </div>
                         <div class="d-lg-none text-danger" id="dataInvalida">
-                            Data Invalida
+                            Você deve ter mais de 16 anos
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -203,7 +204,7 @@
                     </div>
                     <div class="col-md-8">
                         <label for="telefone" class="form-label">Telefone</label>
-                        <input type="number" class="form-control" id="telefone" name="telefone" value='{{dados.telefone}}' placeholder="(XX)XXXX-XXXXX" min="10000000000" max="99999999999"  required>
+                        <input type="number" class="form-control" id="telefone" name="telefone" value='{{dados.telefone}}' placeholder="(XX)XXXX-XXXXX" required>
                         <div class="invalid-feedback">Informe um telefone valido.</div>
                         {% if dados.whatsapp == "Sim" %}
                         <input name='whatsapp' id="empregoAtual"class="form-check-input" onclick="desabilitar()" type="checkbox" value="Sim" checked>
@@ -214,9 +215,9 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="form-floating">
-                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300"  style="height:100px">{{dados.sobre_candidato}}</textarea>
+                <div class="">
                     <label for="floatingTextarea">Fale um pouco sobre você.</label>
+                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300"  style="height:100px">{{dados.sobre_candidato}}</textarea>
                 </div>
         {% endif %}
                 <div class="form-floating">
@@ -226,8 +227,8 @@
                 {% endif %}
                 </div>
             </section>
-            <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
-            <a href="{% url 'formcandidato' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+            <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0 text-light" id="submit">Proximo</a>
+            <a href="{% url 'formcandidato' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0 text-light" id="submit">Anterior</a> <!--Link-->
         </form>
     </div>
 </main>

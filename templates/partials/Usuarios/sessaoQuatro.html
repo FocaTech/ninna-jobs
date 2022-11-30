@@ -40,9 +40,9 @@
                                 <option value="TV">Trabalho Voluntário</option>
                             </select>
                         </div>
-                        <div class="form-floating py-2">
-                            <textarea name='sobre_conquista' class="form-control" placeholder="Fale um pouco sobre" maxlength="100" id="floatingTextarea" style="height: 100px"></textarea>
+                        <div class="py-2">
                             <label for="floatingTextarea">Fale um pouco sobre.</label>
+                            <textarea name='sobre_conquista' class="form-control" placeholder="Fale um pouco sobre" maxlength="300" id="floatingTextarea" style="height: 100px"></textarea>
                         </div>
                     </div>
                 </div> <!--Div para incluir o novo form caso aperte o adicionar-->
@@ -50,8 +50,8 @@
                     <button type="submit" class="btn btn-primary m-2 col corBotao" id="submit"><i class="bi bi-plus-lg"></i>Adicionar</button>
                 </div>
             </section>
-            <a href="{% url 'Certificados_conquistas' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0" id="submit">Proximo</a>
-            <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0" id="submit">Anterior</a> <!--Link-->
+            <a href="{% url 'Certificados_conquistas' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0 text-light" id="submit">Proximo</a>
+            <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0 text-light" id="submit">Anterior</a> <!--Link-->
          </form>
          <div class="d-flex py-2 flex-wrap">
             {% if certificados %}
@@ -59,7 +59,7 @@
             <div class="m-3">
                 <div class="card" style="width: 18rem;">
                     <div class="mx-2 py-1 d-flex justify-content-end">
-                        <a type="button" class="btn btn-primary float-end corBotao"  href="{% url 'apagarC' certificado.id %}" id="submit"><i class="bi bi-trash">
+                        <a type="button" class="btn btn-primary float-end corBotao text-light"  href="{% url 'apagarC' certificado.id %}" id="submit"><i class="bi bi-trash">
                         </i></a>
                     </div>
                     <div class="card-body">

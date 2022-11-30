@@ -474,6 +474,19 @@ def ver_perfil_empresa(request, id_empresa):
     empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=id_candidato)
     empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
 
+    vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=id_candidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+    lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
+    for vagas_salvas in vagas_salvas_query:# desempacotar esse queryset em objetos
+        lista_de_vagas_salvas_do_user.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
+    ids_de_vagas_salvas = [vaga.id for vaga in lista_de_vagas_salvas_do_user]
+
+    vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_candidato)
+    lista_de_vagas_candidatadas = []
+    for vagas_candidatadas in vagas_candidatadas_query:
+        lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+    id_de_vagas_candidatadas = [vaga.id for vaga in lista_de_vagas_candidatadas]
+
+
     dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
     dados = {
         'Dados':dados_pessoais,
@@ -481,6 +494,8 @@ def ver_perfil_empresa(request, id_empresa):
         'empresa' : empresa,
         'empresaid' : empresaid,
         'empresas_favoritadas' : empresas_favoritadas,
+        'ids_de_vagas_salvas' : ids_de_vagas_salvas,
+        'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
     }
     return render(request, 'perfilEmpresa.html', dados)
 
@@ -697,13 +712,9 @@ def favoritar_talento(request, pk_talento):
 
 def favoritar_empresa(request, pk_empresa):
     global url_atual
-    print(url_atual)
-    print(f"pk empr == {pk_empresa}")
     if request.user.is_authenticated:
         id_candidato = request.user
-        print(f"pk empr == {pk_empresa}")
         id_empresa = get_object_or_404(Users, pk=pk_empresa)
-        print(f"id empr == {id_empresa}")
         if EmpresasFavoritadas.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             empresa_para_desfavoritar = get_object_or_404(EmpresasFavoritadas, id_talento=id_candidato, id_empresa=id_empresa)
             empresa_para_desfavoritar.delete()
@@ -742,6 +753,19 @@ def apagar_conta(request):
             dados.delete()
     users.delete()
     return redirect('index')
+
+def apagar_conta_com_verificao(request):
+    user = get_object_or_404(Users, pk=request.user.id)
+    if request.method == 'POST':
+        senha = request.POST.get('senha', None)
+        if auth.authenticate(request, username=user.username, password=senha):
+            user.delete()
+            return redirect('index')
+        else:
+            messages.error(request, 'A senha não esta corrreta')
+            return redirect('apagar_conta_com_verificao')
+
+    return render(request, 'pedirSenha.html')
 
 def candidato_fav(request):
     return render(request, 'candidatosFavoritados.html')
