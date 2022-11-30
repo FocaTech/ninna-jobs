@@ -218,7 +218,7 @@ def arquivar_vaga(request, pk_vaga):
     print(vaga_para_ser_arquivada.status)
     return redirect('empresa')
 
-def busca_vaga(request):
+def buscas(request):
     '''barras de busca da dash, empresa e vagas'''
     listar_vagas_salvas_e_candidatadas(request)
     lista_vagas = Vagas.objects.order_by('-data_vaga').filter()
@@ -247,8 +247,8 @@ def busca_vaga(request):
             'vagas_salvas':busca_salvas
         }
         return render(request, 'dashboard.html', dados)
-    elif 'badmin' in request.GET:
-        nome_a_buscar = request.GET['badmin']
+    elif 'BVadmin' in request.GET:
+        nome_a_buscar = request.GET['BVadmin']
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         empresa = Empresa.objects.filter(user=request.user)
@@ -273,6 +273,14 @@ def busca_vaga(request):
             'vagas' : lista_vagas
         }
         return render(request, 'empresa.html', dados)
+    elif 'badmin' in request.GET:
+        adms = Users.objects.all()
+        nome_a_buscar = request.GET['badmin']
+        adms = adms.filter(username__icontains=nome_a_buscar, is_superuser=True)
+        dados = {
+            'usuario_admin' : adms
+        }
+        return render(request, 'acoesadmin.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas

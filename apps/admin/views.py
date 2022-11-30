@@ -62,8 +62,7 @@ def acoes_empresa(request):
     empresas_query = Users.objects.filter(funcao = 'EMP')
 
     for empresa in empresas_query:
-        if len(Vagas.objects.filter(user=empresa)) > 1:
-            vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
+        vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
         # vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
     for id in vagas:
         id_empresas.append(vagas[id][-1])
@@ -143,7 +142,6 @@ def acoes_vaga(request):
 
     else:
         return render(request, 'acoesVagas.html', dados)
-
 
 def admin_ban(request, id_empresa):
     users = get_object_or_404(Users, pk=id_empresa)
