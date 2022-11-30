@@ -697,13 +697,9 @@ def favoritar_talento(request, pk_talento):
 
 def favoritar_empresa(request, pk_empresa):
     global url_atual
-    print(url_atual)
-    print(f"pk empr == {pk_empresa}")
     if request.user.is_authenticated:
         id_candidato = request.user
-        print(f"pk empr == {pk_empresa}")
         id_empresa = get_object_or_404(Users, pk=pk_empresa)
-        print(f"id empr == {id_empresa}")
         if EmpresasFavoritadas.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             empresa_para_desfavoritar = get_object_or_404(EmpresasFavoritadas, id_talento=id_candidato, id_empresa=id_empresa)
             empresa_para_desfavoritar.delete()
@@ -742,6 +738,19 @@ def apagar_conta(request):
             dados.delete()
     users.delete()
     return redirect('index')
+
+def apagar_conta_com_verificao(request):
+    user = get_object_or_404(Users, pk=request.user.id)
+    if request.method == 'POST':
+        senha = request.POST.get('senha', None)
+        if auth.authenticate(request, username=user.username, password=senha):
+            user.delete()
+            return redirect('index')
+        else:
+            messages.error(request, 'A senha não esta corrreta')
+            return redirect('apagar_conta_com_verificao')
+
+    return render(request, 'pedirSenha.html')
 
 def candidato_fav(request):
     return render(request, 'candidatosFavoritados.html')

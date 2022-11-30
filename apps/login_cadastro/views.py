@@ -44,7 +44,6 @@ def cadastro_candidato(request):
         user = auth.authenticate(request, username=candidato_nome, password=candidato_senha, funcao = "CAN")
         if user:
             auth.login(request, user)
-            print("autenticado")
             # messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {candidato_nome}')
             return redirect('index')
         return redirect ('index')
@@ -106,7 +105,6 @@ def recuperar_senha(request):
         if Users.objects.filter(email=email).exists():
             user = get_object_or_404(Users, email=email)
             email_do_user_atual = email
-            print(email_do_user_atual)
             senha_canditato = Users.objects.filter(email=email).values_list('password', flat=True).get()
             html_content = render_to_string('emails/recuperar_senha.html', {
                 'senha' : senha_canditato,
@@ -123,12 +121,10 @@ def recuperar_senha(request):
     return render(request, 'recuperarsenha.html')
 
 def conferir_token(request,  uidb64, token):
-    print('entrou no conferir')
     global email_do_user_atual
     user = get_object_or_404(Users, email=email_do_user_atual)
 
     if default_token_generator.check_token(user, token):
-        print('foi pro alterar')
         return redirect('alterar_senha')
     return render(request, 'alterarsenha.html')
 
@@ -138,9 +134,6 @@ def alterar_senha(request):
         if request.method == 'POST':
             nova_senha = request.POST.get('nova_senha', None)
             confirmar_nova_senha = request.POST.get('confirmar_nova_senha', None)
-            print(f"nova senha do user: {nova_senha}")
-            print(f"confirmar senha do user: {confirmar_nova_senha}")
-            print(f"email do user atual: {email_do_user_atual}")
             if nova_senha != confirmar_nova_senha:
                 messages.error(request, 'As senhas devem ser iguais')
                 return redirect('alterar_senha')
@@ -150,7 +143,6 @@ def alterar_senha(request):
                 user_para_mudar_senha.save()
                 messages.success(request,'Senha alterada com sucesso!')
                 email_do_user_atual = ''
-                print("deu certo salvou")
                 return redirect('index')
     else:
         return redirect('login')
