@@ -3,10 +3,6 @@
 {% block title %}Minhas vagas{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
-<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
 <script src="{% static 'js/botaoAdcExcluir.js' %}"defer></script>
 <script src="{% static 'js/maskmoney.js' %}" defer></script>
 <script src="{% static 'js/dataNasc.js' %}" defer></script>
@@ -27,7 +23,7 @@
     </style>
     <div class="w-75 m-auto sDois" >
         {% if not dados %}
-        <form runat="server" action="{% url 'Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" name='formCand' enctype="multipart/form-data" data-funcoes-url="{% url 'ajax_load_funcoes' %}" novalidate>
+        <form runat="server" action="{% url 'Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" name='formCand' enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <section class="step py-5 mb-3" id="step_6">
                 <h2> Dados Pessoais</h2>
@@ -114,28 +110,6 @@
                         <input type="number" name="cep" class="form-control" v-model="endereco.cep" @change="cepAlteradoEvento" id="cep" size="10" maxlength="9"required>
                         <div class="invalid-feedback">Por favor, informe um cep valido.</div>
                     </div>
-                    <div class="col-md-4">
-                        <label for="estado" class="form-label">Estado</label>
-                        <select name="estado" class="form-select" id="uf"required>
-                            <option selected disabled value="">Escolha</option>
-                            {% for estado in estados %}
-                            <option value="{{estado}}">{{estado}}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">Por favor, escolha um estado valido</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="cidade" class="form-label">Cidade</label>
-                        <select name="cidade" class="form-select" id="cidade"required>
-                            <option selected disabled value="">Escolha</option>
-                            {% for cidade in cidades %}
-                            <option value="{{cidade}}">{{cidade}}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">Por favor, escolha uma cidade valida</div>
-                    </div>
-                </div>
-                <div class="row py-2">
                     <div class="col-md-8">
                         <label for="telefone" class="form-label">Telefone</label>
                         <input type="number" class="form-control" id="telefone" name="telefone" placeholder="(XX)XXXX-XXXXX"  required>
@@ -145,11 +119,13 @@
                     </div>
                 </div>
                 <div class="">
+                <div class="">
+                    <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300" style="height:100px"></textarea>
                     <label for="floatingTextarea">Fale um pouco sobre você.</label>
                     <textarea name="sobre_candidato" class="form-control" placeholder="comente" id="floatingTextarea" maxlength="300" style="height:100px"></textarea>
                 </div>
         {% elif dados %}
-        <form action="{% url 'editando_Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" name='formCand' enctype="multipart/form-data" data-funcoes-url="{% url 'ajax_load_funcoes' %}" novalidate>
+        <form action="{% url 'editando_Dados_Pessoais' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" name='formCand' enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <section class="step py-5 mb-3" id="step_6">
                 <h2> Dados Pessoais</h2>
@@ -228,27 +204,6 @@
                         <input type="number" name="cep" class="form-control" v-model="endereco.cep" @change="cepAlteradoEvento" id="cep" size="10" maxlength="9" value='{{dados.cep}}' required>
                         <div class="invalid-feedback">Por favor, informe um cep valido.</div>
                     </div>
-                    <div class="col-md-4">
-                        <label for="estado" class="form-label">Estado</label>
-                        <select name="estado" class="form-select" id="uf"required>
-                            <option value='{{dados.estado}}' selected>{{dados.estado}}</option>
-                            {% for estado in estados %}
-                            <option value="{{estado}}">{{estado}}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">Por favor, escolha um estado valido</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="cidade" class="form-label">Cidade</label>
-                        <select name="cidade" class="form-select" id="cidade"required>
-                            <option value="{{dados.cidade}}" selected>{{dados.cidade}}</option>
-                            {% for cidade in cidades %}
-                            <option value="{{cidade}}">{{cidade}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="row py-2">
                     <div class="col-md-8">
                         <label for="telefone" class="form-label">Telefone</label>
                         <input type="number" class="form-control" id="telefone" name="telefone" value='{{dados.telefone}}' placeholder="(XX)XXXX-XXXXX" required>
@@ -277,19 +232,6 @@
             <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0 text-light" id="submit">Proximo</a>
             <a href="{% url 'formcandidato' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0 text-light" id="submit">Anterior</a> <!--Link-->
         </form>
-        <script type='text/javascript'>
-            $('#uf').change(function(){
-                const url = $('#formCand').attr('data-funcoes-url');
-                estadoID = $(this).val();
-                $.ajax({
-                    url:url,
-                    data:{ 'uf':estadoID},
-                    success: function(data){
-                        $("#cidade").html(data);
-                    }
-                });
-            });
-        </script>
     </div>
 </main>
 <script>

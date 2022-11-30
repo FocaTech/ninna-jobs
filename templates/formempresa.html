@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
-    <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
     <script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
     <script src="{% static 'js/dist/jquery..js' %}"></script>
     <script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
@@ -32,7 +29,7 @@
         <h1 class="display-6 text-center titulo">Cadastro - <strong>Empresa</strong></h1>
         <div class="containerFormEmpresa p-5">
             {% if not empresas %}
-            <form id="formEmp" action="{% url 'registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}" class="" method="POST" enctype="multipart/form-data">
+            <form id="formEmp" action="{% url 'registro' %}" class="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="py-2 d-flex align-items-center justify-content-around">
                     <img id="blah"class="foto-perfil" src="{% static 'img/placeholder.svg' %}">
@@ -65,28 +62,6 @@
                         <input name="celular" type="tel" class="form-control" id="celular" placeholder="(XX)XXXX-XXXXX" required>
                     </div>
                 </div>
-                <div class="row py-2">
-                    <div class="col-md-4">
-                        <label for="estado" class="form-label">Estado</label>
-                        <select name="estado" class="form-select" id="uf"required>
-                            <option selected disabled value="">Escolha</option>
-                            {% for estado in estados %}
-                            <option value="{{estado}}">{{estado}}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">Por favor, escolha um estado valido</div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="cidade" class="form-label">Cidade</label>
-                        <select name="cidade" class="form-select" id="cidade"required>
-                            <option selected disabled value="">Escolha</option>
-                            <option value="">aaa</option>
-                            {% for cidade in cidades %}
-                            <option value="{{cidade}}">{{cidade}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
                 <div class="row py-1">
                     <div class="col-md-6">
                         <label for="cep" class="form-label">Cep</label>
@@ -106,7 +81,7 @@
                     <textarea class="form-control" placeholder="Sobre a empresa" id="floatingTextarea" style="height: 100px" name="descricao_empresa" maxlength='1000' required></textarea>
                 </div>
             {% else %}
-            <form id="formEmp" action="{% url 'editar_registro' %}" data-funcoes-url="{% url 'ajax_load_funcoes' %}"class="" method="POST" enctype="multipart/form-data">
+            <form id="formEmp" action="{% url 'editar_registro' %}" class="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!--********************** FOTO DO PERFIL ***************************-->
                 <label for="file"><b>Foto utilizada</b></label>
@@ -114,7 +89,7 @@
                     <img class="foto-perfil" src="{{ empresas.img_perfil_empresa.url }}">
                     <div>
                         <label for="file"><b>Mudar foto do perfil</b></label>
-                        <input class="form-control" name="img_perfil_empresa" type="file" class"" id="logoStartup" accept="image/*" required>
+                        <input class="form-control" name="img_perfil_empresa" type="file" class"" id="logoStartup" accept="image/*">
                     </div>
                 </div>
                 <!--********************** NOME FANTASIA ***************************-->
@@ -150,29 +125,6 @@
                         </div>
                     </div>
                 </div>
-                <!--********************** ESTADO E CIDADE ***************************-->
-                <div class="row py-2">
-                    <div class="col-md-4">
-                        <label for="estado" class="form-label">Estado</label>
-                        <select name="estado" class="form-select" id="uf"required>
-                            <option value='{{empresas.estado}}' selected>{{empresas.estado}}</option>
-                            {% for estado in estados %}
-                            <option value="{{estado}}">{{estado}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="cidade" class="form-label">Cidade</label>
-                        <select name="cidade" class="form-select" id="cidade"required>
-                            <option value="cu">cu</option>
-                            <option value='{{empresas.cidade}}' selected>{{empresas.cidade}}</option>
-                            {% for cidade in cidades %}
-                            <option value="{{cidade}}">{{cidade}}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">Por favor, escolha um estado valido</div>
-                    </div>
-                </div>
                 <!--********************** CEP E RAMO DE ATIVIDADE ***************************-->
                 <div class="row py-1">
                     <div class="col-md-6">
@@ -201,19 +153,6 @@
                     </div>
                 </div>
             </form>
-            <script type='text/javascript'>
-                $('#uf').change(function(){
-                    const url = $('#formEmp').attr('data-funcoes-url');
-                    estadoID = $(this).val();
-                    $.ajax({
-                        url:url,
-                        data:{ 'uf':estadoID},
-                        success: function(data){
-                            $("#cidade").html(data);
-                        }
-                    });
-                });
-            </script>
         </div>
     </div>
     <script>

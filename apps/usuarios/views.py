@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Certificados_Conquistas, City, Dados_Pessoais, Empresa, Idiomas, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados, EmpresasFavoritadas
+from .models import Certificados_Conquistas, Dados_Pessoais, Empresa, Idiomas, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados, EmpresasFavoritadas
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
@@ -8,6 +8,7 @@ from vaga.views import listar_vagas_salvas_e_candidatadas, listar_vagas_arquivad
 from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
+import requests
 
 url_atual = ""
 
@@ -17,61 +18,63 @@ def formempresa(request):
         empresas = get_object_or_404(Empresa, user=request.user)
     else:
         empresas = None
-    locais = City.objects.all()
-    estado = []
-    cidades = []
-    for local in locais:
-        if not local.state in estado:
-            estado.append(local.state)
-    estado = sorted(estado)
-    cidades = sorted(cidades)
     empresa = Empresa.objects.filter(user=request.user)
     dados = {
         'empresas':empresas,
-        'estados':estado,
-        'cidades':cidades,
         'empresa':empresa
     }
     return render(request, 'FormEmpresa.html', dados)
 
 def editar_registro(request):
     '''formulario da empresa'''
-    if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) == 1:
-        e = Empresa.objects.get(user=request.user)
-        if 'img_perfil_empresa' in request.FILES:
-            e.img_perfil_empresa = request.FILES['img_perfil_empresa']
-        e.razao_social = request.POST['razao_social']
-        e.cnpj = request.POST['cnpj']
-        e.nome_fantasia = request.POST['nome_fantasia']
-        e.telefone = request.POST['telefone']
-        e.celular = request.POST['celular']
-        e.cidade = request.POST['cidade']
-        e.estado = request.POST['estado']
-        e.cep = request.POST['cep']
-        e.ramo_de_atividade = request.POST['ramo_de_atividade']
-        e.descricao_empresa = request.POST['descricao_empresa']
-        celular = request.POST['celular']
-        celular = celular[0:18]
-        e.celular = celular
-        e.save()
-    return redirect('perfilempresa')
+    if request.method == 'POST':
+        cep = request.POST['cep']
+        response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
+        if response.status_code == 200:
+            local = response.json()
+            if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) == 1:
+                e = Empresa.objects.get(user=request.user)
+                if 'img_perfil_empresa' in request.FILES:
+                    e.img_perfil_empresa = request.FILES['img_perfil_empresa']
+                e.razao_social = request.POST['razao_social']
+                e.cnpj = request.POST['cnpj']
+                e.nome_fantasia = request.POST['nome_fantasia']
+                e.telefone = request.POST['telefone']
+                e.celular = request.POST['celular']
+                e.cidade = local['localidade']
+                e.estado = local['uf']
+                e.cep = local['cep']
+                e.ramo_de_atividade = request.POST['ramo_de_atividade']
+                e.descricao_empresa = request.POST['descricao_empresa']
+                celular = request.POST['celular']
+                celular = celular[0:18]
+                e.celular = celular
+                e.save()
+    return redirect('formempresa')
 
 def registro(request):
-    if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) < 1:
-        img_perfil_empresa = request.FILES['img_perfil_empresa']
-        razao_social = request.POST['razao_social']
-        cnpj = request.POST['cnpj']
-        nome_fantasia = request.POST['nome_fantasia']
-        telefone = request.POST['telefone']
-        celular = request.POST['celular']
-        cidade = request.POST['cidade']
-        estado = request.POST['estado']
+    if request.method == 'POST':
         cep = request.POST['cep']
-        ramo_de_atividade = request.POST['ramo_de_atividade']
-        descricao_empresa = request.POST['descricao_empresa']
-        perfil = Empresa.objects.create(user=request.user,img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
-        perfil.save()
-        return redirect('perfilempresa')
+        response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
+        if response.status_code == 200:
+            local = response.json()
+            if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) < 1:
+                img_perfil_empresa = request.FILES['img_perfil_empresa']
+                razao_social = request.POST['razao_social']
+                cnpj = request.POST['cnpj']
+                nome_fantasia = request.POST['nome_fantasia']
+                telefone = request.POST['telefone']
+                celular = request.POST['celular']
+                cidade = local['localidade']
+                estado = local['uf']
+                cep = local['cep']
+                ramo_de_atividade = request.POST['ramo_de_atividade']
+                descricao_empresa = request.POST['descricao_empresa']
+                perfil = Empresa.objects.create(user=request.user,img_perfil_empresa=img_perfil_empresa, razao_social=razao_social, cnpj=cnpj, nome_fantasia=nome_fantasia, telefone=telefone, celular=celular, cidade=cidade, estado=estado, cep=cep, ramo_de_atividade=ramo_de_atividade, descricao_empresa=descricao_empresa)
+                perfil.save()
+                return redirect('perfilempresa')
+        else:
+            redirect('formempresa')
     else:
         return render(request, 'formempresa.html')
 
@@ -112,41 +115,17 @@ def Informacoes_iniciais(request):
         rede_social = request.POST['rede_social']
         informacoes1 = Informações_Iniciais.objects.create(user=usuario,curriculo=curriculos, estagio=estagio, pj=pj, clt=clt,flex=flex, salario_pretendido=salario_pretendido,areas_interesse=area_interesse,linkedin=linkedin,rede_social=rede_social)
         informacoes1.save()
-    #pega cidades
-    locais = City.objects.all()
-    estado = []
-    cidades = []
     dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
-    for local in locais:
-        if not local.state in estado:
-            estado.append(local.state)
-    cidades = sorted(cidades)
-    estado = sorted(estado)
     if len(Dados_Pessoais.objects.filter(user=user_candidato)) > 0:
         dados_can = get_object_or_404(Dados_Pessoais, user=user_candidato)
     else:
         dados_can = False
     dados = {
         'Dados':dados_pessoais,
-        'estados':estado,
-        'cidades':cidades,
         'dados':dados_can
     }
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
-
-def carrega_funcoes(request):
-    '''pega o estado e devolve suas cidades'''
-    estado_id = request.GET.get('uf')
-    cidades = City.objects.filter(state=estado_id)
-    nome_cidade = []
-    for local in cidades:
-        if not local.name in nome_cidade:
-            nome_cidade.append(local.name)
-    dados = {
-        'cidades':nome_cidade
-    }
-    return render(request, 'partials/Usuarios/funcao_ajax.html', dados)
 
 def editando_informacoes_iniciais(request):
     '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
@@ -169,24 +148,28 @@ def editando_informacoes_iniciais(request):
 def Dados_pessoais(request):
     '''Pega os dados pessoais salva e renderiza as formacoes'''
     user_candidato = request.user
-    if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=user_candidato)) < 1:
-        imagem_perfil = request.FILES['imagem_perfil']
-        nome_do_candidato = request.POST['nome_do_candidato']
-        cpf = request.POST['cpf_do_candidato']
-        data_nascimento = request.POST['data_nascimento']
-        genero = request.POST['genero_candidato']
+    if request.method == 'POST':
         cep = request.POST['cep']
-        estado = request.POST['estado']
-        cidade = request.POST['cidade']
-        telefone = request.POST['telefone']
-        whatsapp = request.POST.get('whatsapp')
-        if whatsapp == None:
-            whatsapp = 'Não'
-        sobre_candidato = request.POST['sobre_candidato']
-        cpf = int(cpf)
-        cep = int(cep)
-        informacoes2 = Dados_Pessoais.objects.create(user=user_candidato,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone, whatsapp=whatsapp, sobre_candidato=sobre_candidato)
-        informacoes2.save()
+        response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
+        if response.status_code == 200:
+            local = response.json()
+            if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=user_candidato)) < 1:
+                imagem_perfil = request.FILES['imagem_perfil']
+                nome_do_candidato = request.POST['nome_do_candidato']
+                cpf = request.POST['cpf_do_candidato']
+                data_nascimento = request.POST['data_nascimento']
+                genero = request.POST['genero_candidato']
+                cep = local['cep']
+                estado = local['uf']
+                cidade = local['localidade']
+                telefone = request.POST['telefone']
+                whatsapp = request.POST.get('whatsapp')
+                if whatsapp == None:
+                    whatsapp = 'Não'
+                sobre_candidato = request.POST['sobre_candidato']
+                cpf = int(cpf)
+                informacoes2 = Dados_Pessoais.objects.create(user=user_candidato,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone, whatsapp=whatsapp, sobre_candidato=sobre_candidato)
+                informacoes2.save()
     formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=user_candidato)
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     dados = {
@@ -203,31 +186,34 @@ def apagar_dados_pessoais(request):
 def editando_dados_pessoais(request):
     '''caso ele ja tenha preenchido ele vai ser direcionado aqui para editar'''
     user_candidato = request.user
-    if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=user_candidato)) == 1:
-        d = Dados_Pessoais.objects.get(user=user_candidato)
-        if 'imagem_perfil' in request.FILES:
-            d.imagem_perfil = request.FILES['imagem_perfil']
-        if request.POST['data_nascimento'] == "":
-            d.data_nascimento = d.data_nascimento
-        else:
-            d.data_nascimento = request.POST['data_nascimento']
-        if request.POST.get('whatsapp') == None:
-            d.whatsapp = 'Não'
-        else:
-            d.whatsapp = request.POST['whatsapp']
-        d.nome_do_candidato = request.POST['nome_do_candidato']
-        d.genero = request.POST['genero_candidato']
-        d.estado = request.POST['estado']
-        d.cidade = request.POST['cidade']
-        d.telefone = request.POST['telefone']
-        d.sobre_candidato = request.POST['sobre_candidato']
-        cpf = request.POST['cpf_do_candidato']
-        cpf = int(cpf)
-        ceps = request.POST['cep']
-        ceps = int(ceps)
-        d.cpf_do_candidato = cpf
-        d.cep = ceps
-        d.save()
+    if request.method == 'POST':
+        cep = request.POST['cep']
+        response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
+        if response.status_code == 200:
+            local = response.json()
+            if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=user_candidato)) == 1:
+                d = Dados_Pessoais.objects.get(user=user_candidato)
+                if 'imagem_perfil' in request.FILES:
+                    d.imagem_perfil = request.FILES['imagem_perfil']
+                if request.POST['data_nascimento'] == "":
+                    d.data_nascimento = d.data_nascimento
+                else:
+                    d.data_nascimento = request.POST['data_nascimento']
+                if request.POST.get('whatsapp') == None:
+                    d.whatsapp = 'Não'
+                else:
+                    d.whatsapp = request.POST['whatsapp']
+                d.nome_do_candidato = request.POST['nome_do_candidato']
+                d.genero = request.POST['genero_candidato']
+                d.estado = local['uf']
+                d.cidade = local['localidade']
+                d.cep = local['cep']
+                d.telefone = request.POST['telefone']
+                d.sobre_candidato = request.POST['sobre_candidato']
+                cpf = request.POST['cpf_do_candidato']
+                cpf = int(cpf)
+                d.cpf_do_candidato = cpf
+                d.save()
     return redirect('Dados_Pessoais')
 
 def deleta_formacao(request, id_formacao):
@@ -711,13 +697,9 @@ def favoritar_talento(request, pk_talento):
 
 def favoritar_empresa(request, pk_empresa):
     global url_atual
-    print(url_atual)
-    print(f"pk empr == {pk_empresa}")
     if request.user.is_authenticated:
         id_candidato = request.user
-        print(f"pk empr == {pk_empresa}")
         id_empresa = get_object_or_404(Users, pk=pk_empresa)
-        print(f"id empr == {id_empresa}")
         if EmpresasFavoritadas.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             empresa_para_desfavoritar = get_object_or_404(EmpresasFavoritadas, id_talento=id_candidato, id_empresa=id_empresa)
             empresa_para_desfavoritar.delete()
@@ -733,11 +715,11 @@ def configuracoes(request):
 
 def apagar_conta(request):
     users = get_object_or_404(Users, pk=request.user.id)
-    if len(Empresa.objects.all().filter(user=users)) >= 0:
-        for dados in Empresa.objects.all().filter(user=users):
-            dados.delete()
     if len(Dados_Pessoais.objects.all().filter(user=users)) >= 0:
         for dados in Dados_Pessoais.objects.all().filter(user=users):
+            dados.delete()
+    if len(Empresa.objects.all().filter(user=users)) >= 0:
+        for dados in Empresa.objects.all().filter(user=users):
             dados.delete()
     if len(Informações_Iniciais.objects.all().filter(user=users)) >= 0:
         for dados in Informações_Iniciais.objects.all().filter(user=users):
@@ -757,5 +739,28 @@ def apagar_conta(request):
     users.delete()
     return redirect('index')
 
+def apagar_conta_com_verificao(request):
+    user = get_object_or_404(Users, pk=request.user.id)
+    if request.method == 'POST':
+        senha = request.POST.get('senha', None)
+        if auth.authenticate(request, username=user.username, password=senha):
+            user.delete()
+            return redirect('index')
+        else:
+            messages.error(request, 'A senha não esta corrreta')
+            return redirect('apagar_conta_com_verificao')
+
+    return render(request, 'pedirSenha.html')
+
 def candidato_fav(request):
     return render(request, 'candidatosFavoritados.html')
+
+def cep(request):
+    if request.method == 'POST':
+        cep = request.POST['cep']
+        response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
+        if response.status_code == 200:
+            dados = response.json()
+            return render(request, 'FormEmpresa.html', {"dados": dados})
+
+    return redirect('formempresa')

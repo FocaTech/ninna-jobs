@@ -7,7 +7,6 @@ urlpatterns = [
     path('editar/perfil/', views.formempresa, name='formempresa'),
     path('Informacoes/Iniciais/', views.formcandidato, name='formcandidato'),#form 1
     path('Dados/Pessoais/', views.Informacoes_iniciais, name='Informacoes_iniciais'),#form 2
-    path('Ajax/load-funcoes', views.carrega_funcoes, name='ajax_load_funcoes'),#select estado e cidade
     path('ApagarInformacoes/Iniciais/', views.apagar_informacoes_iniciais, name='apagar_informacoes_iniciais'),#form 2
     path('Dados/Pessoais/2', views.editando_informacoes_iniciais, name='editando_informacoes_iniciais'),#caso o usuario volte
     path('Formacao/Academica/', views.Dados_pessoais, name='Dados_Pessoais'),#form 3
@@ -39,5 +38,6 @@ urlpatterns = [
     path('favoritar_empresa/<int:pk_empresa>', views.favoritar_empresa, name='favoritar_empresa'),#favoritar empresa
     path('configuracoes', views.configuracoes, name='configuracoes'),#apagar conta
     path('apagar_conta', views.apagar_conta, name='apagar_conta'),
+    path('apagar_conta_verificao', views.apagar_conta_com_verificao, name='apagar_conta_com_verificao'),
     path('candidato_fav', views.candidato_fav, name='candidato_fav'),
 ]

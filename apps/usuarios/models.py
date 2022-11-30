@@ -46,7 +46,7 @@ class Dados_Pessoais(models.Model):
     genero = models.CharField(max_length=9)
     telefone = models.BigIntegerField()
     whatsapp = models.CharField(max_length=3, blank=True, null=True)
-    cep = models.BigIntegerField()
+    cep = models.CharField(max_length=9)
     estado = models.CharField(max_length=60)
     cidade = models.CharField(max_length=60)
     sobre_candidato = models.TextField(max_length=400, blank=True,null=True)
@@ -92,13 +92,6 @@ class Idiomas(models.Model):
     nivel_idioma = models.CharField(max_length=15)
     def __str__(self):
         return self.nivel_idioma
-
-class City(models.Model):#cidades e estados
-	name = models.CharField(max_length=60)#nome da cidade
-	state = models.CharField(max_length=100)#nome do estado
-    # python manage.py loaddata city
-	def __unicode__(self):
-		return self.name
 
 class TalentosFavoritados(models.Model):
     id_talento = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='talento')
