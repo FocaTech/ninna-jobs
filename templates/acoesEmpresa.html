@@ -61,22 +61,30 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for k,v in vagas.items %}
+                  {% for vaga in vagas %}
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td>
-                    {% if empresa %}
-                    {% for e in empresa %}
-                    {% if e.user == v.1 %}
-                    <td class="sorting_1">{{ e.nome_fantasia }}</td>
-                    {% endif %}
-                    {% endfor %}
-                    {% else %}
-                    <td class="sorting_1">{{ k }}</td>
-                    {% endif %}
+                    <td class="sorting_1">{{ vaga.user.username }}</td>
+                    <td class="d-none d-xl-table-cell">{{vaga.user.date_joined|date:"d/m/Y"}}</td>
+                    <td class="d-none d-xl-table-cell">{{vaga.data_vaga}}</td>
+                    <td><span class="badge bg-success">Ativo</span></td>
+                    <td class="d-none d-md-table-cell">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</button></li>
+                          <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
                     <td class="d-none d-xl-table-cell">{{v.1.date_joined|date:"d/m/Y"}}</td>
                       <td class="d-none d-xl-table-cell">{{v.0|date:"d/m/Y | H:i:s"}}</td>
 
@@ -97,7 +105,7 @@
                       </div>
                     </td>
                   </tr>
-                  {% endfor %}
+                  
                 </tbody>
               </table>
             </div>
