@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}NinnaJobs - Admin{% endblock %}
+{% block title %}Admin{% endblock %}
 {% block head %}
 
 <script src="{% static 'node_modules/chart.js/dist/chart.js' %}" defer></script>
@@ -142,9 +142,7 @@
                     Informações
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'perfilempresa' %}">Perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Vagas ativas: 00</a></li>
-                    <li><a class="dropdown-item" href="#">Matches: 00</a></li>
+                    <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' i.id %}">Perfil</a></li>
                   </ul>
                 </div>
               </div>
@@ -183,9 +181,7 @@
                               Informações
                             </button>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Perfil</a></li>
-                              <li><a class="dropdown-item" href="#">Vagas Candidatadas: 00</a></li>
-                              <li><a class="dropdown-item" href="#">Matches: 00</a></li>
+                              <li><a class="dropdown-item" href="{% url 'perfil_candidato' i.id %}">Perfil</a></li>
                             </ul>
                           </div>
                         </td>

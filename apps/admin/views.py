@@ -58,23 +58,50 @@ def acoes_admin(request):
 
 def acoes_empresa(request):
     vagas = {}
-    id_empresas = []
     empresas_query = Users.objects.filter(funcao = 'EMP')
+    # empresas = []
+    # for empresa in empresas_query:
+    #     try:
+    #         # vaga_query = get_object_or_404(Vagas, user=empresa, status=True)
+    #         vaga_query = Vagas.objects.filter(user=empresa, status=True).order_by('-data_vaga')
+    #     except:
+    #         print('continua')
+    #     if len(vaga_query) != 0:
+    #         vagas.append(vaga_query[0])
+    #     vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
 
     for empresa in empresas_query:
-        if len(Vagas.objects.filter(user=empresa)) > 1:
+        if Vagas.objects.filter(user=empresa):
             vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
         # vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
-    for id in vagas:
-        id_empresas.append(vagas[id][-1])
-
-    empresas = Empresa.objects.all()
+        
+    empresas = Users.objects.filter(funcao="EMP")
+    perfil_empresa = Empresa.objects.all()
     contexto ={
         'vagas' : vagas,
-        'id_empresas' : id_empresas,
         'empresa' : empresas,
+        'perfil' : perfil_empresa,
     }
     return render(request, 'acoesEmpresa.html', contexto)
+
+# def acoes_empresa(request):
+#     vagas = {}
+#     id_empresas = []
+#     empresas_query = Users.objects.filter(funcao = 'EMP')
+
+#     for empresa in empresas_query:
+#         vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
+#         # vagas = list(OrderedDict.fromkeys(vagas))# tirar os repetidos
+#     for id in vagas:
+#         id_empresas.append(vagas[id][-1])
+
+#     empresas = Empresa.objects.all()
+#     contexto ={
+#         'vagas' : vagas,
+#         'id_empresas' : id_empresas,
+#         'empresa' : empresas,
+#     }
+#     return render(request, 'acoesEmpresa.html', contexto)
 
 def acoes_talento(request):
     candidatos = Users.objects.filter(funcao = 'CAN')
@@ -107,9 +134,10 @@ def acoes_vaga(request):
     perfis = PerfilProfissional.objects.all()
 
     vagas = Vagas.objects.all()
-    user = Users.objects.filter(funcao = 'EMP')
+    empresa = Empresa.objects.all()
 
     dados = {
+        'empresa':sorted(empresa),
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
@@ -117,12 +145,14 @@ def acoes_vaga(request):
     }
 
     if request.method == 'POST':
+        empresa = request.POST['empresa']
+        empresa = get_object_or_404(Empresa, nome_fantasia=empresa)
         nome_vaga = request.POST['nome_vaga']
         tipo_contratacao = request.POST['tipo_contratacao']
-        local = request.POST['local']
+        local = empresa.estado + '/' + empresa.cidade
         perfil = request.POST['perfil']
         salario = request.POST['salario']
-        descricao_empresa = request.POST['descricao_empresa']
+        descricao_empresa = empresa.descricao_empresa
         descricao_vaga = request.POST['descricao_vaga']
         area_atuacao = request.POST['area_atuacao']
         principais_atividades = request.POST['principais_atividades']
@@ -131,17 +161,15 @@ def acoes_vaga(request):
         beneficios = request.POST['beneficios']
         tipo_trabalho = request.POST['tipo_trabalho']
         logo_empresa = request.FILES['logo_empresa']
-        user = get_object_or_404(Users, pk=request.user.id)
-        vaga = Vagas.objects.create(nome_vaga=nome_vaga, user=user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
+        vaga = Vagas.objects.create(nome_vaga=nome_vaga, user=empresa.user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
         # return redirect('minhas-vagas')
-        return redirect('empresa')
+        return redirect('acoes_vagas')
 
     else:
         return render(request, 'acoesVagas.html', dados)
-
 
 def admin_ban(request, id_empresa):
     users = get_object_or_404(Users, pk=id_empresa)

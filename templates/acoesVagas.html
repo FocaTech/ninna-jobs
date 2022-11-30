@@ -34,9 +34,9 @@
             <button type="button" class="btn btn-primary" id="botaoExluir"><i class="bi bi-trash"></i> Excluir Vaga</button>
         </div>
         <div class="container">
-            <form method='GET' action="{% url 'badmin' %}" class="filtros my-4">
+            <form method='GET' action="{% url 'BVadmin' %}" class="filtros my-4">
                 <div class="input-group">
-                    <input name='badmin' placeholder="Pesquisar" type="search" class="form-control">
+                    <input name='BVdmin' placeholder="Pesquisar" type="search" class="form-control">
                     <span class="input-group-text"><i class="bi bi-search"></i>
                     </span>
                 </div>
@@ -137,6 +137,7 @@
             </div>
     </div>
 </main>
+
 <!--Modal cadastrar vagas-->
 <div class="modal fade" id="cadastro-de-vaga" tabindex="-1" aria-labelledby="cadastro-de-vaga-label" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -146,16 +147,18 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4 val">
-        <form id="cadastrar-vagas" action="{% url 'select' %}" method="post" enctype="multipart/form-data">
+        <form id="cadastrar-vagas" action="{% url 'acoes_vagas' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-2">
-                <label class="form-label">Logo da Empresa</label>
+                <label class="form-label">Logo da Vaga</label>
                 <input class="p-1" type="file" accept="image/*" name="logo_empresa" required>
             </div>
             <div class="col">
                 <label class="form-label" for="empresa">Empresa</label>
                 <select class="form-select" name="empresa">
-                    <option value="Pague menos">pague menos</option>
+                    {% for e in empresa %}
+                    <option value="{{e.nome_fantasia}}">{{e.nome_fantasia}}</option>
+                    {% endfor %}
                 </select required>
             </div>
             <div class="row g-3 align-items-center mb-2">
@@ -165,10 +168,6 @@
                 </div>
             </div>
             <div class="row g-3 align-items-center mb-2">
-                <div class="col">
-                    <label class="form-label">Local da Empresa</label>
-                    <input class="form-control" type="text" name="local" required>
-                </div>
                 <div class="col val">
                     <label class="form-label" for="contratacao">Tipo de Contratacao</label>
                     <select class="form-select" name="tipo_contratacao">
@@ -195,10 +194,6 @@
             <div class="mb-2">
                 <label class="form-label">Descrição da Vaga</label>
                 <textarea class="form-control" name="descricao_vaga" required></textarea>
-            </div>
-            <div class="mb-2">
-                <label class="form-label">Descrição da Empresa</label>
-                <textarea class="form-control" name="descricao_empresa" required></textarea>
             </div>
             <div class="row g-3 align-items-center mb-2">
                 <div class="col">

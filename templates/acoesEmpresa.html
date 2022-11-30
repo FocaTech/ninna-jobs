@@ -25,7 +25,7 @@
             <div class="col-sm-12 p-3">
               <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
                 <thead>
-                  <div class="row">
+                  {% comment %} <div class="row">
                     <div class="col">
                       <tr>
                         <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
@@ -45,7 +45,14 @@
                         </th>
                       </tr>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
+                  <form method='GET' action="{% url 'BAempresa' %}" class="filtros my-4">
+                    <div class="input-group">
+                        <input name='BAempresa' placeholder="Pesquisar" type="search" class="form-control">
+                        <span class="input-group-text"><i class="bi bi-search"></i>
+                        </span>
+                    </div>
+                  </form>
                   <tr>
                     <th>Selecionar</th>
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
@@ -54,24 +61,29 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for k,v in vagas.items %}
+                  {% for e in empresa %}
                   <tr class="empresas">
                     <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td>
-                    {% if empresa %}
-                    {% for e in empresa %}
-                    {% if e.user == v.1 %}
-                    <td class="sorting_1">{{ e.nome_fantasia }}</td>
+                    {% for p in perfil %}
+                    {% if p.user == e %}
+                    <td class="sorting_1">{{ p.nome_fantasia }}</td>
+                    {% else %}
+                    <td class="sorting_1">{{ e.username }}</td>
                     {% endif %}
                     {% endfor %}
-                    {% else %}
-                    <td class="sorting_1">{{ k }}</td>
-                    {% endif %}
-                    <td class="d-none d-xl-table-cell">{{v.1.date_joined|date:"d/m/Y"}}</td>
+
+                    {% for k,v in vagas.items %}
+                      <td class="d-none d-xl-table-cell">{{v.1.date_joined|date:"d/m/Y"}}</td>
+                    {% if v.1 == e %}
                       <td class="d-none d-xl-table-cell">{{v.0|date:"d/m/Y | H:i:s"}}</td>
+                    {% else %}
+                      <td class="d-none d-xl-table-cell">Nao possui vagas</td>
+                    {% endif %}
+                    {% endfor %}
 
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
@@ -80,11 +92,7 @@
                           Ações
                         </button>
                         <ul class="dropdown-menu">
-                          {% for id in id_empresas %}
-                          {% if id == v.1  %}
-                          <li><a href="{% url 'admin_ban' id.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
-                          {% endif %}
-                          {% endfor %}
+                          <li><a href="{% url 'admin_ban' e.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
                           <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li>
                         </ul>
                       </div>
