@@ -745,32 +745,6 @@ def configuracoes(request):
     return render(request, 'configuracoes.html')
 
 def apagar_conta(request):
-    users = get_object_or_404(Users, pk=request.user.id)
-    if len(Dados_Pessoais.objects.all().filter(user=users)) >= 0:
-        for dados in Dados_Pessoais.objects.all().filter(user=users):
-            dados.delete()
-    if len(Empresa.objects.all().filter(user=users)) >= 0:
-        for dados in Empresa.objects.all().filter(user=users):
-            dados.delete()
-    if len(Informações_Iniciais.objects.all().filter(user=users)) >= 0:
-        for dados in Informações_Iniciais.objects.all().filter(user=users):
-            dados.delete()
-    if len(Certificados_Conquistas.objects.all().filter(user=users)) >= 0:
-        for dados in Certificados_Conquistas.objects.all().filter(user=users):
-            dados.delete()
-    if len(Formacao_Academica.objects.all().filter(user=users)) >= 0:
-        for dados in Formacao_Academica.objects.all().filter(user=users):
-            dados.delete()
-    if len(Idiomas.objects.all().filter(user=users)) >= 0:
-        for dados in Idiomas.objects.all().filter(user=users):
-            dados.delete()
-    if len(Experiência_Profissional.objects.all().filter(user=users)) >= 0:
-        for dados in Experiência_Profissional.objects.all().filter(user=users):
-            dados.delete()
-    users.delete()
-    return redirect('index')
-
-def apagar_conta_com_verificao(request):
     user = get_object_or_404(Users, pk=request.user.id)
     if request.method == 'POST':
         senha = request.POST.get('senha', None)
@@ -785,13 +759,3 @@ def apagar_conta_com_verificao(request):
 
 def candidato_fav(request):
     return render(request, 'candidatosFavoritados.html')
-
-def cep(request):
-    if request.method == 'POST':
-        cep = request.POST['cep']
-        response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
-        if response.status_code == 200:
-            dados = response.json()
-            return render(request, 'FormEmpresa.html', {"dados": dados})
-
-    return redirect('formempresa')

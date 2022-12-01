@@ -220,8 +220,8 @@ def arquivar_vaga(request, pk_vaga):
 
 def buscas(request):
     '''barras de busca da dash, empresa e vagas'''
-    listar_vagas_salvas_e_candidatadas(request)
     lista_vagas = Vagas.objects.order_by('-data_vaga').filter()
+    listar_vagas_salvas_e_candidatadas(request)
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
@@ -237,14 +237,19 @@ def buscas(request):
         nome_a_buscar = request.GET['bash']
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
-        busca_candidatadas = paginar(busca_candidatadas, request)
+        busca_arquivadas = reducao_codigo_busca(lista_minhas_arquivadas, nome_a_buscar)
         empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
+        a = []
+        for busca in busca_arquivadas:
+            for b in busca:
+                a.append(b)
         dados = {
             'Dados':DP,
             'empresa':empresa,
             'vagas_candidatadas' : busca_candidatadas,
-            'vagas_salvas':busca_salvas
+            'vagas_salvas':busca_salvas,
+            'vagas_arquivadas':a,
         }
         return render(request, 'dashboard.html', dados)
     elif 'BVadmin' in request.GET:
@@ -319,17 +324,25 @@ def listar_vagas_salvas_e_candidatadas(request):
     '''vai gerar duas listas, estas que estao logo aqui em baixo, os nomes são auto-explicativos'''
     global lista_de_vagas_candidatadas_do_user
     global lista_de_vagas_salvas_do_user
+    global lista_minhas_arquivadas
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
     id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
     lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
     for vagas_salvas in id_das_vagas_salvas_do_user:# desempacotar esse queryset em objetos
-        lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# pegando as vagas salvas direto da Tab. vagas
+        if vagas_salvas.id_vaga.status == True:
+            lista_de_vagas_salvas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga.nome_vaga))# pegando as vagas salvas direto da Tab. vagas
 
     id_das_vagas_candidatadas_do_user = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
     lista_de_vagas_candidatadas_do_user = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
-        lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))
+        if vagas_candidatadas.id_vaga.status == True:
+            lista_de_vagas_candidatadas_do_user.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga.nome_vaga))
+
+    lista_minhas_arquivadas = []
+    for todas_vagas in VagasCandidatadas.objects.filter(id_cadidato=request.user):
+        if todas_vagas.id_vaga.status == False:
+            lista_minhas_arquivadas.append(Vagas.objects.filter(pk=todas_vagas.id_vaga.pk))
 
 def listar_vagas_arquivadas():
     lista_de_vagas_arquivadas = Vagas.objects.filter(status=False)
