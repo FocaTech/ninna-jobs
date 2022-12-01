@@ -118,7 +118,8 @@ def index(request):
         vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
         lista_de_vagas_candidatadas = []
         for vagas_candidatadas in vagas_candidatadas_query:
-            lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+            # lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+            lista_de_vagas_candidatadas = Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True)
         id_de_vagas_candidatadas = [vaga.id for vaga in lista_de_vagas_candidatadas]
 
         vagas = paginar(vagas, request)
