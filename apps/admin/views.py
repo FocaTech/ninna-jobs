@@ -107,7 +107,8 @@ def acoes_talento(request):
 def relatorio(request):
     vagas_match = {}
     for c in Users.objects.filter(funcao = 'CAN'):
-        vagas_match[c.username] = [VagasCandidatadas.objects.filter(id_cadidato=c)[0]]
+        if VagasCandidatadas.objects.filter(user=c):
+            vagas_match[c.username] = [VagasCandidatadas.objects.filter(id_cadidato=c)[0]]
 
     contexto = {
         'numero_vagas':len(Vagas.objects.all()),
