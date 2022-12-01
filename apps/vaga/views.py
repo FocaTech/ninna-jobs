@@ -109,21 +109,29 @@ def index(request):
         vagas = Vagas.objects.get_queryset().order_by('id').filter(status=True)
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
+        lista_vagas_salvas = []# lista vazia para adicionar as vagas salvas
         vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
-        lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
         for vagas_salvas in vagas_salvas_query:# desempacotar esse queryset em objetos
-            lista_de_vagas_salvas_do_user.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
-        ids_de_vagas_salvas = [vaga.id for vaga in lista_de_vagas_salvas_do_user]
+            try:
+                lista_vagas_salvas.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
+            except:
+                continue
+        ids_vagas_salvas = [vaga.id for vaga in lista_vagas_salvas]
 
+
+        lista_vagas_candidatadas = []
         vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
-        lista_de_vagas_candidatadas = []
         for vagas_candidatadas in vagas_candidatadas_query:
-            # lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
-            lista_de_vagas_candidatadas = Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True)
-        id_de_vagas_candidatadas = [vaga.id for vaga in lista_de_vagas_candidatadas]
+            try:
+                lista_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+            except:
+                continue
+        id_vagas_candidatadas = [vaga.id for vaga in lista_vagas_candidatadas]
+
+        print(lista_vagas_candidatadas)
 
         vagas = paginar(vagas, request)
-        ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
+        ids_vagas_salvas = paginar(ids_vagas_salvas, request)
         user_candidato = request.user
         DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
         empresa = Empresa.objects.filter(user=request.user)
@@ -131,8 +139,8 @@ def index(request):
             'Dados':DP,
             'empresa':empresa,
             'vagas' : vagas,
-            'ids_de_vagas_salvas' : ids_de_vagas_salvas,
-            'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
+            'ids_de_vagas_salvas' : ids_vagas_salvas,
+            'id_de_vagas_candidatadas' : id_vagas_candidatadas,
         }
     else:
         vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
