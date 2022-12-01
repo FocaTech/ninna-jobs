@@ -10,6 +10,7 @@
 <script src="{% static 'js/cep.js' %}" defer></script>
 {% endblock %}
 {% block content %}
+{% include 'partials/_alertas.html' %}
 <h1 class="display-6 text-center p-4 titulo">Cadastro - <strong>Banco de Talentos</strong></h1>
 <main>
     <style>
@@ -199,7 +200,7 @@
                 <div class="row py-2">
                     <div class="col-md-4">
                         <label for="cep" class="form-label">Cep</label>
-                        <input type="number" name="cep" class="form-control" v-model="endereco.cep" @change="cepAlteradoEvento" id="cep" size="10" maxlength="9" value='{{dados.cep}}' required>
+                        <input type="text" name="cep" class="form-control" v-model="endereco.cep" @change="cepAlteradoEvento" id="cep" size="10" maxlength="9" value='{{dados.cep}}' required>
                         <div class="invalid-feedback">Por favor, informe um cep valido.</div>
                     </div>
                     <div class="col-md-8">
