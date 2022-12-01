@@ -368,7 +368,7 @@ def empresa(request, *args, **kwargs):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
 
-    vagas = Vagas.objects.filter(user=id_empresa,status=True)
+    vagas = Vagas.objects.filter(user=id_empresa, status=True)
     vagas_arquivadas = Vagas.objects.filter(user=id_empresa, status=False)
 
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
@@ -463,7 +463,7 @@ def dashboard(request):
 
 def perfilempresa(request):
     '''perfil da empresa'''
-    vagas = Vagas.objects.filter(user=request.user)
+    vagas = Vagas.objects.filter(user=request.user, status=True)
     empresa = Empresa.objects.filter(user=request.user)
     dados = {
         'empresa':empresa,
@@ -477,7 +477,7 @@ def ver_perfil_empresa(request, id_empresa):
     url_atual = "http://127.0.0.1:8000" + request.path
     id_candidato = request.user
 
-    vagas = Vagas.objects.filter(user=id_empresa)
+    vagas = Vagas.objects.filter(user=id_empresa, status=True)
     empresa = Empresa.objects.filter(user=id_empresa)
     empresaid_query = Users.objects.filter(id=id_empresa)
 
