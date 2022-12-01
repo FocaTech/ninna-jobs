@@ -105,11 +105,15 @@ def acoes_talento(request):
     return render(request, 'acoesTalento.html', contexto)
 
 def relatorio(request):
+    vagas_match = {}
+    for c in Users.objects.filter(funcao = 'CAN'):
+        vagas_match[c.username] = [VagasCandidatadas.objects.filter(id_cadidato=c)[0]]
+
     contexto = {
         'numero_vagas':len(Vagas.objects.all()),
-        # 'numero_vagas_match':len(VagasCandidatadas.objects.all()),
-        # 'numero_vagas_sem_match':len(Vagas.objects.filter(status=True)),
-        'numero_vagas_ativas':len(Vagas.objects.all()) - len(Vagas.objects.filter(status=False)),
+        'numero_vagas_match':len(vagas_match),
+        'numero_vagas_sem_match':len(Vagas.objects.filter(status=False)) - len(vagas_match),
+        'numero_vagas_ativas':len(Vagas.objects.filter(status=True)),
         'numero_de_can':todos_os_can,
         'numero_de_can_ativos':len(Dados_Pessoais.objects.all()),
         'numero_de_can_inativos':todos_os_can - len(Dados_Pessoais.objects.all()),
