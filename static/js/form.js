@@ -79,10 +79,10 @@ function desabilitar() {
         console.log('cu')
         saidaMes.disabled = true
         saidaAno.disabled = true
-    }else{
+    } else {
         console.log('cuzin')
         saidaMes.disabled = false
         saidaAno.disabled = false
     }
-  }
+}
 

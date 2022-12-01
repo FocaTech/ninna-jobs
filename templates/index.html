@@ -5,29 +5,17 @@
 <link rel="stylesheet" href="{% static 'css/forms.css' %}">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,300,600,700,800" rel='stylesheet' type='text/css'>
 <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel='stylesheet'type='text/css'>
-<!--link script-->
-<script src="https://kit.fontawesome.com/dfcc59a893.js" crossorigin="anonymous"></script>
-
 <link rel="stylesheet" href="{% static 'css/sobre-nos.css' %}">
 <link rel="stylesheet" href="{% static 'css/styleinicio.css' %}">
 <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-icons.css' %}" >
 <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
-<!--Estilos scripts Inicio-->
-{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> {% endcomment %}
-<script src="{% static 'bootstrap.bundle.min.js' %}" defer></script>
-
 <!-- JavaScripts Inicio -->
-{% comment %} <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script> {% endcomment %}
+<script src="https://kit.fontawesome.com/dfcc59a893.js" crossorigin="anonymous"></script>
 <script src="{% static 'js/modernizr.js'%}"></script>
 <script src="{% static 'js/dist/jquery.validate.min.js' %}"></script>
-<script src="{% static 'js/dist/jquery..js' %}"></script>
 <script src="{% static 'js/dist/additional-methods.min.js' %}"></script>
-
-
-
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
@@ -58,11 +46,11 @@
         </div>
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="card-body p-4 card-cadastrar-body m-auto">
-                <h1 class="titulo-cardInicio">Banco de Talentos - Ninna Jobs</h1>
+                <h1 class="titulo-cardInicio">Banco de Talentos<span> - </span>Ninna Jobs</h1>
                 {% if not user.is_authenticated %}
                 <p class="card-text p-1 mt-3 h5 text-light">Candidato: Cadastre-se e aproveite oportunidades</p>
                 <p class="card-text p-1 h5 text-light">Empresa: Cadastre-se e anuncie sua vaga </p>
-                <div class="m-3 mb-0">
+                <div class="m-3 mb-0 card-buttons">
                     <a href="{% url 'cadastro_empresa' %}" class="btn btn-primary mx-5">Sou Empresa</a>
                     <a href="{% url 'cadastro_candidato' %}" class="btn btn-primary mx-5">Sou Candidato</a>
                 </div>
@@ -81,7 +69,7 @@
         </div>
     </div>
     <!--Vagas-->
-    <div class="my-5">
+    <div class="my-5 vagas">
         <a href="#"name="vagas"></a>
         <div class="title-section text-center pt-5 mt-5">
             <h2 class="mt-5 h2 fw-bold">Vagas</h2>
@@ -130,16 +118,14 @@
         </div>
     </div>
     <!--Sobrenos-->
-    <div class="container">
-        <div class="sobre-nos">
-            <img src="{% static 'img/sobre-nos.jpg' %}" alt="">
-            <div class="texto">
-                <div class="title-section">
-                    <h2 class="h2 fw-bold">Sobre Nós</h2>
-                    <span></span>
-                </div>
-                <p>Quem visita a página Sobre Nós do seu site pode ter chegado até si através de um motor de pesquisa, ter gostado do conteúdo ou do produto apresentado e estar à procura de saber mais sobre o projeto. Os visitantes podem também ser já utilizadores do serviço que presta ou consumidores do seu produto e vir em busca de mais informação. Pense nos seus públicos e no que lhes poderá interessar, reflita sobre o conhecimento que já adquiriu no contacto com os seus clientes e escreva como se estivesse a conversar frente a frente com o visitante do site.</p>
+    <div class="sobre-nos">
+        <img src="{% static 'img/sobre-nos.jpg' %}" alt="">
+        <div class="texto">
+            <div class="title-section">
+                <h2 class="h2 fw-bold">Sobre Nós</h2>
+                <span></span>
             </div>
+            <p>Quem visita a página Sobre Nós do seu site pode ter chegado até si através de um motor de pesquisa, ter gostado do conteúdo ou do produto apresentado e estar à procura de saber mais sobre o projeto. Os visitantes podem também ser já utilizadores do serviço que presta ou consumidores do seu produto e vir em busca de mais informação. Pense nos seus públicos e no que lhes poderá interessar, reflita sobre o conhecimento que já adquiriu no contacto com os seus clientes e escreva como se estivesse a conversar frente a frente com o visitante do site.</p>
         </div>
     </div>
     <!--Contato-->
@@ -174,14 +160,16 @@
                                         <label class="form-label" for="message">Mensagem</label>
                                         <textarea style="resize: none" class="form-control" id="message" name="message" rows="6"></textarea>
                                     </p>
-                                    <button class="btn btn-primary px-5 py-3" type="submit">Enviar</button>
+                                    <div class="form-button-wrapper">
+                                        <button class="btn btn-primary px-5 py-3" type="submit">Enviar</button>
+                                    </div>
                                 </div>
                             </div> <!-- /.col-md-3 -->
                             <div class="col-md-5 col-sm-6">
                                 <h4 class="widget-title">Nossa Localização</h4>
                                 <div class="map-holder">
                                     <div class="google-map-canvas" id="map-canvas" style="height: 250px;">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15925.412729477739!2d-38.5227377!3d-3.7329735!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xfe9c6b7989ba92a3!2sNINNA%20Hub!5e0!3m2!1spt-BR!2sbr!4v1661442698000!5m2!1spt-BR!2sbr" width="445" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15925.412729477739!2d-38.5227377!3d-3.7329735!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xfe9c6b7989ba92a3!2sNINNA%20Hub!5e0!3m2!1spt-BR!2sbr!4v1661442698000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                     </div>
                                 </div>
                                 <div class="contato-info">
@@ -201,7 +189,7 @@
 </main>
 <!-- Validação formulario de contato -->
 <script>
-    var v = $("#formContato").validate({
+    $("#formContato").validate({
         rules:{
             name: {
                 required: true,
@@ -229,6 +217,5 @@
             message:"A mensagem não pode estar vazia"
         }
     })
-    $('#formContato :is(input, textarea)').blur(function() { v.element(this) })
 </script>
 {% endblock %}
