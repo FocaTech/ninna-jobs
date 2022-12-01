@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from login_cadastro.models import Users
-from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional
-from usuarios.models import Empresa
+from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional, VagasCandidatadas
+from usuarios.models import Empresa, Dados_Pessoais
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib import messages
@@ -106,8 +106,16 @@ def acoes_talento(request):
 
 def relatorio(request):
     contexto = {
+        'numero_vagas':len(Vagas.objects.all()),
+        # 'numero_vagas_match':len(VagasCandidatadas.objects.all()),
+        # 'numero_vagas_sem_match':len(Vagas.objects.filter(status=True)),
+        'numero_vagas_ativas':len(Vagas.objects.all()) - len(Vagas.objects.filter(status=False)),
         'numero_de_can':todos_os_can,
+        'numero_de_can_ativos':len(Dados_Pessoais.objects.all()),
+        'numero_de_can_inativos':todos_os_can - len(Dados_Pessoais.objects.all()),
         "numero_de_emp": todas_as_emp,
+        "numero_de_emp_inativas": todas_as_emp - len(Empresa.objects.all()),
+        "numero_de_emp_ativas": len(Empresa.objects.all()),
     }
     return render(request, 'relatorio.html',contexto)
 

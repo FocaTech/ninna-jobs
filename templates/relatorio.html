@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}NinnaJobs - Admin{% endblock %}
+{% block title %} Admin{% endblock %}
 {% block head %}
 
 <script src="{% static 'node_modules/chart.js/dist/chart.js' %}" defer></script>
@@ -31,7 +31,27 @@
             <tbody class="table-group-divider">
                 <tr>
                     <td colspan="2">Empresas cadastradas</td>
-                    <td colspan="2">00</td>
+                    {% if numero_de_emp_inativas < 10 %}
+                    <td colspan="2">0{{numero_de_emp}}</td>
+                    {% else %}
+                    <td colspan="2">{{numero_de_emp}}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td colspan="2">Empresas ativas</td>
+                    {% if numero_de_emp_ativas < 10 %}
+                    <td colspan="2">0{{numero_de_emp_ativas}}</td>
+                    {% else %}
+                    <td colspan="2">{{numero_de_emp_ativas}}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td colspan="2">Empresas inativas</td>
+                    {% if numero_de_emp_inativas < 10 %}
+                    <td colspan="2">0{{numero_de_emp_inativas}}</td>
+                    {% else %}
+                    <td colspan="2">{{numero_de_emp_inativas}}</td>
+                    {% endif %}
                 </tr>
             </tbody>
         </table>
@@ -44,19 +64,35 @@
             <tbody class="table-group-divider">
                 <tr>
                     <td colspan="2">Vagas registradas</td>
-                    <td colspan="2">00</td>
+                    {% if numero_vagas < 10 %}
+                    <td colspan="2">0{{numero_vagas}}</td>
+                    {% else %}
+                    <td colspan="2">{{numero_vagas}}</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td colspan="2">Vagas ativas</td>
-                    <td colspan="2">00</td>
+                    {% if numero_vagas_ativas < 10 %}
+                    <td colspan="2">0{{numero_vagas_ativas}}</td>
+                    {% else %}
+                    <td colspan="2">{{numero_vagas_ativas}}</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td colspan="2">Vagas preenchidas por match</td>
-                    <td colspan="2">00</td>
+                    {% if numero_vagas_match < 10 %}
+                    <td colspan="2">0{{numero_vagas_match}}</td>
+                    {% else %}
+                    <td colspan="2">{{numero_vagas_match}}</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td colspan="2">Vagas Encerradas sem match</td>
-                    <td colspan="2">00</td>
+                    {% if numero_vagas_sem_match < 10 %}
+                    <td colspan="2">0{{numero_vagas_sem_match}}</td>
+                    {% else %}
+                    <td colspan="2">{{numero_vagas_sem_match}}</td>
+                    {% endif %}
                 </tr>
             </tbody>
         </table>
@@ -77,11 +113,19 @@
                 </tr>
                 <tr>
                     <td colspan="2">Talentos ativos</td>
-                    <td colspan="2">00</td>
+                    {% if numero_de_can_ativos < 10 %}
+                    <td colspan="2">0{{ numero_de_can_ativos }}</td>
+                    {% else %}
+                    <td colspan="2">{{ numero_de_can_ativos }}</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td colspan="2">Talentos inativos</td>
-                    <td colspan="2">00</td>
+                    {% if numero_de_can_inativos < 10 %}
+                    <td colspan="2">0{{ numero_de_can_inativos }}</td>
+                    {% else %}
+                    <td colspan="2">{{ numero_de_can_inativos }}</td>
+                    {% endif %}
                 </tr>
             </tbody>
         </table>

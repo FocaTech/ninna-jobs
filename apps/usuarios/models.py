@@ -46,7 +46,7 @@ class Dados_Pessoais(models.Model):
     genero = models.CharField(max_length=9)
     telefone = models.BigIntegerField()
     whatsapp = models.CharField(max_length=3, blank=True, null=True)
-    cep = models.CharField(max_length=9)
+    cep = models.CharField(max_length=15)
     estado = models.CharField(max_length=60)
     cidade = models.CharField(max_length=60)
     sobre_candidato = models.TextField(max_length=400, blank=True,null=True)

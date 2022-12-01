@@ -142,7 +142,7 @@ def index(request):
     return render(request, 'index.html', dados)
 
 def vagas(request):
-    vagas = Vagas.objects.order_by('-data_vaga').filter()
+    vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
     vagas = paginar(vagas, request)
     user_candidato = request.user
     if request.user.is_authenticated:
