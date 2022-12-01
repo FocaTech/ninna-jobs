@@ -221,11 +221,11 @@ def arquivar_vaga(request, pk_vaga):
 
 def buscas(request):
     '''barras de busca da dash, empresa e vagas'''
-    lista_vagas = Vagas.objects.order_by('-data_vaga').filter()
+    lista_vagas = Vagas.objects.order_by('-data_vaga')
     listar_vagas_salvas_e_candidatadas(request)
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
-        lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+        lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, status=True)
         empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
         dados = {
@@ -268,15 +268,16 @@ def buscas(request):
         return render(request, 'acoesVagas.html', dados)
     elif 'bempresa' in request.GET:
         user = request.user
-        lista_vagas = lista_vagas.filter(user=user)
         nome_a_buscar = request.GET['bempresa']
-        lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
+        lista_arquivadas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=False)
+        lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=True)
         empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
         dados = {
             'Dados':DP,
             'empresa':empresa,
-            'vagas' : lista_vagas
+            'vagas' : lista_vagas,
+            'vagas_arquivadas' : lista_arquivadas
         }
         return render(request, 'empresa.html', dados)
     elif 'badmin' in request.GET:
