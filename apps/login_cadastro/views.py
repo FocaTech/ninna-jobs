@@ -44,6 +44,7 @@ def cadastro_candidato(request):
         user = auth.authenticate(request, username=candidato_nome, password=candidato_senha, funcao = "CAN")
         if user:
             auth.login(request, user)
+            # messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {candidato_nome}')
             return redirect('index')
         return redirect ('index')
     else:
@@ -71,6 +72,7 @@ def cadastro_empresa(request):
         user = auth.authenticate(request, username=empresa_nome, password=empresa_senha, funcao = "EMP")
         if user:
             auth.login(request, user)
+            # messages.success(request, f'Login realizado com Sucesso, Seja Bem Vindo {empresa_nome}')
             return redirect('index')
         return redirect('index')
     else:

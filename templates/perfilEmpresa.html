@@ -38,26 +38,11 @@
         </div>
         <div class="tabber__content p-5">
           {% for e in empresa %}
-          <section id="sobre" class="active px-5 text-break">
+          <section id="sobre" class="active px-5">
             <p class="h6 lh-lg">
               {{e.descricao_empresa}}
             </p>
-            <div class="py-5">
-              <div class="row">
-                <p class="col">Razão Social: {{e.razao_social}}</p>
-                <p class="col">CNPJ:{{e.cnpj}} </p>
-              </div>
-              <div class="row">
-                <p class="col">Telefone:{{e.telefone}}</p>
-                <p class="col">Celular:{{e.celular}}</p>
-              </div>
-              <span></span>
-              <div class="row">
-                <p class="col">CEP:{{e.cep}}</p>
-                <p class="col">Ramo de Atividade: {{e.ramo_de_atividade}} </p>
-              </div>
-            </section>
-            </div>
+          </section>
           {% endfor %}
           <section id="vagas" class="p-5">
             <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">

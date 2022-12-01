@@ -50,6 +50,7 @@ def select(request):
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
+        # return redirect('minhas-vagas')
         return redirect('empresa')
 
     else:
@@ -207,12 +208,14 @@ def candidatar_a_vaga(request, pk_vagas):
         return redirect(url_atual)
 
 def arquivar_vaga(request, pk_vaga):
+    print(pk_vaga)
     vaga_para_ser_arquivada = get_object_or_404(Vagas, pk=pk_vaga)
     if vaga_para_ser_arquivada.status == True:
         vaga_para_ser_arquivada.status = False
     else:
         vaga_para_ser_arquivada.status = True
     vaga_para_ser_arquivada.save()
+    print(vaga_para_ser_arquivada.status)
     return redirect('empresa')
 
 def buscas(request):
@@ -253,6 +256,7 @@ def buscas(request):
         dados = {
             'Dados':DP,
             'empresa':empresa,
+            # 'vagas_candidatadas' : busca_candidatadas,
             'vagas':busca_vagas
         }
         return render(request, 'acoesVagas.html', dados)
@@ -289,17 +293,10 @@ def buscas(request):
         emp = Users.objects.all()
         nome_a_buscar = request.GET['BAempresa']
         emp = emp.filter(username__icontains=nome_a_buscar, funcao="EMP")
-        vagas = {}
-        for empresa in emp:
-            if Vagas.objects.filter(user=empresa):
-                vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
-        perfil_empresa = Empresa.objects.all()
-        dados ={
-            'vagas' : vagas,
-            'empresa' : emp,
-            'perfil' : perfil_empresa,
+        dados = {
+            'empresa' : emp
         }
-        return render(request, 'acoesEmpresa.html', dados)
+        return render(request, 'acoesTalento.html', dados)
 
 def reducao_codigo_busca(lista_nomes, nome_a_buscar):
     lista_salva = []#onde vai salvar a pesquisa das candidatadas
