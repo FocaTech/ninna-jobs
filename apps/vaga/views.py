@@ -5,8 +5,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.core.paginator import Paginator
-from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas, Empresa
-
+from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas, Empresa,TalentosFavoritados
 # pro email
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -230,7 +229,7 @@ def arquivar_vaga(request, pk_vaga):
 def buscas(request):
     '''barras de busca da dash, empresa e vagas'''
     lista_vagas = Vagas.objects.order_by('-data_vaga')
-    listar_vagas_salvas_e_candidatadas(request)
+    listar_busca(request)
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, status=True)
@@ -277,15 +276,25 @@ def buscas(request):
     elif 'bempresa' in request.GET:
         user = request.user
         nome_a_buscar = request.GET['bempresa']
+        lista = reducao_codigo_busca(lista_talentos, nome_a_buscar)
         lista_arquivadas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=False)
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=True)
         empresa = Empresa.objects.filter(user=request.user)
         DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
+        lista_ta = []
+        for l in lista:
+            for f in l:
+                lista_ta.append(f)
+        empresa = Empresa.objects.filter(user=request.user)
         dados = {
-            'Dados':DP,
+            'empresa':empresa,
+            'form':Formacao_Academica.objects.all(),
+            'dados':Dados_Pessoais.objects.all(),
+            'info':Informações_Iniciais.objects.all(),
             'empresa':empresa,
             'vagas' : lista_vagas,
-            'vagas_arquivadas' : lista_arquivadas
+            'vagas_arquivadas' : lista_arquivadas,
+            'ids_dos_talentos_favoritados' : lista_ta,
         }
         return render(request, 'empresa.html', dados)
     elif 'badmin' in request.GET:
@@ -330,11 +339,12 @@ def reducao_codigo_busca(lista_nomes, nome_a_buscar):
                 lista_salva.append(nomes)
     return lista_salva
 
-def listar_vagas_salvas_e_candidatadas(request):
-    '''vai gerar duas listas, estas que estao logo aqui em baixo, os nomes são auto-explicativos'''
+def listar_busca(request):
+    '''vai gerar listas para barras de buscas'''
     global lista_de_vagas_candidatadas_do_user
     global lista_de_vagas_salvas_do_user
     global lista_minhas_arquivadas
+    global lista_talentos
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
     id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
@@ -353,6 +363,10 @@ def listar_vagas_salvas_e_candidatadas(request):
     for todas_vagas in VagasCandidatadas.objects.filter(id_cadidato=request.user):
         if todas_vagas.id_vaga.status == False:
             lista_minhas_arquivadas.append(Vagas.objects.filter(pk=todas_vagas.id_vaga.pk))
+
+    lista_talentos = []
+    for talentos in TalentosFavoritados.objects.filter(id_empresa=request.user):
+        lista_talentos.append(Users.objects.filter(id=talentos.id_talento.pk))
 
 def listar_vagas_arquivadas():
     lista_de_vagas_arquivadas = Vagas.objects.filter(status=False)
