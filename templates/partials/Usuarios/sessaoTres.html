@@ -3,8 +3,6 @@
 {% block title %}Minhas vagas{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/formempresa.css' %}">
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
 <script src="{% static 'js/botaoAdcExcluir.js' %}"defer></script>
 <script src="{% static 'js/maskmoney.js' %}" defer></script>
 <script src="{% static 'js/form.js' %}" defer></script>
@@ -16,7 +14,7 @@
     <div class="w-75 m-auto sTres" >
         <form action="{% url 'adicionarF' %}" class="g-3 needs-validation position-relative" method="POST" id="formCand" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            <section class="step py-5 border-bottom" id="step_3">
+            <section class="step py-5" id="step_3">
                 <div class="row py-2">
                     <h2>Formação Academica</h2>
                     <div class="formacao">

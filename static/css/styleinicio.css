@@ -1,5 +1,5 @@
 /*------------------------------------------------------
-	h2 Do Inicio Styles
+	h2 do inicio
 --------------------------------------------------------*/
 .title-section {
     margin-bottom: 80px;
@@ -20,13 +20,13 @@
 }
 
 /*------------------------------------------------------
-	banner Styles
+	banner
 --------------------------------------------------------*/
 .titulo-cardInicio{
-        font-weight: 900;
-        font-size: 28px;
-        text-transform: uppercase;
-        color: #dae1f5;
+    font-weight: 900;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #dae1f5;
 }
 
 .card-cadastrar-body{
@@ -41,7 +41,7 @@
 }
 
 /*------------------------------------------------------
-	contato Styles
+	contato
 --------------------------------------------------------*/
 #contato .contato-form .full-row {
     width: 100%;
@@ -87,4 +87,62 @@
 }
 #contato .error {
     color: red
+}
+
+@media screen and (max-width: 650px) {
+    .position-absolute.top-50.start-50.translate-middle {
+        all: unset !important;
+    }
+    .card-cadastrar-body {
+        text-align: center;
+    }
+    .titulo-cardInicio>span {
+        font-size: 0;
+    }
+    .titulo-cardInicio>span::after {
+        display: block;
+    }
+    .card-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .card-buttons a.mx-5 {
+        margin: unset !important;
+    }
+    .sobre-nos {
+        padding: 1rem;
+        flex-direction: column;
+        height: unset;
+    }
+    .sobre-nos .texto {
+        width: unset;
+        margin-left: unset;
+        text-align: justify;
+    }
+    .sobre-nos img {
+        height: auto;
+        width: 100%;
+    }
+    .title-section {
+        margin-bottom: 2.5em;
+    }
+    .widget-title {
+        text-align: center;
+    }
+    .col-md-5 .widget-title {
+        margin-top: 1.25em;
+    }
+    .contato-form button {
+        justify-self: center;
+    }
+    .form-button-wrapper {
+        text-align: center;
+    }
+    .vagas .pt-5 {
+        padding-top: 0 !important;
+    }
+    #contato .container {
+        padding: 1.2em !important;
+    }
 }

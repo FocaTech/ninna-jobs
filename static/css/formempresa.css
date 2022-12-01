@@ -33,3 +33,9 @@
     margin-bottom: 8px!important;
     border-radius: 0;
 }
+
+@media screen and (max-width: 650px) {
+    .botaoenviarformempresa.w-25 {
+        width: unset !important;
+    }
+}
