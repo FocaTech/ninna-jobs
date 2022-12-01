@@ -25,6 +25,7 @@
 {% endblock %}
 {% block body_class %}page-dashboard{% endblock %}
 {% block content %}
+{% include 'partials/_alertas.html' %}
     <div class="content">
         <h1 class="display-6 text-center titulo">Cadastro - <strong>Empresa</strong></h1>
         <div class="containerFormEmpresa p-5">
@@ -148,6 +149,9 @@
                 </div>
                 {% endif %}
                 <div class="d-flex justify-content-end p-5">
+                    {% if empresa %}
+                    <a type="button" class="btn btn-primary float-end corBotao" href="{% url 'apagar_form_empresa' %}" id="submit"><i class="bi bi-trash"></i>Excluir</a>
+                    {% endif %}
                     <div>
                         <button class="btn botaoenviarformempresa" type="submit" name="enviarFormEmpresa" id="submit">Enviar</button>
                     </div>

@@ -11,6 +11,11 @@ from django.core.paginator import Paginator
 import requests
 
 url_atual = ""
+def apagar_form_empresa(request):
+    '''apagar form empresa'''
+    informacoes = get_object_or_404(Empresa, user=request.user)
+    informacoes.delete()
+    return redirect('formempresa')
 
 def formempresa(request):
     '''formulario da empresa'''
@@ -50,6 +55,8 @@ def editar_registro(request):
                 celular = celular[0:18]
                 e.celular = celular
                 e.save()
+        else:
+            messages.error(request,'Cep Invalido')
     return redirect('formempresa')
 
 def registro(request):
@@ -58,6 +65,7 @@ def registro(request):
         response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
         if response.status_code == 200:
             local = response.json()
+            print('passou')
             if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) < 1:
                 img_perfil_empresa = request.FILES['img_perfil_empresa']
                 razao_social = request.POST['razao_social']
@@ -74,7 +82,8 @@ def registro(request):
                 perfil.save()
                 return redirect('perfilempresa')
         else:
-            redirect('formempresa')
+            messages.error(request,'Cep Invalido')
+            return redirect('formempresa')
     else:
         return render(request, 'formempresa.html')
 
@@ -170,6 +179,9 @@ def Dados_pessoais(request):
                 cpf = int(cpf)
                 informacoes2 = Dados_Pessoais.objects.create(user=user_candidato,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone, whatsapp=whatsapp, sobre_candidato=sobre_candidato)
                 informacoes2.save()
+        else:
+            messages.error(request,'Cep Invalido')
+            return redirect('Informacoes_iniciais')
     formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=user_candidato)
     DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
     dados = {
@@ -214,6 +226,9 @@ def editando_dados_pessoais(request):
                 cpf = int(cpf)
                 d.cpf_do_candidato = cpf
                 d.save()
+        else:
+            messages.error(request,'Cep Invalido')
+            return redirect('Informacoes_iniciais')
     return redirect('Dados_Pessoais')
 
 def deleta_formacao(request, id_formacao):
