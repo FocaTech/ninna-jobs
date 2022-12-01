@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from login_cadastro.models import Users
 from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional, VagasCandidatadas
-from usuarios.models import Empresa, Dados_Pessoais
+from usuarios.models import Empresa, Dados_Pessoais, Formacao_Academica
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib import messages
@@ -16,13 +16,18 @@ vagas_ativas = Vagas.objects.filter(status=True).count()
 def interface(request):
     empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
     candidato = Users.objects.filter(funcao='CAN').order_by('-date_joined')[0:5]
-
+    empresas = Empresa.objects.all()
+    dados = Dados_Pessoais.objects.all()
+    formacao = Formacao_Academica.objects.all()
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
         'numero_de_vagas_ativas' : vagas_ativas,
         'empresa' : empresa,
+        'empresas' : empresas,
         'candidato' :candidato,
+        'formacao' :formacao,
+        'dados' :dados,
         'vagas_ativas' : vagas_ativas
     }
 

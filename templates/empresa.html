@@ -168,7 +168,7 @@
                 <li class="d-flex">
                     <img src="{{ d.imagem_perfil.url }}" class="sidebar-avatar my-3 mx-1">
                     <div class="my-auto mx-1">
-                        <span class="fs-4">{{d.nome_do_candidato}}</span><br>
+                        <span class="fs-4">{{d.nome_do_candidato}}({{d.user.username}})</span><br>
                         <div class="d-flex flex-wrap">
                             {% for i in info %}
                             {% if i.user == d.user %}

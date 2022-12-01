@@ -32,7 +32,11 @@
                 {% endif %}
                 {% endfor %}
                 <div class="card-body">
-                  <h5 class="card-title"><i class="bi bi-building"></i>{{ empresa_fav.username }}</h5>
+                  {% for e in empresa %}
+                  {% if e.user == empresa_fav %}
+                  <h5 class="card-title"><i class="bi bi-building"></i>{{e.nome_fantasia}}({{ empresa_fav.username }})</h5>
+                  {% endif %}
+                  {% endfor %}
                   <div class="d-flex justify-content-between">
                     <div class="dropdown-center">
                       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -70,7 +70,7 @@
                     </td>
                     {% for p in perfil %}
                     {% if p.user == e %}
-                    <td class="sorting_1">{{ p.nome_fantasia }}</td>
+                    <td class="sorting_1">{{ p.nome_fantasia }}({{e.username}})</td>
                     {% else %}
                     <td class="sorting_1">{{ e.username }}</td>
                     {% endif %}

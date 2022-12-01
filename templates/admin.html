@@ -134,9 +134,17 @@
           <div class="col">
             <div class="card h-100 vaga">
 
+              {% for e in empresas %}
+              {% if e.user == i %}
+              <img src="{{e.img_perfil_empresa.url}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-building"></i>{{e.nome_fantasia}}({{i.username}})</h5>
+              {% else %}
               <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title"><i class="bi bi-building"></i> {{i.username}}</h5>
+              <h5 class="card-title"><i class="bi bi-building"></i>{{i.username}}</h5>
+              {% endif %}
+              {% endfor %}
                 <div class="dropdown-center">
                   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Informações
@@ -164,16 +172,26 @@
                       <tr>
                         <th>Nome</th>
                         <th>Grau de instrução</th>
-                        <th>Nivel de experiência</th>
                         <th>Data de inscrição</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for i in candidato%}
                       <tr>
+                        {% if dados %}
+                        {% for d in dados %}
+                        <td>{{d.nome_do_candidato}}({{i.username}})</td>
+                        {% endfor %}
+                        {% else %}
                         <td>{{i.username}}</td>
+                        {% endif %}
+                        {% if formacao.0 %}
+                        {% for f in formacao %}
+                        <td>{{f.formacao}}</td>
+                        {% endfor %}
+                        {% else %}
                         <td>Superior Incompleto</td>
-                        <td>Senior</td>
+                        {% endif %}
                         <td>{{i.date_joined|date:"d/m/Y"}}</td>
                         <td>
                           <div class="dropdown-center">

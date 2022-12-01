@@ -16,7 +16,7 @@
       {% else %}
       {% for e in empresa %}
       <img class="sidebar-avatar mb-1" src="{{e.img_perfil_empresa.url}}" alt="">
-      <h2 class="sidebar-name h5 text-center">{{ e.nome_fantasia }}</h2>
+      <h2 class="sidebar-name h5 text-center">{{ e.nome_fantasia }}({{e.user.username}})</h2>
       {% endfor %}
       {% endif %}
     </div>

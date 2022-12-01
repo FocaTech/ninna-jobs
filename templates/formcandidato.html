@@ -201,6 +201,36 @@
         <a href="{% url 'Informacoes_iniciais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0 text-light" id="submit">Proximo</a>
         <a href="{% url 'dashboard' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0 text-light" id="submit">Anterior</a> <!--Link Ou botão?-->
     </form>
+    <section class="top-catagory-area section-padding-20-0">
+        <div class="container">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link">&laquo;</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link">1</a>
+                </li>
+                <li class="page-item">
+                    <a href="{% url 'Informacoes_iniciais' %}" class="page-link">2</a>
+                </li>
+                <li class="page-item">
+                    <a href="{% url 'Dados_Pessoais' %}" class="page-link">3</a>
+                </li>
+                <li class="page-item">
+                    <a href="{% url 'Formacao_academica' %}" class="page-link">4</a>
+                </li>
+                <li class="page-item">
+                    <a href="{% url 'Certificados_conquistas' %}" class="page-link">5</a>
+                </li>
+                <li class="page-item">
+                    <a href="{% url 'Experiencia_profissional' %}" class="page-link">6</a>
+                </li>
+                <li class="page-item">
+                    <a href="{% url 'Informacoes_iniciais' %}" class="page-link">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </section>
 </div>
 </main>
 {% endblock %}

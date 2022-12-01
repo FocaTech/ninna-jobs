@@ -53,6 +53,36 @@
             <a href="{% url 'Certificados_conquistas' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 end-0 text-light" id="submit">Proximo</a>
             <a href="{% url 'Dados_Pessoais' %}" class="botaoenviarformempresa enviarformcand w-25 position-absolute bottom-0 start-0 text-light" id="submit">Anterior</a> <!--Link-->
         </form>
+        <section class="top-catagory-area section-padding-20-0">
+            <div class="container">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a href="{% url 'Dados_Pessoais' %}" class="page-link">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="{% url 'formcandidato' %}" class="page-link">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="{% url 'Informacoes_iniciais' %}" class="page-link">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="{% url 'Dados_Pessoais' %}" class="page-link">3</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="{% url 'Certificados_conquistas' %}" class="page-link">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="{% url 'Experiencia_profissional' %}" class="page-link">6</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="{% url 'Certificados_conquistas' %}" class="page-link">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
         <div class="d-flex py-2 flex-wrap">
             {% if certificados %}
             {% for certificado in certificados %}
@@ -66,7 +96,6 @@
                         <ul class="list-group list-group-flush">
                             <h4>Titulo:</h4><li>{{ certificado.titulo }}</li>
                             <h4>Tipo:</h4><li>{{ certificado.tipo_conquista }}</li>
-                            <h4>Curso:</h4><li>{{ formacao.curso }}</li>
                             <h4>Sobre Certificado</h4><li>{{ certificado.descricao_conquista }}</li>
                         </ul>
                     </div>

@@ -13,7 +13,7 @@
                 {% if Dados %}
                 {% for dado in Dados %}
                 <img src="{{ dado.imagem_perfil.url }}" alt="" class="sidebar-avatar">
-                <h2 class="profile-name">{{ dado.nome_do_candidato }}</h2>
+                <h2 class="profile-name">{{ dado.nome_do_candidato }}({{dado.user.username}})</h2>
                 {% endfor %}
                 {% else %}
                 <img src="{% static 'img/placeholder.svg' %}" alt="" class="sidebar-avatar">
