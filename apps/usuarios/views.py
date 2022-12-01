@@ -492,7 +492,10 @@ def ver_perfil_empresa(request, id_empresa):
     vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=id_candidato)# traz um queryset com todos os objetos da Tab. VagaSalva
     lista_de_vagas_salvas_do_user = []# lista vazia para adicionar as vagas salvas
     for vagas_salvas in vagas_salvas_query:# desempacotar esse queryset em objetos
-        lista_de_vagas_salvas_do_user.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
+        try:
+            lista_de_vagas_salvas_do_user.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
+        except:
+            continue
     ids_de_vagas_salvas = [vaga.id for vaga in lista_de_vagas_salvas_do_user]
 
     vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_candidato)
