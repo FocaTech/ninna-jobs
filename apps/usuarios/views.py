@@ -369,7 +369,7 @@ def empresa(request, *args, **kwargs):
     perfis = PerfilProfissional.objects.all()
 
     vagas = Vagas.objects.filter(user=id_empresa,status=True)
-    vagas_arquivadas = Vagas.objects.filter(status=False)
+    vagas_arquivadas = Vagas.objects.filter(user=id_empresa, status=False)
 
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
@@ -498,7 +498,8 @@ def ver_perfil_empresa(request, id_empresa):
     vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_candidato)
     lista_de_vagas_candidatadas = []
     for vagas_candidatadas in vagas_candidatadas_query:
-        lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+        # lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+        lista_de_vagas_candidatadas = Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True)
     id_de_vagas_candidatadas = [vaga.id for vaga in lista_de_vagas_candidatadas]
 
 
