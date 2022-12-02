@@ -1,13 +1,5 @@
 from django.contrib import admin
-from .models import Empresa, Informações_Iniciais, TalentosFavoritados, EmpresasFavoritadas
-class Listando(admin.ModelAdmin):
-    list_display = ('id', 'nome_fantasia', )
-    list_display_links = ('id', 'nome_fantasia')
-    search_fields = ('nome_fantasia',)
-    list_per_page = 10
-
-admin.site.register(Empresa, Listando)
-
+from .models import TalentosFavoritados, EmpresasFavoritadas
 class TalentoFavoritado(admin.ModelAdmin):
     list_display = ('id', 'id_talento', 'id_empresa')
     list_display_links = ('id', 'id_talento', 'id_empresa')

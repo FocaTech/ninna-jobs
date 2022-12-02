@@ -5,7 +5,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.core.paginator import Paginator
-from usuarios.models import Dados_Pessoais, Formacao_Academica,Informações_Iniciais, Empresa,TalentosFavoritados
+from usuarios.models import DadosPessoais, FormacaoAcademica,InformaçõesIniciais, Empresa,TalentosFavoritados
 # pro email
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -132,7 +132,7 @@ def index(request):
         vagas = paginar(vagas, request)
         ids_vagas_salvas = paginar(ids_vagas_salvas, request)
         user_candidato = request.user
-        DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+        DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
         empresa = Empresa.objects.filter(user=request.user)
         dados = {
             'Dados':DP,
@@ -154,7 +154,7 @@ def vagas(request):
     vagas = paginar(vagas, request)
     user_candidato = request.user
     if request.user.is_authenticated:
-        DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+        DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
     else:
         DP = None
     if request.user.is_authenticated:
@@ -234,7 +234,7 @@ def buscas(request):
         nome_a_buscar = request.GET['buscar']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, status=True)
         empresa = Empresa.objects.filter(user=request.user)
-        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
+        DP = DadosPessoais.objects.order_by().filter(user=request.user)
         dados = {
             'Dados':DP,
             'empresa':empresa,
@@ -247,7 +247,7 @@ def buscas(request):
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
         busca_arquivadas = reducao_codigo_busca(lista_minhas_arquivadas, nome_a_buscar)
         empresa = Empresa.objects.filter(user=request.user)
-        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
+        DP = DadosPessoais.objects.order_by().filter(user=request.user)
         a = []
         for busca in busca_arquivadas:
             for b in busca:
@@ -265,7 +265,7 @@ def buscas(request):
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         empresa = Empresa.objects.filter(user=request.user)
-        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
+        DP = DadosPessoais.objects.order_by().filter(user=request.user)
         dados = {
             'Dados':DP,
             'empresa':empresa,
@@ -280,7 +280,7 @@ def buscas(request):
         lista_arquivadas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=False)
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=True)
         empresa = Empresa.objects.filter(user=request.user)
-        DP = Dados_Pessoais.objects.order_by().filter(user=request.user)
+        DP = DadosPessoais.objects.order_by().filter(user=request.user)
         lista_ta = []
         for l in lista:
             for f in l:
@@ -288,9 +288,9 @@ def buscas(request):
         empresa = Empresa.objects.filter(user=request.user)
         dados = {
             'empresa':empresa,
-            'form':Formacao_Academica.objects.all(),
-            'dados':Dados_Pessoais.objects.all(),
-            'info':Informações_Iniciais.objects.all(),
+            'form':FormacaoAcademica.objects.all(),
+            'dados':DadosPessoais.objects.all(),
+            'info':InformaçõesIniciais.objects.all(),
             'empresa':empresa,
             'vagas' : lista_vagas,
             'vagas_arquivadas' : lista_arquivadas,

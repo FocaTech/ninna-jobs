@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Certificados_Conquistas, Dados_Pessoais, Empresa, Idiomas, Experiência_Profissional, Informações_Iniciais, Formacao_Academica, TalentosFavoritados, EmpresasFavoritadas
+from .models import CertificadosConquistas, DadosPessoais, Empresa, Idiomas, ExperiênciaProfissional, InformaçõesIniciais, FormacaoAcademica, TalentosFavoritados, EmpresasFavoritadas
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
@@ -89,12 +89,12 @@ def registro(request):
 def formcandidato(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
     user_candidato = request.user
-    if len(Informações_Iniciais.objects.filter(user=user_candidato)) > 0:
-        informacoes = get_object_or_404(Informações_Iniciais, user=user_candidato)
+    if len(InformaçõesIniciais.objects.filter(user=user_candidato)) > 0:
+        informacoes = get_object_or_404(InformaçõesIniciais, user=user_candidato)
         informacoes.salario_pretendido = int(informacoes.salario_pretendido)
     else:
         informacoes = False
-    DP = Dados_Pessoais.objects.order_by('data_dados').filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by('data_dados').filter(user=user_candidato)
     dados = {
             'Dados':DP,
             'informacoes':informacoes
@@ -103,14 +103,14 @@ def formcandidato(request):
 
 def apagar_informacoes_iniciais(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
-    informacoes = get_object_or_404(Informações_Iniciais, user=request.user)
+    informacoes = get_object_or_404(InformaçõesIniciais, user=request.user)
     informacoes.delete()
     return redirect('formcandidato')
 
 def Informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
     user_candidato = request.user
-    if request.method == 'POST' and len(Informações_Iniciais.objects.filter(user=user_candidato)) < 1:
+    if request.method == 'POST' and len(InformaçõesIniciais.objects.filter(user=user_candidato)) < 1:
         usuario = get_object_or_404(Users, pk=request.user.id)
         curriculos = request.FILES['curriculo']
         estagio = request.POST.get('estagio', None)
@@ -121,11 +121,11 @@ def Informacoes_iniciais(request):
         area_interesse = request.POST['area_interesse']
         linkedin = request.POST['linkedin']
         rede_social = request.POST['rede_social']
-        informacoes1 = Informações_Iniciais.objects.create(user=usuario,curriculo=curriculos, estagio=estagio, pj=pj, clt=clt,flex=flex, salario_pretendido=salario_pretendido,areas_interesse=area_interesse,linkedin=linkedin,rede_social=rede_social)
+        informacoes1 = InformaçõesIniciais.objects.create(user=usuario,curriculo=curriculos, estagio=estagio, pj=pj, clt=clt,flex=flex, salario_pretendido=salario_pretendido,areas_interesse=area_interesse,linkedin=linkedin,rede_social=rede_social)
         informacoes1.save()
-    dados_pessoais = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
-    if len(Dados_Pessoais.objects.filter(user=user_candidato)) > 0:
-        dados_can = get_object_or_404(Dados_Pessoais, user=user_candidato)
+    dados_pessoais = DadosPessoais.objects.order_by().filter(user=user_candidato)
+    if len(DadosPessoais.objects.filter(user=user_candidato)) > 0:
+        dados_can = get_object_or_404(DadosPessoais, user=user_candidato)
     else:
         dados_can = False
     dados = {
@@ -138,8 +138,8 @@ def Informacoes_iniciais(request):
 def editando_informacoes_iniciais(request):
     '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
     user_candidato = request.user
-    if request.method == 'POST' and len(Informações_Iniciais.objects.filter(user=user_candidato)) == 1:
-        i = Informações_Iniciais.objects.get(user=user_candidato)
+    if request.method == 'POST' and len(InformaçõesIniciais.objects.filter(user=user_candidato)) == 1:
+        i = InformaçõesIniciais.objects.get(user=user_candidato)
         if 'curriculo' in request.FILES:
             i.curriculo = request.FILES['curriculo']
         i.estagio = request.POST.get('estagio', None)
@@ -161,7 +161,7 @@ def Dados_pessoais(request):
         response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
         if response.status_code == 200:
             local = response.json()
-            if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=user_candidato)) < 1:
+            if request.method == 'POST' and len(DadosPessoais.objects.filter(user=user_candidato)) < 1:
                 imagem_perfil = request.FILES['imagem_perfil']
                 nome_do_candidato = request.POST['nome_do_candidato']
                 cpf = request.POST['cpf_do_candidato']
@@ -176,13 +176,13 @@ def Dados_pessoais(request):
                     whatsapp = 'Não'
                 sobre_candidato = request.POST['sobre_candidato']
                 cpf = int(cpf)
-                informacoes2 = Dados_Pessoais.objects.create(user=user_candidato,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone, whatsapp=whatsapp, sobre_candidato=sobre_candidato)
+                informacoes2 = DadosPessoais.objects.create(user=user_candidato,imagem_perfil=imagem_perfil,nome_do_candidato=nome_do_candidato,data_nascimento=data_nascimento,cpf_do_candidato=cpf,genero=genero,cep=cep,estado=estado,cidade=cidade,telefone=telefone, whatsapp=whatsapp, sobre_candidato=sobre_candidato)
                 informacoes2.save()
         else:
             messages.error(request,'Cep Invalido')
             return redirect('Informacoes_iniciais')
-    formacoes = Formacao_Academica.objects.order_by('instituicao_ensino').filter(user=user_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    formacoes = FormacaoAcademica.objects.order_by('instituicao_ensino').filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
     dados = {
         'Dados':DP,
         'formacoes':formacoes
@@ -190,7 +190,7 @@ def Dados_pessoais(request):
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
 def apagar_dados_pessoais(request):
-    dados = get_object_or_404(Dados_Pessoais, user=request.user)
+    dados = get_object_or_404(DadosPessoais, user=request.user)
     dados.delete()
     return redirect('Informacoes_iniciais')
 
@@ -202,8 +202,8 @@ def editando_dados_pessoais(request):
         response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
         if response.status_code == 200:
             local = response.json()
-            if request.method == 'POST' and len(Dados_Pessoais.objects.filter(user=user_candidato)) == 1:
-                d = Dados_Pessoais.objects.get(user=user_candidato)
+            if request.method == 'POST' and len(DadosPessoais.objects.filter(user=user_candidato)) == 1:
+                d = DadosPessoais.objects.get(user=user_candidato)
                 if 'imagem_perfil' in request.FILES:
                     d.imagem_perfil = request.FILES['imagem_perfil']
                 if request.POST['data_nascimento'] == "":
@@ -228,18 +228,18 @@ def editando_dados_pessoais(request):
         else:
             messages.error(request,'Cep Invalido')
             return redirect('Informacoes_iniciais')
-    return redirect('Dados_Pessoais')
+    return redirect('DadosPessoais')
 
 def deleta_formacao(request, id_formacao):
     '''deleta as formacoes existentes'''
-    nome = get_object_or_404(Formacao_Academica, pk=id_formacao)
+    nome = get_object_or_404(FormacaoAcademica, pk=id_formacao)
     nome.delete()
-    return redirect('Dados_Pessoais')
+    return redirect('DadosPessoais')
 
 def adicionar_formacao(request):
     '''adiciona ate 5 formacoes e redireciona a mesma pagina'''
     user = request.user
-    contando = Formacao_Academica.objects.order_by().filter(user=user)
+    contando = FormacaoAcademica.objects.order_by().filter(user=user)
     if len(contando) >= 5:
         messages.error(request, 'No Maximo 5 fomaçoes')
     else:
@@ -250,15 +250,15 @@ def adicionar_formacao(request):
             curso = request.POST['curso']
             data_inicio = request.POST['data_inicio']
             data_termino = request.POST['data_termino']
-            informacoes3 = Formacao_Academica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
+            informacoes3 = FormacaoAcademica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
             informacoes3.save()
-    return redirect('Dados_Pessoais')
+    return redirect('DadosPessoais')
 
 def Formacao_academica(request):
     '''renderiza a pagina e traz os certificados do candidato'''
     user_candidato = request.user
-    certificados = Certificados_Conquistas.objects.order_by().filter(user=user_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    certificados = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
     dados = {
         'Dados':DP,
         'certificados':certificados
@@ -267,14 +267,14 @@ def Formacao_academica(request):
 
 def deleta_certificado(request, id_certificado):
     '''delta os certificados adicionados'''
-    nome = get_object_or_404(Certificados_Conquistas, pk=id_certificado)
+    nome = get_object_or_404(CertificadosConquistas, pk=id_certificado)
     nome.delete()
     return redirect('Formacao_academica')
 
 def adicionar_certificado(request):
     '''adiciona ate 5 certificados e salva eles'''
     user = request.user
-    contando = Certificados_Conquistas.objects.order_by().filter(user=user)
+    contando = CertificadosConquistas.objects.order_by().filter(user=user)
     if len(contando) >= 5:
         messages.error(request, 'No Maximo 5 Certificados ou Conquistas')
     else:
@@ -283,15 +283,15 @@ def adicionar_certificado(request):
             titulo = request.POST['titulo']
             tipo = request.POST['tipo']
             sobre_conquista = request.POST['sobre_conquista']
-            informacoes4 = Certificados_Conquistas.objects.create(user=usuario,titulo=titulo,tipo_conquista=tipo,descricao_conquista=sobre_conquista)
+            informacoes4 = CertificadosConquistas.objects.create(user=usuario,titulo=titulo,tipo_conquista=tipo,descricao_conquista=sobre_conquista)
             informacoes4.save()
     return redirect('Formacao_academica')
 
 def Certificados_conquistas(request):
     '''lista as experiencias'''
     user_candidato = request.user
-    experiencias = Experiência_Profissional.objects.filter(user=user_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    experiencias = ExperiênciaProfissional.objects.filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
     dados = {
         'Dados':DP,
         'experiencias':experiencias
@@ -300,14 +300,14 @@ def Certificados_conquistas(request):
 
 def deleta_experiencia(request, id_experiencia):
     '''apaga os lugares onde o candidato ja Trabalhou ou trabalha'''
-    nome = get_object_or_404(Experiência_Profissional, pk=id_experiencia)
+    nome = get_object_or_404(ExperiênciaProfissional, pk=id_experiencia)
     nome.delete()
     return redirect('Certificados_conquistas')
 
 def adicionar_experiencia(request):
     '''salva ate 5 experiencias no banco e redireciona a mesma pagina'''
     user_candidato = request.user
-    contando = Experiência_Profissional.objects.order_by().filter(user=user_candidato)
+    contando = ExperiênciaProfissional.objects.order_by().filter(user=user_candidato)
     if len(contando) >= 5:
         messages.error(request, 'No Maximo 5 Experiencias')
     else:
@@ -321,7 +321,7 @@ def adicionar_experiencia(request):
             meu_emprego = request.POST.get('meu_emprego')
             if meu_emprego == None:
                 meu_emprego = "Exonerado"
-            informacoes5 = Experiência_Profissional.objects.create(user=usuario,empresa_onde_trabalhou=empresa,cargo_exercido=cargo,descricao_de_atividades=sobre_contrato,inicio_emprego=data_contrato,demissao=data_demissao,emprego_atual=meu_emprego)
+            informacoes5 = ExperiênciaProfissional.objects.create(user=usuario,empresa_onde_trabalhou=empresa,cargo_exercido=cargo,descricao_de_atividades=sobre_contrato,inicio_emprego=data_contrato,demissao=data_demissao,emprego_atual=meu_emprego)
             informacoes5.save()
     return redirect('Certificados_conquistas')
 
@@ -329,7 +329,7 @@ def Experiencia_profissional(request):
     '''mostra os idiomas e os lista'''
     user_candidato = request.user
     idioma = Idiomas.objects.filter(user=user_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
     dados = {
         'Dados':DP,
         'idiomas':idioma
@@ -345,7 +345,7 @@ def deleta_idioma(requst, id_idioma):
 def adicionar_idioma(request):
     '''redireciona a mesma pagina de idiomas para listalos'''
     user_candidato = request.user
-    contando = Certificados_Conquistas.objects.order_by().filter(user=user_candidato)
+    contando = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
     if len(contando) >= 5:
         messages.error(request, 'No Maximo 5 Idiomas')
     else:
@@ -377,8 +377,8 @@ def empresa(request, *args, **kwargs):
 
     dados_pessoais = []
     for talento in ids_dos_talentos_favoritados:
-        # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
-        dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+        # dado_pessoal = DadosPessoais.objects.order_by('data_dados')
+        dado_pessoal = DadosPessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
         else:
@@ -386,7 +386,7 @@ def empresa(request, *args, **kwargs):
 
     informacoes_iniciais = []
     for talento in ids_dos_talentos_favoritados:
-        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        informacao_inicial = InformaçõesIniciais.objects.filter(user=talento)
         if len(informacao_inicial) != 0:
             informacoes_iniciais.append(*informacao_inicial)
         else:
@@ -394,7 +394,7 @@ def empresa(request, *args, **kwargs):
 
     formacaoes_academicas = []
     for talento in ids_dos_talentos_favoritados:
-        formacao_academica = Formacao_Academica.objects.filter(user=talento)
+        formacao_academica = FormacaoAcademica.objects.filter(user=talento)
         if len(formacao_academica) != 0:
             formacaoes_academicas.append(*formacao_academica)
         else:
@@ -448,7 +448,7 @@ def dashboard(request):
                 lista_de_vagas_arquivas_do_user.append(vagas_candidatadass)
 
     user_candidato = request.user
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
     dados = {
         'Dados':DP,
         'vagas' : vagas,
@@ -505,7 +505,7 @@ def ver_perfil_empresa(request, id_empresa):
     id_de_vagas_candidatadas = [vaga.id for vaga in lista_de_vagas_candidatadas]
 
 
-    dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
+    dados_pessoais = DadosPessoais.objects.filter(user=id_candidato)
     dados = {
         'Dados':dados_pessoais,
         'vagas' : vagas,
@@ -520,11 +520,11 @@ def ver_perfil_empresa(request, id_empresa):
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''
     user_candidato = request.user
-    CC = Certificados_Conquistas.objects.order_by().filter(user=user_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
-    EP = Experiência_Profissional.objects.order_by().filter(user=user_candidato)
-    FA = Formacao_Academica.objects.order_by().filter(user=user_candidato)
-    II = Informações_Iniciais.objects.order_by().filter(user=user_candidato)
+    CC = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
+    EP = ExperiênciaProfissional.objects.order_by().filter(user=user_candidato)
+    FA = FormacaoAcademica.objects.order_by().filter(user=user_candidato)
+    II = InformaçõesIniciais.objects.order_by().filter(user=user_candidato)
     I = Idiomas.objects.order_by().filter(user=user_candidato)
     dados = {
         'Certificados':CC,
@@ -542,11 +542,11 @@ def perfil_candidato(request, id_candidato):
     url_atual = "http://127.0.0.1:8000" + request.path
     id_empresa = request.user
     user_candidato = get_object_or_404(Users, pk=id_candidato)
-    CC = Certificados_Conquistas.objects.order_by().filter(user=user_candidato)
-    DP = Dados_Pessoais.objects.order_by().filter(user=user_candidato)
-    EP = Experiência_Profissional.objects.order_by().filter(user=user_candidato)
-    FA = Formacao_Academica.objects.order_by().filter(user=user_candidato)
-    II = Informações_Iniciais.objects.order_by().filter(user=user_candidato)
+    CC = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
+    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
+    EP = ExperiênciaProfissional.objects.order_by().filter(user=user_candidato)
+    FA = FormacaoAcademica.objects.order_by().filter(user=user_candidato)
+    II = InformaçõesIniciais.objects.order_by().filter(user=user_candidato)
     I = Idiomas.objects.order_by().filter(user=user_candidato)
     empresa = Empresa.objects.filter(user=request.user)
 
@@ -581,8 +581,8 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     dados_pessoais = []
     for talento in lista_de_talentos:
-        # dado_pessoal = Dados_Pessoais.objects.order_by('data_dados')
-        dado_pessoal = Dados_Pessoais.objects.filter(user=talento)
+        # dado_pessoal = DadosPessoais.objects.order_by('data_dados')
+        dado_pessoal = DadosPessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
         else:
@@ -590,7 +590,7 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     informacoes_iniciais = []
     for talento in lista_de_talentos:
-        informacao_inicial = Informações_Iniciais.objects.filter(user=talento)
+        informacao_inicial = InformaçõesIniciais.objects.filter(user=talento)
         if len(informacao_inicial) != 0:
             informacoes_iniciais.append(*informacao_inicial)
         else:
@@ -598,7 +598,7 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     formacaoes_academicas = []
     for talento in lista_de_talentos:
-        formacao_academica = Formacao_Academica.objects.filter(user=talento)
+        formacao_academica = FormacaoAcademica.objects.filter(user=talento)
         if len(formacao_academica) != 0:
             formacaoes_academicas.append(*formacao_academica)
         else:
@@ -631,9 +631,9 @@ def talentos(request):
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
-    d = Dados_Pessoais.objects.order_by('-data_dados')
-    i = Informações_Iniciais.objects.all()
-    f = Formacao_Academica.objects.all()
+    d = DadosPessoais.objects.order_by('-data_dados')
+    i = InformaçõesIniciais.objects.all()
+    f = FormacaoAcademica.objects.all()
     if len(d) > 0:
         dados_paginados = Paginator(d, 6)
         page_num = request.GET.get('page')
@@ -657,15 +657,15 @@ def talentos(request):
 
 def busca_talentos(request):
     if 'busca_talentos' in request.GET:
-        lista_talentos = Dados_Pessoais.objects.order_by('-data_dados').filter()
+        lista_talentos = DadosPessoais.objects.order_by('-data_dados').filter()
         nome_a_buscar = request.GET['busca_talentos']
         lista_talentos = lista_talentos.filter(nome_do_candidato__icontains=nome_a_buscar)
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
-    d = Dados_Pessoais.objects.order_by('-data_dados')
-    i = Informações_Iniciais.objects.all()
-    f = Formacao_Academica.objects.all()
+    d = DadosPessoais.objects.order_by('-data_dados')
+    i = InformaçõesIniciais.objects.all()
+    f = FormacaoAcademica.objects.all()
     empresa = Empresa.objects.filter(user=request.user)
     dados = {
         'empresa':empresa,
@@ -701,7 +701,7 @@ def empresas_favoritadas(request):
         dados_empresas_favoritadas.append(*dados_empresas_favoritadas_query)
 
     empresa = Empresa.objects.all()
-    dados_pessoais = Dados_Pessoais.objects.filter(user=id_candidato)
+    dados_pessoais = DadosPessoais.objects.filter(user=id_candidato)
     dados = {
         'empresa':empresa,
         'Dados':dados_pessoais,

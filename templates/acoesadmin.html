@@ -29,6 +29,7 @@
         <div>
           <h2 class="text-center">Administradores</h2>
           <div>
+          {% include 'partials/_alertas.html' %}
             <!--Tabela das admin-->
             <div class="col-sm-12 p-3">
               <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
@@ -106,11 +107,11 @@
             </div>
             <div class="modal-body">
               <!--Form para cadastrar um novo admin-->
-              <form action="{% url 'acoes_admin'%}" method="POST" id="adicionar-admin" >
+              <form action="{% url 'acoes_admin'%}" method="POST" id="adicionar-admin" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="col-mb-6">
                   <label for="perfilfoto">Selecione uma foto de perfil</label>
-                  <input id="perfilfoto" type="file" class="form-control" aria-label="file example" required>
+                  <input name='perfilfoto' id="perfilfoto" type="file" class="form-control" aria-label="file example" required>
                   <div class="invalid-feedback">Example invalid form file feedback</div>
                 </div>
                 <!-- <div class="col-md-8">

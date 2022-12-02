@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from login_cadastro.models import Users
 from datetime import datetime
@@ -21,7 +20,7 @@ class Empresa(models.Model):
         return self.nome_fantasia
 
 #Criando os models do curriculo do candidato
-class Informações_Iniciais(models.Model):
+class InformaçõesIniciais(models.Model):
     #Informações Iniciais
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     curriculo = models.FileField(upload_to='curriculo/%Y/%m/%d', blank=False, null=False)
@@ -36,7 +35,7 @@ class Informações_Iniciais(models.Model):
     def __str__(self):
         return self.areas_interesse
 
-class Dados_Pessoais(models.Model):
+class DadosPessoais(models.Model):
     #Dados Pessoais
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     nome_do_candidato = models.CharField(max_length=150)
@@ -54,7 +53,7 @@ class Dados_Pessoais(models.Model):
     def __str__(self):
         return self.nome_do_candidato
 
-class Formacao_Academica(models.Model):
+class FormacaoAcademica(models.Model):
     #Formação Acadêmica
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     instituicao_ensino = models.CharField(max_length=200)
@@ -65,7 +64,7 @@ class Formacao_Academica(models.Model):
     def __str__(self):
         return self.instituicao_ensino
 
-class Certificados_Conquistas(models.Model):
+class CertificadosConquistas(models.Model):
     #Certificados e Conquistas
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     titulo = models.CharField(max_length=100)
@@ -74,7 +73,7 @@ class Certificados_Conquistas(models.Model):
     def __str__(self):
         return self.titulo
 
-class Experiência_Profissional(models.Model):
+class ExperiênciaProfissional(models.Model):
     #Experiência Profissional
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     empresa_onde_trabalhou = models.CharField(max_length=50)
