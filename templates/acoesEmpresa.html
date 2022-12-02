@@ -46,15 +46,15 @@
                       </tr>
                     </div>
                   </div> {% endcomment %}
-                  <form method='GET' action="{% url 'BAempresa' %}" class="filtros my-4">
+                  <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
                     <div class="input-group">
-                        <input name='BAempresa' placeholder="Pesquisar" type="search" class="form-control">
+                        <input name='busca/admin/empresa' placeholder="Pesquisar" type="search" class="form-control">
                         <span class="input-group-text"><i class="bi bi-search"></i>
                         </span>
                     </div>
                   </form>
                   <tr>
-                    <th>Selecionar</th>
+                    {% comment %} <th>Selecionar</th> {% endcomment %}
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
                     <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
                     <th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultima Vaga Lançada</th>
@@ -63,12 +63,12 @@
                 <tbody>
                   {% for e in empresa %}
                   <tr class="empresas">
-                    <td>
+                    {% comment %} <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
-                    </td>
-                    {% for p in perfil %}
+                    </td> {% endcomment %}
+                    {% for p in perfil_emp %}
                     {% if p.user == e %}
                     <td class="sorting_1">{{ p.nome_fantasia }}({{e.username}})</td>
                     {% else %}
@@ -93,7 +93,8 @@
                         </button>
                         <ul class="dropdown-menu">
                           <li><a href="{% url 'admin_ban' e.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
-                          <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li>
+                          <li><a href="{% url 'ver_perfil_empresa' e.pk %}"><button class="dropdown-item"><i class="bi bi-building"></i> Ver Perfil</button></a></li>
+                          {% comment %} <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li> {% endcomment %}
                         </ul>
                       </div>
                     </td>
@@ -105,9 +106,9 @@
           </div>
         </div>
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-primary"><i class="bi bi-trash"></i>
+          {% comment %} <button type="button" class="btn btn-primary"><i class="bi bi-trash"></i>
             Excluir
-          </button>
+          </button> {% endcomment %}
         </div>
       </div>
     </main>

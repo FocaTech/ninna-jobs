@@ -12,9 +12,13 @@
                     <li>
                         <div class="sidebar-user rounded-circle">
                             <!--Imagem do admin-->
+                            {% if perfil.perfil_admin.url %}
+                            <img src="{{ perfil.perfil_admin.url }}" class="img-fluid sidebar-avatar mb-4" alt="admin">
+                            {% else %}
                             <img src=" {% static 'img/candidato.jpg' %}" class="img-fluid sidebar-avatar mb-4" alt="admin">
+                            {% endif %}
                         <div class="text-dark">{{ user.username }}</div>
-                        <small class="text-dark">Admin 1</small>
+                        <small class="text-dark">Admin {{user.pk}}</small>
                         </div>
                     </li>
                     <li>

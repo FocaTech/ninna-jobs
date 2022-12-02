@@ -4,6 +4,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
+from administrador.models import PerfilAdmin
 from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
@@ -18,7 +19,7 @@ def apagar_form_empresa(request):
 
 def formempresa(request):
     '''formulario da empresa'''
-    if len(Empresa.objects.filter(user=request.user)) > 0:
+    if Empresa.objects.filter(user=request.user).exists():
         empresas = get_object_or_404(Empresa, user=request.user)
     else:
         empresas = None
@@ -65,7 +66,7 @@ def registro(request):
         if response.status_code == 200:
             local = response.json()
             print('passou')
-            if request.method == 'POST' and len(Empresa.objects.filter(user=request.user)) < 1:
+            if request.method == 'POST' and not Empresa.objects.filter(user=request.user).exists():
                 img_perfil_empresa = request.FILES['img_perfil_empresa']
                 razao_social = request.POST['razao_social']
                 cnpj = request.POST['cnpj']
@@ -89,7 +90,7 @@ def registro(request):
 def formcandidato(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
     user_candidato = request.user
-    if len(InformaçõesIniciais.objects.filter(user=user_candidato)) > 0:
+    if InformaçõesIniciais.objects.filter(user=user_candidato).exists():
         informacoes = get_object_or_404(InformaçõesIniciais, user=user_candidato)
         informacoes.salario_pretendido = int(informacoes.salario_pretendido)
     else:
@@ -110,7 +111,7 @@ def apagar_informacoes_iniciais(request):
 def Informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
     user_candidato = request.user
-    if request.method == 'POST' and len(InformaçõesIniciais.objects.filter(user=user_candidato)) < 1:
+    if request.method == 'POST' and not InformaçõesIniciais.objects.filter(user=user_candidato).exists():
         usuario = get_object_or_404(Users, pk=request.user.id)
         curriculos = request.FILES['curriculo']
         estagio = request.POST.get('estagio', None)
@@ -161,7 +162,7 @@ def Dados_pessoais(request):
         response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
         if response.status_code == 200:
             local = response.json()
-            if request.method == 'POST' and len(DadosPessoais.objects.filter(user=user_candidato)) < 1:
+            if request.method == 'POST' and not DadosPessoais.objects.filter(user=user_candidato).exists():
                 imagem_perfil = request.FILES['imagem_perfil']
                 nome_do_candidato = request.POST['nome_do_candidato']
                 cpf = request.POST['cpf_do_candidato']
@@ -506,7 +507,12 @@ def ver_perfil_empresa(request, id_empresa):
 
 
     dados_pessoais = DadosPessoais.objects.filter(user=id_candidato)
+    if request.user.is_superuser:
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     dados = {
+        'perfil':perfil,
         'Dados':dados_pessoais,
         'vagas' : vagas,
         'empresa' : empresa,
@@ -548,12 +554,17 @@ def perfil_candidato(request, id_candidato):
     FA = FormacaoAcademica.objects.order_by().filter(user=user_candidato)
     II = InformaçõesIniciais.objects.order_by().filter(user=user_candidato)
     I = Idiomas.objects.order_by().filter(user=user_candidato)
+    if request.user.is_superuser:
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     empresa = Empresa.objects.filter(user=request.user)
 
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
 
     dados = {
+        'perfil':perfil,
         'empresa':empresa,
         'Certificados':CC,
         'Dados':DP,
@@ -702,6 +713,8 @@ def empresas_favoritadas(request):
 
     empresa = Empresa.objects.all()
     dados_pessoais = DadosPessoais.objects.filter(user=id_candidato)
+    print(empresas_favoritadas)
+    print(dados_empresas_favoritadas)
     dados = {
         'empresa':empresa,
         'Dados':dados_pessoais,

@@ -55,9 +55,9 @@
                       </tr>
                     </div>
                   </div> {% endcomment %}
-                  <form method='GET' action="{% url 'badmin' %}" class="filtros my-4">
+                  <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
                     <div class="input-group">
-                        <input name='badmin' placeholder="Pesquisar" type="search" class="form-control">
+                        <input name='buscar/admin' placeholder="Pesquisar" type="search" class="form-control">
                         <span class="input-group-text"><i class="bi bi-search"></i>
                         </span>
                     </div>
@@ -81,7 +81,7 @@
                     <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y"}}</td>
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
-                      <button type="submit" class="btn btn-primary"><i class="bi bi-trash"></i> Excluir</button>
+                      <a href="{% url 'admin_ban' i.pk %}"><button type="submit" class="btn btn-primary"><i class="bi bi-trash"></i> Excluir</button></a>
                     </td>
                   </tr>
                 {% endfor %}

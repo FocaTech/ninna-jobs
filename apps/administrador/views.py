@@ -19,6 +19,7 @@ def interface(request):
     empresas = Empresa.objects.all()
     dados = DadosPessoais.objects.all()
     formacao = FormacaoAcademica.objects.all()
+    perfil = get_object_or_404(PerfilAdmin,user=request.user)
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
@@ -28,7 +29,8 @@ def interface(request):
         'candidato' :candidato,
         'formacao' :formacao,
         'dados' :dados,
-        'vagas_ativas' : vagas_ativas
+        'vagas_ativas' : vagas_ativas,
+        'perfil' : perfil
     }
 
     dados["data"] = [dados["numero_de_can"], dados["numero_de_emp"]]
@@ -57,14 +59,17 @@ def acoes_admin(request):
                 if 'perfilfoto' in request.FILES:
                     user = get_object_or_404(Users, email=email)
                     perfil_foto = request.FILES['perfilfoto']
-                    PerfilAdmin.objects.create(user=user, perfil_admin=perfil_foto)
+                    perfil = PerfilAdmin.objects.create(user=user, perfil_admin=perfil_foto)
+                    perfil.save()
                 return redirect('acoes_admin')
             else:
                 messages.error(request, 'Senhas diferentes')
         else:
             messages.error(request, 'Email ja existe')
     usuario_admin = Users.objects.filter(is_staff = True)
+    perfil = get_object_or_404(PerfilAdmin,user=request.user)
     contexto = {
+        'perfil':perfil,
         'usuario_admin' : usuario_admin
     }
     return render(request, 'acoesadmin.html', contexto)
@@ -81,10 +86,12 @@ def acoes_empresa(request):
 
     empresas = Users.objects.filter(funcao="EMP")
     perfil_empresa = Empresa.objects.all()
+    perfil = get_object_or_404(PerfilAdmin, user=request.user)
     contexto ={
+        'perfil':perfil,
         'vagas' : vagas,
         'empresa' : empresas,
-        'perfil' : perfil_empresa,
+        'perfil_emp' : perfil_empresa,
     }
     return render(request, 'acoesEmpresa.html', contexto)
 
@@ -110,8 +117,9 @@ def acoes_empresa(request):
 @login_required(login_url='index')
 def acoes_talento(request):
     candidatos = Users.objects.filter(funcao = 'CAN')
-
+    perfil = get_object_or_404(PerfilAdmin,user=request.user)
     contexto = {
+        'perfil':perfil,
         'candidatos' : candidatos
     }
 
@@ -122,8 +130,9 @@ def relatorio(request):
     for c in Users.objects.filter(funcao = 'CAN'):
         if VagasCandidatadas.objects.filter(id_cadidato=c):
             vagas_match[c.username] = [VagasCandidatadas.objects.filter(id_cadidato=c)[0]]
-
+    perfil = get_object_or_404(PerfilAdmin,user=request.user)
     contexto = {
+        'perfil':perfil,
         'numero_vagas':len(Vagas.objects.all()),
         'numero_vagas_match':len(vagas_match),
         'numero_vagas_sem_match':len(Vagas.objects.filter(status=False)) - len(vagas_match),
@@ -151,8 +160,10 @@ def acoes_vaga(request):
     vagas = Vagas.objects.all()
     empresa = Empresa.objects.all()
 
+    perfil = get_object_or_404(PerfilAdmin,user=request.user)
     dados = {
-        'empresa':sorted(empresa),
+        'perfil':perfil,
+        'empresa':empresa,
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
@@ -188,11 +199,5 @@ def acoes_vaga(request):
 @login_required(login_url='index')
 def admin_ban(request, id_empresa):
     users = get_object_or_404(Users, pk=id_empresa)
-    if len(Empresa.objects.all().filter(user=users)) >= 0:
-        for dados in Empresa.objects.all().filter(user=users):
-            dados.delete()
-    if len(Vagas.objects.all().filter(user=users)) >= 0:
-        for dados in Empresa.objects.all().filter(user=users):
-            dados.delete()
     users.delete()
     return redirect('acoes_empresa')

@@ -13,10 +13,10 @@
       <section class="content">
         <header class="page-header">
           <h1>Empresas favoritadas</h1>
-          <form method='GET' action="#" class="filtros">
+          <form method='GET' action="{% url 'buscar' %}" class="filtros">
             <div class="form-group input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input name="#" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
+              <input name="busca/empresas/favoritadas" id="txt_pesquisa" placeholder="Pesquisar" type="search" class="form-control">
             </div>
           </form>
         </header>
