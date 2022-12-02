@@ -1,8 +1,8 @@
 {% load static %}
 <div class="left-column">
   <div class="sidebar">
-    {% if dados %}
-    {% for dado in dados %}
+    {% if Dados %}
+    {% for dado in Dados %}
     <div class="sidebar-user mb-3">
       <img class="sidebar-avatar mb-1" src="{{dado.imagem_perfil.url}}" alt="">
       <h2 class="sidebar-name h5 text-center">{{ dado.nome_do_candidato }}({{dado.user.username}})</h2>
