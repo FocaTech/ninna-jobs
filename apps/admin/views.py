@@ -4,9 +4,7 @@ from login_cadastro.models import Users
 from vaga.models import Vagas, TipoContratacao, TipoTrabalho, PerfilProfissional, VagasCandidatadas
 from usuarios.models import Empresa, Dados_Pessoais, Formacao_Academica
 from django.http import JsonResponse
-from django.core import serializers
 from django.contrib import messages
-from collections import OrderedDict
 
 todos_os_can = Users.objects.filter(funcao='CAN').count()
 todas_as_emp = Users.objects.filter(funcao='EMP').count()

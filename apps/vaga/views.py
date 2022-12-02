@@ -5,7 +5,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.core.paginator import Paginator
-from usuarios.models import Certificados_Conquistas, Dados_Pessoais, Experiência_Profissional,Formacao_Academica,Informações_Iniciais, Idiomas, Empresa,TalentosFavoritados
+from usuarios.models import Dados_Pessoais, Formacao_Academica,Informações_Iniciais, Empresa,TalentosFavoritados
 # pro email
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string

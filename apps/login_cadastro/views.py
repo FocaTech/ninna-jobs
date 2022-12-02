@@ -1,15 +1,12 @@
-import re
-from .models import Users, AreaDeInteresse, Genero, Estado, FormacaoAcademica, Mes, Ano, Conquista, NivelIdioma
+from .models import Users
 from django.contrib import auth, messages
 from django.shortcuts import get_object_or_404, render, redirect
-from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.http import HttpResponse
-from django.utils.datastructures import MultiValueDictKeyError
 
 # tokens
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 
 # pro email

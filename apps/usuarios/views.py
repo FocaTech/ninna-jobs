@@ -4,7 +4,6 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
 from vaga.models import Vagas, VagasCandidatadas, VagasSalvas, TipoContratacao, TipoTrabalho, PerfilProfissional
-from vaga.views import  listar_vagas_arquivadas
 from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
