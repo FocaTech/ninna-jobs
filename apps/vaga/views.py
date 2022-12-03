@@ -5,7 +5,8 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.core.paginator import Paginator
-from usuarios.models import DadosPessoais, FormacaoAcademica,InformaçõesIniciais, Empresa,TalentosFavoritados
+from usuarios.models import DadosPessoais, FormacaoAcademica,InformaçõesIniciais, Empresa,TalentosFavoritados, EmpresasFavoritadas
+from administrador.models import PerfilAdmin
 # pro email
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -134,7 +135,12 @@ def index(request):
         user_candidato = request.user
         DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
         empresa = Empresa.objects.filter(user=request.user)
+        if request.user.is_superuser:
+            perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        else:
+            perfil = None
         dados = {
+            'perfil':perfil,
             'Dados':DP,
             'empresa':empresa,
             'vagas' : vagas,
@@ -161,7 +167,12 @@ def vagas(request):
         empresa = Empresa.objects.filter(user=request.user)
     else:
         empresa = None
+    if request.user.is_superuser:
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     dados = {
+        'perfil':perfil,
         'Dados':DP,
         'empresa':empresa,
         'vagas' : vagas
@@ -230,8 +241,8 @@ def buscas(request):
     '''barras de busca da dash, empresa e vagas'''
     lista_vagas = Vagas.objects.order_by('-data_vaga')
     listar_busca(request)
-    if 'buscar' in request.GET:
-        nome_a_buscar = request.GET['buscar']
+    if 'buscar/vagas' in request.GET:#busca de todas as vagas
+        nome_a_buscar = request.GET['buscar/vagas']
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, status=True)
         empresa = Empresa.objects.filter(user=request.user)
         DP = DadosPessoais.objects.order_by().filter(user=request.user)
@@ -241,8 +252,8 @@ def buscas(request):
             'vagas' : lista_vagas
         }
         return render(request, 'vagas.html', dados)
-    elif 'bash' in request.GET:
-        nome_a_buscar = request.GET['bash']
+    elif 'busca/dashboard' in request.GET:#busca de dashboard candidatos
+        nome_a_buscar = request.GET['busca/dashboard']
         busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
         busca_candidatadas = reducao_codigo_busca(lista_de_vagas_candidatadas_do_user, nome_a_buscar)
         busca_arquivadas = reducao_codigo_busca(lista_minhas_arquivadas, nome_a_buscar)
@@ -260,22 +271,26 @@ def buscas(request):
             'vagas_arquivadas':a,
         }
         return render(request, 'dashboard.html', dados)
-    elif 'BVadmin' in request.GET:
-        nome_a_buscar = request.GET['BVadmin']
+    elif 'buscar/vaga/admin' in request.GET:#busca do admin em vagas
+        nome_a_buscar = request.GET['buscar/vaga/admin']
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
-        busca_salvas = reducao_codigo_busca(lista_de_vagas_salvas_do_user, nome_a_buscar)
-        empresa = Empresa.objects.filter(user=request.user)
-        DP = DadosPessoais.objects.order_by().filter(user=request.user)
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        empresa = Empresa.objects.all()
+        contratacoes = TipoContratacao.objects.all()
+        trabalhos = TipoTrabalho.objects.all()
+        perfis = PerfilProfissional.objects.all()
         dados = {
-            'Dados':DP,
-            'empresa':empresa,
-            # 'vagas_candidatadas' : busca_candidatadas,
-            'vagas':busca_vagas
+        'perfil':perfil,
+        'empresa':empresa,
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'vagas' : busca_vagas
         }
         return render(request, 'acoesVagas.html', dados)
-    elif 'bempresa' in request.GET:
+    elif 'busca/empresa' in request.GET:#busca da dashboard empresa
         user = request.user
-        nome_a_buscar = request.GET['bempresa']
+        nome_a_buscar = request.GET['busca/empresa']
         lista = reducao_codigo_busca(lista_talentos, nome_a_buscar)
         lista_arquivadas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=False)
         lista_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar, user=user, status=True)
@@ -297,25 +312,52 @@ def buscas(request):
             'ids_dos_talentos_favoritados' : lista_ta,
         }
         return render(request, 'empresa.html', dados)
-    elif 'badmin' in request.GET:
+    elif 'busca/empresas/favoritadas' in request.GET:#busca empresa favoritadas
+        user = request.user
+        nome_a_buscar = request.GET['busca/empresas/favoritadas']
+        lista = reducao_codigo_busca(lista_empresas_favoritadas, nome_a_buscar)
+        lista_em = []
+
+        for l in lista:
+            for e in l:
+                lista_em.append(e)
+        dados_empresas_favoritadas = []
+        empresas_favoritadas = []
+        empresas_favoritadas_query = EmpresasFavoritadas.objects.filter(id_talento=request.user)
+        empresas_favoritadas = [empresas.id_empresa for empresas in empresas_favoritadas_query]
+        dados_empresas_favoritadas = []
+        for emp_fav in empresas_favoritadas:
+            dados_empresas_favoritadas_query = Empresa.objects.filter(user=emp_fav.id)
+            dados_empresas_favoritadas.append(*dados_empresas_favoritadas_query)
+
+        empresa = Empresa.objects.all()
+        dados_pessoais = DadosPessoais.objects.filter(user=request.user)
+        dados = {
+        'empresa':empresa,
+        'Dados':dados_pessoais,
+        'empresas_favoritadas' : lista_em,
+        'dados_empresas_favoritadas' : dados_empresas_favoritadas,
+        }
+        return render(request, 'empresasfavoritadas.html', dados)
+    elif 'buscar/admin' in request.GET:#busca do admin em admins
         adms = Users.objects.all()
-        nome_a_buscar = request.GET['badmin']
+        nome_a_buscar = request.GET['buscar/admin']
         adms = adms.filter(username__icontains=nome_a_buscar, is_superuser=True)
         dados = {
             'usuario_admin' : adms
         }
         return render(request, 'acoesadmin.html', dados)
-    elif 'bcand' in request.GET:
+    elif 'buscar/candidato' in request.GET:#busca do admin de todos os candidatos
         cand = Users.objects.all()
-        nome_a_buscar = request.GET['bcand']
+        nome_a_buscar = request.GET['buscar/candidato']
         cand = cand.filter(username__icontains=nome_a_buscar, funcao="CAN")
         dados = {
             'candidatos' : cand
         }
         return render(request, 'acoesTalento.html', dados)
-    elif 'BAempresa' in request.GET:
+    elif 'busca/admin/empresa' in request.GET:#busca do admin em empresas
         emp = Users.objects.all()
-        nome_a_buscar = request.GET['BAempresa']
+        nome_a_buscar = request.GET['busca/admin/empresa']
         emp = emp.filter(username__icontains=nome_a_buscar, funcao="EMP")
         dados = {
             'empresa' : emp
@@ -345,6 +387,7 @@ def listar_busca(request):
     global lista_de_vagas_salvas_do_user
     global lista_minhas_arquivadas
     global lista_talentos
+    global lista_empresas_favoritadas
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
     id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
@@ -363,6 +406,10 @@ def listar_busca(request):
     for todas_vagas in VagasCandidatadas.objects.filter(id_cadidato=request.user):
         if todas_vagas.id_vaga.status == False:
             lista_minhas_arquivadas.append(Vagas.objects.filter(pk=todas_vagas.id_vaga.pk))
+
+    lista_empresas_favoritadas = []
+    for empresas in EmpresasFavoritadas.objects.filter(id_talento=request.user):
+        lista_empresas_favoritadas.append(Users.objects.filter(id=empresas.id_empresa.pk))
 
     lista_talentos = []
     for talentos in TalentosFavoritados.objects.filter(id_empresa=request.user):

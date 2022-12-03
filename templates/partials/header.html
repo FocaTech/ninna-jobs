@@ -45,6 +45,10 @@
             <img width="40" height="40" src="{{emp.img_perfil_empresa.url}}" alt="menu">
           </button>
           {% endfor %}
+          {% elif perfil.perfil_admin.url and user.is_superuser %}
+          <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img width="40" height="40" src="{{perfil.perfil_admin.url}}" alt="menu">
+          </button>
           {% else %}
           <button class="dropdown-toggle botaologout mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img width="40" height="40" src="{% static 'img/avatar.svg' %}" alt="menu">

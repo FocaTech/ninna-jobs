@@ -41,15 +41,15 @@
                       </tr>
                     </div>
                   </div> {% endcomment %}
-                  <form method='GET' action="{% url 'bcand' %}" class="filtros my-4">
+                  <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
                     <div class="input-group">
-                        <input name='bcand' placeholder="Pesquisar" type="search" class="form-control">
+                        <input name='buscar/candidato' placeholder="Pesquisar" type="search" class="form-control">
                         <span class="input-group-text"><i class="bi bi-search"></i>
                         </span>
                     </div>
                   </form>
                   <tr>
-                    <th>Selecionar</th>
+                    {% comment %} <th>Selecionar</th> {% endcomment %}
                     <th class="" tabindex="0"rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>
                     <th class="" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="data de inscrição">Data de inscrição</th>
                     <th class="" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Vaga Lançada">Ultimo acesso</th>
@@ -58,11 +58,11 @@
                 <tbody>
                   {% for candidato in candidatos %}
                   <tr class="empresas">
-                    <td>
+                    {% comment %} <td>
                       <div class="form-check">
                         <input class="form-check-input marcar" type="checkbox" value=""name="marcarexcluirempresa">
                       </div>
-                    </td>
+                    </td> {% endcomment %}
                     <td class="nome-table">{{candidato.username}}({{candidato.username}})</td>
                     <td class="">{{candidato.date_joined|date:"d/m/Y | H:i:m"}}</td>
                     <td class="">{{candidato.last_login|date:"d/m/Y | H:i:m"}}</td>
@@ -73,7 +73,8 @@
                       </button>
                       <ul class="dropdown-menu">
                         <li><a href="{% url 'admin_ban' candidato.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
-                        <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li>
+                        <li><a href="{% url 'perfil_candidato' candidato.pk %}"><button class="dropdown-item"><i class="bi bi-person"></i> Ver Perfil</button></a></li>
+                        {% comment %} <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li> {% endcomment %}
                       </ul>
                     </div>
                     </td>
@@ -85,9 +86,9 @@
           </div>
         </div>
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-primary"><i class="bi bi-trash"></i>
+          {% comment %} <button type="button" class="btn btn-primary"><i class="bi bi-trash"></i>
             Excluir
-          </button>
+          </button> {% endcomment %}
         </div>
       </div>
     </main>
