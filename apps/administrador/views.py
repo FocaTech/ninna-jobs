@@ -152,7 +152,10 @@ def relatorio(request):
     for c in Users.objects.filter(funcao = 'CAN'):
         if VagasCandidatadas.objects.filter(id_cadidato=c):
             vagas_match[c.username] = [VagasCandidatadas.objects.filter(id_cadidato=c)[0]]
-    perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    if PerfilAdmin.objects.filter(user=request.user):
+        perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    else:
+        perfil = None
     contexto = {
         'perfil':perfil,
         'numero_vagas':len(Vagas.objects.all()),
