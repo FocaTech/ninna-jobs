@@ -21,7 +21,10 @@ def interface(request):
     empresas = Empresa.objects.all()
     dados = DadosPessoais.objects.all()
     formacao = FormacaoAcademica.objects.all()
-    perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
@@ -70,7 +73,10 @@ def acoes_admin(request):
         else:
             messages.error(request, 'Email ja existe')
     usuario_admin = Users.objects.filter(is_staff = True)
-    perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     usuario_admin = paginar(usuario_admin, request)
     contexto = {
         'perfil':perfil,
@@ -92,7 +98,10 @@ def acoes_empresa(request):
 
     empresas = Users.objects.filter(funcao="EMP")
     perfil_empresa = Empresa.objects.all()
-    perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     empresas = paginar(empresas, request)
     contexto ={
         'perfil':perfil,
@@ -126,7 +135,10 @@ def acoes_talento(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
     candidatos = Users.objects.filter(funcao = 'CAN')
-    perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     candidatos = paginar(candidatos, request)
     contexto = {
         'perfil':perfil,
@@ -172,7 +184,10 @@ def acoes_vaga(request):
     vagas = Vagas.objects.all()
     empresa = Empresa.objects.all()
 
-    perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     vagas = paginar(vagas, request)
     dados = {
         'perfil':perfil,
@@ -216,7 +231,10 @@ def editar_vagas_admin(request, pk_vagas):
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
     vagas.salario = int(vagas.salario)
-    perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
     vaga_a_editar = {
         'perfil':perfil,
         'contratacoes' : contratacoes,

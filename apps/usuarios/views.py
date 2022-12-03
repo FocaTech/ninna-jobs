@@ -533,7 +533,7 @@ def ver_perfil_empresa(request, id_empresa):
 
 
     dados_pessoais = DadosPessoais.objects.filter(user=id_candidato)
-    if request.user.is_superuser:
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
         perfil = None
@@ -589,7 +589,7 @@ def perfil_candidato(request, id_candidato):
     FA = FormacaoAcademica.objects.order_by().filter(user=user_candidato)
     II = InformaçõesIniciais.objects.order_by().filter(user=user_candidato)
     I = Idiomas.objects.order_by().filter(user=user_candidato)
-    if request.user.is_superuser:
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
         perfil = None

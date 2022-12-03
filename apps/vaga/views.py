@@ -140,8 +140,8 @@ def index(request):
         user_candidato = request.user
         DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
         empresa = Empresa.objects.filter(user=request.user)
-        if request.user.is_superuser:
-            perfil = PerfilAdmin.objects.filter(user=request.user)
+        if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+            perfil = get_object_or_404(PerfilAdmin, user=request.user)
         else:
             perfil = None
         dados = {
@@ -149,7 +149,7 @@ def index(request):
             'Dados':DP,
             'empresa':empresa,
             'vagas' : vagas,
-            'ids_de_vagas_salvas' : ids_vagas_salvas,
+            'ids_de_vagas_salvas' : ids_de_vagas_salvas,
             'id_de_vagas_candidatadas' : id_vagas_candidatadas,
         }
     else:
@@ -172,10 +172,10 @@ def vagas(request):
         empresa = Empresa.objects.filter(user=request.user)
     else:
         empresa = None
-    if request.user.is_superuser:
-        perfil = get_object_or_404(PerfilAdmin, user=request.user)
-    else:
-        perfil = None
+        if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+            perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        else:
+            perfil = None
 
     lista_vagas_salvas = []# lista vazia para adicionar as vagas salvas
     vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=user_candidato)# traz um queryset com todos os objetos da Tab. VagaSalva
@@ -311,7 +311,10 @@ def buscas(request):
     elif 'buscar/vaga/admin' in request.GET:#busca do admin em vagas
         nome_a_buscar = request.GET['buscar/vaga/admin']
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
-        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+            perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        else:
+            perfil = None
         empresa = Empresa.objects.all()
         contratacoes = TipoContratacao.objects.all()
         trabalhos = TipoTrabalho.objects.all()
