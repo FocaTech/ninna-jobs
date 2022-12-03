@@ -118,7 +118,6 @@ def index(request):
                 continue
         ids_de_vagas_salvas = [vaga.id for vaga in lista_vagas_salvas]
 
-
         lista_vagas_candidatadas = []
         vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato)
         for vagas_candidatadas in vagas_candidatadas_query:
@@ -127,8 +126,6 @@ def index(request):
             except:
                 continue
         id_de_vagas_candidatadas = [vaga.id for vaga in lista_vagas_candidatadas]
-
-        print(lista_vagas_candidatadas)
 
         vagas = paginar(vagas, request)
         ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
@@ -171,11 +168,32 @@ def vagas(request):
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
         perfil = None
+
+    lista_vagas_salvas = []# lista vazia para adicionar as vagas salvas
+    vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=user_candidato)# traz um queryset com todos os objetos da Tab. VagaSalva
+    for vagas_salvas in vagas_salvas_query:# desempacotar esse queryset em objetos
+        try:
+            lista_vagas_salvas.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
+        except:
+            continue
+    ids_de_vagas_salvas = [vaga.id for vaga in lista_vagas_salvas]
+
+    lista_vagas_candidatadas = []
+    vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=user_candidato)
+    for vagas_candidatadas in vagas_candidatadas_query:
+        try:
+            lista_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
+        except:
+            continue
+    id_de_vagas_candidatadas = [vaga.id for vaga in lista_vagas_candidatadas]
+
     dados = {
         'perfil':perfil,
         'Dados':DP,
         'empresa':empresa,
-        'vagas' : vagas
+        'vagas' : vagas,
+        'ids_de_vagas_salvas' : ids_de_vagas_salvas,
+        'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
     }
     return render(request, 'vagas.html', dados)
 
