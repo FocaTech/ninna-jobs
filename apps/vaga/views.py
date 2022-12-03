@@ -115,7 +115,7 @@ def index(request):
                 lista_vagas_salvas.append(*Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga))# traz uma lista de obj
             except:
                 continue
-        ids_vagas_salvas = [vaga.id for vaga in lista_vagas_salvas]
+        ids_de_vagas_salvas = [vaga.id for vaga in lista_vagas_salvas]
 
 
         lista_vagas_candidatadas = []
@@ -125,12 +125,12 @@ def index(request):
                 lista_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
             except:
                 continue
-        id_vagas_candidatadas = [vaga.id for vaga in lista_vagas_candidatadas]
+        id_de_vagas_candidatadas = [vaga.id for vaga in lista_vagas_candidatadas]
 
         print(lista_vagas_candidatadas)
 
         vagas = paginar(vagas, request)
-        ids_vagas_salvas = paginar(ids_vagas_salvas, request)
+        ids_de_vagas_salvas = paginar(ids_de_vagas_salvas, request)
         user_candidato = request.user
         DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
         empresa = Empresa.objects.filter(user=request.user)
@@ -138,8 +138,8 @@ def index(request):
             'Dados':DP,
             'empresa':empresa,
             'vagas' : vagas,
-            'ids_de_vagas_salvas' : ids_vagas_salvas,
-            'id_de_vagas_candidatadas' : id_vagas_candidatadas,
+            'ids_de_vagas_salvas' : ids_de_vagas_salvas,
+            'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
         }
     else:
         vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
