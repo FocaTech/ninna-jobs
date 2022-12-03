@@ -99,3 +99,8 @@ class TalentosFavoritados(models.Model):
 class EmpresasFavoritadas(models.Model):
     id_talento = models.ForeignKey(Users, on_delete=models.CASCADE, )
     id_empresa = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='empresa2')
+
+class URLAtual(models.Model):
+    url = models.CharField(max_length=1600)
+    def __str__(self):
+        return self.url
