@@ -5,7 +5,7 @@ from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
 from django.core.paginator import Paginator
-from usuarios.models import DadosPessoais, FormacaoAcademica,InformaçõesIniciais, Empresa,TalentosFavoritados, EmpresasFavoritadas
+from usuarios.models import DadosPessoais, FormacaoAcademica,InformaçõesIniciais, Empresa,TalentosFavoritados, EmpresasFavoritadas, URLAtual
 from administrador.models import PerfilAdmin
 # pro email
 from django.core.mail import EmailMultiAlternatives
@@ -13,7 +13,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
-url_atual = 'http://127.0.0.1:8000/usuarios/dashboard/'
+# url_atual = 'http://127.0.0.1:8000/usuarios/dashboard/'
 
 def select(request):
     '''cria e salva vagas'''
@@ -97,14 +97,25 @@ def atualizar_vagas(request):
 
 def deleta_vaga(request, pk_vaga):
     '''Apaga vaga'''
+    url_atual = URLAtual.objects.all()
+    if len(url_atual) > 0 :
+        url_atual = [url for url in url_atual]
+
+    print(f'url apagar vaga= {url_atual}')
     vaga = get_object_or_404(Vagas, pk=pk_vaga)
     messages.error(request, f"Vaga '{vaga.nome_vaga}' deletada")
     vaga.delete()
     return redirect(url_atual)
 
 def index(request):
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
+    # global url_atual
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all()
+    limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
     if request.user.is_authenticated:
         vagas = Vagas.objects.get_queryset().order_by('id').filter(status=True)
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
@@ -202,7 +213,13 @@ def tela_de_vagas_salvas(request):
 
 @has_role_decorator('candidato')
 def salvar_vaga(request, pk_vaga):
-    global url_atual
+    # global url_atual
+    url_atual = URLAtual.objects.all()
+    if len(url_atual) > 0 :
+        for url in url_atual:
+            print(f"url no for {url}")
+            url_atual = str(url)
+    print(f'url fav vaga = {url_atual}')
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -223,7 +240,12 @@ def salvar_vaga(request, pk_vaga):
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
-    global url_atual
+    # global url_atual
+    url_atual = URLAtual.objects.all()
+    if len(url_atual) > 0 :
+        for url in url_atual:
+            url_atual = str(url)
+    print(f'url candidatar = {url_atual}')
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
         # id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()

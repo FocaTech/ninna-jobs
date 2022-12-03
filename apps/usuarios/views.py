@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import CertificadosConquistas, DadosPessoais, Empresa, Idiomas, ExperiênciaProfissional, InformaçõesIniciais, FormacaoAcademica, TalentosFavoritados, EmpresasFavoritadas
+from .models import CertificadosConquistas, DadosPessoais, Empresa, Idiomas, ExperiênciaProfissional, InformaçõesIniciais, FormacaoAcademica, TalentosFavoritados, EmpresasFavoritadas, URLAtual
 from login_cadastro.models import Users
 from rolepermissions.decorators import has_role_decorator
 from collections import OrderedDict
@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator
 import requests
 
-url_atual = ""
+# url_atual = ""
 def apagar_form_empresa(request):
     '''apagar form empresa'''
     informacoes = get_object_or_404(Empresa, user=request.user)
@@ -229,13 +229,13 @@ def editando_dados_pessoais(request):
         else:
             messages.error(request,'Cep Invalido')
             return redirect('Informacoes_iniciais')
-    return redirect('DadosPessoais')
+    return redirect('Dados_Pessoais')
 
 def deleta_formacao(request, id_formacao):
     '''deleta as formacoes existentes'''
     nome = get_object_or_404(FormacaoAcademica, pk=id_formacao)
     nome.delete()
-    return redirect('DadosPessoais')
+    return redirect('Dados_Pessoais')
 
 def adicionar_formacao(request):
     '''adiciona ate 5 formacoes e redireciona a mesma pagina'''
@@ -253,7 +253,7 @@ def adicionar_formacao(request):
             data_termino = request.POST['data_termino']
             informacoes3 = FormacaoAcademica.objects.create(user=usuario,instituicao_ensino=instituicao_ensino,formacao=formacao,curso=curso,data_inicio=data_inicio,data_termino=data_termino)
             informacoes3.save()
-    return redirect('DadosPessoais')
+    return redirect('Dados_Pessoais')
 
 def Formacao_academica(request):
     '''renderiza a pagina e traz os certificados do candidato'''
@@ -361,8 +361,14 @@ def adicionar_idioma(request):
 @has_role_decorator('empresa')
 def empresa(request, *args, **kwargs):
     '''dash de empresa'''
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
+    # global url_atual
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all()
+    limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
     id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
@@ -420,6 +426,16 @@ def empresa(request, *args, **kwargs):
 @has_role_decorator('candidato')
 def dashboard(request):
     '''dash de candidato'''
+    # global url_atual
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all().delete()
+    # limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
+    print(f'dash = {url_atual} delete de out')
+
     vagas = Vagas.objects.all()
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -473,8 +489,16 @@ def perfilempresa(request):
 
 def ver_perfil_empresa(request, id_empresa):
     '''candidato poder ver perfil da empresa'''
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
+    # global url_atual
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all()
+    limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
+    print(f'ver perfil = {url_atual}')
+
     id_candidato = request.user
 
     vagas = Vagas.objects.filter(user=id_empresa, status=True)
@@ -544,8 +568,17 @@ def perfil(request):
 
 def perfil_candidato(request, id_candidato):
     '''empresa poder ver os perfil candidato'''
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
+    # global url_atual
+
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all()
+    limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
+    print(f'ver perfil cand = {url_atual}')
+
     id_empresa = request.user
     user_candidato = get_object_or_404(Users, pk=id_candidato)
     CC = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
@@ -578,8 +611,16 @@ def perfil_candidato(request, id_candidato):
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
+    # global url_atual
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all()
+    limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
+    print(f'listar talentos = {url_atual}')
+
     id_empresa = request.user
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
 
@@ -592,7 +633,6 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     dados_pessoais = []
     for talento in lista_de_talentos:
-        # dado_pessoal = DadosPessoais.objects.order_by('data_dados')
         dado_pessoal = DadosPessoais.objects.filter(user=talento)
         if len(dado_pessoal) != 0:
             dados_pessoais.append(*dado_pessoal)# asterisco serve para desenpacotar o queryset, ou seja, na lista esta indo somente os obj
@@ -636,8 +676,16 @@ def listar_talentos_candidatados(request, pk_vaga):
 
 def talentos(request):
     '''empresa poder ver os candidatos'''
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
+    # global url_atual
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all()
+    limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
+    print(f'ver talentos = {url_atual}')
+
     id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
@@ -697,8 +745,15 @@ def contato(request):
     return redirect('index')
 
 def empresas_favoritadas(request):
-    global url_atual
-    url_atual = "http://127.0.0.1:8000" + request.path
+    # global url_atual
+    url = "http://127.0.0.1:8000" + request.path
+
+    limpar_bd_ulr = URLAtual.objects.all()
+    limpar_bd_ulr.delete()
+    url_atual = URLAtual.objects.create(url=url)
+    url_atual.save()
+
+    print(f'emp fav = {url_atual}')
     id_candidato = request.user
 
     empresas_favoritadas = []
@@ -725,7 +780,13 @@ def empresas_favoritadas(request):
     return render(request, 'empresasfavoritadas.html', dados)
 
 def favoritar_talento(request, pk_talento):
-    global url_atual
+    # global url_atual
+    url_atual = URLAtual.objects.all()
+    if len(url_atual) > 0 :
+        for url in url_atual:
+            url_atual = str(url)
+
+    print(f'url fav talen = {url_atual}')
     if request.user.is_authenticated:
         id_empresa = request.user
         id_candidato = get_object_or_404(Users, pk=pk_talento)
@@ -743,7 +804,13 @@ def favoritar_talento(request, pk_talento):
         return redirect(url_atual)
 
 def favoritar_empresa(request, pk_empresa):
-    global url_atual
+    # global url_atual
+    url_atual = URLAtual.objects.all()
+    if len(url_atual) > 0 :
+        for url in url_atual:
+            url_atual = str(url)
+
+    print(f'url fav empr = {url_atual}')
     if request.user.is_authenticated:
         id_candidato = request.user
         id_empresa = get_object_or_404(Users, pk=pk_empresa)

@@ -19,7 +19,7 @@ def interface(request):
     empresas = Empresa.objects.all()
     dados = DadosPessoais.objects.all()
     formacao = FormacaoAcademica.objects.all()
-    perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    perfil = get_object_or_404(PerfilAdmin, user=request.user)
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
