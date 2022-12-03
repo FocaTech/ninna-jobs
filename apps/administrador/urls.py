@@ -9,6 +9,9 @@ urlpatterns = [
     path('relatorio/', views.relatorio, name='relatorio'),
     path('detalhes-vagas', views.detalhes_vagas, name='detalhes_vagas'),
     path('acoes-vagas', views.acoes_vaga, name='acoes_vagas'),
+    path('editar/admin/<int:pk_vagas>', views.editar_vagas_admin, name='editar_admin'),
+    path('atualizar/vagas/admin', views.atualizar_vagas_admin, name='atualizar_vagas_admin'),
     path('api-charts', views.interface_charts, name='api-charts'),
     path('admin/ban/<int:id_empresa>', views.admin_ban, name='admin_ban'),#admin apagar empresa
+    path('deletar/vaga/admin/<int:pk_vaga>', views.deleta_vaga_admin, name='deletar_admin'),
 ]

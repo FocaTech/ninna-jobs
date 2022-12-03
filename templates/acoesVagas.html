@@ -107,19 +107,14 @@
                                     </div>
                                     <div class="modal-footer justify-content-between">
                                       <div>
-                                        {% if vaga.id in ids_de_vagas_salvas %}
-                                        <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star-fill"></i></a>
-                                        {% else %}
-                                        <a href="{% url 'salvar_vaga' vaga.id %}" type="button" class="" title="Favoritar"><i class="bi bi-star"></i></a>
-                                        {% endif %}
                                       </div>
                                       {% if user.is_superuser %}
                                       <div class="col-12 col-sm-6 col-lg-4">
                                         <div class="single-best-receipe-area mb-30">
                                           <div class="receipe-content">
                                             <a href="{% url 'editar' vaga.id %}">
-                                                <a href="{% url 'editar' vaga.id %}" type="button" class="btn btn-success">Editar</a>
-                                                <a href="{% url 'deletar' vaga.id %}" type="button" class="btn btn-danger">Deletar</a>
+                                                <a href="{% url 'editar_admin' vaga.id %}" type="button" class="btn btn-success">Editar</a>
+                                                <a href="{% url 'deletar_admin' vaga.id %}" type="button" class="btn btn-danger">Deletar</a>
                                             </a>
                                           </div>
                                         </div>
@@ -129,11 +124,48 @@
                                   </div>
                                 </div>
                               </div>
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
                 {% endif %}
             </div>
+            <section class="top-catagory-area section-padding-20-0">
+                <div class="container">
+                    {% if vagas.has_other_pages %}
+                    <ul class="pagination">
+                        {% if vagas.has_previous %}
+                        <li class="page-item">
+                            <a href="?page={{ vagas.previous_page_number }}" class="page-link">&laquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">&laquo;</a>
+                        </li>
+                        {% endif %}
+                        {% for pagina in vagas.paginator.page_range %}
+                        {% if vagas.number == pagina %}
+                        <li class="page-item active">
+                            <a class="page-link">{{ pagina }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if vagas.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ vagas.next_page_number }}" class="page-link">&raquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">&raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+              </section>
             </div>
     </div>
 </main>

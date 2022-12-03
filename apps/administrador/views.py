@@ -6,11 +6,13 @@ from usuarios.models import Empresa, DadosPessoais, FormacaoAcademica
 from django.http import JsonResponse
 from django.contrib import messages
 from administrador.models import PerfilAdmin
+from vaga.views import paginar
 
 
 todos_os_can = Users.objects.filter(funcao='CAN').count()
 todas_as_emp = Users.objects.filter(funcao='EMP').count()
 vagas_ativas = Vagas.objects.filter(status=True).count()
+url_atual = ''
 # Create your views here.
 @login_required(login_url='index')
 def interface(request):
@@ -43,9 +45,10 @@ def interface_charts(request):
         "data": [todos_os_can, todas_as_emp]
     })
 
-
 @login_required(login_url='index')
 def acoes_admin(request):
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -68,6 +71,7 @@ def acoes_admin(request):
             messages.error(request, 'Email ja existe')
     usuario_admin = Users.objects.filter(is_staff = True)
     perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    usuario_admin = paginar(usuario_admin, request)
     contexto = {
         'perfil':perfil,
         'usuario_admin' : usuario_admin
@@ -76,6 +80,8 @@ def acoes_admin(request):
 
 @login_required(login_url='index')
 def acoes_empresa(request):
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     vagas = {}
     empresas_query = Users.objects.filter(funcao = 'EMP')
 
@@ -87,6 +93,7 @@ def acoes_empresa(request):
     empresas = Users.objects.filter(funcao="EMP")
     perfil_empresa = Empresa.objects.all()
     perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    empresas = paginar(empresas, request)
     contexto ={
         'perfil':perfil,
         'vagas' : vagas,
@@ -116,8 +123,11 @@ def acoes_empresa(request):
 
 @login_required(login_url='index')
 def acoes_talento(request):
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     candidatos = Users.objects.filter(funcao = 'CAN')
     perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    candidatos = paginar(candidatos, request)
     contexto = {
         'perfil':perfil,
         'candidatos' : candidatos
@@ -153,6 +163,8 @@ def detalhes_vagas(request):
 @login_required(login_url='index')
 def acoes_vaga(request):
     '''cria e salva vagas'''
+    global url_atual
+    url_atual = "http://127.0.0.1:8000" + request.path
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
     perfis = PerfilProfissional.objects.all()
@@ -161,6 +173,7 @@ def acoes_vaga(request):
     empresa = Empresa.objects.all()
 
     perfil = get_object_or_404(PerfilAdmin,user=request.user)
+    vagas = paginar(vagas, request)
     dados = {
         'perfil':perfil,
         'empresa':empresa,
@@ -172,13 +185,13 @@ def acoes_vaga(request):
 
     if request.method == 'POST':
         empresa = request.POST['empresa']
-        empresa = get_object_or_404(Empresa, nome_fantasia=empresa)
+        empresas = get_object_or_404(Empresa, nome_fantasia=empresa)
         nome_vaga = request.POST['nome_vaga']
         tipo_contratacao = request.POST['tipo_contratacao']
-        local = empresa.estado + '/' + empresa.cidade
+        local = empresas.estado + '/' + empresas.cidade
         perfil = request.POST['perfil']
         salario = request.POST['salario']
-        descricao_empresa = empresa.descricao_empresa
+        descricao_empresa = empresas.descricao_empresa
         descricao_vaga = request.POST['descricao_vaga']
         area_atuacao = request.POST['area_atuacao']
         principais_atividades = request.POST['principais_atividades']
@@ -187,7 +200,7 @@ def acoes_vaga(request):
         beneficios = request.POST['beneficios']
         tipo_trabalho = request.POST['tipo_trabalho']
         logo_empresa = request.FILES['logo_empresa']
-        vaga = Vagas.objects.create(nome_vaga=nome_vaga, user=empresa.user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
+        vaga = Vagas.objects.create(nome_empresa=empresas.nome_fantasia,nome_vaga=nome_vaga, user=empresas.user, tipo_contratacao = tipo_contratacao, local_empresa=local, perfil_profissional=perfil, salario=salario, descricao_empresa=descricao_empresa, descricao_vaga=descricao_vaga, area_atuacao=area_atuacao, principais_atividades=principais_atividades, requisitos=requisitos, diferencial=diferencial, beneficios=beneficios, tipo_trabalho=tipo_trabalho, logo_empresa=logo_empresa)
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
@@ -196,8 +209,57 @@ def acoes_vaga(request):
     else:
         return render(request, 'acoesVagas.html', dados)
 
+def editar_vagas_admin(request, pk_vagas):
+    '''Editar uma vaga'''
+    vagas = get_object_or_404(Vagas, pk=pk_vagas)
+    contratacoes = TipoContratacao.objects.all()
+    trabalhos = TipoTrabalho.objects.all()
+    perfis = PerfilProfissional.objects.all()
+    vagas.salario = int(vagas.salario)
+    perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    vaga_a_editar = {
+        'perfil':perfil,
+        'contratacoes' : contratacoes,
+        'trabalhos' : trabalhos,
+        'perfis' : perfis,
+        'vaga':vagas,
+    }
+    return render(request, 'editar_vaga_admin.html', vaga_a_editar)
+
+def atualizar_vagas_admin(request):
+    '''Atualizar a vaga editada'''
+    if request.method == 'POST':
+        pk_vaga = request.POST['pk_vagas']
+        v = Vagas.objects.get(pk=pk_vaga)
+        v.nome_vaga = request.POST['nome_vaga']
+        v.tipo_contratacao = request.POST['tipo_contratacao']
+        v.perfil_profissional = request.POST['perfil']
+        v.salario = request.POST['salario']
+        v.descricao_vaga = request.POST['descricao_vaga']
+        v.area_atuacao = request.POST['area_atuacao']
+        v.principais_atividades = request.POST['principais_atividades']
+        v.requisitos = request.POST['requisitos']
+        v.diferencial = request.POST['diferencial']
+        v.beneficios = request.POST['beneficios']
+        v.tipo_trabalho = request.POST['tipo_trabalho']
+        if 'logo_empresa' in request.FILES:
+            v.logo_empresa = request.FILES['logo_empresa']
+        v.save()
+        messages.success(request, f"Vaga '{v.nome_vaga}' editada")
+    return redirect('acoes_vagas')
+
 @login_required(login_url='index')
 def admin_ban(request, id_empresa):
+    'banir adm'
+    global url_atual
     users = get_object_or_404(Users, pk=id_empresa)
     users.delete()
-    return redirect('acoes_empresa')
+    return redirect(url_atual)
+
+@login_required(login_url='index')
+def deleta_vaga_admin(request, pk_vaga):
+    '''adm Apaga vaga'''
+    global url_atual
+    vaga = get_object_or_404(Vagas, pk=pk_vaga)
+    vaga.delete()
+    return redirect(url_atual)

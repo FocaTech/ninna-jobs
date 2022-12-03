@@ -71,7 +71,7 @@ def editar_vagas(request, pk_vagas):
         'perfis' : perfis,
         'vaga':vagas,
     }
-    return render(request, 'editar_vaga.html', vaga_a_editar)
+    return render(request, 'editar_vaga_admin.html', vaga_a_editar)
 
 def atualizar_vagas(request):
     '''Atualizar a vaga editada'''
@@ -96,7 +96,7 @@ def atualizar_vagas(request):
     return redirect('empresa')
 
 def deleta_vaga(request, pk_vaga):
-    '''Apaga vaga'''
+    '''Apaga empresa vaga'''
     vaga = get_object_or_404(Vagas, pk=pk_vaga)
     messages.error(request, f"Vaga '{vaga.nome_vaga}' deletada")
     vaga.delete()
@@ -106,7 +106,7 @@ def index(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
     if request.user.is_authenticated:
-        vagas = Vagas.objects.get_queryset().order_by('id').filter(status=True)
+        vagas = Vagas.objects.get_queryset().order_by('-data_vaga').filter(status=True)[0:6]
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
         lista_vagas_salvas = []# lista vazia para adicionar as vagas salvas
@@ -128,10 +128,6 @@ def index(request):
                 continue
         id_vagas_candidatadas = [vaga.id for vaga in lista_vagas_candidatadas]
 
-        print(lista_vagas_candidatadas)
-
-        vagas = paginar(vagas, request)
-        ids_vagas_salvas = paginar(ids_vagas_salvas, request)
         user_candidato = request.user
         DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
         empresa = Empresa.objects.filter(user=request.user)
@@ -145,7 +141,7 @@ def index(request):
             'empresa':empresa,
             'vagas' : vagas,
             'ids_de_vagas_salvas' : ids_vagas_salvas,
-            'id_de_vagas_candidatadas' : id_vagas_candidatadas,
+            'id_de_vagas_candidatadas' : id_vagas_candidatadas[0:6],
         }
     else:
         vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
@@ -421,7 +417,7 @@ def listar_vagas_arquivadas():
 
 def paginar(vagas, request):
     if len(vagas) > 0:
-        vagas_paginadas = Paginator(vagas, 6)
+        vagas_paginadas = Paginator(vagas, 9)
         page_num = request.GET.get('page')
         vagas = vagas_paginadas.get_page(page_num)
     return vagas

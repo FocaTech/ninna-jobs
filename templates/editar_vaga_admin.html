@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Editar vagas{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+<main class="container">
+    <div class="right-column">
+        <section class="content">
+            <header class="page-header">
+                <h1>Editando Vaga</h1>
+            </header>
+                <!--Modal cadastrar vagas editadas-->
+                <div class="content">
+                    <div>
+                    <form action='{% url "atualizar_vagas_admin" %}' method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            <input type="text" id="pk_vagas" class="form-control" name="pk_vagas" value="{{vaga.id}}" hidden>
+                        <div class="col-12 col-lg-4">
+                            <label for="file"><b>Foto utilizada</b></label>
+                            <img src="{{ vaga.logo_empresa.url }}">
+                            <input class="p-1" type="file" name="logo_empresa" value="">
+                        </div>
+                        <div class="row g-3 align-items-center mb-2">
+                        <div class="col">
+                            <label class="form-label">Nome da Vaga</label>
+                            <input class="form-control" type="text" name="nome_vaga" maxlength='99' value="{{vaga.nome_vaga}}" required>
+                        </div>
+                        </div>
+                        <div class="row g-3 align-items-center mb-2">
+                        <div class="col">
+                            <label class="form-label" for="contratacao">Tipo de Contratacao</label>
+                            <select class="form-select" name="tipo_contratacao">
+                                {% for contratacao in contratacoes%}
+                                <option value="{{contratacao.contratacao}}">{{contratacao.contratacao}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        </div>
+                        <div class="row g-3 align-items-center mb-2">
+                        <div class="col">
+                            <label class="form-label" for="perfil">Perfil do Profissional</label>
+                            <select class="form-select" name="perfil">
+                                {% for perfil in perfis%}
+                                <option value="{{perfil.contratacao}}">{{perfil.contratacao}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Salário</label>
+                            <input class="form-control" type="number" name="salario" value="{{vaga.salario}}" min="100" max="10000000" required>
+                        </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Descrição da Vaga</label>
+                            <textarea class="form-control" name="descricao_vaga" maxlength="499" style="resize: none" required>{{vaga.descricao_vaga}}</textarea>
+                        </div>
+                        <div class="row g-3 align-items-center mb-2">
+                        <div class="col">
+                            <label class="form-label">Área de Atuação</label>
+                            <input class="form-control" type="text" name="area_atuacao" maxlength='79' value="{{vaga.area_atuacao}}" required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label" for="tipotrabalho">Tipo de trabalho</label>
+                            <select class="form-select" name="tipo_trabalho">
+                                {% for trabalho in trabalhos%}
+                                <option value="{{trabalho.trabalho}}">{{trabalho.trabalho}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Principais Atividades</label>
+                            <input class="form-control" type="text" name="principais_atividades" maxlength="299" value="{{vaga.principais_atividades}}" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Requisitos</label>
+                            <textarea class="form-control" type="text" name="requisitos" maxlength="399" style="resize: none" required>{{vaga.requisitos}}</textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Diferencial</label>
+                            <input class="form-control" type="text" name="diferencial" maxlength='299' value="{{vaga.diferencial}}" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Beneficios</label>
+                            <textarea class="form-control" name="beneficios" maxlength="499" style="resize: none" required>{{vaga.beneficios}}</textarea>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="single-best-receipe-area mb-30">
+                                <div class="receipe-content">
+                                <button class="btn btn-success" type="submit">Atualizar</button>
+                                <a href="{% url 'empresa' %}" type="button" class="btn btn-danger">Cancelar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

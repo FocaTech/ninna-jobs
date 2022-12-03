@@ -96,6 +96,7 @@
                           <li><a href="{% url 'ver_perfil_empresa' e.pk %}"><button class="dropdown-item"><i class="bi bi-building"></i> Ver Perfil</button></a></li>
                           {% comment %} <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li> {% endcomment %}
                         </ul>
+
                       </div>
                     </td>
                   </tr>
@@ -110,6 +111,44 @@
             Excluir
           </button> {% endcomment %}
         </div>
+          <!-- ##### Pagination ##### -->
+          <section class="top-catagory-area section-padding-20-0">
+            <div class="container">
+                {% if empresa.has_other_pages %}
+                <ul class="pagination">
+                    {% if empresa.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{ empresa.previous_page_number }}" class="page-link">&laquo;</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">&laquo;</a>
+                    </li>
+                    {% endif %}
+                    {% for pagina in empresa.paginator.page_range %}
+                    {% if empresa.number == pagina %}
+                    <li class="page-item active">
+                        <a class="page-link">{{ pagina }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if empresa.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{ empresa.next_page_number }}" class="page-link">&raquo;</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">&raquo;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+          </section>
       </div>
     </main>
     {% endblock %}

@@ -8,6 +8,7 @@ from administrador.models import PerfilAdmin
 from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
+from vaga.views import paginar
 import requests
 
 url_atual = ""
@@ -108,7 +109,7 @@ def apagar_informacoes_iniciais(request):
     informacoes.delete()
     return redirect('formcandidato')
 
-def Informacoes_iniciais(request):
+def informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
     user_candidato = request.user
     if request.method == 'POST' and not InformaçõesIniciais.objects.filter(user=user_candidato).exists():
@@ -154,7 +155,7 @@ def editando_informacoes_iniciais(request):
         i.save()
     return redirect('Informacoes_iniciais')
 
-def Dados_pessoais(request):
+def dados_pessoais(request):
     '''Pega os dados pessoais salva e renderiza as formacoes'''
     user_candidato = request.user
     if request.method == 'POST':
@@ -255,7 +256,7 @@ def adicionar_formacao(request):
             informacoes3.save()
     return redirect('DadosPessoais')
 
-def Formacao_academica(request):
+def formacao_academica(request):
     '''renderiza a pagina e traz os certificados do candidato'''
     user_candidato = request.user
     certificados = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
@@ -288,7 +289,7 @@ def adicionar_certificado(request):
             informacoes4.save()
     return redirect('Formacao_academica')
 
-def Certificados_conquistas(request):
+def certificados_conquistas(request):
     '''lista as experiencias'''
     user_candidato = request.user
     experiencias = ExperiênciaProfissional.objects.filter(user=user_candidato)
@@ -326,7 +327,7 @@ def adicionar_experiencia(request):
             informacoes5.save()
     return redirect('Certificados_conquistas')
 
-def Experiencia_profissional(request):
+def experiencia_profissional(request):
     '''mostra os idiomas e os lista'''
     user_candidato = request.user
     idioma = Idiomas.objects.filter(user=user_candidato)
@@ -426,7 +427,7 @@ def dashboard(request):
     id_das_vagas_salvas_do_user = VagasSalvas.objects.filter(id_cadidato=id_cadidato)# traz um queryset com todos os objetos da Tab. VagaSalva
 
     lista_de_vagas_salvas_do_user = []
-    lista_de_vagas_salvas_do_user = [ Vagas.objects.filter(nome_vaga=vagas_salvas.id_vaga, status=True) for vagas_salvas in id_das_vagas_salvas_do_user]
+    lista_de_vagas_salvas_do_user = [ Vagas.objects.filter(pk=vagas_salvas.id_vaga.pk, status=True) for vagas_salvas in id_das_vagas_salvas_do_user]
 
     ids_de_vagas_salvas = []
     for vaga_salva in lista_de_vagas_salvas_do_user:
@@ -437,8 +438,8 @@ def dashboard(request):
     lista_de_vagas_candidatadas = []
     lista_de_vagas_candidatadas_arquivadas = []
     for vagas_candidatadas in id_das_vagas_candidatadas_do_user:
-        lista_de_vagas_candidatadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
-        lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga))# lista que vai ser usada para filtrar as arquivadas
+        lista_de_vagas_candidatadas.append(Vagas.objects.filter(pk=vagas_candidatadas.id_vaga.pk, status=True))
+        lista_de_vagas_candidatadas_arquivadas.append(Vagas.objects.filter(pk=vagas_candidatadas.id_vaga.pk))# lista que vai ser usada para filtrar as arquivadas
 
     id_de_vagas_candidatadas = [vaga.id for vagaquery in lista_de_vagas_candidatadas for vaga in vagaquery]# dois for para desenpacotar o queryset
 
@@ -450,6 +451,7 @@ def dashboard(request):
 
     user_candidato = request.user
     DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
+
     dados = {
         'Dados':DP,
         'vagas' : vagas,
@@ -620,6 +622,7 @@ def listar_talentos_candidatados(request, pk_vaga):
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
 
+    dados_pessoais = paginar(dados_pessoais, request)
     empresa = Empresa.objects.filter(user=request.user)
     dados = {
         'empresa':empresa,
@@ -630,6 +633,7 @@ def listar_talentos_candidatados(request, pk_vaga):
         'info' : informacoes_iniciais,
         'form' : formacaoes_academicas,
         'ids_dos_talentos_favoritados' : ids_dos_talentos_favoritados,
+        'id_vaga':pk_vaga
     }
 
     return render(request, 'listar-talentos_candidatados.html', dados)
@@ -645,21 +649,16 @@ def talentos(request):
     d = DadosPessoais.objects.order_by('-data_dados')
     i = InformaçõesIniciais.objects.all()
     f = FormacaoAcademica.objects.all()
-    if len(d) > 0:
-        dados_paginados = Paginator(d, 6)
-        page_num = request.GET.get('page')
-        d = dados_paginados.get_page(page_num)
-
+    dados_paginados = paginar(d, request)
     lista_de_talentos_favoritados = TalentosFavoritados.objects.filter(id_empresa=id_empresa)
     ids_dos_talentos_favoritados = [talento.id_talento for talento in lista_de_talentos_favoritados]
-
     empresa = Empresa.objects.filter(user=request.user)
     dado = {
         'empresa':empresa,
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
-        'dados':d,
+        'dados':dados_paginados,
         'info':i,
         'form':f,
         'ids_dos_talentos_favoritados':ids_dos_talentos_favoritados,
@@ -667,9 +666,9 @@ def talentos(request):
     return render(request, 'bancodetalentos.html', dado)
 
 def busca_talentos(request):
-    if 'busca_talentos' in request.GET:
+    if 'buscar/talentos' in request.GET:
         lista_talentos = DadosPessoais.objects.order_by('-data_dados').filter()
-        nome_a_buscar = request.GET['busca_talentos']
+        nome_a_buscar = request.GET['buscar/talentos']
         lista_talentos = lista_talentos.filter(nome_do_candidato__icontains=nome_a_buscar)
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
@@ -713,6 +712,7 @@ def empresas_favoritadas(request):
 
     empresa = Empresa.objects.all()
     dados_pessoais = DadosPessoais.objects.filter(user=id_candidato)
+    empresas_favoritadas = paginar(empresas_favoritadas, request)
     print(empresas_favoritadas)
     print(dados_empresas_favoritadas)
     dados = {

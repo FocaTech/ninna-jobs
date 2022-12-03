@@ -13,6 +13,6 @@ urlpatterns = [
     path('tela_de_vagas_salvas', views.tela_de_vagas_salvas, name='tela_de_vagas_salvas'),
     path('buscar', views.buscas, name='buscar'),#busca de todas as vagas
     path('editar/<int:pk_vagas>', views.editar_vagas, name='editar'),
-    path('atualizar_vagas', views.atualizar_vagas, name='atualizar_vagas'),
+    path('atualizar/vagas', views.atualizar_vagas, name='atualizar_vagas'),
     path('deletar/<int:pk_vaga>', views.deleta_vaga, name='deletar'),
 ]

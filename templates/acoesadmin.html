@@ -95,6 +95,36 @@
             adicionar
           </button>
         </div>
+        <section class="top-catagory-area section-padding-20-0">
+          <div class="container">
+              <ul class="pagination">
+                  <li class="page-item">
+                      <a href="{% url 'Dados_Pessoais' %}" class="page-link">&laquo;</a>
+                  </li>
+                  <li class="page-item">
+                      <a href="{% url 'formcandidato' %}" class="page-link">1</a>
+                  </li>
+                  <li class="page-item">
+                      <a href="{% url 'Informacoes_iniciais' %}" class="page-link">2</a>
+                  </li>
+                  <li class="page-item">
+                      <a href="{% url 'Dados_Pessoais' %}" class="page-link">3</a>
+                  </li>
+                  <li class="page-item active">
+                      <a class="page-link">4</a>
+                  </li>
+                  <li class="page-item">
+                      <a href="{% url 'Certificados_conquistas' %}" class="page-link">5</a>
+                  </li>
+                  <li class="page-item">
+                      <a href="{% url 'Experiencia_profissional' %}" class="page-link">6</a>
+                  </li>
+                  <li class="page-item">
+                      <a href="{% url 'Certificados_conquistas' %}" class="page-link">&raquo;</a>
+                  </li>
+              </ul>
+          </div>
+      </section>
       </div>
     </main>
       <!--Modal de adicionar um novo Administrador-->
