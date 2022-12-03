@@ -133,7 +133,7 @@ def index(request):
         DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
         empresa = Empresa.objects.filter(user=request.user)
         if request.user.is_superuser:
-            perfil = get_object_or_404(PerfilAdmin, user=request.user)
+            perfil = PerfilAdmin.objects.filter(user=request.user)
         else:
             perfil = None
         dados = {
@@ -202,6 +202,7 @@ def tela_de_vagas_salvas(request):
 
 @has_role_decorator('candidato')
 def salvar_vaga(request, pk_vaga):
+    global url_atual
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -213,12 +214,12 @@ def salvar_vaga(request, pk_vaga):
             vaga_salva_desfavoritar = get_object_or_404(VagasSalvas, id_cadidato=id_cadidato, id_vaga=id_vaga)
             vaga_salva_desfavoritar.delete()
             messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
-            return redirect("dashboard")
+            return redirect(url_atual)
 
         vaga_salva = VagasSalvas.objects.create(id_cadidato=id_cadidato, id_vaga=id_vaga)
         vaga_salva.save()
         messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
-        return redirect("dashboard")
+        return redirect(url_atual)
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
@@ -245,7 +246,6 @@ def candidatar_a_vaga(request, pk_vagas):
         return redirect(url_atual)
 
 def arquivar_vaga(request, pk_vaga):
-    print(pk_vaga)
     vaga_para_ser_arquivada = get_object_or_404(Vagas, pk=pk_vaga)
     if vaga_para_ser_arquivada.status == True:
         vaga_para_ser_arquivada.status = False
