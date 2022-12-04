@@ -22,13 +22,10 @@
         <h2 class="h5 mb-3 text-secondary">Escolha o melhor candidato para a vaga</h2>
         {% if not user.funcao == "CAN" %}
         {% for d in dados %}
-        <ul class="w3-ul w3-card-4">
-          <ul class="card d-flex shadow-lg p-2 mb-2 bg-body rounded">
-            <div class="position-absolute top-0 end-0 bg-light">
-              {% include 'partials/botao-fav.html' %}
-              <a href="{% url 'perfil_candidato' d.user.id %}" class="fs-5 bg-light"><i class="bi bi-file-earmark-person"></i><a>
-              <button onclick="this.parentElement.style.display='none'" class="fs-5 bg-light border border-0"><i class="bi bi-x"></i></button>
-            </div>
+        <ul class="w3-ul w3-card-4 shadow-lg p-2 mb-2 bg-body rounded">
+            {% include 'partials/botao-fav.html' %}
+            <a href="{% url 'perfil_candidato' d.user.id %}"><span class="w3-bar-item w3-button w3-white w3-xlarge w3-right"><i class="bi bi-file-earmark-person"></i><span></a>
+            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
             <li class="d-flex">
                 <img src="{{ d.imagem_perfil.url }}" class="sidebar-avatar my-3 mx-1">
                 <div class="my-auto mx-1">
@@ -48,9 +45,9 @@
                     </div>
                 </div>
             </li>
-        </ul>
-        {% endfor %}
-        {% endif %}
+          </ul>
+          {% endfor %}
+          {% endif %}
           <!-- ##### Pagination ##### -->
           <section class="top-catagory-area section-padding-20-0">
             <div class="container">
