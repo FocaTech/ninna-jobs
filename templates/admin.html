@@ -130,7 +130,7 @@
         <!--Empresas cadastradas-->
         <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
           {% for e in empresas %}
-          {% if e.nome_fantasia %}
+          {% if e.user.pk %}
           <div class="col">
             <div class="card h-100 vaga">
               <img src="{{e.img_perfil_empresa.url}}" class="card-img-top" alt="...">
@@ -147,7 +147,7 @@
               </div>
             </div>
           </div>
-          {% elif e.username %}
+          {% elif e.pk %}
           <div class="col">
             <div class="card h-100 vaga">
               <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
