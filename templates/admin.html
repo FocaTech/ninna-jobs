@@ -103,16 +103,11 @@
           {% for i in empresa %}
           <div class="col">
             <div class="card h-100 vaga">
-
               {% for e in empresas %}
               {% if e.user == i %}
               <img src="{{e.img_perfil_empresa.url}}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title"><i class="bi bi-building"></i>{{e.nome_fantasia}}({{i.username}})</h5>
-              {% else %}
-              <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
-              <div class="card-body">
-              <h5 class="card-title"><i class="bi bi-building"></i>{{i.username}}</h5>
               {% endif %}
               {% endfor %}
                 <div class="dropdown-center">
