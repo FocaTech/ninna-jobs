@@ -141,8 +141,7 @@
                     Informações
                   </button>
                   <ul class="dropdown-menu">
-                    {% comment %} <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' i.id %}">Perfil</a></li> {% endcomment %}
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' e.user.id %}">Perfil</a></li>
                   </ul>
                 </div>
               </div>
@@ -159,8 +158,7 @@
                     Informações
                   </button>
                   <ul class="dropdown-menu">
-                    {% comment %} <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' i.id %}">Perfil</a></li> {% endcomment %}
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' e.id %}">Perfil</a></li>
                   </ul>
                 </div>
               </div>
