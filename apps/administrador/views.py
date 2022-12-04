@@ -16,7 +16,7 @@ url_atual = ''
 # Create your views here.
 @login_required(login_url='index')
 def interface(request):
-    empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')
+    empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
     candidato = Users.objects.filter(funcao='CAN').order_by('-date_joined')[0:5]
     empresas = Empresa.objects.all()
     dados = DadosPessoais.objects.all()
@@ -26,11 +26,18 @@ def interface(request):
     else:
         perfil = None
 
+    empresas = []
+    for e in empresa:
+        if len(empresas) < 3:
+            if Empresa.objects.filter(user=e).exists():
+                empresas.append(get_object_or_404(Empresa, user=e))
+            else:
+                empresas.append(e)
+
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
         'numero_de_vagas_ativas' : vagas_ativas,
-        'empresa' : empresa,
         'empresas' : empresas,
         'candidato' :candidato,
         'formacao' :formacao,
