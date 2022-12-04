@@ -14,7 +14,7 @@
                 <!--Modal cadastrar vagas editadas-->
                 <div class="content">
                     <div>
-                    <form action='{% url "atualizar_vagas_admin" %}' method="post" enctype="multipart/form-data">
+                    <form action='{% url "atualizar_vagas" %}' method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                             <input type="text" id="pk_vagas" class="form-control" name="pk_vagas" value="{{vaga.id}}" hidden>
                         <div class="col-12 col-lg-4">

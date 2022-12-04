@@ -25,6 +25,13 @@ def interface(request):
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
         perfil = None
+
+    print(f"empresa == {empresa}")
+    print(f"candidato == {candidato}")
+    print(f"empresas == {empresas}")
+    print(f"dados == {dados}")
+    print(f"perfil == {perfil}")
+
     dados = {
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
