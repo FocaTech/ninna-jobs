@@ -46,6 +46,23 @@
             <div class="card-body">
               <div class="row">
                 <div class="col mt-0">
+                  <h6 class="card-title">Número de matches</h6>
+                </div>
+                <div class="col-auto">
+                  <div class="avatar">
+                    <div class="avatar-title rounded-circle bg-primary-dark">
+                      &#129309;
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="display-5 mt-1 mb-3">00</h2>
+            </div>
+          </div>
+          <div class="card col m-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col mt-0">
                   <h6 class="card-title">Vagas ativas</h6>
                 </div>
                 <div class="col-auto">
@@ -88,6 +105,19 @@
             <div class="card-body">
             <!--Onde os graficos devem ser renderizados neste canvas-->
               <canvas class="totalusuarios" width="400" height="200"></canvas>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
+                Nivel dos Talentos
+            </div>
+            <div class="card-body">
+            <!--Onde os graficos devem ser renderizados neste canvas-->
+              <canvas class="niveltalento" width="400" height="200"></canvas>
             </div>
           </div>
         </div>
@@ -99,33 +129,46 @@
         </div>
         <!--Empresas cadastradas-->
         <div class="row row-cols-1 row-cols-md-3 g-3 py-2 px-1">
-
-          {% for i in empresa %}
+          {% for e in empresa %}
+          {% for i in empresas %}
+          {% if i.user == e %}
           <div class="col">
             <div class="card h-100 vaga">
-
-              {% for e in empresas %}
-              {% if e.user == i %}
-              <img src="{{e.img_perfil_empresa.url}}" class="card-img-top" alt="...">
+              <img src="{{i.img_perfil_empresa.url}}" class="card-img-top" alt="...">
               <div class="card-body">
-              <h5 class="card-title"><i class="bi bi-building"></i>{{e.nome_fantasia}}({{i.username}})</h5>
-              {% else %}
-              <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
-              <div class="card-body">
-              <h5 class="card-title"><i class="bi bi-building"></i>{{i.username}}</h5>
-              {% endif %}
-              {% endfor %}
+              <h5 class="card-title"><i class="bi bi-building"></i>{{i.nome_fantasia}}({{e.username}})</h5>
                 <div class="dropdown-center">
                   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Informações
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' i.id %}">Perfil</a></li>
+                    {% comment %} <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' i.id %}">Perfil</a></li> {% endcomment %}
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
+          {% else %}
+          <div class="col">
+            <div class="card h-100 vaga">
+              <img src="{% static 'img/empresa.jpg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+              <h5 class="card-title"><i class="bi bi-building"></i>{{e.username}}</h5>
+                <div class="dropdown-center">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Informações
+                  </button>
+                  <ul class="dropdown-menu">
+                    {% comment %} <li><a class="dropdown-item" href="{% url 'ver_perfil_empresa' i.id %}">Perfil</a></li> {% endcomment %}
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
           {% endfor %}
         </div>
         <div class="row">

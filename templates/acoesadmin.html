@@ -97,34 +97,41 @@
         </div>
         <section class="top-catagory-area section-padding-20-0">
           <div class="container">
+              {% if usuario_admin.has_other_pages %}
               <ul class="pagination">
+                  {% if usuario_admin.has_previous %}
                   <li class="page-item">
-                      <a href="{% url 'Dados_Pessoais' %}" class="page-link">&laquo;</a>
+                      <a href="?page={{ usuario_admin.previous_page_number }}" class="page-link">&laquo;</a>
                   </li>
-                  <li class="page-item">
-                      <a href="{% url 'formcandidato' %}" class="page-link">1</a>
+                  {% else %}
+                  <li class="page-item disabled">
+                      <a class="page-link">&laquo;</a>
                   </li>
-                  <li class="page-item">
-                      <a href="{% url 'Informacoes_iniciais' %}" class="page-link">2</a>
-                  </li>
-                  <li class="page-item">
-                      <a href="{% url 'Dados_Pessoais' %}" class="page-link">3</a>
-                  </li>
+                  {% endif %}
+                  {% for pagina in usuario_admin.paginator.page_range %}
+                  {% if usuario_admin.number == pagina %}
                   <li class="page-item active">
-                      <a class="page-link">4</a>
+                      <a class="page-link">{{ pagina }}</a>
                   </li>
+                  {% else %}
                   <li class="page-item">
-                      <a href="{% url 'Certificados_conquistas' %}" class="page-link">5</a>
+                      <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
                   </li>
+                  {% endif %}
+                  {% endfor %}
+                  {% if usuario_admin.has_next %}
                   <li class="page-item">
-                      <a href="{% url 'Experiencia_profissional' %}" class="page-link">6</a>
+                      <a href="?page={{ usuario_admin.next_page_number }}" class="page-link">&raquo;</a>
                   </li>
-                  <li class="page-item">
-                      <a href="{% url 'Certificados_conquistas' %}" class="page-link">&raquo;</a>
+                  {% else %}
+                  <li class="page-item disabled">
+                      <a class="page-link">&raquo;</a>
                   </li>
+                  {% endif %}
               </ul>
+              {% endif %}
           </div>
-      </section>
+        </section>
       </div>
     </main>
       <!--Modal de adicionar um novo Administrador-->

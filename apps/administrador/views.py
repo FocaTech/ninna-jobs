@@ -16,7 +16,7 @@ url_atual = ''
 # Create your views here.
 @login_required(login_url='index')
 def interface(request):
-    empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
+    empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')
     candidato = Users.objects.filter(funcao='CAN').order_by('-date_joined')[0:5]
     empresas = Empresa.objects.all()
     dados = DadosPessoais.objects.all()
