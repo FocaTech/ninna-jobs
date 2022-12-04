@@ -63,16 +63,27 @@
                         <input class="form-check-input marcar" type="checkbox" value=""name="marcarexcluirempresa">
                       </div>
                     </td> {% endcomment %}
-                    <td class="nome-table">{{candidato.username}}({{candidato.username}})</td>
+                    {% if candidato.user %}
+                    <td class="nome-table">{{candidato.nome_do_candidato}}({{candidato.user.username}})</td>
+                    <td class="">{{candidato.user.date_joined|date:"d/m/Y | H:i:m"}}</td>
+                    <td class="">{{candidato.user.last_login|date:"d/m/Y | H:i:m"}}</td>
+                    <td class="d-none d-md-table-cell">
+                    {% else %}
+                    <td class="nome-table">{{candidato.username}}</td>
                     <td class="">{{candidato.date_joined|date:"d/m/Y | H:i:m"}}</td>
                     <td class="">{{candidato.last_login|date:"d/m/Y | H:i:m"}}</td>
                     <td class="d-none d-md-table-cell">
+                    {% endif %}
                     <div class="dropdown">
                       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Ações
                       </button>
                       <ul class="dropdown-menu">
+                        {% if e.user %}
+                        <li><a href="{% url 'admin_ban' candidato.user.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
+                        {% else %}
                         <li><a href="{% url 'admin_ban' candidato.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
+                        {% endif %}
                         <li><a href="{% url 'perfil_candidato' candidato.pk %}"><button class="dropdown-item"><i class="bi bi-person"></i> Ver Perfil</button></a></li>
                         {% comment %} <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li> {% endcomment %}
                       </ul>
