@@ -13,7 +13,6 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
-# url_atual = 'http://127.0.0.1:8000/usuarios/dashboard/'
 
 def select(request):
     '''cria e salva vagas'''
@@ -50,7 +49,6 @@ def select(request):
         vaga.save()
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
-        # return redirect('minhas-vagas')
         return redirect('empresa')
 
     else:
@@ -106,7 +104,6 @@ def deleta_vaga(request, pk_vaga):
     return redirect(url_atual)
 
 def index(request):
-    # global url_atual
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all()
@@ -210,13 +207,10 @@ def tela_de_vagas_salvas(request):
 
 @has_role_decorator('candidato')
 def salvar_vaga(request, pk_vaga):
-    # global url_atual
     url_atual = URLAtual.objects.all()
     if len(url_atual) > 0 :
         for url in url_atual:
-            print(f"url no for {url}")
             url_atual = str(url)
-    print(f'url fav vaga = {url_atual}')
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
 
@@ -237,15 +231,12 @@ def salvar_vaga(request, pk_vaga):
 
 @has_role_decorator('candidato')
 def candidatar_a_vaga(request, pk_vagas):
-    # global url_atual
     url_atual = URLAtual.objects.all()
     if len(url_atual) > 0 :
         for url in url_atual:
             url_atual = str(url)
-    print(f'url candidatar = {url_atual}')
     if request.user.is_authenticated:
         id_cadidato = get_object_or_404(Users, pk=request.user.id)
-        # id_vaga = Vagas.objects.filter(id=pk_vagas).values_list('nome_vaga', flat=True).get()
         id_vaga = get_object_or_404(Vagas, pk=pk_vagas)
         if VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga).exists():
             descandidatar = VagasCandidatadas.objects.filter(id_cadidato=id_cadidato, id_vaga=id_vaga)
@@ -271,7 +262,6 @@ def arquivar_vaga(request, pk_vaga):
     else:
         vaga_para_ser_arquivada.status = True
     vaga_para_ser_arquivada.save()
-    print(vaga_para_ser_arquivada.status)
     return redirect('empresa')
 
 def buscas(request):

@@ -11,7 +11,6 @@ from django.core.paginator import Paginator
 from vaga.views import paginar
 import requests
 
-# url_atual = ""
 def apagar_form_empresa(request):
     '''apagar form empresa'''
     informacoes = get_object_or_404(Empresa, user=request.user)
@@ -66,7 +65,6 @@ def registro(request):
         response = requests.get(f'https://viacep.com.br/ws/{cep}/json/')
         if response.status_code == 200:
             local = response.json()
-            print('passou')
             if request.method == 'POST' and not Empresa.objects.filter(user=request.user).exists():
                 img_perfil_empresa = request.FILES['img_perfil_empresa']
                 razao_social = request.POST['razao_social']
@@ -362,7 +360,6 @@ def adicionar_idioma(request):
 @has_role_decorator('empresa')
 def empresa(request, *args, **kwargs):
     '''dash de empresa'''
-    # global url_atual
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all()
@@ -427,15 +424,12 @@ def empresa(request, *args, **kwargs):
 @has_role_decorator('candidato')
 def dashboard(request):
     '''dash de candidato'''
-    # global url_atual
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all().delete()
     # limpar_bd_ulr.delete()
     url_atual = URLAtual.objects.create(url=url)
     url_atual.save()
-
-    print(f'dash = {url_atual} delete de out')
 
     vagas = Vagas.objects.all()
     id_cadidato = get_object_or_404(Users, pk=request.user.id)
@@ -491,15 +485,12 @@ def perfilempresa(request):
 
 def ver_perfil_empresa(request, id_empresa):
     '''candidato poder ver perfil da empresa'''
-    # global url_atual
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all()
     limpar_bd_ulr.delete()
     url_atual = URLAtual.objects.create(url=url)
     url_atual.save()
-
-    print(f'ver perfil = {url_atual}')
 
     id_candidato = request.user
 
@@ -527,7 +518,6 @@ def ver_perfil_empresa(request, id_empresa):
     vagas_candidatadas_query = VagasCandidatadas.objects.filter(id_cadidato=id_candidato)
     lista_de_vagas_candidatadas = []
     for vagas_candidatadas in vagas_candidatadas_query:
-        # lista_de_vagas_candidatadas.append(*Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True))
         lista_de_vagas_candidatadas = Vagas.objects.filter(nome_vaga=vagas_candidatadas.id_vaga, status=True)
     id_de_vagas_candidatadas = [vaga.id for vaga in lista_de_vagas_candidatadas]
 
@@ -570,16 +560,12 @@ def perfil(request):
 
 def perfil_candidato(request, id_candidato):
     '''empresa poder ver os perfil candidato'''
-    # global url_atual
-
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all()
     limpar_bd_ulr.delete()
     url_atual = URLAtual.objects.create(url=url)
     url_atual.save()
-
-    print(f'ver perfil cand = {url_atual}')
 
     id_empresa = request.user
     user_candidato = get_object_or_404(Users, pk=id_candidato)
@@ -613,15 +599,12 @@ def perfil_candidato(request, id_candidato):
     return render(request, 'perfil.html',dados)
 
 def listar_talentos_candidatados(request, pk_vaga):
-    # global url_atual
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all()
     limpar_bd_ulr.delete()
     url_atual = URLAtual.objects.create(url=url)
     url_atual.save()
-
-    print(f'listar talentos = {url_atual}')
 
     id_empresa = request.user
     talentos_candidatados = VagasCandidatadas.objects.filter(id_vaga=pk_vaga)
@@ -680,7 +663,6 @@ def listar_talentos_candidatados(request, pk_vaga):
 
 def talentos(request):
     '''empresa poder ver os candidatos'''
-    # global url_atual
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all()
@@ -742,7 +724,6 @@ def contato(request):
     return redirect('index')
 
 def empresas_favoritadas(request):
-    # global url_atual
     url = "http://127.0.0.1:8000" + request.path
 
     limpar_bd_ulr = URLAtual.objects.all()
@@ -750,7 +731,6 @@ def empresas_favoritadas(request):
     url_atual = URLAtual.objects.create(url=url)
     url_atual.save()
 
-    print(f'emp fav = {url_atual}')
     id_candidato = request.user
 
     empresas_favoritadas = []
@@ -766,8 +746,7 @@ def empresas_favoritadas(request):
     empresa = Empresa.objects.all()
     dados_pessoais = DadosPessoais.objects.filter(user=id_candidato)
     empresas_favoritadas = paginar(empresas_favoritadas, request)
-    print(empresas_favoritadas)
-    print(dados_empresas_favoritadas)
+
     dados = {
         'empresa':empresa,
         'Dados':dados_pessoais,
@@ -784,7 +763,6 @@ def favoritar_talento(request, pk_talento):
         for url in url_atual:
             url_atual = str(url)
 
-    print(f'url fav talen = {url_atual}')
     if request.user.is_authenticated:
         id_empresa = request.user
         id_candidato = get_object_or_404(Users, pk=pk_talento)
@@ -792,23 +770,19 @@ def favoritar_talento(request, pk_talento):
         if TalentosFavoritados.objects.filter(id_talento=id_candidato, id_empresa=id_empresa).exists():
             talento_para_desfavoritar = get_object_or_404(TalentosFavoritados, id_talento=id_candidato, id_empresa=id_empresa)
             talento_para_desfavoritar.delete()
-            # messages.warning(request, f"Vaga '{id_vaga.nome_vaga}' Desfavoritada")
             return redirect(url_atual)
 
         talento_favoritado = TalentosFavoritados.objects.create(id_talento=id_candidato, id_empresa=id_empresa)
         talento_favoritado.save()
-        # messages.success(request, f"Vaga '{id_vaga.nome_vaga}' Favoritada")
 
         return redirect(url_atual)
 
 def favoritar_empresa(request, pk_empresa):
-    # global url_atual
     url_atual = URLAtual.objects.all()
     if len(url_atual) > 0 :
         for url in url_atual:
             url_atual = str(url)
 
-    print(f'url fav empr = {url_atual}')
     if request.user.is_authenticated:
         id_candidato = request.user
         id_empresa = get_object_or_404(Users, pk=pk_empresa)
