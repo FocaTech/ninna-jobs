@@ -68,22 +68,25 @@
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td> {% endcomment %}
-                    {% for p in perfil_emp %}
-                    {% if p.user == e %}
-                    <td class="sorting_1">{{ p.nome_fantasia }}({{e.username}})</td>
-                    {% else %}
+                    {% if e.user.pk %}
+                    <td class="sorting_1">{{ e.nome_fantasia }}({{e.user.username}})</td>
+                    <td class="d-none d-xl-table-cell">{{e.user.date_joined|date:"d/m/Y"}}</td>
+                    {% elif e.username %}
                     <td class="sorting_1">{{ e.username }}</td>
+                    <td class="d-none d-xl-table-cell">{{e.date_joined|date:"d/m/Y"}}</td>
                     {% endif %}
-                    {% endfor %}
 
+                    {% if e.user %}
                     {% for k,v in vagas.items %}
-                      <td class="d-none d-xl-table-cell">{{v.1.date_joined|date:"d/m/Y"}}</td>
-                    {% if v.1 == e %}
-                      <td class="d-none d-xl-table-cell">{{v.0|date:"d/m/Y | H:i:s"}}</td>
-                    {% else %}
-                      <td class="d-none d-xl-table-cell">Nao possui vagas</td>
+                    {% if v.1 == e.user %}
+                    <td class="d-none d-xl-table-cell">{{v.0|date:"d/m/Y | H:i:s"}}</td>
                     {% endif %}
                     {% endfor %}
+                    {% endif %}
+
+                  {% if not e.user.pk %}
+                  <td class="d-none d-xl-table-cell">Não possui Vagas</td>
+                  {% endif %}
 
                     <td><span class="badge bg-success">Ativo</span></td>
                     <td class="d-none d-md-table-cell">
@@ -92,7 +95,11 @@
                           Ações
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a href="{% url 'admin_ban' e.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
+                        {% if e.user.pk %}
+                          <li><a href="{% url 'admin_ban' e.user.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
+                        {% else %}
+                        <li><a href="{% url 'admin_ban' e.pk %}"><button type="submit" class="dropdown-item"><i class="bi bi-trash"></i>Excluir</button></a></li>
+                        {% endif %}
                           <li><a href="{% url 'ver_perfil_empresa' e.pk %}"><button class="dropdown-item"><i class="bi bi-building"></i> Ver Perfil</button></a></li>
                           {% comment %} <li><button class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Enviar E-mail</button></li> {% endcomment %}
                         </ul>

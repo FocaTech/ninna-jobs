@@ -38,6 +38,7 @@ def interface(request):
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
         'numero_de_vagas_ativas' : vagas_ativas,
+        'empresa':empresa,
         'empresas' : empresas,
         'candidato' :candidato,
         'formacao' :formacao,
@@ -98,13 +99,15 @@ def acoes_empresa(request):
     url_atual = "http://127.0.0.1:8000" + request.path
     vagas = {}
     empresas_query = Users.objects.filter(funcao = 'EMP')
-
     for empresa in empresas_query:
         if Vagas.objects.filter(user=empresa):
             vagas[empresa.username] = [Vagas.objects.filter(user_id=empresa).order_by('-data_vaga')[0].data_vaga, empresa]
-
-    empresas = Users.objects.filter(funcao="EMP")
-    perfil_empresa = Empresa.objects.all()
+    empresas = []
+    for e in empresas_query:
+        if Empresa.objects.filter(user=e).exists():
+            empresas.append(get_object_or_404(Empresa, user=e))
+        else:
+            empresas.append(e)
     if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
@@ -112,9 +115,8 @@ def acoes_empresa(request):
     empresas = paginar(empresas, request)
     contexto ={
         'perfil':perfil,
-        'vagas' : vagas,
+        'vagas':vagas,
         'empresa' : empresas,
-        'perfil_emp' : perfil_empresa,
     }
     return render(request, 'acoesEmpresa.html', contexto)
 
@@ -122,7 +124,13 @@ def acoes_empresa(request):
 def acoes_talento(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
-    candidatos = Users.objects.filter(funcao = 'CAN')
+    candidato = Users.objects.filter(funcao = 'CAN')
+    candidatos = []
+    for c in candidato:
+        if DadosPessoais.objects.filter(user=c).exists():
+            candidatos.append(get_object_or_404(DadosPessoais, user=c))
+        else:
+            candidatos.append(c)
     if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:

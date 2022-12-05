@@ -172,10 +172,10 @@ def vagas(request):
         empresa = Empresa.objects.filter(user=request.user)
     else:
         empresa = None
-        if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
-            perfil = get_object_or_404(PerfilAdmin, user=request.user)
-        else:
-            perfil = None
+    if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+    else:
+        perfil = None
 
     lista_vagas_salvas = []# lista vazia para adicionar as vagas salvas
     vagas_salvas_query = VagasSalvas.objects.filter(id_cadidato=user_candidato)# traz um queryset com todos os objetos da Tab. VagaSalva
