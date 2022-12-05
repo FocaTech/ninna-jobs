@@ -28,7 +28,7 @@
             <p>Informe sua senha para efetuar a exclusão da conta</p>
         </div>
 
-        <form action="{% url 'apagar_conta_com_verificao' %}" method="POST"> {% csrf_token %}
+        <form action="{% url 'apagar_conta' %}" method="POST"> {% csrf_token %}
             {% include 'partials/_alertas.html' %}
             <div class="div-novasenha">
                 <div class="mb-4">
