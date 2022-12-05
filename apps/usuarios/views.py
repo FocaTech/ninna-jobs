@@ -688,8 +688,6 @@ def talentos(request):
     url_atual = URLAtual.objects.create(url=url)
     url_atual.save()
 
-    print(f'ver talentos = {url_atual}')
-
     id_empresa = request.user
     contratacoes = TipoContratacao.objects.all()
     trabalhos = TipoTrabalho.objects.all()
