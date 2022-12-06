@@ -50,7 +50,10 @@
                 <div class="row py-2">
                     <div class="col-md-6">
                         <label for="telefone" class="form-label">Telefone</label>
-                        <input type="number" name="telefone" class="form-control" id="telefone" name="telefone" placeholder="(XX)XXXXXXXXX" required>
+                        <input type="number" name="telefone" class="form-control" id="telefone" min="10000000000" max"9999999999" name="telefone" placeholder="(XX)XXXXXXXXX" required>
+                        <div class="invalid-feedback">
+                            Informe um telefone valido.
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="celular" class="form-label">Celular</label>
@@ -107,7 +110,7 @@
                 <div class="row py-2">
                     <div class="col-md-6">
                         <label for="telefone" class="form-label">Telefone</label>
-                        <input type="number" name="telefone" class="form-control" id="telefone" name="telefone" value='{{empresas.telefone}}' placeholder="(XX)XXXX-XXXXX" required>
+                        <input type="number" name="telefone" class="form-control" id="telefone" min="10000000000" max"9999999999" name="telefone" value='{{empresas.telefone}}' placeholder="(XX)XXXX-XXXXX" required>
                         <div class="invalid-feedback">
                             Informe um telefone valido.
                         </div>
