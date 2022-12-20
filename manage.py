@@ -22,10 +22,179 @@ if __name__ == '__main__':
     main()
 
 
-# AJUDA FRONT
+# AJUDA DO FRONT
 # python manage.py runserver
 # python manage.py loaddata TipoTrabalho
 # python manage.py loaddata PerfilProfissional
 # python manage.py loaddata TipoContratacao
 # pip install -r requirements.txt
 # .\venv\Scripts\activate
+
+
+#<-MEMBROS DA FOCATEC->
+#FRONTEND:
+#°Alice Costa - https://github.com/AliceKowai
+#°Gustavo Ícaro - https://github.com/gustavoicaro
+#°Maria Geisa - https://github.com/mariageisa
+
+#BACKEND:
+#°Erick Patrick - https://github.com/ErickPTCosta
+#°Hermeson Rocha - https://github.com/Hemerson-Rocha
+#°Kauhê Victo - https://github.com/Kauhe-Victor
+#°Danilo da Silva - https://github.com/Danilozzz
+
+#<-Projeto - NINNA JOBS->
+#repositorio - https://github.com/gustavoicaro/ninna-jobs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#FÉ DA EQUIPE
+#°Diego Wesley - https://github.com/DiegoWesley25
