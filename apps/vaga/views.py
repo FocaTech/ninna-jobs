@@ -302,8 +302,8 @@ def buscas(request):
             'vagas_arquivadas':a,
         }
         return render(request, 'dashboard.html', dados)
-    elif 'buscar/vaga/admin' in request.GET:#busca do admin em vagas
-        nome_a_buscar = request.GET['buscar/vaga/admin']
+    elif 'buscar/admin/vaga' in request.GET:#busca do admin em vagas
+        nome_a_buscar = request.GET['buscar/admin/vaga']
         busca_vagas = lista_vagas.filter(nome_vaga__icontains=nome_a_buscar)
         if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
             perfil = get_object_or_404(PerfilAdmin, user=request.user)
@@ -373,19 +373,23 @@ def buscas(request):
         'dados_empresas_favoritadas' : dados_empresas_favoritadas,
         }
         return render(request, 'empresasfavoritadas.html', dados)
-    elif 'buscar/admin' in request.GET:#busca do admin em admins
+    elif 'buscar/admin/admins' in request.GET:#busca do admin em admins
         adms = Users.objects.all()
-        nome_a_buscar = request.GET['buscar/admin']
+        nome_a_buscar = request.GET['buscar/admin/admins']
         adms = adms.filter(username__icontains=nome_a_buscar, is_superuser=True)
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
         dados = {
-            'usuario_admin' : adms
+            'perfil':perfil,
+            'usuario_admin' : adms,
         }
         return render(request, 'acoesadmin.html', dados)
-    elif 'buscar/candidato' in request.GET:#busca do admin de todos os candidatos
+    elif 'buscar/admin/candidato' in request.GET:#busca do admin de todos os candidatos
         cand = Users.objects.all()
-        nome_a_buscar = request.GET['buscar/candidato']
+        nome_a_buscar = request.GET['buscar/admin/candidato']
         cand = cand.filter(username__icontains=nome_a_buscar, funcao="CAN")
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
         dados = {
+            'perfil':perfil,
             'candidatos' : cand
         }
         return render(request, 'acoesTalento.html', dados)
@@ -393,7 +397,9 @@ def buscas(request):
         emp = Users.objects.all()
         nome_a_buscar = request.GET['busca/admin/empresa']
         emp = emp.filter(username__icontains=nome_a_buscar, funcao="EMP")
+        perfil = get_object_or_404(PerfilAdmin, user=request.user)
         dados = {
+            'perfil':perfil,
             'empresa' : emp
         }
         return render(request, 'acoesTalento.html', dados)
@@ -453,9 +459,9 @@ def listar_vagas_arquivadas():
     lista_de_vagas_arquivadas = Vagas.objects.filter(status=False)
     return lista_de_vagas_arquivadas
 
-def paginar(vagas, request):
-    if len(vagas) > 0:
-        vagas_paginadas = Paginator(vagas, 9)
+def paginar(objeto, request):
+    if len(objeto) > 9:
+        objeto_paginadas = Paginator(objeto, 9)
         page_num = request.GET.get('page')
-        vagas = vagas_paginadas.get_page(page_num)
-    return vagas
+        objeto = objeto_paginadas.get_page(page_num)
+    return objeto

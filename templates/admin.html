@@ -56,7 +56,11 @@
                   </div>
                 </div>
               </div>
-              <h2 class="display-5 mt-1 mb-3">00</h2>
+              {% if numero_vagas_match < 10 %}
+              <h2 class="display-5 mt-1 mb-3">0{{numero_vagas_match}}</h2>
+              {% else %}
+              <h2 class="display-5 mt-1 mb-3">{{numero_vagas_match}}</h2>
+              {% endif %}
             </div>
           </div>
           <div class="card col m-2">
@@ -109,7 +113,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        {% comment %} <div class="col-md-6">
           <div class="card h-100">
             <div class="card-header">
               <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
@@ -121,7 +125,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> {% endcomment %}
         <div class="row">
           <div class="col-md-12 my-4">
             <h4>Ultimas empresas cadastradas</h4>

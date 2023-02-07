@@ -21,6 +21,10 @@ def interface(request):
     empresas = Empresa.objects.all()
     dados = DadosPessoais.objects.all()
     formacao = FormacaoAcademica.objects.all()
+    vagas_match = {}
+    for c in Users.objects.filter(funcao = 'CAN'):
+        if VagasCandidatadas.objects.filter(id_cadidato=c):
+            vagas_match[c.username] = [VagasCandidatadas.objects.filter(id_cadidato=c)[0]]
     if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
@@ -35,6 +39,7 @@ def interface(request):
                 empresas.append(e)
 
     dados = {
+        'numero_vagas_match':len(vagas_match),
         'numero_de_can' : todos_os_can,
         'numero_de_emp' : todas_as_emp,
         'numero_de_vagas_ativas' : vagas_ativas,
@@ -61,7 +66,7 @@ def interface_charts(request):
 def acoes_admin(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
-    if request.method == 'POST':
+    if request.method == 'POST' and 'username' in request.POST and 'email' in request.POST and 'password' in request.POST and 'password2' in request.POST:
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
@@ -81,6 +86,11 @@ def acoes_admin(request):
                 messages.error(request, 'Senhas diferentes')
         else:
             messages.error(request, 'Email ja existe')
+    # if 'ativo' in request.POST:
+    #     usuario_admin = Users.objects.order_by('-date_joined').filter(is_staff = True)
+    #     ativo = True
+    # else:
+    #     ativo = False
     usuario_admin = Users.objects.filter(is_staff = True)
     if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
@@ -89,7 +99,8 @@ def acoes_admin(request):
     usuario_admin = paginar(usuario_admin, request)
     contexto = {
         'perfil':perfil,
-        'usuario_admin' : usuario_admin
+        'usuario_admin' : usuario_admin,
+        # 'ativo':ativo
     }
     return render(request, 'acoesadmin.html', contexto)
 
