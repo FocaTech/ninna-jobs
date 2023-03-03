@@ -37,8 +37,8 @@
         <p>{{ vaga.beneficios }}</p>
       </div>
     {% if user.is_authenticated %}
-      <div class="modal-footer justify-content-between">
-        {% if user.funcao == "CAN" %}
+    {% if user.funcao == "CAN" %}
+    <div class="modal-footer justify-content-between">
         <div>
           {% if not vaga.status == False %}
           {% if vaga.id in ids_de_vagas_salvas %}
@@ -76,8 +76,8 @@
             </div>
           </div>
         </div>
-        {% endif %}
       </div>
+      {% endif %}
     {% else %}
     <div class="modal-footer justify-content-between">
       <div>
@@ -88,6 +88,6 @@
       </div>
     </div>
     {% endif %}
-    </div>
   </div>
+</div>
 </div>

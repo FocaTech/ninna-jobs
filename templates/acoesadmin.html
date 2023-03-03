@@ -80,7 +80,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for i in usuario_admin %}
+                  {% for i in dados %}
                   <tr class="empresas">
                     {% comment %} <td>
                       <div class="form-check">
@@ -106,43 +106,7 @@
             adicionar
           </button>
         </div>
-        <section class="top-catagory-area section-padding-20-0">
-          <div class="container">
-              {% if usuario_admin.has_other_pages %}
-              <ul class="pagination">
-                  {% if usuario_admin.has_previous %}
-                  <li class="page-item">
-                      <a href="?page={{ usuario_admin.previous_page_number }}" class="page-link">&laquo;</a>
-                  </li>
-                  {% else %}
-                  <li class="page-item disabled">
-                      <a class="page-link">&laquo;</a>
-                  </li>
-                  {% endif %}
-                  {% for pagina in usuario_admin.paginator.page_range %}
-                  {% if usuario_admin.number == pagina %}
-                  <li class="page-item active">
-                      <a class="page-link">{{ pagina }}</a>
-                  </li>
-                  {% else %}
-                  <li class="page-item">
-                      <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
-                  </li>
-                  {% endif %}
-                  {% endfor %}
-                  {% if usuario_admin.has_next %}
-                  <li class="page-item">
-                      <a href="?page={{ usuario_admin.next_page_number }}" class="page-link">&raquo;</a>
-                  </li>
-                  {% else %}
-                  <li class="page-item disabled">
-                      <a class="page-link">&raquo;</a>
-                  </li>
-                  {% endif %}
-              </ul>
-              {% endif %}
-          </div>
-        </section>
+        {% include 'partials/_paginacao.html' %}
       </div>
     </main>
       <!--Modal de adicionar um novo Administrador-->

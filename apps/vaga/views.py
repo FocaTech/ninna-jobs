@@ -150,8 +150,7 @@ def index(request):
             'id_de_vagas_candidatadas' : id_vagas_candidatadas,
         }
     else:
-        vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
-        vagas = paginar(vagas, request)
+        vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)[0:6]
         dados = {
             'vagas' : vagas,
         }
@@ -200,7 +199,7 @@ def vagas(request):
         'perfil':perfil,
         'Dados':DP,
         'empresa':empresa,
-        'vagas' : vagas,
+        'dados' : vagas,
         'ids_de_vagas_salvas' : ids_de_vagas_salvas,
         'id_de_vagas_candidatadas' : id_de_vagas_candidatadas,
     }
@@ -280,7 +279,7 @@ def buscas(request):
         dados = {
             'Dados':DP,
             'empresa':empresa,
-            'vagas' : lista_vagas
+            'dados' : lista_vagas
         }
         return render(request, 'vagas.html', dados)
     elif 'busca/dashboard' in request.GET:#busca de dashboard candidatos
@@ -319,7 +318,7 @@ def buscas(request):
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
-        'vagas' : busca_vagas
+        'dados' : busca_vagas
         }
         return render(request, 'acoesVagas.html', dados)
     elif 'busca/empresa' in request.GET:#busca da dashboard empresa
@@ -367,7 +366,7 @@ def buscas(request):
         empresa = Empresa.objects.all()
         dados_pessoais = DadosPessoais.objects.filter(user=request.user)
         dados = {
-        'empresa':empresa,
+        'dados':empresa,
         'Dados':dados_pessoais,
         'empresas_favoritadas' : lista_em,
         'dados_empresas_favoritadas' : dados_empresas_favoritadas,
@@ -377,30 +376,39 @@ def buscas(request):
         adms = Users.objects.all()
         nome_a_buscar = request.GET['buscar/admin/admins']
         adms = adms.filter(username__icontains=nome_a_buscar, is_superuser=True)
-        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        if PerfilAdmin.objects.filter(user=request.user).exists():
+            perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        else:
+            perfil = None
         dados = {
             'perfil':perfil,
-            'usuario_admin' : adms,
+            'dados' : adms,
         }
         return render(request, 'acoesadmin.html', dados)
     elif 'buscar/admin/candidato' in request.GET:#busca do admin de todos os candidatos
         cand = Users.objects.all()
         nome_a_buscar = request.GET['buscar/admin/candidato']
         cand = cand.filter(username__icontains=nome_a_buscar, funcao="CAN")
-        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        if PerfilAdmin.objects.filter(user=request.user).exists():
+            perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        else:
+            perfil = None
         dados = {
             'perfil':perfil,
-            'candidatos' : cand
+            'dados' : cand
         }
         return render(request, 'acoesTalento.html', dados)
     elif 'busca/admin/empresa' in request.GET:#busca do admin em empresas
         emp = Users.objects.all()
         nome_a_buscar = request.GET['busca/admin/empresa']
         emp = emp.filter(username__icontains=nome_a_buscar, funcao="EMP")
-        perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        if PerfilAdmin.objects.filter(user=request.user).exists():
+            perfil = get_object_or_404(PerfilAdmin, user=request.user)
+        else:
+            perfil = None
         dados = {
             'perfil':perfil,
-            'empresa' : emp
+            'dados' : emp
         }
         return render(request, 'acoesTalento.html', dados)
 
@@ -461,7 +469,11 @@ def listar_vagas_arquivadas():
 
 def paginar(objeto, request):
     if len(objeto) > 9:
+        if request.GET.get('page') != None:
+            page_num = request.GET.get('page')
+        else:
+            page_num = 1
         objeto_paginadas = Paginator(objeto, 9)
-        page_num = request.GET.get('page')
         objeto = objeto_paginadas.get_page(page_num)
+        objeto.adjusted_elided_pages = objeto_paginadas.get_elided_page_range(page_num)
     return objeto

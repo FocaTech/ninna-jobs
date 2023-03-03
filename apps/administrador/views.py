@@ -66,6 +66,14 @@ def interface_charts(request):
 def acoes_admin(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
+    # for i in range(1,1000):
+    #     i = str(i)
+    #     user = 'user'+i
+    #     email = f'admin{i}@adm.com'
+    #     password = f'123{i}'
+    #     admin = Users.objects.create_user(username = user, email = email, password = password,  is_staff=True, is_superuser=True)
+    #     admin.save()
+
     if request.method == 'POST' and 'username' in request.POST and 'email' in request.POST and 'password' in request.POST and 'password2' in request.POST:
         username = request.POST['username']
         email = request.POST['email']
@@ -99,7 +107,7 @@ def acoes_admin(request):
     usuario_admin = paginar(usuario_admin, request)
     contexto = {
         'perfil':perfil,
-        'usuario_admin' : usuario_admin,
+        'dados' : usuario_admin,
         # 'ativo':ativo
     }
     return render(request, 'acoesadmin.html', contexto)
@@ -127,7 +135,7 @@ def acoes_empresa(request):
     contexto ={
         'perfil':perfil,
         'vagas':vagas,
-        'empresa' : empresas,
+        'dados' : empresas,
     }
     return render(request, 'acoesEmpresa.html', contexto)
 
@@ -149,7 +157,7 @@ def acoes_talento(request):
     candidatos = paginar(candidatos, request)
     contexto = {
         'perfil':perfil,
-        'candidatos' : candidatos
+        'dados' : candidatos
     }
 
     return render(request, 'acoesTalento.html', contexto)
@@ -205,7 +213,7 @@ def acoes_vaga(request):
         'contratacoes' : contratacoes,
         'trabalhos' : trabalhos,
         'perfis' : perfis,
-        'vagas' : vagas
+        'dados' : vagas
     }
 
     if request.method == 'POST':
@@ -277,10 +285,10 @@ def atualizar_vagas_admin(request):
     return redirect('acoes_vagas')
 
 @login_required(login_url='index')
-def admin_ban(request, id_empresa):
+def admin_ban(request, id):
     'banir adm'
     global url_atual
-    users = get_object_or_404(Users, pk=id_empresa)
+    users = get_object_or_404(Users, pk=id)
     users.delete()
     return redirect(url_atual)
 

@@ -541,22 +541,25 @@ def ver_perfil_empresa(request, id_empresa):
 
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''
-    user_candidato = request.user
-    CC = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
-    DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
-    EP = ExperiênciaProfissional.objects.order_by().filter(user=user_candidato)
-    FA = FormacaoAcademica.objects.order_by().filter(user=user_candidato)
-    II = InformaçõesIniciais.objects.order_by().filter(user=user_candidato)
-    I = Idiomas.objects.order_by().filter(user=user_candidato)
-    dados = {
-        'Certificados':CC,
-        'Dados':DP,
-        'Experiencia':EP,
-        'Formacao':FA,
-        'Informacoes':II,
-        'Idiomas':I
-    }
-    return render(request, 'perfil.html',dados)
+    if request.user.is_authenticated:
+        user_candidato = request.user
+        CC = CertificadosConquistas.objects.order_by().filter(user=user_candidato)
+        DP = DadosPessoais.objects.order_by().filter(user=user_candidato)
+        EP = ExperiênciaProfissional.objects.order_by().filter(user=user_candidato)
+        FA = FormacaoAcademica.objects.order_by().filter(user=user_candidato)
+        II = InformaçõesIniciais.objects.order_by().filter(user=user_candidato)
+        I = Idiomas.objects.order_by().filter(user=user_candidato)
+        dados = {
+            'Certificados':CC,
+            'Dados':DP,
+            'Experiencia':EP,
+            'Formacao':FA,
+            'Informacoes':II,
+            'Idiomas':I
+        }
+        return render(request, 'perfil.html',dados)
+    else:
+        return redirect('index')
 
 def perfil_candidato(request, id_candidato):
     '''empresa poder ver os perfil candidato'''
@@ -750,7 +753,7 @@ def empresas_favoritadas(request):
     dados = {
         'empresa':empresa,
         'Dados':dados_pessoais,
-        'empresas_favoritadas' : empresas_favoritadas,
+        'dados' : empresas_favoritadas,
         'dados_empresas_favoritadas' : dados_empresas_favoritadas,
     }
 

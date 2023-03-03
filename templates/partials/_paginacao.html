@@ -1,0 +1,54 @@
+<!-- ##### Pagination ##### -->
+<section class="top-catagory-area section-padding-20-0">
+<div class="container">
+    {% if dados.has_other_pages %}
+    <ul class="pagination">
+        {% if dados.has_previous %}
+            <li class="page-item">
+                <a href="?page=1" class="page-link">&laquo;&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{ dados.previous_page_number }}" class="page-link">&laquo;</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">&laquo;&laquo;</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link">&laquo;</a>
+            </li>
+        {% endif%}
+        {% for page_number in dados.adjusted_elided_pages %}
+            {% if page_number == dados.paginator.ELLIPSIS %}
+                <li class="page-item disabled">
+                    <a class="page-link">{{page_number}}</a>
+                </li>
+            {% elif page_number == dados.number %}
+                <li class="page-item active">
+                    <a class="page-link">{{page_number}}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a href="?page={{ page_number }}" class="{% if page_number == dados.number %}current{% endif %} page-link">{{page_number}}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if dados.has_next %}
+            <li class="page-item">
+                <a href="?page={{ dados.next_page_number }}" class="page-link">&raquo;</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{dados.paginator.num_pages}}" class="page-link">&raquo;&raquo;</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">&raquo;</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link">&raquo;&raquo;</a>
+            </li>
+        {% endif%}
+    </ul>
+    {% endif %}
+</div>
+</section>
