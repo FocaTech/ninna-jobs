@@ -1,7 +1,7 @@
 /*
  * Baseline styles
  */
- #preloader {
+ #loading {
   position:fixed;
   top:0;
   left:0;
@@ -10,7 +10,7 @@
   background-color: #0e0062; /* cor do background que vai ocupar o body */
   z-index:999; /* z-index para jogar para frente e sobrepor tudo */
 }
-#preloader .inner {
+#loading .inner {
   position: absolute;
   top: 50%; /* centralizar a parte interna do preload (onde fica a animação)*/
   left: 50%;

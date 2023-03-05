@@ -9,9 +9,8 @@ padding:"inner"+a,content:b,"":"outer"+a},function(c,d){n.fn[d]=function(d,e){va
 
 //<![CDATA[
   $(window).on('load', function () {
-    $('#preloader .inner').fadeOut();
-    $('#preloader').delay(10).fadeOut('slow'); 
+    $('#loading .inner').fadeOut();
+    $('#loading').delay(10).fadeOut('slow');
     $('body').delay(10).css({'overflow': 'visible'});
   })
   //]]>
-  
