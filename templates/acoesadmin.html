@@ -30,11 +30,12 @@
           <h2 class="text-center">Administradores</h2>
           <div>
           {% include 'partials/_alertas.html' %}
+
             <!--Tabela das admin-->
             <div class="col-sm-12 p-3">
               <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
                 <thead>
-                  {% comment %} <div class="row">
+                  <div class="row">
                     <div class="col">
                       <tr>
                         <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
@@ -42,17 +43,21 @@
                             {% csrf_token %}
                               <th tabindex="0" rowspan="1" colspan="1" aria-label="Inativo">
                                 <div class="form-check form-switch">
-                                  {% if ativo %}
-                                  <input class="form-check-input" type="checkbox" name='ativo' role="switch" id="ativo" checked>
+                                  {% if recentes %}
+                                  <input class="form-check-input" type="checkbox" name='recentes' role="switch" id="ativo" checked>
                                   {% else %}
-                                  <input class="form-check-input" type="checkbox" name='ativo' role="switch" id="ativo">
+                                  <input class="form-check-input" type="checkbox" name='recentes' role="switch" id="ativo">
                                   {% endif %}
                                   <label class="form-check-label" for="ativo" name="ativofiltro">Mais Recentes</label>
                                 </div>
                               </th>
                               <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">
                                 <div class="form-check form-switch">
+                                  {% if inativofiltro %}
+                                  <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro" checked>
+                                  {% else %}
                                   <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro">
+                                  {% endif %}
                                   <label class="form-check-label" for="inativo">Inativo</label>
                                 </div>
                               </th>
@@ -61,12 +66,13 @@
                                   <button type="submit" class="btn btn-primary">filtrar</button>
                                 </div>
                               </th>
-                            <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th>
+                            {% comment %} <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th> {% endcomment %}
                           </form>
                         </th>
                       </tr>
                     </div>
-                  </div> {% endcomment %}
+                  </div>
+
                   <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
                     <div class="input-group">
                         <input name='buscar/admin/admins' placeholder="Pesquisar" type="search" class="form-control">
@@ -87,10 +93,13 @@
                         <input class="form-check-input marcar" type="checkbox" value="" id="flexCheckDefault" name="marcarexcluirempresa">
                       </div>
                     </td> {% endcomment %}
-
                     <td class="sorting_1">{{i.username}}</td>
                     <td class="d-none d-xl-table-cell">{{i.date_joined|date:"d/m/Y | H:i:m"}}</td>
+                    {% if i.is_active == True %}
                     <td><span class="badge bg-success">Ativo</span></td>
+                    {% else %}
+                    <td><span class="badge bg-danger">Desativo</span></td>
+                    {% endif %}
                     <td class="d-none d-md-table-cell">
                       <a href="{% url 'admin_ban' i.pk %}"><button type="submit" class="btn btn-primary"><i class="bi bi-trash"></i> Excluir</button></a>
                     </td>

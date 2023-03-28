@@ -98,12 +98,20 @@ def acoes_admin(request):
                 messages.error(request, 'Senhas diferentes')
         else:
             messages.error(request, 'Email ja existe')
-    # if 'ativo' in request.POST:
-    #     usuario_admin = Users.objects.order_by('-date_joined').filter(is_staff = True)
-    #     ativo = True
-    # else:
-    #     ativo = False
+
     usuario_admin = Users.objects.filter(is_staff = True)
+    if 'recentes' in request.POST:
+        usuario_admin = usuario_admin.order_by('-date_joined')
+        recentes = True
+    else:
+        recentes = False
+
+    if 'inativofiltro' in request.POST:
+        usuario_admin = usuario_admin.filter(is_active=False)
+        ativo = True
+    else:
+        ativo = False
+
     if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
@@ -112,7 +120,8 @@ def acoes_admin(request):
     contexto = {
         'perfil':perfil,
         'dados' : usuario_admin,
-        # 'ativo':ativo
+        'recentes':recentes,
+        'inativofiltro':ativo
     }
     return render(request, 'acoesadmin.html', contexto)
 
