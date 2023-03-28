@@ -25,34 +25,46 @@
             <div class="col-sm-12 p-3">
               <table id="datatables-dashboard-projects" class="table table-striped my-0" aria-describedby="">
                 <thead>
-                  {% comment %} <div class="row">
+                  <div class="row">
                     <div class="col">
                       <tr>
                         <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
+                        <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
                           <th tabindex="0" rowspan="1" colspan="1" aria-label="Inativo">
                             <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" role="switch" id="ativo">
-                              <label class="form-check-label" for="ativo" name="ativofiltro">Ativo</label>
+                              {% if recentes %}
+                              <input class="form-check-input" type="checkbox" name='recentes' role="switch" id="ativo" checked>
+                              {% else %}
+                              <input class="form-check-input" type="checkbox" name='recentes' role="switch" id="ativo">
+                              {% endif %}
+                              <label class="form-check-label" for="ativo" name="ativofiltro">Mais Recentes</label>
                             </div>
                           </th>
                           <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">
                             <div class="form-check form-switch">
+                              {% if inativofiltro %}
+                              <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro" checked>
+                              {% else %}
                               <input class="form-check-input" type="checkbox" role="switch" id="inativo" name="inativofiltro">
+                              {% endif %}
                               <label class="form-check-label" for="inativo">Inativo</label>
                             </div>
                           </th>
-                          <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th>
+                          <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">
+                            <div class="form-check form-switch">
+                              <button type="submit" class="btn btn-primary">filtrar</button>
+                            </div>
+                          </th>
+                        {% comment %} <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th> {% endcomment %}
+                          <div class="input-group">
+                              <input name='busca/admin/empresa' placeholder="Pesquisar" type="search" class="form-control">
+                              <span class="input-group-text"><i class="bi bi-search"></i></span>
+                          </div>
+                        </form>
                         </th>
                       </tr>
                     </div>
-                  </div> {% endcomment %}
-                  <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
-                    <div class="input-group">
-                        <input name='busca/admin/empresa' placeholder="Pesquisar" type="search" class="form-control">
-                        <span class="input-group-text"><i class="bi bi-search"></i>
-                        </span>
-                    </div>
-                  </form>
+                  </div>
                   <tr>
                     {% comment %} <th>Selecionar</th> {% endcomment %}
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>

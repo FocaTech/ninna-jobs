@@ -391,7 +391,20 @@ def buscas(request):
             perfil = get_object_or_404(PerfilAdmin, user=request.user)
         else:
             perfil = None
+
+        if 'recentes' in request.GET:
+            adms = adms.order_by('-date_joined')
+            recentes = True
+        else:
+            recentes = False
+        if 'inativofiltro' in request.GET:
+            adms = adms.filter(is_active=False)
+            ativo = True
+        else:
+            ativo = False
         dados = {
+            'recentes':recentes,
+            'inativofiltro':ativo,
             'perfil':perfil,
             'dados' : adms,
         }
@@ -404,7 +417,20 @@ def buscas(request):
             perfil = get_object_or_404(PerfilAdmin, user=request.user)
         else:
             perfil = None
+
+        if 'recentes' in request.GET:
+            cand = cand.order_by('-date_joined')
+            recentes = True
+        else:
+            recentes = False
+        if 'inativofiltro' in request.GET:
+            cand = cand.filter(is_active=False)
+            ativo = True
+        else:
+            ativo = False
         dados = {
+            'recentes':recentes,
+            'inativofiltro':ativo,
             'perfil':perfil,
             'dados' : cand
         }
@@ -417,7 +443,20 @@ def buscas(request):
             perfil = get_object_or_404(PerfilAdmin, user=request.user)
         else:
             perfil = None
+
+        if 'recentes' in request.GET:
+            emp = emp.order_by('-date_joined')
+            recentes = True
+        else:
+            recentes = False
+        if 'inativofiltro' in request.GET:
+            emp = emp.filter(is_active=False)
+            ativo = True
+        else:
+            ativo = False
         dados = {
+            'recentes':recentes,
+            'inativofiltro':ativo,
             'perfil':perfil,
             'dados' : emp
         }

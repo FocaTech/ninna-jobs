@@ -39,8 +39,7 @@
                     <div class="col">
                       <tr>
                         <th tabindex="0" rowspan="1" colspan="1" aria-label="Ações">Filtros</th>
-                          <form action="{% url 'acoes_admin' %}" method="POST">
-                            {% csrf_token %}
+                        <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
                               <th tabindex="0" rowspan="1" colspan="1" aria-label="Inativo">
                                 <div class="form-check form-switch">
                                   {% if recentes %}
@@ -67,18 +66,16 @@
                                 </div>
                               </th>
                             {% comment %} <th><input class="form-check-input" type="checkbox" id="checkTodos" name="checkTodos"> Selecionar Todos</th> {% endcomment %}
-                          </form>
+                              <div class="input-group">
+                                  <input name='buscar/admin/admins' placeholder="Pesquisar" type="search" class="form-control">
+                                  <span class="input-group-text"><i class="bi bi-search"></i></span>
+                              </div>
+                            </form>
                         </th>
                       </tr>
                     </div>
                   </div>
 
-                  <form method='GET' action="{% url 'buscar' %}" class="filtros my-4">
-                    <div class="input-group">
-                        <input name='buscar/admin/admins' placeholder="Pesquisar" type="search" class="form-control">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    </div>
-                  </form>
                   <tr>
                     {% comment %} <th>Selecionar</th> {% endcomment %}
                     <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome</th>

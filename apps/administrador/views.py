@@ -100,26 +100,12 @@ def acoes_admin(request):
             messages.error(request, 'Email ja existe')
 
     usuario_admin = Users.objects.filter(is_staff = True)
-    if 'recentes' in request.POST:
-        usuario_admin = usuario_admin.order_by('-date_joined')
-        recentes = True
-    else:
-        recentes = False
-
-    if 'inativofiltro' in request.POST:
-        usuario_admin = usuario_admin.filter(is_active=False)
-        ativo = True
-    else:
-        ativo = False
-
     if request.user.is_superuser and PerfilAdmin.objects.filter(user=request.user).exists():
         perfil = get_object_or_404(PerfilAdmin, user=request.user)
     else:
         perfil = None
     usuario_admin = paginar(usuario_admin, request)
     contexto = {
-        'recentes':recentes,
-        'inativofiltro':ativo,
         'perfil':perfil,
         'dados' : usuario_admin,
     }
