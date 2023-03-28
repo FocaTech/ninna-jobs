@@ -12,8 +12,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
+#cache
+from django.views.decorators.cache import cache_page
 
-
+@cache_page(15)
 def select(request):
     '''cria e salva vagas'''
     contratacoes = TipoContratacao.objects.all()
@@ -50,10 +52,10 @@ def select(request):
         if vaga:
             messages.success(request, f"Vaga '{vaga.nome_vaga}' salva com Sucesso")
         return redirect('empresa')
-
     else:
         return render(request, 'empresa.html', dado)
 
+@cache_page(15)
 def editar_vagas(request, pk_vagas):
     '''Editar uma vaga'''
     vagas = get_object_or_404(Vagas, pk=pk_vagas)
@@ -71,6 +73,7 @@ def editar_vagas(request, pk_vagas):
     }
     return render(request, 'editar_vaga_admin.html', vaga_a_editar)
 
+@cache_page(15)
 def atualizar_vagas(request):
     '''Atualizar a vaga editada'''
     if request.method == 'POST':
@@ -93,6 +96,7 @@ def atualizar_vagas(request):
         messages.success(request, f"Vaga '{v.nome_vaga}' editada")
     return redirect('empresa')
 
+@cache_page(15)
 def deleta_vaga(request, pk_vaga):
     '''Apaga vaga'''
     url_atual = URLAtual.objects.all()
@@ -103,6 +107,7 @@ def deleta_vaga(request, pk_vaga):
     vaga.delete()
     return redirect(url_atual)
 
+@cache_page(15)
 def index(request):
     url = "http://127.0.0.1:8000" + request.path
 
@@ -156,6 +161,7 @@ def index(request):
         }
     return render(request, 'index.html', dados)
 
+@cache_page(15)
 def vagas(request):
     vagas = Vagas.objects.order_by('-data_vaga').filter(status=True)
     vagas = paginar(vagas, request)
@@ -205,10 +211,12 @@ def vagas(request):
     }
     return render(request, 'vagas.html', dados)
 
+@cache_page(15)
 def tela_de_vagas_salvas(request):
     return render(request, 'salvas.html')
 
 @has_role_decorator('candidato')
+@cache_page(15)
 def salvar_vaga(request, pk_vaga):
     url_atual = URLAtual.objects.all()
     if len(url_atual) > 0 :
@@ -233,6 +241,7 @@ def salvar_vaga(request, pk_vaga):
         return redirect(url_atual)
 
 @has_role_decorator('candidato')
+@cache_page(15)
 def candidatar_a_vaga(request, pk_vagas):
     url_atual = URLAtual.objects.all()
     if len(url_atual) > 0 :
@@ -258,6 +267,7 @@ def candidatar_a_vaga(request, pk_vagas):
         email.send()
         return redirect(url_atual)
 
+@cache_page(15)
 def arquivar_vaga(request, pk_vaga):
     vaga_para_ser_arquivada = get_object_or_404(Vagas, pk=pk_vaga)
     if vaga_para_ser_arquivada.status == True:
@@ -267,6 +277,7 @@ def arquivar_vaga(request, pk_vaga):
     vaga_para_ser_arquivada.save()
     return redirect('empresa')
 
+@cache_page(15)
 def buscas(request):
     '''barras de busca da dash, empresa e vagas'''
     lista_vagas = Vagas.objects.order_by('-data_vaga')
@@ -468,12 +479,11 @@ def listar_vagas_arquivadas():
     return lista_de_vagas_arquivadas
 
 def paginar(objeto, request):
-    if len(objeto) > 9:
-        if request.GET.get('page') != None:
-            page_num = request.GET.get('page')
-        else:
-            page_num = 1
-        objeto_paginadas = Paginator(objeto, 9)
-        objeto = objeto_paginadas.get_page(page_num)
-        objeto.adjusted_elided_pages = objeto_paginadas.get_elided_page_range(page_num)
+    if request.GET.get('page') != None:
+        page_num = request.GET.get('page')
+    else:
+        page_num = 1
+    objeto_paginadas = Paginator(objeto, 9)
+    objeto = objeto_paginadas.get_page(page_num)
+    objeto.adjusted_elided_pages = objeto_paginadas.get_elided_page_range(page_num)
     return objeto

@@ -10,13 +10,17 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from vaga.views import paginar
 import requests
+#cache
+from django.views.decorators.cache import cache_page
 
+@cache_page(15)
 def apagar_form_empresa(request):
     '''apagar form empresa'''
     informacoes = get_object_or_404(Empresa, user=request.user)
     informacoes.delete()
     return redirect('formempresa')
 
+@cache_page(15)
 def formempresa(request):
     '''formulario da empresa'''
     if Empresa.objects.filter(user=request.user).exists():
@@ -30,6 +34,7 @@ def formempresa(request):
     }
     return render(request, 'FormEmpresa.html', dados)
 
+@cache_page(15)
 def editar_registro(request):
     '''formulario da empresa'''
     if request.method == 'POST':
@@ -59,6 +64,7 @@ def editar_registro(request):
             messages.error(request,'Cep Invalido')
     return redirect('formempresa')
 
+@cache_page(15)
 def registro(request):
     if request.method == 'POST':
         cep = request.POST['cep']
@@ -86,6 +92,7 @@ def registro(request):
     else:
         return render(request, 'formempresa.html')
 
+@cache_page(15)
 def formcandidato(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
     user_candidato = request.user
@@ -101,12 +108,14 @@ def formcandidato(request):
         }
     return render(request, 'formcandidato.html', dados)
 
+@cache_page(15)
 def apagar_informacoes_iniciais(request):
     '''começa todo o forms e traz os objetos para editar se existir'''
     informacoes = get_object_or_404(InformaçõesIniciais, user=request.user)
     informacoes.delete()
     return redirect('formcandidato')
 
+@cache_page(15)
 def informacoes_iniciais(request):
     '''pega o form candidato salva e ja lista os dados pessoais com alguns campos'''
     user_candidato = request.user
@@ -135,6 +144,7 @@ def informacoes_iniciais(request):
 
     return render(request, 'partials/Usuarios/sessaoDois.html', dados)
 
+@cache_page(15)
 def editando_informacoes_iniciais(request):
     '''caso o candidato ja tenha prenchido ele vai editar e salvar aqui'''
     user_candidato = request.user
@@ -153,6 +163,7 @@ def editando_informacoes_iniciais(request):
         i.save()
     return redirect('Informacoes_iniciais')
 
+@cache_page(15)
 def dados_pessoais(request):
     '''Pega os dados pessoais salva e renderiza as formacoes'''
     user_candidato = request.user
@@ -189,11 +200,13 @@ def dados_pessoais(request):
     }
     return render(request, 'partials/Usuarios/sessaoTres.html', dados)
 
+@cache_page(15)
 def apagar_dados_pessoais(request):
     dados = get_object_or_404(DadosPessoais, user=request.user)
     dados.delete()
     return redirect('Informacoes_iniciais')
 
+@cache_page(15)
 def editando_dados_pessoais(request):
     '''caso ele ja tenha preenchido ele vai ser direcionado aqui para editar'''
     user_candidato = request.user
@@ -230,12 +243,14 @@ def editando_dados_pessoais(request):
             return redirect('Informacoes_iniciais')
     return redirect('Dados_Pessoais')
 
+@cache_page(15)
 def deleta_formacao(request, id_formacao):
     '''deleta as formacoes existentes'''
     nome = get_object_or_404(FormacaoAcademica, pk=id_formacao)
     nome.delete()
     return redirect('Dados_Pessoais')
 
+@cache_page(15)
 def adicionar_formacao(request):
     '''adiciona ate 5 formacoes e redireciona a mesma pagina'''
     user = request.user
@@ -254,6 +269,7 @@ def adicionar_formacao(request):
             informacoes3.save()
     return redirect('Dados_Pessoais')
 
+@cache_page(15)
 def formacao_academica(request):
     '''renderiza a pagina e traz os certificados do candidato'''
     user_candidato = request.user
@@ -265,12 +281,14 @@ def formacao_academica(request):
     }
     return render(request, 'partials/Usuarios/sessaoQuatro.html', dados)
 
+@cache_page(15)
 def deleta_certificado(request, id_certificado):
     '''delta os certificados adicionados'''
     nome = get_object_or_404(CertificadosConquistas, pk=id_certificado)
     nome.delete()
     return redirect('Formacao_academica')
 
+@cache_page(15)
 def adicionar_certificado(request):
     '''adiciona ate 5 certificados e salva eles'''
     user = request.user
@@ -287,6 +305,7 @@ def adicionar_certificado(request):
             informacoes4.save()
     return redirect('Formacao_academica')
 
+@cache_page(15)
 def certificados_conquistas(request):
     '''lista as experiencias'''
     user_candidato = request.user
@@ -298,12 +317,14 @@ def certificados_conquistas(request):
     }
     return render(request, 'partials/Usuarios/sessaoCinco.html', dados)
 
+@cache_page(15)
 def deleta_experiencia(request, id_experiencia):
     '''apaga os lugares onde o candidato ja Trabalhou ou trabalha'''
     nome = get_object_or_404(ExperiênciaProfissional, pk=id_experiencia)
     nome.delete()
     return redirect('Certificados_conquistas')
 
+@cache_page(15)
 def adicionar_experiencia(request):
     '''salva ate 5 experiencias no banco e redireciona a mesma pagina'''
     user_candidato = request.user
@@ -325,6 +346,7 @@ def adicionar_experiencia(request):
             informacoes5.save()
     return redirect('Certificados_conquistas')
 
+@cache_page(15)
 def experiencia_profissional(request):
     '''mostra os idiomas e os lista'''
     user_candidato = request.user
@@ -336,12 +358,14 @@ def experiencia_profissional(request):
         }
     return render(request, 'partials/Usuarios/sessaoSeis.html',dados)
 
+@cache_page(15)
 def deleta_idioma(requst, id_idioma):
     '''apaga os idiomas adicionados'''
     nome = get_object_or_404(Idiomas, pk=id_idioma)
     nome.delete()
     return redirect('Experiencia_profissional')
 
+@cache_page(15)
 def adicionar_idioma(request):
     '''redireciona a mesma pagina de idiomas para listalos'''
     user_candidato = request.user
@@ -358,6 +382,7 @@ def adicionar_idioma(request):
     return redirect('Experiencia_profissional')
 
 @has_role_decorator('empresa')
+@cache_page(15)
 def empresa(request, *args, **kwargs):
     '''dash de empresa'''
     url = "http://127.0.0.1:8000" + request.path
@@ -422,6 +447,7 @@ def empresa(request, *args, **kwargs):
     return render(request, 'empresa.html', dado)
 
 @has_role_decorator('candidato')
+@cache_page(15)
 def dashboard(request):
     '''dash de candidato'''
     url = "http://127.0.0.1:8000" + request.path
@@ -473,6 +499,7 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', dados)
 
+@cache_page(15)
 def perfilempresa(request):
     '''perfil da empresa'''
     vagas = Vagas.objects.filter(user=request.user, status=True)
@@ -483,6 +510,7 @@ def perfilempresa(request):
     }
     return render(request, 'perfilEmpresa.html', dados)
 
+@cache_page(15)
 def ver_perfil_empresa(request, id_empresa):
     '''candidato poder ver perfil da empresa'''
     url = "http://127.0.0.1:8000" + request.path
@@ -539,6 +567,7 @@ def ver_perfil_empresa(request, id_empresa):
     }
     return render(request, 'perfilEmpresa.html', dados)
 
+@cache_page(15)
 def perfil(request):
     '''perfil do canditato que fez alguns dos forms'''
     if request.user.is_authenticated:
@@ -561,6 +590,7 @@ def perfil(request):
     else:
         return redirect('index')
 
+@cache_page(15)
 def perfil_candidato(request, id_candidato):
     '''empresa poder ver os perfil candidato'''
     url = "http://127.0.0.1:8000" + request.path
@@ -601,6 +631,7 @@ def perfil_candidato(request, id_candidato):
         }
     return render(request, 'perfil.html',dados)
 
+@cache_page(15)
 def listar_talentos_candidatados(request, pk_vaga):
     url = "http://127.0.0.1:8000" + request.path
 
@@ -664,6 +695,7 @@ def listar_talentos_candidatados(request, pk_vaga):
 
     return render(request, 'listar-talentos_candidatados.html', dados)
 
+@cache_page(15)
 def talentos(request):
     '''empresa poder ver os candidatos'''
     url = "http://127.0.0.1:8000" + request.path
@@ -696,6 +728,7 @@ def talentos(request):
     }
     return render(request, 'bancodetalentos.html', dado)
 
+@cache_page(15)
 def busca_talentos(request):
     if 'buscar/talentos' in request.GET:
         lista_talentos = DadosPessoais.objects.order_by('-data_dados').filter()
@@ -720,12 +753,14 @@ def busca_talentos(request):
     }
     return render(request, 'bancodetalentos.html', dados)
 
+@cache_page(15)
 def contato(request):
     if request.method == 'POST':
         send_mail(f"{request.POST['subject']}", f" id:{request.user.id} \n nome:{request.POST['name']} \n email:{request.POST['email']} \n mensagem:{request.POST['message']}", f"{request.POST['email']}", ['ninnajobs72@gmail.com'])
         messages.success(request, 'Email enviado')
     return redirect('index')
 
+@cache_page(15)
 def empresas_favoritadas(request):
     url = "http://127.0.0.1:8000" + request.path
 
@@ -759,6 +794,7 @@ def empresas_favoritadas(request):
 
     return render(request, 'empresasfavoritadas.html', dados)
 
+@cache_page(15)
 def favoritar_talento(request, pk_talento):
     # global url_atual
     url_atual = URLAtual.objects.all()
@@ -780,6 +816,7 @@ def favoritar_talento(request, pk_talento):
 
         return redirect(url_atual)
 
+@cache_page(15)
 def favoritar_empresa(request, pk_empresa):
     url_atual = URLAtual.objects.all()
     if len(url_atual) > 0 :
@@ -799,6 +836,7 @@ def favoritar_empresa(request, pk_empresa):
 
         return redirect(url_atual)
 
+@cache_page(15)
 def configuracoes(request):
     return render(request, 'configuracoes.html')
 
@@ -815,5 +853,6 @@ def apagar_conta(request):
 
     return render(request, 'pedirSenha.html')
 
+@cache_page(15)
 def candidato_fav(request):
     return render(request, 'candidatosFavoritados.html')

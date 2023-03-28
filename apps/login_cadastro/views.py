@@ -15,10 +15,14 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
+#cache
+from django.views.decorators.cache import cache_page
 
+@cache_page(15)
 def acesso(request):
     return render(request, 'acesso.html')
 
+@cache_page(15)
 def cadastro_candidato(request):
     if request.method == 'POST':
         candidato_nome = request.POST['candidato_nome']
@@ -45,6 +49,7 @@ def cadastro_candidato(request):
     else:
         return render(request, 'loginCandidato.html')
 
+@cache_page(15)
 def cadastro_empresa(request):
     if request.method == 'POST':
         empresa_nome = request.POST['empresa_nome']
@@ -71,6 +76,7 @@ def cadastro_empresa(request):
     else:
         return render(request, 'loginEmpresa.html')
 
+@cache_page(15)
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email', None)
@@ -90,6 +96,7 @@ def login(request):
     return redirect('acesso')
 
 email_do_user_atual = ''
+
 def recuperar_senha(request):
     if request.method == 'POST':
         global email_do_user_atual

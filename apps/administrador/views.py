@@ -7,6 +7,8 @@ from django.http import JsonResponse
 from django.contrib import messages
 from administrador.models import PerfilAdmin
 from vaga.views import paginar
+#cache
+from django.views.decorators.cache import cache_page
 
 
 todos_os_can = Users.objects.filter(funcao='CAN').count()
@@ -15,6 +17,7 @@ vagas_ativas = Vagas.objects.filter(status=True).count()
 url_atual = ''
 # Create your views here.
 @login_required(login_url='index')
+@cache_page(15)
 def interface(request):
     empresa = Users.objects.filter(funcao = 'EMP').order_by('-date_joined')[0:3]
     candidato = Users.objects.filter(funcao='CAN').order_by('-date_joined')[0:5]
@@ -63,6 +66,7 @@ def interface_charts(request):
     })
 
 @login_required(login_url='index')
+@cache_page(15)
 def acoes_admin(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
@@ -113,6 +117,7 @@ def acoes_admin(request):
     return render(request, 'acoesadmin.html', contexto)
 
 @login_required(login_url='index')
+@cache_page(15)
 def acoes_empresa(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
@@ -140,6 +145,7 @@ def acoes_empresa(request):
     return render(request, 'acoesEmpresa.html', contexto)
 
 @login_required(login_url='index')
+@cache_page(15)
 def acoes_talento(request):
     global url_atual
     url_atual = "http://127.0.0.1:8000" + request.path
@@ -162,6 +168,8 @@ def acoes_talento(request):
 
     return render(request, 'acoesTalento.html', contexto)
 
+@login_required(login_url='index')
+@cache_page(15)
 def relatorio(request):
     vagas_match = {}
     for c in Users.objects.filter(funcao = 'CAN'):
@@ -187,10 +195,12 @@ def relatorio(request):
     return render(request, 'relatorio.html',contexto)
 
 @login_required(login_url='index')
+@cache_page(15)
 def detalhes_vagas(request):
     return render(request, 'detalhesVagasEmpresa.html')
 
 @login_required(login_url='index')
+@cache_page(15)
 def acoes_vaga(request):
     '''cria e salva vagas'''
     global url_atual
@@ -242,6 +252,8 @@ def acoes_vaga(request):
     else:
         return render(request, 'acoesVagas.html', dados)
 
+@login_required(login_url='index')
+@cache_page(15)
 def editar_vagas_admin(request, pk_vagas):
     '''Editar uma vaga'''
     vagas = get_object_or_404(Vagas, pk=pk_vagas)
@@ -262,6 +274,8 @@ def editar_vagas_admin(request, pk_vagas):
     }
     return render(request, 'editar_vaga_admin.html', vaga_a_editar)
 
+@login_required(login_url='index')
+@cache_page(15)
 def atualizar_vagas_admin(request):
     '''Atualizar a vaga editada'''
     if request.method == 'POST':
@@ -285,6 +299,7 @@ def atualizar_vagas_admin(request):
     return redirect('acoes_vagas')
 
 @login_required(login_url='index')
+@cache_page(15)
 def admin_ban(request, id):
     'banir adm'
     global url_atual
@@ -293,6 +308,7 @@ def admin_ban(request, id):
     return redirect(url_atual)
 
 @login_required(login_url='index')
+@cache_page(15)
 def deleta_vaga_admin(request, pk_vaga):
     '''adm Apaga vaga'''
     global url_atual
