@@ -118,10 +118,10 @@ def acoes_admin(request):
         perfil = None
     usuario_admin = paginar(usuario_admin, request)
     contexto = {
+        'recentes':recentes,
+        'inativofiltro':ativo,
         'perfil':perfil,
         'dados' : usuario_admin,
-        'recentes':recentes,
-        'inativofiltro':ativo
     }
     return render(request, 'acoesadmin.html', contexto)
 
